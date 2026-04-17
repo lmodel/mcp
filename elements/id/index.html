@@ -502,138 +502,8 @@ Alias: id</p>
 </thead>
 <tbody>
 <tr>
-<td><a href="../ListPromptsResultResponse/">ListPromptsResultResponse</a></td>
-<td>A successful response from the server for a prompts/list request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ListToolsResultResponse/">ListToolsResultResponse</a></td>
-<td>A successful response from the server for a tools/list request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ListTasksRequest/">ListTasksRequest</a></td>
-<td>A request to retrieve a list of tasks</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../GetTaskPayloadRequest/">GetTaskPayloadRequest</a></td>
-<td>A request to retrieve the result of a completed task</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../PingRequest/">PingRequest</a></td>
-<td>A ping, issued by either the server or the client, to check that the other pa...</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../GetTaskResultResponse/">GetTaskResultResponse</a></td>
-<td>A successful response for a tasks/get request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ListTasksResultResponse/">ListTasksResultResponse</a></td>
-<td>A successful response for a tasks/list request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../SubscribeResultResponse/">SubscribeResultResponse</a></td>
-<td>A successful response for a resources/subscribe request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../InitializeResultResponse/">InitializeResultResponse</a></td>
-<td>A successful response from the server for an initialize request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../CallToolRequest/">CallToolRequest</a></td>
-<td>Used by the client to invoke a tool provided by the server</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../CompleteRequest/">CompleteRequest</a></td>
-<td>A request from the client to the server, to ask for completion options</td>
-<td>no</td>
-</tr>
-<tr>
 <td><a href="../SetLevelRequest/">SetLevelRequest</a></td>
 <td>A request from the client to the server, to enable or adjust logging</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../CreateMessageRequest/">CreateMessageRequest</a></td>
-<td>A request from the server to sample an LLM via the client</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../JSONRPCRequest/">JSONRPCRequest</a></td>
-<td>A request that expects a response</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../PingResultResponse/">PingResultResponse</a></td>
-<td>A successful response for a ping request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../CreateTaskResultResponse/">CreateTaskResultResponse</a></td>
-<td>A successful response for a task-augmented request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../CancelTaskResultResponse/">CancelTaskResultResponse</a></td>
-<td>A successful response for a tasks/cancel request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ListToolsRequest/">ListToolsRequest</a></td>
-<td>Sent from the client to request a list of tools the server has</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../SetLevelResultResponse/">SetLevelResultResponse</a></td>
-<td>A successful response from the server for a logging/setLevel request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../CompleteResultResponse/">CompleteResultResponse</a></td>
-<td>A successful response from the server for a completion/complete request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../CallToolResultResponse/">CallToolResultResponse</a></td>
-<td>A successful response from the server for a tools/call request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../GetTaskPayloadResultResponse/">GetTaskPayloadResultResponse</a></td>
-<td>A successful response for a tasks/result request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ReadResourceRequest/">ReadResourceRequest</a></td>
-<td>Sent from the client to the server, to read a specific resource URI</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../URLElicitationRequiredError/">URLElicitationRequiredError</a></td>
-<td>A response indicating that additional information is required via URL elicita...</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../SubscribeRequest/">SubscribeRequest</a></td>
-<td>Sent from the client to request resource update notifications</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ListResourcesResultResponse/">ListResourcesResultResponse</a></td>
-<td>A successful response from the server for a resources/list request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../GetPromptRequest/">GetPromptRequest</a></td>
-<td>Used by the client to get a prompt provided by the server</td>
 <td>no</td>
 </tr>
 <tr>
@@ -642,18 +512,58 @@ Alias: id</p>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../ListRootsResultResponse/">ListRootsResultResponse</a></td>
-<td>A successful response from the client for a roots/list request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ListRootsRequest/">ListRootsRequest</a></td>
-<td>Sent from the server to request a list of root URIs from the client</td>
-<td>no</td>
-</tr>
-<tr>
 <td><a href="../ElicitRequest/">ElicitRequest</a></td>
 <td>A request from the server to elicit additional information from the user via ...</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../GetTaskResultResponse/">GetTaskResultResponse</a></td>
+<td>A successful response for a tasks/get request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ListTasksRequest/">ListTasksRequest</a></td>
+<td>A request to retrieve a list of tasks</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../URLElicitationRequiredError/">URLElicitationRequiredError</a></td>
+<td>A response indicating that additional information is required via URL elicita...</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ListToolsRequest/">ListToolsRequest</a></td>
+<td>Sent from the client to request a list of tools the server has</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../JSONRPCRequest/">JSONRPCRequest</a></td>
+<td>A request that expects a response</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../CancelTaskRequest/">CancelTaskRequest</a></td>
+<td>A request to cancel a task</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ReadResourceRequest/">ReadResourceRequest</a></td>
+<td>Sent from the client to the server, to read a specific resource URI</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../SetLevelResultResponse/">SetLevelResultResponse</a></td>
+<td>A successful response from the server for a logging/setLevel request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ListTasksResultResponse/">ListTasksResultResponse</a></td>
+<td>A successful response for a tasks/list request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../CreateTaskResultResponse/">CreateTaskResultResponse</a></td>
+<td>A successful response for a task-augmented request</td>
 <td>no</td>
 </tr>
 <tr>
@@ -662,8 +572,8 @@ Alias: id</p>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../UnsubscribeRequest/">UnsubscribeRequest</a></td>
-<td>Sent from the client to cancel resource update notifications</td>
+<td><a href="../ListPromptsRequest/">ListPromptsRequest</a></td>
+<td>Sent from the client to request a list of prompts and prompt templates</td>
 <td>no</td>
 </tr>
 <tr>
@@ -672,18 +582,8 @@ Alias: id</p>
 <td>yes</td>
 </tr>
 <tr>
-<td><a href="../ReadResourceResultResponse/">ReadResourceResultResponse</a></td>
-<td>A successful response from the server for a resources/read request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ListResourceTemplatesRequest/">ListResourceTemplatesRequest</a></td>
-<td>Sent from the client to request a list of resource templates the server has</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../GetTaskRequest/">GetTaskRequest</a></td>
-<td>A request to retrieve the state of a task</td>
+<td><a href="../ListRootsRequest/">ListRootsRequest</a></td>
+<td>Sent from the server to request a list of root URIs from the client</td>
 <td>no</td>
 </tr>
 <tr>
@@ -692,14 +592,9 @@ Alias: id</p>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../InitializeRequest/">InitializeRequest</a></td>
-<td>Request sent from the client to the server when it first connects, asking it ...</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../CancelTaskRequest/">CancelTaskRequest</a></td>
-<td>A request to cancel a task</td>
-<td>no</td>
+<td><a href="../JSONRPCErrorResponse/">JSONRPCErrorResponse</a></td>
+<td>A response to a request that indicates an error occurred</td>
+<td>yes</td>
 </tr>
 <tr>
 <td><a href="../JSONRPCResultResponse/">JSONRPCResultResponse</a></td>
@@ -707,18 +602,118 @@ Alias: id</p>
 <td>yes</td>
 </tr>
 <tr>
-<td><a href="../UnsubscribeResultResponse/">UnsubscribeResultResponse</a></td>
-<td>A successful response for a resources/unsubscribe request</td>
+<td><a href="../ListRootsResultResponse/">ListRootsResultResponse</a></td>
+<td>A successful response from the client for a roots/list request</td>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../JSONRPCErrorResponse/">JSONRPCErrorResponse</a></td>
-<td>A response to a request that indicates an error occurred</td>
-<td>yes</td>
+<td><a href="../CompleteRequest/">CompleteRequest</a></td>
+<td>A request from the client to the server, to ask for completion options</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../PingResultResponse/">PingResultResponse</a></td>
+<td>A successful response for a ping request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../CompleteResultResponse/">CompleteResultResponse</a></td>
+<td>A successful response from the server for a completion/complete request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../GetPromptRequest/">GetPromptRequest</a></td>
+<td>Used by the client to get a prompt provided by the server</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../GetTaskPayloadRequest/">GetTaskPayloadRequest</a></td>
+<td>A request to retrieve the result of a completed task</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../InitializeRequest/">InitializeRequest</a></td>
+<td>Request sent from the client to the server when it first connects, asking it ...</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ReadResourceResultResponse/">ReadResourceResultResponse</a></td>
+<td>A successful response from the server for a resources/read request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../CancelTaskResultResponse/">CancelTaskResultResponse</a></td>
+<td>A successful response for a tasks/cancel request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../PingRequest/">PingRequest</a></td>
+<td>A ping, issued by either the server or the client, to check that the other pa...</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../InitializeResultResponse/">InitializeResultResponse</a></td>
+<td>A successful response from the server for an initialize request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ListResourceTemplatesRequest/">ListResourceTemplatesRequest</a></td>
+<td>Sent from the client to request a list of resource templates the server has</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ListResourcesResultResponse/">ListResourcesResultResponse</a></td>
+<td>A successful response from the server for a resources/list request</td>
+<td>no</td>
 </tr>
 <tr>
 <td><a href="../CreateMessageResultResponse/">CreateMessageResultResponse</a></td>
 <td>A successful response from the client for a sampling/createMessage request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../CallToolResultResponse/">CallToolResultResponse</a></td>
+<td>A successful response from the server for a tools/call request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../SubscribeRequest/">SubscribeRequest</a></td>
+<td>Sent from the client to request resource update notifications</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ListPromptsResultResponse/">ListPromptsResultResponse</a></td>
+<td>A successful response from the server for a prompts/list request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../CallToolRequest/">CallToolRequest</a></td>
+<td>Used by the client to invoke a tool provided by the server</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../GetTaskPayloadResultResponse/">GetTaskPayloadResultResponse</a></td>
+<td>A successful response for a tasks/result request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../GetTaskRequest/">GetTaskRequest</a></td>
+<td>A request to retrieve the state of a task</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../CreateMessageRequest/">CreateMessageRequest</a></td>
+<td>A request from the server to sample an LLM via the client</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../SubscribeResultResponse/">SubscribeResultResponse</a></td>
+<td>A successful response for a resources/subscribe request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../UnsubscribeRequest/">UnsubscribeRequest</a></td>
+<td>Sent from the client to cancel resource update notifications</td>
 <td>no</td>
 </tr>
 <tr>
@@ -727,8 +722,13 @@ Alias: id</p>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../ListPromptsRequest/">ListPromptsRequest</a></td>
-<td>Sent from the client to request a list of prompts and prompt templates</td>
+<td><a href="../UnsubscribeResultResponse/">UnsubscribeResultResponse</a></td>
+<td>A successful response for a resources/unsubscribe request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ListToolsResultResponse/">ListToolsResultResponse</a></td>
+<td>A successful response from the server for a tools/list request</td>
 <td>no</td>
 </tr>
 </tbody>

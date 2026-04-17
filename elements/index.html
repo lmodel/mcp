@@ -1,0 +1,2187 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://lmodel.github.io/mcp/elements/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../about/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Schema - mcp</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+      
+
+
+    
+    
+
+      
+    
+<script src="../assets/pymdownx-extras/material-extra-theme-2ek1P7jT.js" type="text/javascript"></script>
+<script src="../assets/pymdownx-extras/material-extra-3rdparty-BUCF4rjN.js" type="text/javascript"></script>
+
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../css/ansi-colours.css">
+    
+      <link rel="stylesheet" href="../css/jupyter-cells.css">
+    
+      <link rel="stylesheet" href="../css/pandas-dataframe.css">
+    
+      <link rel="stylesheet" href="../assets/pymdownx-extras/extra-c6ab11540a.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mcp" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+
+<header class="md-header" data-md-component="header">
+  <nav
+    class="md-header__inner md-grid"
+    aria-label="header.title"
+  >
+    <a
+      href="https://lmodel.github.io/mcp/"
+      title="mcp"
+      class="md-header__button md-logo"
+      aria-label="mcp"
+    >
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 2-5 4.5v11l5-4.5zM6.5 5C4.55 5 2.45 5.4 1 6.5v14.66c0 .25.25.5.5.5.1 0 .15-.07.25-.07 1.35-.65 3.3-1.09 4.75-1.09 1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.31 4.75 1.06.1.05.15.03.25.03.25 0 .5-.25.5-.5V6.5c-.6-.45-1.25-.75-2-1V19c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V6.5C10.55 5.4 8.45 5 6.5 5"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            mcp
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Schema
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="md-header__options">
+      <div class="md-header-nav__scheme md-header-nav__button md-source__icon md-icon">
+          <a
+            href="javascript:toggleScheme();"
+            title="Light mode"
+            class="light-mode"
+          >
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+          </a>
+          <a
+            href="javascript:toggleScheme();"
+            title="Dark mode"
+            class="dark-mode"
+          >
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+          </a>
+          <a
+            href="javascript:toggleScheme();"
+            title="System preference"
+            class="system-mode"
+          >
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 2c-1.79 1.15-3 3.18-3 5.5s1.21 4.35 3.03 5.5C4.46 13 2 10.54 2 7.5A5.5 5.5 0 0 1 7.5 2m11.57 1.5 1.43 1.43L4.93 20.5 3.5 19.07zm-6.18 2.43L11.41 5 9.97 6l.42-1.7L9 3.24l1.75-.12.58-1.65L12 3.1l1.73.03-1.35 1.13zm-3.3 3.61-1.16-.73-1.12.78.34-1.32-1.09-.83 1.36-.09.45-1.29.51 1.27 1.36.03-1.05.87zM19 13.5a5.5 5.5 0 0 1-5.5 5.5c-1.22 0-2.35-.4-3.26-1.07l7.69-7.69c.67.91 1.07 2.04 1.07 3.26m-4.4 6.58 2.77-1.15-.24 3.35zm4.33-2.7 1.15-2.77 2.2 2.54zm1.15-4.96-1.14-2.78 3.34.24zM9.63 18.93l2.77 1.15-2.53 2.19z"/></svg>
+          </a>
+           <a
+            href="javascript:toggleScheme();"
+            title="Unknown scheme"
+            class="unknown-mode"
+          >
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m15.07 11.25-.9.92C13.45 12.89 13 13.5 13 15h-2v-.5c0-1.11.45-2.11 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41a2 2 0 0 0-2-2 2 2 0 0 0-2 2H8a4 4 0 0 1 4-4 4 4 0 0 1 4 4 3.2 3.2 0 0 1-.93 2.25M13 19h-2v-2h2M12 2A10 10 0 0 0 2 12a10 10 0 0 0 10 10 10 10 0 0 0 10-10c0-5.53-4.5-10-10-10"/></svg>
+          </a>
+      </div>
+    </div>
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/lmodel/mcp" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="mcp" class="md-nav__button md-logo" aria-label="mcp" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 2-5 4.5v11l5-4.5zM6.5 5C4.55 5 2.45 5.4 1 6.5v14.66c0 .25.25.5.5.5.1 0 .15-.07.25-.07 1.35-.65 3.3-1.09 4.75-1.09 1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.31 4.75 1.06.1.05.15.03.25.03.25 0 .5-.25.5-.5V6.5c-.6-.45-1.25-.75-2-1V19c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V6.5C10.55 5.4 8.45 5 6.5 5"/></svg>
+
+    </a>
+    mcp
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/lmodel/mcp" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Schema
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Schema
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Slots
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enumerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enumerations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subsets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subsets
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#slots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Slots
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#enumerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enumerations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#types" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Types
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subsets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subsets
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+  
+                  
+
+
+  
+  
+
+
+<h1 id="mcp">mcp</h1>
+<p>Model Context Protocol LinkML Schema</p>
+<p>URI: <a href="https://w3id.org/lmodel/mcp">https://w3id.org/lmodel/mcp</a></p>
+<p>Name: mcp</p>
+<h2 id="classes">Classes</h2>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="Annotations/">Annotations</a></td>
+<td>Optional annotations for the client</td>
+</tr>
+<tr>
+<td><a href="ArgumentMap/">ArgumentMap</a></td>
+<td>Argument object used in prompt and tool calls</td>
+</tr>
+<tr>
+<td><a href="AudioContent/">AudioContent</a></td>
+<td>Audio provided to or from an LLM</td>
+</tr>
+<tr>
+<td><a href="BlobResourceContents/">BlobResourceContents</a></td>
+<td>Blob resource contents</td>
+</tr>
+<tr>
+<td><a href="BooleanSchema/">BooleanSchema</a></td>
+<td>Boolean schema definition</td>
+</tr>
+<tr>
+<td><a href="CallToolRequestParams/">CallToolRequestParams</a></td>
+<td>Parameters for a tools/call request</td>
+</tr>
+<tr>
+<td><a href="CancelledNotificationParams/">CancelledNotificationParams</a></td>
+<td>Parameters for a notifications/cancelled notification</td>
+</tr>
+<tr>
+<td><a href="ClientCapabilities/">ClientCapabilities</a></td>
+<td>Capabilities a client may support</td>
+</tr>
+<tr>
+<td><a href="ClientNotification/">ClientNotification</a></td>
+<td>A union of all notifications that can be sent by a client</td>
+</tr>
+<tr>
+<td><a href="ClientRequest/">ClientRequest</a></td>
+<td>A union of all requests that can be sent by a client</td>
+</tr>
+<tr>
+<td><a href="ClientResult/">ClientResult</a></td>
+<td>A union of all result types that a client can return</td>
+</tr>
+<tr>
+<td><a href="CompleteRequestParams/">CompleteRequestParams</a></td>
+<td>Parameters for a completion/complete request</td>
+</tr>
+<tr>
+<td><a href="CompletionArgument/">CompletionArgument</a></td>
+<td>Argument descriptor for completion requests</td>
+</tr>
+<tr>
+<td><a href="CompletionContext/">CompletionContext</a></td>
+<td>Additional context for completion requests</td>
+</tr>
+<tr>
+<td><a href="CompletionData/">CompletionData</a></td>
+<td>Completion result payload</td>
+</tr>
+<tr>
+<td><a href="ContentBlock/">ContentBlock</a></td>
+<td>Structured text content block</td>
+</tr>
+<tr>
+<td><a href="ContentBlockVariants/">ContentBlockVariants</a></td>
+<td>A union of all content block types</td>
+</tr>
+<tr>
+<td><a href="CreateMessageRequestParams/">CreateMessageRequestParams</a></td>
+<td>Parameters for a sampling/createMessage request</td>
+</tr>
+<tr>
+<td><a href="ElicitationCapability/">ElicitationCapability</a></td>
+<td>Client elicitation capability</td>
+</tr>
+<tr>
+<td><a href="ElicitationCompleteNotificationParams/">ElicitationCompleteNotificationParams</a></td>
+<td>Parameters for a notifications/elicitation/complete notification</td>
+</tr>
+<tr>
+<td><a href="ElicitationContent/">ElicitationContent</a></td>
+<td>Form values returned by an elicitation</td>
+</tr>
+<tr>
+<td><a href="ElicitRequestFormParams/">ElicitRequestFormParams</a></td>
+<td>Parameters for a form-mode elicitation request</td>
+</tr>
+<tr>
+<td><a href="ElicitRequestParams/">ElicitRequestParams</a></td>
+<td>A union of all elicitation request parameter types</td>
+</tr>
+<tr>
+<td><a href="ElicitRequestURLParams/">ElicitRequestURLParams</a></td>
+<td>Parameters for a URL-mode elicitation request</td>
+</tr>
+<tr>
+<td><a href="EmbeddedResource/">EmbeddedResource</a></td>
+<td>The contents of a resource, embedded into a prompt or tool call result</td>
+</tr>
+<tr>
+<td><a href="EnumOption/">EnumOption</a></td>
+<td>Single enumerated option with a machine value and display title</td>
+</tr>
+<tr>
+<td><a href="EnumSchema/">EnumSchema</a></td>
+<td>A union of all enum schema types</td>
+</tr>
+<tr>
+<td><a href="Error/">Error</a></td>
+<td>A JSON-RPC error object</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="InternalError/">InternalError</a></td>
+<td>A JSON-RPC error indicating that an internal error occurred on the receiver (...</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="InvalidParamsError/">InvalidParamsError</a></td>
+<td>A JSON-RPC error indicating that the method parameters are invalid or malform...</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="InvalidRequestError/">InvalidRequestError</a></td>
+<td>A JSON-RPC error indicating that the request is not a valid request object (-...</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="MethodNotFoundError/">MethodNotFoundError</a></td>
+<td>A JSON-RPC error indicating that the requested method does not exist or is no...</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ParseError/">ParseError</a></td>
+<td>A JSON-RPC error indicating that invalid JSON was received by the server (-32...</td>
+</tr>
+<tr>
+<td><a href="ErrorData/">ErrorData</a></td>
+<td>Structured JSON-RPC error data payload</td>
+</tr>
+<tr>
+<td><a href="ExtensionAppCapability/">ExtensionAppCapability</a></td>
+<td>Extension payload for app mime type declarations</td>
+</tr>
+<tr>
+<td><a href="ExtensionsCapability/">ExtensionsCapability</a></td>
+<td>Server/client extension capability object</td>
+</tr>
+<tr>
+<td><a href="GetPromptRequestParams/">GetPromptRequestParams</a></td>
+<td>Parameters for a prompts/get request</td>
+</tr>
+<tr>
+<td><a href="HasAnnotations/">HasAnnotations</a></td>
+<td>Mixin for types that carry annotations</td>
+</tr>
+<tr>
+<td><a href="HasIcons/">HasIcons</a></td>
+<td>Mixin for types that carry icons</td>
+</tr>
+<tr>
+<td><a href="HasMeta/">HasMeta</a></td>
+<td>Mixin for types that carry a _meta field</td>
+</tr>
+<tr>
+<td><a href="HasName/">HasName</a></td>
+<td>Mixin for types that carry name and title</td>
+</tr>
+<tr>
+<td><a href="Icon/">Icon</a></td>
+<td>An optionally-sized icon that can be displayed in a user interface</td>
+</tr>
+<tr>
+<td><a href="ImageContent/">ImageContent</a></td>
+<td>An image provided to or from an LLM</td>
+</tr>
+<tr>
+<td><a href="Implementation/">Implementation</a></td>
+<td>Describes the MCP implementation</td>
+</tr>
+<tr>
+<td><a href="InitializeRequestParams/">InitializeRequestParams</a></td>
+<td>Parameters for an initialize request</td>
+</tr>
+<tr>
+<td><a href="JSONRPCErrorResponse/">JSONRPCErrorResponse</a></td>
+<td>A response to a request that indicates an error occurred</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="URLElicitationRequiredError/">URLElicitationRequiredError</a></td>
+<td>A response indicating that additional information is required via URL elicita...</td>
+</tr>
+<tr>
+<td><a href="JSONRPCMessage/">JSONRPCMessage</a></td>
+<td>A union of all JSON-RPC message types (requests, notifications, and responses...</td>
+</tr>
+<tr>
+<td><a href="JSONRPCNotification/">JSONRPCNotification</a></td>
+<td>A notification which does not expect a response</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="CancelledNotification/">CancelledNotification</a></td>
+<td>Notification to indicate that a previously-issued request is being cancelled</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ElicitationCompleteNotification/">ElicitationCompleteNotification</a></td>
+<td>Notification from the server that an out-of-band elicitation request complete...</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="InitializedNotification/">InitializedNotification</a></td>
+<td>Notification sent from the client to the server after initialization has fini...</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="LoggingMessageNotification/">LoggingMessageNotification</a></td>
+<td>Notification of a log message passed from server to client</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ProgressNotification/">ProgressNotification</a></td>
+<td>Out-of-band notification to inform the receiver of a progress update</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="PromptListChangedNotification/">PromptListChangedNotification</a></td>
+<td>Notification that the list of prompts the server offers has changed</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ResourceListChangedNotification/">ResourceListChangedNotification</a></td>
+<td>Notification that the list of resources the server can read from has changed</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ResourceUpdatedNotification/">ResourceUpdatedNotification</a></td>
+<td>Notification that a resource has changed and may need to be read again</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="RootsListChangedNotification/">RootsListChangedNotification</a></td>
+<td>Notification from the client that the list of roots has changed</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="TaskStatusNotification/">TaskStatusNotification</a></td>
+<td>Notification that a task's status has changed</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ToolListChangedNotification/">ToolListChangedNotification</a></td>
+<td>Notification that the list of tools the server offers has changed</td>
+</tr>
+<tr>
+<td><a href="JSONRPCRequest/">JSONRPCRequest</a></td>
+<td>A request that expects a response</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="CallToolRequest/">CallToolRequest</a></td>
+<td>Used by the client to invoke a tool provided by the server</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="CancelTaskRequest/">CancelTaskRequest</a></td>
+<td>A request to cancel a task</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="CompleteRequest/">CompleteRequest</a></td>
+<td>A request from the client to the server, to ask for completion options</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="CreateMessageRequest/">CreateMessageRequest</a></td>
+<td>A request from the server to sample an LLM via the client</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ElicitRequest/">ElicitRequest</a></td>
+<td>A request from the server to elicit additional information from the user via ...</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="GetPromptRequest/">GetPromptRequest</a></td>
+<td>Used by the client to get a prompt provided by the server</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="GetTaskPayloadRequest/">GetTaskPayloadRequest</a></td>
+<td>A request to retrieve the result of a completed task</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="GetTaskRequest/">GetTaskRequest</a></td>
+<td>A request to retrieve the state of a task</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="InitializeRequest/">InitializeRequest</a></td>
+<td>Request sent from the client to the server when it first connects, asking it ...</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ListPromptsRequest/">ListPromptsRequest</a></td>
+<td>Sent from the client to request a list of prompts and prompt templates</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ListResourcesRequest/">ListResourcesRequest</a></td>
+<td>Sent from the client to request a list of resources the server has</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ListResourceTemplatesRequest/">ListResourceTemplatesRequest</a></td>
+<td>Sent from the client to request a list of resource templates the server has</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ListRootsRequest/">ListRootsRequest</a></td>
+<td>Sent from the server to request a list of root URIs from the client</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ListTasksRequest/">ListTasksRequest</a></td>
+<td>A request to retrieve a list of tasks</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ListToolsRequest/">ListToolsRequest</a></td>
+<td>Sent from the client to request a list of tools the server has</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="PingRequest/">PingRequest</a></td>
+<td>A ping, issued by either the server or the client, to check that the other pa...</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ReadResourceRequest/">ReadResourceRequest</a></td>
+<td>Sent from the client to the server, to read a specific resource URI</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="SetLevelRequest/">SetLevelRequest</a></td>
+<td>A request from the client to the server, to enable or adjust logging</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="SubscribeRequest/">SubscribeRequest</a></td>
+<td>Sent from the client to request resource update notifications</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="UnsubscribeRequest/">UnsubscribeRequest</a></td>
+<td>Sent from the client to cancel resource update notifications</td>
+</tr>
+<tr>
+<td><a href="JSONRPCResponse/">JSONRPCResponse</a></td>
+<td>A union of all JSON-RPC response types</td>
+</tr>
+<tr>
+<td><a href="JSONRPCResultResponse/">JSONRPCResultResponse</a></td>
+<td>A successful (non-error) response to a request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="CallToolResultResponse/">CallToolResultResponse</a></td>
+<td>A successful response from the server for a tools/call request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="CancelTaskResultResponse/">CancelTaskResultResponse</a></td>
+<td>A successful response for a tasks/cancel request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="CompleteResultResponse/">CompleteResultResponse</a></td>
+<td>A successful response from the server for a completion/complete request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="CreateMessageResultResponse/">CreateMessageResultResponse</a></td>
+<td>A successful response from the client for a sampling/createMessage request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="CreateTaskResultResponse/">CreateTaskResultResponse</a></td>
+<td>A successful response for a task-augmented request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ElicitResultResponse/">ElicitResultResponse</a></td>
+<td>A successful response from the client for an elicitation/create request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="GetPromptResultResponse/">GetPromptResultResponse</a></td>
+<td>A successful response from the server for a prompts/get request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="GetTaskPayloadResultResponse/">GetTaskPayloadResultResponse</a></td>
+<td>A successful response for a tasks/result request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="GetTaskResultResponse/">GetTaskResultResponse</a></td>
+<td>A successful response for a tasks/get request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="InitializeResultResponse/">InitializeResultResponse</a></td>
+<td>A successful response from the server for an initialize request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ListPromptsResultResponse/">ListPromptsResultResponse</a></td>
+<td>A successful response from the server for a prompts/list request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ListResourcesResultResponse/">ListResourcesResultResponse</a></td>
+<td>A successful response from the server for a resources/list request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ListResourceTemplatesResultResponse/">ListResourceTemplatesResultResponse</a></td>
+<td>A successful response from the server for a resources/templates/list request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ListRootsResultResponse/">ListRootsResultResponse</a></td>
+<td>A successful response from the client for a roots/list request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ListTasksResultResponse/">ListTasksResultResponse</a></td>
+<td>A successful response for a tasks/list request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ListToolsResultResponse/">ListToolsResultResponse</a></td>
+<td>A successful response from the server for a tools/list request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="PingResultResponse/">PingResultResponse</a></td>
+<td>A successful response for a ping request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ReadResourceResultResponse/">ReadResourceResultResponse</a></td>
+<td>A successful response from the server for a resources/read request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="SetLevelResultResponse/">SetLevelResultResponse</a></td>
+<td>A successful response from the server for a logging/setLevel request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="SubscribeResultResponse/">SubscribeResultResponse</a></td>
+<td>A successful response for a resources/subscribe request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="UnsubscribeResultResponse/">UnsubscribeResultResponse</a></td>
+<td>A successful response for a resources/unsubscribe request</td>
+</tr>
+<tr>
+<td><a href="JsonSchema/">JsonSchema</a></td>
+<td>Restricted JSON Schema object used in MCP payloads</td>
+</tr>
+<tr>
+<td><a href="LegacyTitledEnumSchema/">LegacyTitledEnumSchema</a></td>
+<td>Legacy titled enum schema</td>
+</tr>
+<tr>
+<td><a href="LogData/">LogData</a></td>
+<td>Structured log data payload</td>
+</tr>
+<tr>
+<td><a href="LogDetails/">LogDetails</a></td>
+<td>Structured details attached to log data</td>
+</tr>
+<tr>
+<td><a href="LoggingMessageNotificationParams/">LoggingMessageNotificationParams</a></td>
+<td>Parameters for a notifications/message notification</td>
+</tr>
+<tr>
+<td><a href="MetaObject/">MetaObject</a></td>
+<td>Metadata object attached to protocol objects</td>
+</tr>
+<tr>
+<td><a href="ModelHint/">ModelHint</a></td>
+<td>Hints to use for model selection</td>
+</tr>
+<tr>
+<td><a href="ModelPreferences/">ModelPreferences</a></td>
+<td>The server's preferences for model selection, requested of the client during ...</td>
+</tr>
+<tr>
+<td><a href="MultiSelectEnumSchema/">MultiSelectEnumSchema</a></td>
+<td>A union of multi-select enum schema types</td>
+</tr>
+<tr>
+<td><a href="NumberSchema/">NumberSchema</a></td>
+<td>Number schema definition</td>
+</tr>
+<tr>
+<td><a href="PaginatedRequestParams/">PaginatedRequestParams</a></td>
+<td>Common params for paginated requests</td>
+</tr>
+<tr>
+<td><a href="PrimitiveSchemaDefinition/">PrimitiveSchemaDefinition</a></td>
+<td>A union of all primitive schema definition types</td>
+</tr>
+<tr>
+<td><a href="ProgressNotificationParams/">ProgressNotificationParams</a></td>
+<td>Parameters for a notifications/progress notification</td>
+</tr>
+<tr>
+<td><a href="Prompt/">Prompt</a></td>
+<td>A prompt or prompt template that the server offers</td>
+</tr>
+<tr>
+<td><a href="PromptArgument/">PromptArgument</a></td>
+<td>Describes an argument that a prompt can accept</td>
+</tr>
+<tr>
+<td><a href="PromptMessage/">PromptMessage</a></td>
+<td>Describes a message returned as part of a prompt</td>
+</tr>
+<tr>
+<td><a href="PromptReference/">PromptReference</a></td>
+<td>Identifies a prompt</td>
+</tr>
+<tr>
+<td><a href="PromptsCapability/">PromptsCapability</a></td>
+<td>Server prompts capability</td>
+</tr>
+<tr>
+<td><a href="ReadResourceRequestParams/">ReadResourceRequestParams</a></td>
+<td>Parameters for a resources/read request</td>
+</tr>
+<tr>
+<td><a href="RelatedTaskMetadata/">RelatedTaskMetadata</a></td>
+<td>Metadata for associating messages with a task</td>
+</tr>
+<tr>
+<td><a href="Resource/">Resource</a></td>
+<td>A known resource that the server is capable of reading</td>
+</tr>
+<tr>
+<td><a href="ResourceContents/">ResourceContents</a></td>
+<td>Generic resource contents</td>
+</tr>
+<tr>
+<td><a href="ResourceLink/">ResourceLink</a></td>
+<td>A resource that the server is capable of reading, included in a prompt or too...</td>
+</tr>
+<tr>
+<td><a href="ResourcesCapability/">ResourcesCapability</a></td>
+<td>Server resources capability</td>
+</tr>
+<tr>
+<td><a href="ResourceTemplate/">ResourceTemplate</a></td>
+<td>A template description for resources available on the server</td>
+</tr>
+<tr>
+<td><a href="ResourceTemplateReference/">ResourceTemplateReference</a></td>
+<td>A reference to a resource or resource template definition</td>
+</tr>
+<tr>
+<td><a href="ResourceUpdatedNotificationParams/">ResourceUpdatedNotificationParams</a></td>
+<td>Parameters for a notifications/resources/updated notification</td>
+</tr>
+<tr>
+<td><a href="Result/">Result</a></td>
+<td>Common result fields</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="CallToolResult/">CallToolResult</a></td>
+<td>The result returned by the server for a tools/call request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="CancelTaskResult/">CancelTaskResult</a></td>
+<td>The result returned for a tasks/cancel request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="CompleteResult/">CompleteResult</a></td>
+<td>The result returned by the server for a completion/complete request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="CreateMessageResult/">CreateMessageResult</a></td>
+<td>The result returned by the client for a sampling/createMessage request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="CreateTaskResult/">CreateTaskResult</a></td>
+<td>The result returned for a task-augmented request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ElicitResult/">ElicitResult</a></td>
+<td>The result returned by the client for an elicitation/create request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="GetPromptResult/">GetPromptResult</a></td>
+<td>The result returned by the server for a prompts/get request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="GetTaskPayloadResult/">GetTaskPayloadResult</a></td>
+<td>The result returned for a tasks/result request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="GetTaskResult/">GetTaskResult</a></td>
+<td>The result returned for a tasks/get request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="InitializeResult/">InitializeResult</a></td>
+<td>The result returned by the server for an initialize request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ListPromptsResult/">ListPromptsResult</a></td>
+<td>The result returned by the server for a prompts/list request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ListResourcesResult/">ListResourcesResult</a></td>
+<td>The result returned by the server for a resources/list request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ListResourceTemplatesResult/">ListResourceTemplatesResult</a></td>
+<td>The result returned by the server for a resources/templates/list request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ListRootsResult/">ListRootsResult</a></td>
+<td>The result returned by the client for a roots/list request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ListTasksResult/">ListTasksResult</a></td>
+<td>The result returned for a tasks/list request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ListToolsResult/">ListToolsResult</a></td>
+<td>The result returned by the server for a tools/list request</td>
+</tr>
+<tr>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="ReadResourceResult/">ReadResourceResult</a></td>
+<td>The result returned by the server for a resources/read request</td>
+</tr>
+<tr>
+<td><a href="Root/">Root</a></td>
+<td>Represents a root directory or file that the server can operate on</td>
+</tr>
+<tr>
+<td><a href="RootsCapability/">RootsCapability</a></td>
+<td>Client roots capability</td>
+</tr>
+<tr>
+<td><a href="SamplingCapability/">SamplingCapability</a></td>
+<td>Client sampling capability</td>
+</tr>
+<tr>
+<td><a href="SamplingMessage/">SamplingMessage</a></td>
+<td>Describes a message issued to or received from an LLM API</td>
+</tr>
+<tr>
+<td><a href="SamplingMessageContentBlock/">SamplingMessageContentBlock</a></td>
+<td>A union of content types valid in sampling messages</td>
+</tr>
+<tr>
+<td><a href="SchemaItems/">SchemaItems</a></td>
+<td>JSON Schema items expression used by enum multi-select schemas</td>
+</tr>
+<tr>
+<td><a href="SchemaProperties/">SchemaProperties</a></td>
+<td>Named JSON Schema property map used by vendor fixtures</td>
+</tr>
+<tr>
+<td><a href="ServerCapabilities/">ServerCapabilities</a></td>
+<td>Capabilities that a server may support</td>
+</tr>
+<tr>
+<td><a href="ServerNotification/">ServerNotification</a></td>
+<td>A union of all notifications that can be sent by a server</td>
+</tr>
+<tr>
+<td><a href="ServerRequest/">ServerRequest</a></td>
+<td>A union of all requests that can be sent by a server</td>
+</tr>
+<tr>
+<td><a href="ServerResult/">ServerResult</a></td>
+<td>A union of all result types that a server can return</td>
+</tr>
+<tr>
+<td><a href="SetLevelRequestParams/">SetLevelRequestParams</a></td>
+<td>Parameters for a logging/setLevel request</td>
+</tr>
+<tr>
+<td><a href="SingleSelectEnumSchema/">SingleSelectEnumSchema</a></td>
+<td>A union of single-select enum schema types</td>
+</tr>
+<tr>
+<td><a href="StringSchema/">StringSchema</a></td>
+<td>String schema definition</td>
+</tr>
+<tr>
+<td><a href="StructuredContentData/">StructuredContentData</a></td>
+<td>Structured content object returned by tools</td>
+</tr>
+<tr>
+<td><a href="SubscribeRequestParams/">SubscribeRequestParams</a></td>
+<td>Parameters for a resources/subscribe request</td>
+</tr>
+<tr>
+<td><a href="Task/">Task</a></td>
+<td>Data associated with a task</td>
+</tr>
+<tr>
+<td><a href="TaskMetadata/">TaskMetadata</a></td>
+<td>Metadata for augmenting a request with task execution</td>
+</tr>
+<tr>
+<td><a href="TaskRequestCapabilities/">TaskRequestCapabilities</a></td>
+<td>Task request capability map</td>
+</tr>
+<tr>
+<td><a href="TasksCapability/">TasksCapability</a></td>
+<td>Task capability object</td>
+</tr>
+<tr>
+<td><a href="TaskStatusNotificationParams/">TaskStatusNotificationParams</a></td>
+<td>Parameters for a notifications/tasks/status notification</td>
+</tr>
+<tr>
+<td><a href="TextContent/">TextContent</a></td>
+<td>Text provided to or from an LLM</td>
+</tr>
+<tr>
+<td><a href="TextResourceContents/">TextResourceContents</a></td>
+<td>Text resource contents</td>
+</tr>
+<tr>
+<td><a href="TitledMultiSelectEnumSchema/">TitledMultiSelectEnumSchema</a></td>
+<td>Multi-selection enum with display titles for each option</td>
+</tr>
+<tr>
+<td><a href="TitledSingleSelectEnumSchema/">TitledSingleSelectEnumSchema</a></td>
+<td>Single-selection enum with display titles for each option</td>
+</tr>
+<tr>
+<td><a href="Tool/">Tool</a></td>
+<td>Definition for a tool the client can call</td>
+</tr>
+<tr>
+<td><a href="ToolAnnotations/">ToolAnnotations</a></td>
+<td>Additional properties describing a Tool to clients</td>
+</tr>
+<tr>
+<td><a href="ToolChoice/">ToolChoice</a></td>
+<td>Controls tool selection behavior for sampling requests</td>
+</tr>
+<tr>
+<td><a href="ToolExecution/">ToolExecution</a></td>
+<td>Execution-related properties for a tool</td>
+</tr>
+<tr>
+<td><a href="ToolInput/">ToolInput</a></td>
+<td>Tool input payload</td>
+</tr>
+<tr>
+<td><a href="ToolResultContent/">ToolResultContent</a></td>
+<td>The result of a tool use, provided by the user back to the assistant</td>
+</tr>
+<tr>
+<td><a href="ToolsCapability/">ToolsCapability</a></td>
+<td>Server tools capability</td>
+</tr>
+<tr>
+<td><a href="ToolUseContent/">ToolUseContent</a></td>
+<td>A request from the assistant to call a tool</td>
+</tr>
+<tr>
+<td><a href="UnsubscribeRequestParams/">UnsubscribeRequestParams</a></td>
+<td>Parameters for a resources/unsubscribe request</td>
+</tr>
+<tr>
+<td><a href="UntitledMultiSelectEnumSchema/">UntitledMultiSelectEnumSchema</a></td>
+<td>Multi-selection enum without display titles</td>
+</tr>
+<tr>
+<td><a href="UntitledSingleSelectEnumSchema/">UntitledSingleSelectEnumSchema</a></td>
+<td>Single-selection enum without display titles</td>
+</tr>
+<tr>
+<td><a href="URLElicitation/">URLElicitation</a></td>
+<td>URL-based elicitation request payload carried in error data</td>
+</tr>
+</tbody>
+</table>
+<h2 id="slots">Slots</h2>
+<table>
+<thead>
+<tr>
+<th>Slot</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="_meta/">_meta</a></td>
+<td>Optional metadata object</td>
+</tr>
+<tr>
+<td><a href="a/">a</a></td>
+<td>JSON Schema property for key a</td>
+</tr>
+<tr>
+<td><a href="action/">action</a></td>
+<td>The user action in response to the elicitation</td>
+</tr>
+<tr>
+<td><a href="additionalProperties/">additionalProperties</a></td>
+<td>JSON Schema additionalProperties flag</td>
+</tr>
+<tr>
+<td><a href="age/">age</a></td>
+<td>Age value</td>
+</tr>
+<tr>
+<td><a href="annotations/">annotations</a></td>
+<td>Optional annotations for the client</td>
+</tr>
+<tr>
+<td><a href="anyOf/">anyOf</a></td>
+<td>JSON Schema anyOf entries</td>
+</tr>
+<tr>
+<td><a href="apps_extension/">apps_extension</a></td>
+<td>Extension capability entry for app mime types</td>
+</tr>
+<tr>
+<td><a href="argument/">argument</a></td>
+<td>The argument's information</td>
+</tr>
+<tr>
+<td><a href="arguments/">arguments</a></td>
+<td>Arguments for templating</td>
+</tr>
+<tr>
+<td><a href="audience/">audience</a></td>
+<td>Describes who the intended audience of this object or data is</td>
+</tr>
+<tr>
+<td><a href="b/">b</a></td>
+<td>JSON Schema property for key b</td>
+</tr>
+<tr>
+<td><a href="blob/">blob</a></td>
+<td>A base64-encoded string representing binary data</td>
+</tr>
+<tr>
+<td><a href="capabilities/">capabilities</a></td>
+<td>Capabilities object</td>
+</tr>
+<tr>
+<td><a href="city/">city</a></td>
+<td>City value</td>
+</tr>
+<tr>
+<td><a href="clientInfo/">clientInfo</a></td>
+<td>Information about the client implementation</td>
+</tr>
+<tr>
+<td><a href="code/">code</a></td>
+<td>The error type that occurred</td>
+</tr>
+<tr>
+<td><a href="completion/">completion</a></td>
+<td>The completion result object</td>
+</tr>
+<tr>
+<td><a href="conditions/">conditions</a></td>
+<td>Weather conditions description</td>
+</tr>
+<tr>
+<td><a href="const/">const</a></td>
+<td>JSON Schema const value</td>
+</tr>
+<tr>
+<td><a href="content/">content</a></td>
+<td>Structured content block of a message or result</td>
+</tr>
+<tr>
+<td><a href="contents/">contents</a></td>
+<td>The resource contents</td>
+</tr>
+<tr>
+<td><a href="context/">context</a></td>
+<td>Optional completion context</td>
+</tr>
+<tr>
+<td><a href="costPriority/">costPriority</a></td>
+<td>How much to prioritize cost when selecting a model (0-1)</td>
+</tr>
+<tr>
+<td><a href="createdAt/">createdAt</a></td>
+<td>ISO 8601 timestamp when the task was created</td>
+</tr>
+<tr>
+<td><a href="cursor/">cursor</a></td>
+<td>An opaque token representing the current pagination position</td>
+</tr>
+<tr>
+<td><a href="data/">data</a></td>
+<td>Base64-encoded binary data</td>
+</tr>
+<tr>
+<td><a href="default/">default</a></td>
+<td>Default value for a schema field</td>
+</tr>
+<tr>
+<td><a href="default_value/">default_value</a></td>
+<td>Default value for a schema field</td>
+</tr>
+<tr>
+<td><a href="description/">description</a></td>
+<td>A human-readable description</td>
+</tr>
+<tr>
+<td><a href="destructiveHint/">destructiveHint</a></td>
+<td>If true, the tool may perform destructive updates</td>
+</tr>
+<tr>
+<td><a href="details/">details</a></td>
+<td>Nested log details object</td>
+</tr>
+<tr>
+<td><a href="elicitation/">elicitation</a></td>
+<td>Elicitation capability object</td>
+</tr>
+<tr>
+<td><a href="elicitationId/">elicitationId</a></td>
+<td>The ID of the elicitation</td>
+</tr>
+<tr>
+<td><a href="elicitations/">elicitations</a></td>
+<td>URL elicitation entries included in error data</td>
+</tr>
+<tr>
+<td><a href="email/">email</a></td>
+<td>Email value</td>
+</tr>
+<tr>
+<td><a href="enum/">enum</a></td>
+<td>Array of enum values</td>
+</tr>
+<tr>
+<td><a href="enum_values/">enum_values</a></td>
+<td>Array of enum values</td>
+</tr>
+<tr>
+<td><a href="enumNames/">enumNames</a></td>
+<td>Display names for enum values (legacy)</td>
+</tr>
+<tr>
+<td><a href="error/">error</a></td>
+<td>The error object</td>
+</tr>
+<tr>
+<td><a href="execution/">execution</a></td>
+<td>Execution-related properties for a tool</td>
+</tr>
+<tr>
+<td><a href="experimental/">experimental</a></td>
+<td>Experimental capability extensions</td>
+</tr>
+<tr>
+<td><a href="extensions/">extensions</a></td>
+<td>Implementation-specific extension capabilities</td>
+</tr>
+<tr>
+<td><a href="format/">format</a></td>
+<td>String format constraint</td>
+</tr>
+<tr>
+<td><a href="framework/">framework</a></td>
+<td>Framework value</td>
+</tr>
+<tr>
+<td><a href="hasMore/">hasMore</a></td>
+<td>Indicates whether there are additional completion options</td>
+</tr>
+<tr>
+<td><a href="hints/">hints</a></td>
+<td>Optional hints to use for model selection</td>
+</tr>
+<tr>
+<td><a href="host/">host</a></td>
+<td>Host value</td>
+</tr>
+<tr>
+<td><a href="humidity/">humidity</a></td>
+<td>Humidity percentage value</td>
+</tr>
+<tr>
+<td><a href="icons/">icons</a></td>
+<td>Optional set of sized icons that the client can display in a user interface</td>
+</tr>
+<tr>
+<td><a href="id/">id</a></td>
+<td>Uniquely identifying ID for a JSON-RPC request</td>
+</tr>
+<tr>
+<td><a href="idempotentHint/">idempotentHint</a></td>
+<td>If true, calling repeatedly with same arguments has no additional effect</td>
+</tr>
+<tr>
+<td><a href="includeContext/">includeContext</a></td>
+<td>A request to include context from one or more MCP servers</td>
+</tr>
+<tr>
+<td><a href="input/">input</a></td>
+<td>The arguments to pass to the tool</td>
+</tr>
+<tr>
+<td><a href="inputSchema/">inputSchema</a></td>
+<td>A JSON Schema object defining the expected parameters for the tool</td>
+</tr>
+<tr>
+<td><a href="instructions/">instructions</a></td>
+<td>Instructions describing how to use the server and its features</td>
+</tr>
+<tr>
+<td><a href="intelligencePriority/">intelligencePriority</a></td>
+<td>How much to prioritize intelligence when selecting a model (0-1)</td>
+</tr>
+<tr>
+<td><a href="isError/">isError</a></td>
+<td>Whether the tool call ended in an error</td>
+</tr>
+<tr>
+<td><a href="items/">items</a></td>
+<td>JSON Schema items definition</td>
+</tr>
+<tr>
+<td><a href="jsonrpc/">jsonrpc</a></td>
+<td>JSON-RPC version string</td>
+</tr>
+<tr>
+<td><a href="language/">language</a></td>
+<td>Programming language value</td>
+</tr>
+<tr>
+<td><a href="lastModified/">lastModified</a></td>
+<td>The moment the resource was last modified, as an ISO 8601 formatted string</td>
+</tr>
+<tr>
+<td><a href="lastUpdatedAt/">lastUpdatedAt</a></td>
+<td>ISO 8601 timestamp when the task was last updated</td>
+</tr>
+<tr>
+<td><a href="level/">level</a></td>
+<td>The severity of a log message</td>
+</tr>
+<tr>
+<td><a href="listChanged/">listChanged</a></td>
+<td>Whether notifications for list changes are supported</td>
+</tr>
+<tr>
+<td><a href="location/">location</a></td>
+<td>Location value</td>
+</tr>
+<tr>
+<td><a href="logger/">logger</a></td>
+<td>An optional name of the logger issuing this message</td>
+</tr>
+<tr>
+<td><a href="maximum/">maximum</a></td>
+<td>Maximum value constraint</td>
+</tr>
+<tr>
+<td><a href="maxItems/">maxItems</a></td>
+<td>Maximum number of items</td>
+</tr>
+<tr>
+<td><a href="maxLength/">maxLength</a></td>
+<td>Maximum length constraint</td>
+</tr>
+<tr>
+<td><a href="maxTokens/">maxTokens</a></td>
+<td>The requested maximum number of tokens to sample</td>
+</tr>
+<tr>
+<td><a href="message/">message</a></td>
+<td>A message string</td>
+</tr>
+<tr>
+<td><a href="messages/">messages</a></td>
+<td>Messages for sampling</td>
+</tr>
+<tr>
+<td><a href="method/">method</a></td>
+<td>The JSON-RPC method name</td>
+</tr>
+<tr>
+<td><a href="mimeType/">mimeType</a></td>
+<td>The MIME type of a resource, if known</td>
+</tr>
+<tr>
+<td><a href="mimeTypes/">mimeTypes</a></td>
+<td>MIME types supported by an extension capability</td>
+</tr>
+<tr>
+<td><a href="minimum/">minimum</a></td>
+<td>Minimum value constraint</td>
+</tr>
+<tr>
+<td><a href="minItems/">minItems</a></td>
+<td>Minimum number of items</td>
+</tr>
+<tr>
+<td><a href="minLength/">minLength</a></td>
+<td>Minimum length constraint</td>
+</tr>
+<tr>
+<td><a href="mode/">mode</a></td>
+<td>The elicitation mode</td>
+</tr>
+<tr>
+<td><a href="model/">model</a></td>
+<td>The name of the model that generated the message</td>
+</tr>
+<tr>
+<td><a href="modelPreferences/">modelPreferences</a></td>
+<td>Model preferences for sampling</td>
+</tr>
+<tr>
+<td><a href="name/">name</a></td>
+<td>Intended for programmatic or logical use, but used as a display name in past ...</td>
+</tr>
+<tr>
+<td><a href="nextCursor/">nextCursor</a></td>
+<td>An opaque token representing the pagination position after the last returned ...</td>
+</tr>
+<tr>
+<td><a href="oneOf/">oneOf</a></td>
+<td>JSON Schema oneOf entries</td>
+</tr>
+<tr>
+<td><a href="openWorldHint/">openWorldHint</a></td>
+<td>If true, tool may interact with an open world of external entities</td>
+</tr>
+<tr>
+<td><a href="outputSchema/">outputSchema</a></td>
+<td>An optional JSON Schema object defining the structure of the tool's output</td>
+</tr>
+<tr>
+<td><a href="params/">params</a></td>
+<td>JSON-RPC parameters payload</td>
+</tr>
+<tr>
+<td><a href="pollInterval/">pollInterval</a></td>
+<td>Suggested polling interval in milliseconds</td>
+</tr>
+<tr>
+<td><a href="port/">port</a></td>
+<td>Port value</td>
+</tr>
+<tr>
+<td><a href="priority/">priority</a></td>
+<td>How important this data is for operating the server</td>
+</tr>
+<tr>
+<td><a href="progress/">progress</a></td>
+<td>The progress thus far</td>
+</tr>
+<tr>
+<td><a href="progressToken/">progressToken</a></td>
+<td>The progress token which was given in the initial request, used to associate ...</td>
+</tr>
+<tr>
+<td><a href="prompts/">prompts</a></td>
+<td>The list of prompts</td>
+</tr>
+<tr>
+<td><a href="properties/">properties</a></td>
+<td>JSON Schema properties map</td>
+</tr>
+<tr>
+<td><a href="protocolVersion/">protocolVersion</a></td>
+<td>The version of the Model Context Protocol</td>
+</tr>
+<tr>
+<td><a href="readOnlyHint/">readOnlyHint</a></td>
+<td>If true, the tool does not modify its environment</td>
+</tr>
+<tr>
+<td><a href="reason/">reason</a></td>
+<td>An optional string describing the reason</td>
+</tr>
+<tr>
+<td><a href="ref/">ref</a></td>
+<td>A prompt or resource template reference</td>
+</tr>
+<tr>
+<td><a href="requestedSchema/">requestedSchema</a></td>
+<td>A restricted subset of JSON Schema</td>
+</tr>
+<tr>
+<td><a href="requestId/">requestId</a></td>
+<td>The ID of a request</td>
+</tr>
+<tr>
+<td><a href="requests/">requests</a></td>
+<td>Task request capabilities</td>
+</tr>
+<tr>
+<td><a href="required/">required</a></td>
+<td>Whether this argument must be provided</td>
+</tr>
+<tr>
+<td><a href="required_field/">required_field</a></td>
+<td>Whether this argument must be provided</td>
+</tr>
+<tr>
+<td><a href="required_list/">required_list</a></td>
+<td>JSON Schema required property list</td>
+</tr>
+<tr>
+<td><a href="resource/">resource</a></td>
+<td>The embedded resource contents (text or blob)</td>
+</tr>
+<tr>
+<td><a href="resources/">resources</a></td>
+<td>The list of resources</td>
+</tr>
+<tr>
+<td><a href="resourceTemplates/">resourceTemplates</a></td>
+<td>The list of resource templates</td>
+</tr>
+<tr>
+<td><a href="result/">result</a></td>
+<td>JSON-RPC successful result payload</td>
+</tr>
+<tr>
+<td><a href="role/">role</a></td>
+<td>The role of the sender or recipient</td>
+</tr>
+<tr>
+<td><a href="roots/">roots</a></td>
+<td>The list of roots</td>
+</tr>
+<tr>
+<td><a href="sampling/">sampling</a></td>
+<td>Sampling capability object</td>
+</tr>
+<tr>
+<td><a href="schemaUri/">schemaUri</a></td>
+<td>Optional JSON Schema dialect identifier</td>
+</tr>
+<tr>
+<td><a href="serverInfo/">serverInfo</a></td>
+<td>Information about the server implementation</td>
+</tr>
+<tr>
+<td><a href="size/">size</a></td>
+<td>The size of the raw resource content, in bytes</td>
+</tr>
+<tr>
+<td><a href="sizes/">sizes</a></td>
+<td>Optional array of strings specifying sizes (WxH format or "any")</td>
+</tr>
+<tr>
+<td><a href="speedPriority/">speedPriority</a></td>
+<td>How much to prioritize sampling speed when selecting a model (0-1)</td>
+</tr>
+<tr>
+<td><a href="src/">src</a></td>
+<td>A standard URI pointing to an icon resource</td>
+</tr>
+<tr>
+<td><a href="status/">status</a></td>
+<td>Current task state</td>
+</tr>
+<tr>
+<td><a href="statusMessage/">statusMessage</a></td>
+<td>Optional human-readable message describing the current task state</td>
+</tr>
+<tr>
+<td><a href="stopReason/">stopReason</a></td>
+<td>The reason why sampling stopped, if known</td>
+</tr>
+<tr>
+<td><a href="stopSequences/">stopSequences</a></td>
+<td>Stop sequences for sampling</td>
+</tr>
+<tr>
+<td><a href="structuredContent/">structuredContent</a></td>
+<td>An optional JSON object representing structured result of the tool call</td>
+</tr>
+<tr>
+<td><a href="subscribe/">subscribe</a></td>
+<td>Whether subscribing to resource updates is supported</td>
+</tr>
+<tr>
+<td><a href="systemPrompt/">systemPrompt</a></td>
+<td>An optional system prompt the server wants to use for sampling</td>
+</tr>
+<tr>
+<td><a href="task/">task</a></td>
+<td>Task data</td>
+</tr>
+<tr>
+<td><a href="taskId/">taskId</a></td>
+<td>The task identifier</td>
+</tr>
+<tr>
+<td><a href="tasks/">tasks</a></td>
+<td>The list of tasks</td>
+</tr>
+<tr>
+<td><a href="taskSupport/">taskSupport</a></td>
+<td>Whether this tool supports task-augmented execution</td>
+</tr>
+<tr>
+<td><a href="temperature/">temperature</a></td>
+<td>Sampling temperature</td>
+</tr>
+<tr>
+<td><a href="text/">text</a></td>
+<td>Text content</td>
+</tr>
+<tr>
+<td><a href="theme/">theme</a></td>
+<td>Optional theme specifier for the icon</td>
+</tr>
+<tr>
+<td><a href="title/">title</a></td>
+<td>Intended for UI and end-user contexts — optimized to be human-readable and ea...</td>
+</tr>
+<tr>
+<td><a href="toolChoice/">toolChoice</a></td>
+<td>Controls how the model uses tools</td>
+</tr>
+<tr>
+<td><a href="tools/">tools</a></td>
+<td>The list of tools</td>
+</tr>
+<tr>
+<td><a href="toolUseId/">toolUseId</a></td>
+<td>The ID of the tool use this result corresponds to</td>
+</tr>
+<tr>
+<td><a href="total/">total</a></td>
+<td>Total number of items to process (or total progress required), if known</td>
+</tr>
+<tr>
+<td><a href="ttl/">ttl</a></td>
+<td>Actual retention duration from creation in milliseconds, null for unlimited</td>
+</tr>
+<tr>
+<td><a href="type/">type</a></td>
+<td>Type discriminator field</td>
+</tr>
+<tr>
+<td><a href="uri/">uri</a></td>
+<td>A resource URI</td>
+</tr>
+<tr>
+<td><a href="uriTemplate/">uriTemplate</a></td>
+<td>A URI template (RFC 6570) for constructing resource URIs</td>
+</tr>
+<tr>
+<td><a href="url/">url</a></td>
+<td>The URL that the user should navigate to</td>
+</tr>
+<tr>
+<td><a href="value/">value</a></td>
+<td>A value string</td>
+</tr>
+<tr>
+<td><a href="values/">values</a></td>
+<td>An array of completion values</td>
+</tr>
+<tr>
+<td><a href="version/">version</a></td>
+<td>The version of this implementation</td>
+</tr>
+<tr>
+<td><a href="websiteUrl/">websiteUrl</a></td>
+<td>An optional URL of the website for this implementation</td>
+</tr>
+</tbody>
+</table>
+<h2 id="enumerations">Enumerations</h2>
+<table>
+<thead>
+<tr>
+<th>Enumeration</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="ElicitActionEnum/">ElicitActionEnum</a></td>
+<td>User action in response to an elicitation</td>
+</tr>
+<tr>
+<td><a href="IconThemeEnum/">IconThemeEnum</a></td>
+<td>Theme specifier for an icon</td>
+</tr>
+<tr>
+<td><a href="IncludeContextEnum/">IncludeContextEnum</a></td>
+<td>Context inclusion mode for sampling requests</td>
+</tr>
+<tr>
+<td><a href="LoggingLevel/">LoggingLevel</a></td>
+<td>The severity of a log message</td>
+</tr>
+<tr>
+<td><a href="NumberTypeEnum/">NumberTypeEnum</a></td>
+<td>Number type discriminator</td>
+</tr>
+<tr>
+<td><a href="Role/">Role</a></td>
+<td>The sender or recipient of messages and data in a conversation</td>
+</tr>
+<tr>
+<td><a href="StringFormatEnum/">StringFormatEnum</a></td>
+<td>String format constraints</td>
+</tr>
+<tr>
+<td><a href="TaskStatusEnum/">TaskStatusEnum</a></td>
+<td>The status of a task</td>
+</tr>
+<tr>
+<td><a href="TaskSupportEnum/">TaskSupportEnum</a></td>
+<td>Indicates whether a tool supports task-augmented execution</td>
+</tr>
+<tr>
+<td><a href="ToolChoiceModeEnum/">ToolChoiceModeEnum</a></td>
+<td>Controls tool selection behavior for sampling requests</td>
+</tr>
+</tbody>
+</table>
+<h2 id="types">Types</h2>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="Boolean/">Boolean</a></td>
+<td>A binary (true or false) value</td>
+</tr>
+<tr>
+<td><a href="Curie/">Curie</a></td>
+<td>a compact URI</td>
+</tr>
+<tr>
+<td><a href="Cursor/">Cursor</a></td>
+<td>An opaque token used to represent a cursor for pagination</td>
+</tr>
+<tr>
+<td><a href="Date/">Date</a></td>
+<td>a date (year, month and day) in an idealized calendar</td>
+</tr>
+<tr>
+<td><a href="DateOrDatetime/">DateOrDatetime</a></td>
+<td>Either a date or a datetime</td>
+</tr>
+<tr>
+<td><a href="Datetime/">Datetime</a></td>
+<td>The combination of a date and time</td>
+</tr>
+<tr>
+<td><a href="Decimal/">Decimal</a></td>
+<td>A real number with arbitrary precision that conforms to the xsd:decimal speci...</td>
+</tr>
+<tr>
+<td><a href="Double/">Double</a></td>
+<td>A real number that conforms to the xsd:double specification</td>
+</tr>
+<tr>
+<td><a href="Float/">Float</a></td>
+<td>A real number that conforms to the xsd:float specification</td>
+</tr>
+<tr>
+<td><a href="Integer/">Integer</a></td>
+<td>An integer</td>
+</tr>
+<tr>
+<td><a href="Jsonpath/">Jsonpath</a></td>
+<td>A string encoding a JSON Path</td>
+</tr>
+<tr>
+<td><a href="Jsonpointer/">Jsonpointer</a></td>
+<td>A string encoding a JSON Pointer</td>
+</tr>
+<tr>
+<td><a href="JsonValue/">JsonValue</a></td>
+<td>Any JSON-serializable value</td>
+</tr>
+<tr>
+<td><a href="Ncname/">Ncname</a></td>
+<td>Prefix part of CURIE</td>
+</tr>
+<tr>
+<td><a href="Nodeidentifier/">Nodeidentifier</a></td>
+<td>A URI, CURIE or BNODE that represents a node in a model</td>
+</tr>
+<tr>
+<td><a href="Objectidentifier/">Objectidentifier</a></td>
+<td>A URI or CURIE that represents an object in the model</td>
+</tr>
+<tr>
+<td><a href="ProgressToken/">ProgressToken</a></td>
+<td>A progress token, used to associate progress notifications with the original ...</td>
+</tr>
+<tr>
+<td><a href="RequestId/">RequestId</a></td>
+<td>A uniquely identifying ID for a request in JSON-RPC</td>
+</tr>
+<tr>
+<td><a href="Sparqlpath/">Sparqlpath</a></td>
+<td>A string encoding a SPARQL Property Path</td>
+</tr>
+<tr>
+<td><a href="String/">String</a></td>
+<td>A character string</td>
+</tr>
+<tr>
+<td><a href="Time/">Time</a></td>
+<td>A time object represents a (local) time of day, independent of any particular...</td>
+</tr>
+<tr>
+<td><a href="Uri/">Uri</a></td>
+<td>a complete URI</td>
+</tr>
+<tr>
+<td><a href="Uriorcurie/">Uriorcurie</a></td>
+<td>a URI or a CURIE</td>
+</tr>
+</tbody>
+</table>
+<h2 id="subsets">Subsets</h2>
+<table>
+<thead>
+<tr>
+<th>Subset</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+  
+
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        
+
+<footer class="md-footer">
+  
+    <nav
+      class="md-footer__inner md-grid"
+      aria-label="footer.title"
+    >
+      
+        <a
+          href=".."
+          class="md-footer__link md-footer__link--prev"
+          rel="prev"
+        >
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Home
+            </div>
+          </div>
+        </a>
+      
+      
+        <a
+          href="../about/"
+          class="md-footer__link md-footer__link--next"
+          rel="next"
+        >
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              About
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        with emoji by
+        <a href="https://github.com/twitter/twemoji" target="_blank" rel="noopener">
+          Twemoji
+        </a>
+      </div>
+      
+<div class="md-social">
+  
+</div>
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.tabs.link", "header.autohide", "navigation.expand", "navigation.instant", "navigation.instant.progress", "navigation.tracking", "search.suggest", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../assets/pymdownx-extras/extra-loader-B5CKpNQx.js"></script>
+      
+    
+  </body>
+</html>

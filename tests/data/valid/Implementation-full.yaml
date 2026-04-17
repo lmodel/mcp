@@ -1,0 +1,5 @@
+name: "test-server"
+version: "1.0.0"
+title: "Test Server"
+description: "A test MCP server implementation"
+websiteUrl: "https://example.com"

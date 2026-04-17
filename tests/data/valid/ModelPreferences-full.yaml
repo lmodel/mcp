@@ -1,0 +1,6 @@
+costPriority: 0.3
+intelligencePriority: 0.8
+speedPriority: 0.5
+hints:
+  - name: "claude-3-5-sonnet"
+  - name: "gpt-4"

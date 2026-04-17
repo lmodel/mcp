@@ -1,0 +1,2 @@
+# Missing required 'taskId', 'status', 'createdAt', 'lastUpdatedAt', 'ttl'
+statusMessage: "In progress"

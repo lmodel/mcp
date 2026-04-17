@@ -1,0 +1,7 @@
+taskId: "task-002"
+status: "completed"
+createdAt: "2025-06-15T10:00:00Z"
+lastUpdatedAt: "2025-06-15T10:30:00Z"
+ttl: 7200000
+statusMessage: "All items processed successfully"
+pollInterval: 5000

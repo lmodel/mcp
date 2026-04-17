@@ -1,0 +1,4 @@
+# Missing required 'src' field
+mimeType: "image/png"
+sizes:
+  - "48x48"

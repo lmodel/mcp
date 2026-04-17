@@ -1,0 +1,3 @@
+level: "info"
+data: "Server started successfully"
+logger: "main"

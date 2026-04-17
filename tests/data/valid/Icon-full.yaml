@@ -1,0 +1,6 @@
+src: "https://example.com/icon.png"
+mimeType: "image/png"
+sizes:
+  - "48x48"
+  - "96x96"
+theme: "dark"

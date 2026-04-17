@@ -502,18 +502,8 @@ Alias: code</p>
 </thead>
 <tbody>
 <tr>
-<td><a href="../Error/">Error</a></td>
-<td>A JSON-RPC error object</td>
-<td>yes</td>
-</tr>
-<tr>
 <td><a href="../InternalError/">InternalError</a></td>
 <td>A JSON-RPC error indicating that an internal error occurred on the receiver (...</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../InvalidParamsError/">InvalidParamsError</a></td>
-<td>A JSON-RPC error indicating that the method parameters are invalid or malform...</td>
 <td>no</td>
 </tr>
 <tr>
@@ -522,13 +512,23 @@ Alias: code</p>
 <td>no</td>
 </tr>
 <tr>
+<td><a href="../Error/">Error</a></td>
+<td>A JSON-RPC error object</td>
+<td>yes</td>
+</tr>
+<tr>
+<td><a href="../InvalidRequestError/">InvalidRequestError</a></td>
+<td>A JSON-RPC error indicating that the request is not a valid request object (-...</td>
+<td>no</td>
+</tr>
+<tr>
 <td><a href="../ParseError/">ParseError</a></td>
 <td>A JSON-RPC error indicating that invalid JSON was received by the server (-32...</td>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../InvalidRequestError/">InvalidRequestError</a></td>
-<td>A JSON-RPC error indicating that the request is not a valid request object (-...</td>
+<td><a href="../InvalidParamsError/">InvalidParamsError</a></td>
+<td>A JSON-RPC error indicating that the method parameters are invalid or malform...</td>
 <td>no</td>
 </tr>
 </tbody>

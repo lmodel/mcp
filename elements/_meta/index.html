@@ -502,43 +502,53 @@ Alias: _meta</p>
 </thead>
 <tbody>
 <tr>
+<td><a href="../ToolResultContent/">ToolResultContent</a></td>
+<td>The result of a tool use, provided by the user back to the assistant</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../SamplingMessage/">SamplingMessage</a></td>
+<td>Describes a message issued to or received from an LLM API</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../GetTaskResult/">GetTaskResult</a></td>
+<td>The result returned for a tasks/get request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ResourceUpdatedNotificationParams/">ResourceUpdatedNotificationParams</a></td>
+<td>Parameters for a notifications/resources/updated notification</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../HasMeta/">HasMeta</a></td>
+<td>Mixin for types that carry a _meta field</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../TextResourceContents/">TextResourceContents</a></td>
+<td>Text resource contents</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ListToolsResult/">ListToolsResult</a></td>
+<td>The result returned by the server for a tools/list request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../EmbeddedResource/">EmbeddedResource</a></td>
+<td>The contents of a resource, embedded into a prompt or tool call result</td>
+<td>no</td>
+</tr>
+<tr>
 <td><a href="../ResourceTemplate/">ResourceTemplate</a></td>
 <td>A template description for resources available on the server</td>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../ReadResourceResult/">ReadResourceResult</a></td>
-<td>The result returned by the server for a resources/read request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../GetPromptResult/">GetPromptResult</a></td>
-<td>The result returned by the server for a prompts/get request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ListRootsResult/">ListRootsResult</a></td>
-<td>The result returned by the client for a roots/list request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../BlobResourceContents/">BlobResourceContents</a></td>
-<td>Blob resource contents</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ToolUseContent/">ToolUseContent</a></td>
-<td>A request from the assistant to call a tool</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../CompleteResult/">CompleteResult</a></td>
-<td>The result returned by the server for a completion/complete request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ElicitResult/">ElicitResult</a></td>
-<td>The result returned by the client for an elicitation/create request</td>
+<td><a href="../ProgressNotificationParams/">ProgressNotificationParams</a></td>
+<td>Parameters for a notifications/progress notification</td>
 <td>no</td>
 </tr>
 <tr>
@@ -547,18 +557,13 @@ Alias: _meta</p>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../CreateMessageResult/">CreateMessageResult</a></td>
-<td>The result returned by the client for a sampling/createMessage request</td>
+<td><a href="../CancelTaskResult/">CancelTaskResult</a></td>
+<td>The result returned for a tasks/cancel request</td>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../ToolResultContent/">ToolResultContent</a></td>
-<td>The result of a tool use, provided by the user back to the assistant</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../SamplingMessage/">SamplingMessage</a></td>
-<td>Describes a message issued to or received from an LLM API</td>
+<td><a href="../CancelledNotificationParams/">CancelledNotificationParams</a></td>
+<td>Parameters for a notifications/cancelled notification</td>
 <td>no</td>
 </tr>
 <tr>
@@ -572,6 +577,116 @@ Alias: _meta</p>
 <td>no</td>
 </tr>
 <tr>
+<td><a href="../CompleteResult/">CompleteResult</a></td>
+<td>The result returned by the server for a completion/complete request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../AudioContent/">AudioContent</a></td>
+<td>Audio provided to or from an LLM</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../Prompt/">Prompt</a></td>
+<td>A prompt or prompt template that the server offers</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../Result/">Result</a></td>
+<td>Common result fields</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../CreateMessageResult/">CreateMessageResult</a></td>
+<td>The result returned by the client for a sampling/createMessage request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../LoggingMessageNotificationParams/">LoggingMessageNotificationParams</a></td>
+<td>Parameters for a notifications/message notification</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ListPromptsResult/">ListPromptsResult</a></td>
+<td>The result returned by the server for a prompts/list request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../GetTaskPayloadResult/">GetTaskPayloadResult</a></td>
+<td>The result returned for a tasks/result request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../TextContent/">TextContent</a></td>
+<td>Text provided to or from an LLM</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ToolUseContent/">ToolUseContent</a></td>
+<td>A request from the assistant to call a tool</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ReadResourceResult/">ReadResourceResult</a></td>
+<td>The result returned by the server for a resources/read request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ListRootsResult/">ListRootsResult</a></td>
+<td>The result returned by the client for a roots/list request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../CallToolRequestParams/">CallToolRequestParams</a></td>
+<td>Parameters for a tools/call request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ListResourcesResult/">ListResourcesResult</a></td>
+<td>The result returned by the server for a resources/list request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../TaskStatusNotificationParams/">TaskStatusNotificationParams</a></td>
+<td>Parameters for a notifications/tasks/status notification</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ResourceContents/">ResourceContents</a></td>
+<td>Generic resource contents</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ResourceLink/">ResourceLink</a></td>
+<td>A resource that the server is capable of reading, included in a prompt or too...</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../GetPromptResult/">GetPromptResult</a></td>
+<td>The result returned by the server for a prompts/get request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ImageContent/">ImageContent</a></td>
+<td>An image provided to or from an LLM</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ElicitResult/">ElicitResult</a></td>
+<td>The result returned by the client for an elicitation/create request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../ListTasksResult/">ListTasksResult</a></td>
+<td>The result returned for a tasks/list request</td>
+<td>no</td>
+</tr>
+<tr>
+<td><a href="../BlobResourceContents/">BlobResourceContents</a></td>
+<td>Blob resource contents</td>
+<td>no</td>
+</tr>
+<tr>
 <td><a href="../CreateTaskResult/">CreateTaskResult</a></td>
 <td>The result returned for a task-augmented request</td>
 <td>no</td>
@@ -582,128 +697,13 @@ Alias: _meta</p>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../CallToolRequestParams/">CallToolRequestParams</a></td>
-<td>Parameters for a tools/call request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../CancelTaskResult/">CancelTaskResult</a></td>
-<td>The result returned for a tasks/cancel request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../AudioContent/">AudioContent</a></td>
-<td>Audio provided to or from an LLM</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ResourceContents/">ResourceContents</a></td>
-<td>Generic resource contents</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ProgressNotificationParams/">ProgressNotificationParams</a></td>
-<td>Parameters for a notifications/progress notification</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../GetTaskResult/">GetTaskResult</a></td>
-<td>The result returned for a tasks/get request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../TextResourceContents/">TextResourceContents</a></td>
-<td>Text resource contents</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ListTasksResult/">ListTasksResult</a></td>
-<td>The result returned for a tasks/list request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../Prompt/">Prompt</a></td>
-<td>A prompt or prompt template that the server offers</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../TaskStatusNotificationParams/">TaskStatusNotificationParams</a></td>
-<td>Parameters for a notifications/tasks/status notification</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../TextContent/">TextContent</a></td>
-<td>Text provided to or from an LLM</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ListPromptsResult/">ListPromptsResult</a></td>
-<td>The result returned by the server for a prompts/list request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../HasMeta/">HasMeta</a></td>
-<td>Mixin for types that carry a _meta field</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../EmbeddedResource/">EmbeddedResource</a></td>
-<td>The contents of a resource, embedded into a prompt or tool call result</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../Resource/">Resource</a></td>
-<td>A known resource that the server is capable of reading</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ResourceLink/">ResourceLink</a></td>
-<td>A resource that the server is capable of reading, included in a prompt or too...</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../LoggingMessageNotificationParams/">LoggingMessageNotificationParams</a></td>
-<td>Parameters for a notifications/message notification</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ListResourcesResult/">ListResourcesResult</a></td>
-<td>The result returned by the server for a resources/list request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../Result/">Result</a></td>
-<td>Common result fields</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../GetTaskPayloadResult/">GetTaskPayloadResult</a></td>
-<td>The result returned for a tasks/result request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ImageContent/">ImageContent</a></td>
-<td>An image provided to or from an LLM</td>
-<td>no</td>
-</tr>
-<tr>
 <td><a href="../Tool/">Tool</a></td>
 <td>Definition for a tool the client can call</td>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../ListToolsResult/">ListToolsResult</a></td>
-<td>The result returned by the server for a tools/list request</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../CancelledNotificationParams/">CancelledNotificationParams</a></td>
-<td>Parameters for a notifications/cancelled notification</td>
-<td>no</td>
-</tr>
-<tr>
-<td><a href="../ResourceUpdatedNotificationParams/">ResourceUpdatedNotificationParams</a></td>
-<td>Parameters for a notifications/resources/updated notification</td>
+<td><a href="../Resource/">Resource</a></td>
+<td>A known resource that the server is capable of reading</td>
 <td>no</td>
 </tr>
 </tbody>

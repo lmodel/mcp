@@ -502,29 +502,29 @@ Alias: data</p>
 </thead>
 <tbody>
 <tr>
-<td><a href="../Error/">Error</a></td>
-<td>A JSON-RPC error object</td>
-<td>yes</td>
-</tr>
-<tr>
-<td><a href="../LoggingMessageNotificationParams/">LoggingMessageNotificationParams</a></td>
-<td>Parameters for a notifications/message notification</td>
-<td>yes</td>
-</tr>
-<tr>
 <td><a href="../InternalError/">InternalError</a></td>
 <td>A JSON-RPC error indicating that an internal error occurred on the receiver (...</td>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../InvalidParamsError/">InvalidParamsError</a></td>
-<td>A JSON-RPC error indicating that the method parameters are invalid or malform...</td>
+<td><a href="../InvalidRequestError/">InvalidRequestError</a></td>
+<td>A JSON-RPC error indicating that the request is not a valid request object (-...</td>
 <td>no</td>
+</tr>
+<tr>
+<td><a href="../Error/">Error</a></td>
+<td>A JSON-RPC error object</td>
+<td>yes</td>
 </tr>
 <tr>
 <td><a href="../MethodNotFoundError/">MethodNotFoundError</a></td>
 <td>A JSON-RPC error indicating that the requested method does not exist or is no...</td>
 <td>no</td>
+</tr>
+<tr>
+<td><a href="../AudioContent/">AudioContent</a></td>
+<td>Audio provided to or from an LLM</td>
+<td>yes</td>
 </tr>
 <tr>
 <td><a href="../ImageContent/">ImageContent</a></td>
@@ -537,13 +537,13 @@ Alias: data</p>
 <td>no</td>
 </tr>
 <tr>
-<td><a href="../AudioContent/">AudioContent</a></td>
-<td>Audio provided to or from an LLM</td>
+<td><a href="../LoggingMessageNotificationParams/">LoggingMessageNotificationParams</a></td>
+<td>Parameters for a notifications/message notification</td>
 <td>yes</td>
 </tr>
 <tr>
-<td><a href="../InvalidRequestError/">InvalidRequestError</a></td>
-<td>A JSON-RPC error indicating that the request is not a valid request object (-...</td>
+<td><a href="../InvalidParamsError/">InvalidParamsError</a></td>
+<td>A JSON-RPC error indicating that the method parameters are invalid or malform...</td>
 <td>no</td>
 </tr>
 </tbody>

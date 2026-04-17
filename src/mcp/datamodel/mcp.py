@@ -1,5 +1,5 @@
 # Auto generated from mcp.yaml by pythongen.py version: 0.0.1
-# Generation date: 2026-04-17T23:28:19
+# Generation date: 2026-04-18T00:39:45
 # Schema: mcp
 #
 # id: https://w3id.org/lmodel/mcp

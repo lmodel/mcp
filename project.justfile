@@ -13,17 +13,27 @@ test-vendor:
   #!/usr/bin/env bash
   set -euo pipefail
   echo "Validating: 'tests/data/third_party/mcp/schema/draft/examples/*/*.json' ..."
+  total=0
+  passed=0
   failed=0
+  skipped=0
   while IFS= read -r file; do
+    total=$((total + 1))
     class_name=$(basename "$(dirname "$file")")
     output=$(uv run python tests/validate_vendor.py --target-class "$class_name" "$file" 2>&1)
-    if echo "$output" | grep -q '^\[ERROR\]'; then
+    if grep -q '^\[ERROR\]' <<< "$output"; then
       echo "$output"
-      failed=1
+      failed=$((failed + 1))
+    elif grep -q '^\[SKIP\]' <<< "$output"; then
+      echo "$output"
+      skipped=$((skipped + 1))
+    else
+      passed=$((passed + 1))
     fi
   done < <(find {{vendor_data_dir}} -type f -name '*.json' | sort)
-  if [ "$failed" -eq 0 ]; then
-    echo "All 'upstream example data' fixtures passed."
-  else
+
+  echo -e "\033[32mSummary: total=$total passed=$passed failed=$failed skipped=$skipped\033[0m"
+
+  if [ "$failed" -ne 0 ]; then
     exit 1
   fi

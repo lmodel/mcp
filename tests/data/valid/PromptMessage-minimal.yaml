@@ -1,2 +1,4 @@
 role: "user"
-content: "Please review this code"
+content:
+  type: "text"
+  text: "Please review this code"

@@ -2,7 +2,7 @@
 
 # mcp
 
-Model Context Protocol LinkML Schema
+[Model Context Protocol](https://github.com/modelcontextprotocol/modelcontextprotocol) LinkML Schema
 
 ## Documentation Website
 

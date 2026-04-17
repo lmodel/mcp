@@ -1,0 +1,1915 @@
+# metamodel_version: 1.7.0
+# version: draft
+BASE <https://w3id.org/lmodel/mcp/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX linkml: <https://w3id.org/linkml/>
+PREFIX schema1: <http://schema.org/>
+PREFIX dct: <http://purl.org/dc/terms/>
+
+
+<Cursor> xsd:string
+
+<ProgressToken> xsd:string
+
+<RequestId> xsd:string
+
+<JsonValue> xsd:anyType
+
+linkml:String xsd:string
+
+linkml:Integer xsd:integer
+
+linkml:Boolean xsd:boolean
+
+linkml:Float xsd:float
+
+linkml:Double xsd:double
+
+linkml:Decimal xsd:decimal
+
+linkml:Time xsd:time
+
+linkml:Date xsd:date
+
+linkml:Datetime xsd:dateTime
+
+linkml:DateOrDatetime linkml:DateOrDatetime
+
+linkml:Uriorcurie IRI
+
+linkml:Curie xsd:string
+
+linkml:Uri IRI
+
+linkml:Ncname xsd:string
+
+linkml:Objectidentifier IRI
+
+linkml:Nodeidentifier NONLITERAL
+
+linkml:Jsonpointer xsd:string
+
+linkml:Jsonpath xsd:string
+
+linkml:Sparqlpath xsd:string
+
+<Annotations> CLOSED {
+    (  $<Annotations_tes> (  <audience> [ <https://w3id.org/lmodel/mcp/Role#assistant> <https://w3id.org/lmodel/mcp/Role#user> ] *
+          ;
+          <lastModified> @linkml:String ? ;
+          <priority> @linkml:Float ?
+       ) ;
+       rdf:type [ <Annotations> ] ?
+    )
+}
+
+<ArgumentMap> CLOSED {
+    (  $<ArgumentMap_tes> (  <city> @linkml:String ? ;
+          <location> @linkml:String ? ;
+          <language> @linkml:String ? ;
+          <framework> @linkml:String ?
+       ) ;
+       rdf:type [ <ArgumentMap> ] ?
+    )
+}
+
+<AudioContent> CLOSED {
+    (  $<AudioContent_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          &<HasAnnotations_tes> ;
+          rdf:type [ <HasAnnotations> ] ? ;
+          <data> @linkml:String ;
+          <mimeType> @linkml:String ;
+          <type> @linkml:String ;
+          <_meta> @<MetaObject> ? ;
+          <annotations> @<Annotations> ?
+       ) ;
+       rdf:type [ <AudioContent> ] ?
+    )
+}
+
+<BlobResourceContents> CLOSED {
+    (  $<BlobResourceContents_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          <uri> @linkml:Uri ;
+          <mimeType> @linkml:String ? ;
+          <blob> @linkml:String ;
+          <_meta> @<MetaObject> ?
+       ) ;
+       rdf:type [ <BlobResourceContents> ] ?
+    )
+}
+
+<BooleanSchema> CLOSED {
+    (  $<BooleanSchema_tes> (  <type> @linkml:String ;
+          <default> @linkml:Boolean ? ;
+          <default_value> @linkml:Boolean ? ;
+          dct:title @linkml:String ? ;
+          dct:description @linkml:String ?
+       ) ;
+       rdf:type [ <BooleanSchema> ] ?
+    )
+}
+
+<CallToolRequest> CLOSED {
+    (  $<CallToolRequest_tes> (  &<JSONRPCRequest_tes> ;
+          rdf:type [ <JSONRPCRequest> ] ? ;
+          <params> @<CallToolRequestParams> ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <CallToolRequest> ] ?
+    )
+}
+
+<CallToolRequestParams> CLOSED {
+    (  $<CallToolRequestParams_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          <arguments> @<ArgumentMap> ? ;
+          schema1:name @linkml:String ;
+          <task> @<TaskMetadata> ? ;
+          <_meta> @<MetaObject> ?
+       ) ;
+       rdf:type [ <CallToolRequestParams> ] ?
+    )
+}
+
+<CallToolResult> CLOSED {
+    (  $<CallToolResult_tes> (  &<Result_tes> ;
+          rdf:type [ <Result> ] ? ;
+          <content> @<ContentBlock> + ;
+          <isError> @linkml:Boolean ? ;
+          <structuredContent> @<StructuredContentData> ?
+       ) ;
+       rdf:type [ <CallToolResult> ] ?
+    )
+}
+
+<CallToolResultResponse> CLOSED {
+    (  $<CallToolResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<CallToolResult>
+       ) ;
+       rdf:type [ <CallToolResultResponse> ] ?
+    )
+}
+
+<CancelledNotification> CLOSED {
+    (  $<CancelledNotification_tes> (  &<JSONRPCNotification_tes> ;
+          rdf:type [ <JSONRPCNotification> ] ? ;
+          <params> @<CancelledNotificationParams> ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <CancelledNotification> ] ?
+    )
+}
+
+<CancelledNotificationParams> CLOSED {
+    (  $<CancelledNotificationParams_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          <requestId> @<RequestId> ? ;
+          <reason> @linkml:String ? ;
+          <_meta> @<MetaObject> ?
+       ) ;
+       rdf:type [ <CancelledNotificationParams> ] ?
+    )
+}
+
+<CancelTaskRequest> CLOSED {
+    (  $<CancelTaskRequest_tes> (  &<JSONRPCRequest_tes> ;
+          rdf:type [ <JSONRPCRequest> ] ? ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <CancelTaskRequest> ] ?
+    )
+}
+
+<CancelTaskResult> CLOSED {
+    (  $<CancelTaskResult_tes> (  &<Result_tes> ;
+          rdf:type [ <Result> ] ? ;
+          &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          <taskId> @linkml:String ;
+          <status> [ <https://w3id.org/lmodel/mcp/TaskStatusEnum#cancelled> <https://w3id.org/lmodel/mcp/TaskStatusEnum#completed>
+             <https://w3id.org/lmodel/mcp/TaskStatusEnum#failed> <https://w3id.org/lmodel/mcp/TaskStatusEnum#input_required>
+             <https://w3id.org/lmodel/mcp/TaskStatusEnum#working> ] ;
+          <createdAt> @linkml:String ;
+          <lastUpdatedAt> @linkml:String ;
+          <ttl> @linkml:Integer ;
+          <statusMessage> @linkml:String ? ;
+          <pollInterval> @linkml:Integer ?
+       ) ;
+       rdf:type [ <CancelTaskResult> ] ?
+    )
+}
+
+<CancelTaskResultResponse> CLOSED {
+    (  $<CancelTaskResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<CancelTaskResult>
+       ) ;
+       rdf:type [ <CancelTaskResultResponse> ] ?
+    )
+}
+
+<ClientCapabilities> CLOSED {
+    (  $<ClientCapabilities_tes> (  <elicitation> @<ElicitationCapability> ? ;
+          <experimental> @<JsonValue> ? ;
+          <extensions> @<ExtensionsCapability> ? ;
+          <roots> @<RootsCapability> * ;
+          <sampling> @<SamplingCapability> ? ;
+          <tasks> @<TasksCapability> *
+       ) ;
+       rdf:type [ <ClientCapabilities> ] ?
+    )
+}
+
+<ClientNotification> CLOSED {
+    (  $<ClientNotification_tes> rdf:type . * ;
+       rdf:type [ <ClientNotification> ] ?
+    )
+}
+
+<ClientRequest> CLOSED {
+    (  $<ClientRequest_tes> rdf:type . * ;
+       rdf:type [ <ClientRequest> ] ?
+    )
+}
+
+<ClientResult> CLOSED {
+    (  $<ClientResult_tes> rdf:type . * ;
+       rdf:type [ <ClientResult> ] ?
+    )
+}
+
+<CompleteRequest> CLOSED {
+    (  $<CompleteRequest_tes> (  &<JSONRPCRequest_tes> ;
+          rdf:type [ <JSONRPCRequest> ] ? ;
+          <params> @<CompleteRequestParams> ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <CompleteRequest> ] ?
+    )
+}
+
+<CompleteRequestParams> CLOSED {
+    (  $<CompleteRequestParams_tes> (  <argument> @<CompletionArgument> ;
+          <context> @<CompletionContext> ? ;
+          <ref> @<PromptReference>
+       ) ;
+       rdf:type [ <CompleteRequestParams> ] ?
+    )
+}
+
+<CompleteResult> CLOSED {
+    (  $<CompleteResult_tes> (  &<Result_tes> ;
+          rdf:type [ <Result> ] ? ;
+          <completion> @<CompletionData>
+       ) ;
+       rdf:type [ <CompleteResult> ] ?
+    )
+}
+
+<CompleteResultResponse> CLOSED {
+    (  $<CompleteResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<CompleteResult>
+       ) ;
+       rdf:type [ <CompleteResultResponse> ] ?
+    )
+}
+
+<CompletionArgument> CLOSED {
+    (  $<CompletionArgument_tes> (  schema1:name @linkml:String ;
+          <value> @linkml:String
+       ) ;
+       rdf:type [ <CompletionArgument> ] ?
+    )
+}
+
+<CompletionContext> CLOSED {
+    (  $<CompletionContext_tes> <arguments> @<ArgumentMap> ? ;
+       rdf:type [ <CompletionContext> ] ?
+    )
+}
+
+<CompletionData> CLOSED {
+    (  $<CompletionData_tes> (  <values> @linkml:String + ;
+          <total> @linkml:Float ? ;
+          <hasMore> @linkml:Boolean ?
+       ) ;
+       rdf:type [ <CompletionData> ] ?
+    )
+}
+
+<ContentBlock> CLOSED {
+    (  $<ContentBlock_tes> (  <type> @linkml:String ? ;
+          <text> @linkml:String ?
+       ) ;
+       rdf:type [ <ContentBlock> ] ?
+    )
+}
+
+<ContentBlockVariants> CLOSED {
+    (  $<ContentBlockVariants_tes> rdf:type . * ;
+       rdf:type [ <ContentBlockVariants> ] ?
+    )
+}
+
+<CreateMessageRequest> CLOSED {
+    (  $<CreateMessageRequest_tes> (  &<JSONRPCRequest_tes> ;
+          rdf:type [ <JSONRPCRequest> ] ? ;
+          <params> @<CreateMessageRequestParams> ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <CreateMessageRequest> ] ?
+    )
+}
+
+<CreateMessageRequestParams> CLOSED {
+    (  $<CreateMessageRequestParams_tes> (  <maxTokens> @linkml:Integer ;
+          <messages> @<SamplingMessage> + ;
+          <modelPreferences> @<ModelPreferences> ? ;
+          <systemPrompt> @linkml:String ? ;
+          <temperature> @linkml:Float ? ;
+          <includeContext> [ <https://w3id.org/lmodel/mcp/IncludeContextEnum#allServers>
+             <https://w3id.org/lmodel/mcp/IncludeContextEnum#none> <https://w3id.org/lmodel/mcp/IncludeContextEnum#thisServer> ] ?
+          ;
+          <stopSequences> @linkml:String * ;
+          <tools> @<Tool> * ;
+          <toolChoice> @<ToolChoice> ? ;
+          <task> @<TaskMetadata> ?
+       ) ;
+       rdf:type [ <CreateMessageRequestParams> ] ?
+    )
+}
+
+<CreateMessageResult> CLOSED {
+    (  $<CreateMessageResult_tes> (  &<Result_tes> ;
+          rdf:type [ <Result> ] ? ;
+          <content> @<ContentBlock> ;
+          <model> @linkml:String ;
+          <role> [ <https://w3id.org/lmodel/mcp/Role#assistant> <https://w3id.org/lmodel/mcp/Role#user> ] ;
+          <stopReason> @linkml:String ?
+       ) ;
+       rdf:type [ <CreateMessageResult> ] ?
+    )
+}
+
+<CreateMessageResultResponse> CLOSED {
+    (  $<CreateMessageResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<CreateMessageResult>
+       ) ;
+       rdf:type [ <CreateMessageResultResponse> ] ?
+    )
+}
+
+<CreateTaskResult> CLOSED {
+    (  $<CreateTaskResult_tes> (  &<Result_tes> ;
+          rdf:type [ <Result> ] ? ;
+          <task> @<Task>
+       ) ;
+       rdf:type [ <CreateTaskResult> ] ?
+    )
+}
+
+<CreateTaskResultResponse> CLOSED {
+    (  $<CreateTaskResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<CreateTaskResult>
+       ) ;
+       rdf:type [ <CreateTaskResultResponse> ] ?
+    )
+}
+
+<ElicitationCapability> CLOSED {
+    (  $<ElicitationCapability_tes> rdf:type . * ;
+       rdf:type [ <ElicitationCapability> ] ?
+    )
+}
+
+<ElicitationCompleteNotification> CLOSED {
+    (  $<ElicitationCompleteNotification_tes> (  &<JSONRPCNotification_tes> ;
+          rdf:type [ <JSONRPCNotification> ] ? ;
+          <params> @<ElicitationCompleteNotificationParams> ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <ElicitationCompleteNotification> ] ?
+    )
+}
+
+<ElicitationCompleteNotificationParams> CLOSED {
+    (  $<ElicitationCompleteNotificationParams_tes> <elicitationId> @linkml:String ;
+       rdf:type [ <ElicitationCompleteNotificationParams> ] ?
+    )
+}
+
+<ElicitationContent> CLOSED {
+    (  $<ElicitationContent_tes> (  schema1:name @linkml:String ? ;
+          <email> @linkml:String ? ;
+          <age> @linkml:Integer ?
+       ) ;
+       rdf:type [ <ElicitationContent> ] ?
+    )
+}
+
+<ElicitRequest> CLOSED {
+    (  $<ElicitRequest_tes> (  &<JSONRPCRequest_tes> ;
+          rdf:type [ <JSONRPCRequest> ] ? ;
+          <params> @<ElicitRequestFormParams> ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <ElicitRequest> ] ?
+    )
+}
+
+<ElicitRequestFormParams> CLOSED {
+    (  $<ElicitRequestFormParams_tes> (  <message> @linkml:String ;
+          <requestedSchema> @<JsonSchema> ;
+          <mode> @linkml:String ? ;
+          <task> @<TaskMetadata> ?
+       ) ;
+       rdf:type [ <ElicitRequestFormParams> ] ?
+    )
+}
+
+<ElicitRequestParams> CLOSED {
+    (  $<ElicitRequestParams_tes> rdf:type . * ;
+       rdf:type [ <ElicitRequestParams> ] ?
+    )
+}
+
+<ElicitRequestURLParams> CLOSED {
+    (  $<ElicitRequestURLParams_tes> (  <elicitationId> @linkml:String ;
+          <message> @linkml:String ;
+          <mode> @linkml:String ;
+          <url> @linkml:Uri ;
+          <task> @<TaskMetadata> ?
+       ) ;
+       rdf:type [ <ElicitRequestURLParams> ] ?
+    )
+}
+
+<ElicitResult> CLOSED {
+    (  $<ElicitResult_tes> (  &<Result_tes> ;
+          rdf:type [ <Result> ] ? ;
+          <action> [ <https://w3id.org/lmodel/mcp/ElicitActionEnum#accept> <https://w3id.org/lmodel/mcp/ElicitActionEnum#cancel>
+             <https://w3id.org/lmodel/mcp/ElicitActionEnum#decline> ] ;
+          <content> @<ElicitationContent> ?
+       ) ;
+       rdf:type [ <ElicitResult> ] ?
+    )
+}
+
+<ElicitResultResponse> CLOSED {
+    (  $<ElicitResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<ElicitResult>
+       ) ;
+       rdf:type [ <ElicitResultResponse> ] ?
+    )
+}
+
+<EmbeddedResource> CLOSED {
+    (  $<EmbeddedResource_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          &<HasAnnotations_tes> ;
+          rdf:type [ <HasAnnotations> ] ? ;
+          <type> @linkml:String ;
+          <resource> @<ResourceContents> ;
+          <_meta> @<MetaObject> ? ;
+          <annotations> @<Annotations> ?
+       ) ;
+       rdf:type [ <EmbeddedResource> ] ?
+    )
+}
+
+<EnumOption> CLOSED {
+    (  $<EnumOption_tes> (  <const> @linkml:String ;
+          dct:title @linkml:String ?
+       ) ;
+       rdf:type [ <EnumOption> ] ?
+    )
+}
+
+<EnumSchema> CLOSED {
+    (  $<EnumSchema_tes> rdf:type . * ;
+       rdf:type [ <EnumSchema> ] ?
+    )
+}
+
+<Error>  (
+    CLOSED {
+       (  $<Error_tes> (  <code> @linkml:Integer ;
+             <data> @<ErrorData> ? ;
+             <message> @linkml:String
+          ) ;
+          rdf:type [ <Error> ] ?
+       )
+    } OR @<InternalError> OR @<InvalidParamsError> OR @<InvalidRequestError> OR @<MethodNotFoundError> OR @<ParseError>
+)
+
+<ErrorData> CLOSED {
+    (  $<ErrorData_tes> (  <reason> @linkml:String ? ;
+          <elicitations> @<URLElicitation> *
+       ) ;
+       rdf:type [ <ErrorData> ] ?
+    )
+}
+
+<ExtensionAppCapability> CLOSED {
+    (  $<ExtensionAppCapability_tes> <mimeTypes> @linkml:String * ;
+       rdf:type [ <ExtensionAppCapability> ] ?
+    )
+}
+
+<ExtensionsCapability> CLOSED {
+    (  $<ExtensionsCapability_tes> <apps_extension> @<ExtensionAppCapability> ? ;
+       rdf:type [ <ExtensionsCapability> ] ?
+    )
+}
+
+<GetPromptRequest> CLOSED {
+    (  $<GetPromptRequest_tes> (  &<JSONRPCRequest_tes> ;
+          rdf:type [ <JSONRPCRequest> ] ? ;
+          <params> @<GetPromptRequestParams> ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <GetPromptRequest> ] ?
+    )
+}
+
+<GetPromptRequestParams> CLOSED {
+    (  $<GetPromptRequestParams_tes> (  <arguments> @<ArgumentMap> ? ;
+          schema1:name @linkml:String
+       ) ;
+       rdf:type [ <GetPromptRequestParams> ] ?
+    )
+}
+
+<GetPromptResult> CLOSED {
+    (  $<GetPromptResult_tes> (  &<Result_tes> ;
+          rdf:type [ <Result> ] ? ;
+          dct:description @linkml:String ? ;
+          <messages> @<PromptMessage> +
+       ) ;
+       rdf:type [ <GetPromptResult> ] ?
+    )
+}
+
+<GetPromptResultResponse> CLOSED {
+    (  $<GetPromptResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<GetPromptResult>
+       ) ;
+       rdf:type [ <GetPromptResultResponse> ] ?
+    )
+}
+
+<GetTaskPayloadRequest> CLOSED {
+    (  $<GetTaskPayloadRequest_tes> (  &<JSONRPCRequest_tes> ;
+          rdf:type [ <JSONRPCRequest> ] ? ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <GetTaskPayloadRequest> ] ?
+    )
+}
+
+<GetTaskPayloadResult> CLOSED {
+    (  $<GetTaskPayloadResult_tes> (  &<Result_tes> ;
+          rdf:type [ <Result> ] ?
+       ) ;
+       rdf:type [ <GetTaskPayloadResult> ] ?
+    )
+}
+
+<GetTaskPayloadResultResponse> CLOSED {
+    (  $<GetTaskPayloadResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<GetTaskPayloadResult>
+       ) ;
+       rdf:type [ <GetTaskPayloadResultResponse> ] ?
+    )
+}
+
+<GetTaskRequest> CLOSED {
+    (  $<GetTaskRequest_tes> (  &<JSONRPCRequest_tes> ;
+          rdf:type [ <JSONRPCRequest> ] ? ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <GetTaskRequest> ] ?
+    )
+}
+
+<GetTaskResult> CLOSED {
+    (  $<GetTaskResult_tes> (  &<Result_tes> ;
+          rdf:type [ <Result> ] ? ;
+          &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          <taskId> @linkml:String ;
+          <status> [ <https://w3id.org/lmodel/mcp/TaskStatusEnum#cancelled> <https://w3id.org/lmodel/mcp/TaskStatusEnum#completed>
+             <https://w3id.org/lmodel/mcp/TaskStatusEnum#failed> <https://w3id.org/lmodel/mcp/TaskStatusEnum#input_required>
+             <https://w3id.org/lmodel/mcp/TaskStatusEnum#working> ] ;
+          <createdAt> @linkml:String ;
+          <lastUpdatedAt> @linkml:String ;
+          <ttl> @linkml:Integer ;
+          <statusMessage> @linkml:String ? ;
+          <pollInterval> @linkml:Integer ?
+       ) ;
+       rdf:type [ <GetTaskResult> ] ?
+    )
+}
+
+<GetTaskResultResponse> CLOSED {
+    (  $<GetTaskResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<GetTaskResult>
+       ) ;
+       rdf:type [ <GetTaskResultResponse> ] ?
+    )
+}
+
+<HasAnnotations> {
+    (  $<HasAnnotations_tes> <annotations> @<Annotations> ? ;
+       rdf:type [ <HasAnnotations> ] ?
+    )
+}
+
+<HasIcons> {
+    (  $<HasIcons_tes> <icons> @<Icon> * ;
+       rdf:type [ <HasIcons> ] ?
+    )
+}
+
+<HasMeta> {
+    (  $<HasMeta_tes> <_meta> @<MetaObject> ? ;
+       rdf:type [ <HasMeta> ] ?
+    )
+}
+
+<HasName> {
+    (  $<HasName_tes> (  schema1:name @linkml:String ? ;
+          dct:title @linkml:String ?
+       ) ;
+       rdf:type [ <HasName> ] ?
+    )
+}
+
+<Icon> CLOSED {
+    (  $<Icon_tes> (  <src> @linkml:Uri ;
+          <mimeType> @linkml:String ? ;
+          <sizes> @linkml:String * ;
+          <theme> [ <https://w3id.org/lmodel/mcp/IconThemeEnum#dark> <https://w3id.org/lmodel/mcp/IconThemeEnum#light> ] ?
+       ) ;
+       rdf:type [ <Icon> ] ?
+    )
+}
+
+<ImageContent> CLOSED {
+    (  $<ImageContent_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          &<HasAnnotations_tes> ;
+          rdf:type [ <HasAnnotations> ] ? ;
+          <data> @linkml:String ;
+          <mimeType> @linkml:String ;
+          <type> @linkml:String ;
+          <_meta> @<MetaObject> ? ;
+          <annotations> @<Annotations> ?
+       ) ;
+       rdf:type [ <ImageContent> ] ?
+    )
+}
+
+<Implementation> CLOSED {
+    (  $<Implementation_tes> (  &<HasName_tes> ;
+          rdf:type [ <HasName> ] ? ;
+          &<HasIcons_tes> ;
+          rdf:type [ <HasIcons> ] ? ;
+          <version> @linkml:String ;
+          dct:description @linkml:String ? ;
+          <websiteUrl> @linkml:Uri ? ;
+          schema1:name @linkml:String ;
+          dct:title @linkml:String ? ;
+          <icons> @<Icon> *
+       ) ;
+       rdf:type [ <Implementation> ] ?
+    )
+}
+
+<InitializedNotification> CLOSED {
+    (  $<InitializedNotification_tes> (  &<JSONRPCNotification_tes> ;
+          rdf:type [ <JSONRPCNotification> ] ? ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <InitializedNotification> ] ?
+    )
+}
+
+<InitializeRequest> CLOSED {
+    (  $<InitializeRequest_tes> (  &<JSONRPCRequest_tes> ;
+          rdf:type [ <JSONRPCRequest> ] ? ;
+          <params> @<InitializeRequestParams> ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <InitializeRequest> ] ?
+    )
+}
+
+<InitializeRequestParams> CLOSED {
+    (  $<InitializeRequestParams_tes> (  <capabilities> @<ClientCapabilities> ;
+          <clientInfo> @<Implementation> ;
+          <protocolVersion> @linkml:String
+       ) ;
+       rdf:type [ <InitializeRequestParams> ] ?
+    )
+}
+
+<InitializeResult> CLOSED {
+    (  $<InitializeResult_tes> (  &<Result_tes> ;
+          rdf:type [ <Result> ] ? ;
+          <capabilities> @<ServerCapabilities> ;
+          <protocolVersion> @linkml:String ;
+          <serverInfo> @<Implementation> ;
+          <instructions> @linkml:String ?
+       ) ;
+       rdf:type [ <InitializeResult> ] ?
+    )
+}
+
+<InitializeResultResponse> CLOSED {
+    (  $<InitializeResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<InitializeResult>
+       ) ;
+       rdf:type [ <InitializeResultResponse> ] ?
+    )
+}
+
+<InternalError> CLOSED {
+    (  $<InternalError_tes> (  &<Error_tes> ;
+          rdf:type [ <Error> ] ?
+       ) ;
+       rdf:type [ <InternalError> ] ?
+    )
+}
+
+<InvalidParamsError> CLOSED {
+    (  $<InvalidParamsError_tes> (  &<Error_tes> ;
+          rdf:type [ <Error> ] ?
+       ) ;
+       rdf:type [ <InvalidParamsError> ] ?
+    )
+}
+
+<InvalidRequestError> CLOSED {
+    (  $<InvalidRequestError_tes> (  &<Error_tes> ;
+          rdf:type [ <Error> ] ?
+       ) ;
+       rdf:type [ <InvalidRequestError> ] ?
+    )
+}
+
+<JSONRPCErrorResponse>  (
+    CLOSED {
+       (  $<JSONRPCErrorResponse_tes> (  <id> @<RequestId> ? ;
+             <jsonrpc> @linkml:String ;
+             <error> @<Error>
+          ) ;
+          rdf:type [ <JSONRPCErrorResponse> ] ?
+       )
+    } OR @<URLElicitationRequiredError>
+)
+
+<JSONRPCMessage> CLOSED {
+    (  $<JSONRPCMessage_tes> rdf:type . * ;
+       rdf:type [ <JSONRPCMessage> ] ?
+    )
+}
+
+<JSONRPCNotification>  (
+    @<CancelledNotification> OR @<ElicitationCompleteNotification> OR @<InitializedNotification> OR @<LoggingMessageNotification>
+    OR @<ProgressNotification> OR @<PromptListChangedNotification> OR @<ResourceListChangedNotification> OR
+    @<ResourceUpdatedNotification> OR @<RootsListChangedNotification> OR @<TaskStatusNotification> OR
+    @<ToolListChangedNotification>
+)
+
+<JSONRPCNotification_struct> {
+    (  $<JSONRPCNotification_tes> (  <jsonrpc> @linkml:String ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <JSONRPCNotification> ] ?
+    )
+}
+
+<JSONRPCRequest>  (
+    @<CallToolRequest> OR @<CancelTaskRequest> OR @<CompleteRequest> OR @<CreateMessageRequest> OR @<ElicitRequest> OR
+    @<GetPromptRequest> OR @<GetTaskPayloadRequest> OR @<GetTaskRequest> OR @<InitializeRequest> OR @<ListPromptsRequest> OR
+    @<ListResourceTemplatesRequest> OR @<ListResourcesRequest> OR @<ListRootsRequest> OR @<ListTasksRequest> OR @<ListToolsRequest>
+    OR @<PingRequest> OR @<ReadResourceRequest> OR @<SetLevelRequest> OR @<SubscribeRequest> OR @<UnsubscribeRequest>
+)
+
+<JSONRPCRequest_struct> {
+    (  $<JSONRPCRequest_tes> (  <id> @<RequestId> ;
+          <jsonrpc> @linkml:String ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <JSONRPCRequest> ] ?
+    )
+}
+
+<JSONRPCResponse> CLOSED {
+    (  $<JSONRPCResponse_tes> rdf:type . * ;
+       rdf:type [ <JSONRPCResponse> ] ?
+    )
+}
+
+<JSONRPCResultResponse>  (
+    @<CallToolResultResponse> OR @<CancelTaskResultResponse> OR @<CompleteResultResponse> OR @<CreateMessageResultResponse> OR
+    @<CreateTaskResultResponse> OR @<ElicitResultResponse> OR @<GetPromptResultResponse> OR @<GetTaskPayloadResultResponse> OR
+    @<GetTaskResultResponse> OR @<InitializeResultResponse> OR @<ListPromptsResultResponse> OR
+    @<ListResourceTemplatesResultResponse> OR @<ListResourcesResultResponse> OR @<ListRootsResultResponse> OR
+    @<ListTasksResultResponse> OR @<ListToolsResultResponse> OR @<PingResultResponse> OR @<ReadResourceResultResponse> OR
+    @<SetLevelResultResponse> OR @<SubscribeResultResponse> OR @<UnsubscribeResultResponse>
+)
+
+<JSONRPCResultResponse_struct> {
+    (  $<JSONRPCResultResponse_tes> (  <id> @<RequestId> ;
+          <jsonrpc> @linkml:String
+       ) ;
+       rdf:type [ <JSONRPCResultResponse> ] ?
+    )
+}
+
+<JsonSchema> CLOSED {
+    (  $<JsonSchema_tes> (  <schemaUri> @linkml:String ? ;
+          <type> @linkml:String ? ;
+          <properties> @<SchemaProperties> ? ;
+          <required_list> @linkml:String * ;
+          <additionalProperties> @linkml:Boolean ? ;
+          <minimum> @linkml:Integer ? ;
+          <maximum> @linkml:Integer ? ;
+          <minLength> @linkml:Integer ? ;
+          <maxLength> @linkml:Integer ? ;
+          <format> [ <https://w3id.org/lmodel/mcp/StringFormatEnum#date> <https://w3id.org/lmodel/mcp/StringFormatEnum#date-time>
+             <https://w3id.org/lmodel/mcp/StringFormatEnum#email> <https://w3id.org/lmodel/mcp/StringFormatEnum#uri> ] ? ;
+          dct:description @linkml:String ? ;
+          dct:title @linkml:String ? ;
+          <oneOf> @<EnumOption> * ;
+          <anyOf> @<EnumOption> * ;
+          <items> @<SchemaItems> ? ;
+          <enum> @linkml:String * ;
+          <const> @linkml:String ? ;
+          <default> @<JsonValue> ?
+       ) ;
+       rdf:type [ <JsonSchema> ] ?
+    )
+}
+
+<LegacyTitledEnumSchema> CLOSED {
+    (  $<LegacyTitledEnumSchema_tes> (  <type> @linkml:String ;
+          <enum> @linkml:String * ;
+          <enum_values> @linkml:String * ;
+          <enumNames> @linkml:String * ;
+          <default> @<JsonValue> ? ;
+          <default_value> @linkml:String ? ;
+          dct:description @linkml:String ? ;
+          dct:title @linkml:String ?
+       ) ;
+       rdf:type [ <LegacyTitledEnumSchema> ] ?
+    )
+}
+
+<ListPromptsRequest> CLOSED {
+    (  $<ListPromptsRequest_tes> (  &<JSONRPCRequest_tes> ;
+          rdf:type [ <JSONRPCRequest> ] ? ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <ListPromptsRequest> ] ?
+    )
+}
+
+<ListPromptsResult> CLOSED {
+    (  $<ListPromptsResult_tes> (  &<Result_tes> ;
+          rdf:type [ <Result> ] ? ;
+          <nextCursor> @linkml:String ? ;
+          <prompts> @<Prompt> +
+       ) ;
+       rdf:type [ <ListPromptsResult> ] ?
+    )
+}
+
+<ListPromptsResultResponse> CLOSED {
+    (  $<ListPromptsResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<ListPromptsResult>
+       ) ;
+       rdf:type [ <ListPromptsResultResponse> ] ?
+    )
+}
+
+<ListResourcesRequest> CLOSED {
+    (  $<ListResourcesRequest_tes> (  &<JSONRPCRequest_tes> ;
+          rdf:type [ <JSONRPCRequest> ] ? ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <ListResourcesRequest> ] ?
+    )
+}
+
+<ListResourcesResult> CLOSED {
+    (  $<ListResourcesResult_tes> (  &<Result_tes> ;
+          rdf:type [ <Result> ] ? ;
+          <nextCursor> @linkml:String ? ;
+          <resources> @<Resource> +
+       ) ;
+       rdf:type [ <ListResourcesResult> ] ?
+    )
+}
+
+<ListResourcesResultResponse> CLOSED {
+    (  $<ListResourcesResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<ListResourcesResult>
+       ) ;
+       rdf:type [ <ListResourcesResultResponse> ] ?
+    )
+}
+
+<ListResourceTemplatesRequest> CLOSED {
+    (  $<ListResourceTemplatesRequest_tes> (  &<JSONRPCRequest_tes> ;
+          rdf:type [ <JSONRPCRequest> ] ? ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <ListResourceTemplatesRequest> ] ?
+    )
+}
+
+<ListResourceTemplatesResult> CLOSED {
+    (  $<ListResourceTemplatesResult_tes> (  &<Result_tes> ;
+          rdf:type [ <Result> ] ? ;
+          <nextCursor> @linkml:String ? ;
+          <resourceTemplates> @<ResourceTemplate> +
+       ) ;
+       rdf:type [ <ListResourceTemplatesResult> ] ?
+    )
+}
+
+<ListResourceTemplatesResultResponse> CLOSED {
+    (  $<ListResourceTemplatesResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<ListResourceTemplatesResult>
+       ) ;
+       rdf:type [ <ListResourceTemplatesResultResponse> ] ?
+    )
+}
+
+<ListRootsRequest> CLOSED {
+    (  $<ListRootsRequest_tes> (  &<JSONRPCRequest_tes> ;
+          rdf:type [ <JSONRPCRequest> ] ? ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <ListRootsRequest> ] ?
+    )
+}
+
+<ListRootsResult> CLOSED {
+    (  $<ListRootsResult_tes> (  &<Result_tes> ;
+          rdf:type [ <Result> ] ? ;
+          <roots> @<Root> +
+       ) ;
+       rdf:type [ <ListRootsResult> ] ?
+    )
+}
+
+<ListRootsResultResponse> CLOSED {
+    (  $<ListRootsResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<ListRootsResult>
+       ) ;
+       rdf:type [ <ListRootsResultResponse> ] ?
+    )
+}
+
+<ListTasksRequest> CLOSED {
+    (  $<ListTasksRequest_tes> (  &<JSONRPCRequest_tes> ;
+          rdf:type [ <JSONRPCRequest> ] ? ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <ListTasksRequest> ] ?
+    )
+}
+
+<ListTasksResult> CLOSED {
+    (  $<ListTasksResult_tes> (  &<Result_tes> ;
+          rdf:type [ <Result> ] ? ;
+          <nextCursor> @linkml:String ? ;
+          <tasks> @<Task> +
+       ) ;
+       rdf:type [ <ListTasksResult> ] ?
+    )
+}
+
+<ListTasksResultResponse> CLOSED {
+    (  $<ListTasksResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<ListTasksResult>
+       ) ;
+       rdf:type [ <ListTasksResultResponse> ] ?
+    )
+}
+
+<ListToolsRequest> CLOSED {
+    (  $<ListToolsRequest_tes> (  &<JSONRPCRequest_tes> ;
+          rdf:type [ <JSONRPCRequest> ] ? ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <ListToolsRequest> ] ?
+    )
+}
+
+<ListToolsResult> CLOSED {
+    (  $<ListToolsResult_tes> (  &<Result_tes> ;
+          rdf:type [ <Result> ] ? ;
+          <nextCursor> @linkml:String ? ;
+          <tools> @<Tool> +
+       ) ;
+       rdf:type [ <ListToolsResult> ] ?
+    )
+}
+
+<ListToolsResultResponse> CLOSED {
+    (  $<ListToolsResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<ListToolsResult>
+       ) ;
+       rdf:type [ <ListToolsResultResponse> ] ?
+    )
+}
+
+<LogData> CLOSED {
+    (  $<LogData_tes> (  <error> @linkml:String ? ;
+          <details> @<LogDetails> ?
+       ) ;
+       rdf:type [ <LogData> ] ?
+    )
+}
+
+<LogDetails> CLOSED {
+    (  $<LogDetails_tes> (  <host> @linkml:String ? ;
+          <port> @linkml:Integer ?
+       ) ;
+       rdf:type [ <LogDetails> ] ?
+    )
+}
+
+<LoggingMessageNotification> CLOSED {
+    (  $<LoggingMessageNotification_tes> (  &<JSONRPCNotification_tes> ;
+          rdf:type [ <JSONRPCNotification> ] ? ;
+          <params> @<LoggingMessageNotificationParams> ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <LoggingMessageNotification> ] ?
+    )
+}
+
+<LoggingMessageNotificationParams> CLOSED {
+    (  $<LoggingMessageNotificationParams_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          <data> @<LogData> ;
+          <level> [ <https://w3id.org/lmodel/mcp/LoggingLevel#alert> <https://w3id.org/lmodel/mcp/LoggingLevel#critical>
+             <https://w3id.org/lmodel/mcp/LoggingLevel#debug> <https://w3id.org/lmodel/mcp/LoggingLevel#emergency>
+             <https://w3id.org/lmodel/mcp/LoggingLevel#error> <https://w3id.org/lmodel/mcp/LoggingLevel#info>
+             <https://w3id.org/lmodel/mcp/LoggingLevel#notice> <https://w3id.org/lmodel/mcp/LoggingLevel#warning> ] ;
+          <logger> @linkml:String ? ;
+          <_meta> @<MetaObject> ?
+       ) ;
+       rdf:type [ <LoggingMessageNotificationParams> ] ?
+    )
+}
+
+<MetaObject> CLOSED {
+    (  $<MetaObject_tes> <progressToken> @<ProgressToken> ? ;
+       rdf:type [ <MetaObject> ] ?
+    )
+}
+
+<MethodNotFoundError> CLOSED {
+    (  $<MethodNotFoundError_tes> (  &<Error_tes> ;
+          rdf:type [ <Error> ] ?
+       ) ;
+       rdf:type [ <MethodNotFoundError> ] ?
+    )
+}
+
+<ModelHint> CLOSED {
+    (  $<ModelHint_tes> schema1:name @linkml:String ? ;
+       rdf:type [ <ModelHint> ] ?
+    )
+}
+
+<ModelPreferences> CLOSED {
+    (  $<ModelPreferences_tes> (  <costPriority> @linkml:Float ? ;
+          <intelligencePriority> @linkml:Float ? ;
+          <speedPriority> @linkml:Float ? ;
+          <hints> @<ModelHint> *
+       ) ;
+       rdf:type [ <ModelPreferences> ] ?
+    )
+}
+
+<MultiSelectEnumSchema> CLOSED {
+    (  $<MultiSelectEnumSchema_tes> rdf:type . * ;
+       rdf:type [ <MultiSelectEnumSchema> ] ?
+    )
+}
+
+<NumberSchema> CLOSED {
+    (  $<NumberSchema_tes> (  <type> @linkml:String ;
+          <default> @linkml:Integer ? ;
+          <default_value> @linkml:String ? ;
+          dct:description @linkml:String ? ;
+          <minimum> @linkml:Integer ? ;
+          <maximum> @linkml:Integer ? ;
+          dct:title @linkml:String ?
+       ) ;
+       rdf:type [ <NumberSchema> ] ?
+    )
+}
+
+<PaginatedRequestParams> CLOSED {
+    (  $<PaginatedRequestParams_tes> <cursor> @<Cursor> ? ;
+       rdf:type [ <PaginatedRequestParams> ] ?
+    )
+}
+
+<ParseError> CLOSED {
+    (  $<ParseError_tes> (  &<Error_tes> ;
+          rdf:type [ <Error> ] ?
+       ) ;
+       rdf:type [ <ParseError> ] ?
+    )
+}
+
+<PingRequest> CLOSED {
+    (  $<PingRequest_tes> (  &<JSONRPCRequest_tes> ;
+          rdf:type [ <JSONRPCRequest> ] ? ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <PingRequest> ] ?
+    )
+}
+
+<PingResultResponse> CLOSED {
+    (  $<PingResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<Result> ?
+       ) ;
+       rdf:type [ <PingResultResponse> ] ?
+    )
+}
+
+<PrimitiveSchemaDefinition> CLOSED {
+    (  $<PrimitiveSchemaDefinition_tes> rdf:type . * ;
+       rdf:type [ <PrimitiveSchemaDefinition> ] ?
+    )
+}
+
+<ProgressNotification> CLOSED {
+    (  $<ProgressNotification_tes> (  &<JSONRPCNotification_tes> ;
+          rdf:type [ <JSONRPCNotification> ] ? ;
+          <params> @<ProgressNotificationParams> ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <ProgressNotification> ] ?
+    )
+}
+
+<ProgressNotificationParams> CLOSED {
+    (  $<ProgressNotificationParams_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          <progress> @linkml:Float ;
+          <progressToken> @<ProgressToken> ;
+          <total> @linkml:Float ? ;
+          <message> @linkml:String ? ;
+          <_meta> @<MetaObject> ?
+       ) ;
+       rdf:type [ <ProgressNotificationParams> ] ?
+    )
+}
+
+<Prompt> CLOSED {
+    (  $<Prompt_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          &<HasName_tes> ;
+          rdf:type [ <HasName> ] ? ;
+          &<HasIcons_tes> ;
+          rdf:type [ <HasIcons> ] ? ;
+          <arguments> @<PromptArgument> * ;
+          dct:description @linkml:String ? ;
+          schema1:name @linkml:String ;
+          <_meta> @<MetaObject> ? ;
+          dct:title @linkml:String ? ;
+          <icons> @<Icon> *
+       ) ;
+       rdf:type [ <Prompt> ] ?
+    )
+}
+
+<PromptArgument> CLOSED {
+    (  $<PromptArgument_tes> (  &<HasName_tes> ;
+          rdf:type [ <HasName> ] ? ;
+          dct:description @linkml:String ? ;
+          <required> @linkml:Boolean ? ;
+          <required_field> @linkml:Boolean ? ;
+          schema1:name @linkml:String ;
+          dct:title @linkml:String ?
+       ) ;
+       rdf:type [ <PromptArgument> ] ?
+    )
+}
+
+<PromptListChangedNotification> CLOSED {
+    (  $<PromptListChangedNotification_tes> (  &<JSONRPCNotification_tes> ;
+          rdf:type [ <JSONRPCNotification> ] ? ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <PromptListChangedNotification> ] ?
+    )
+}
+
+<PromptMessage> CLOSED {
+    (  $<PromptMessage_tes> (  <content> @<ContentBlock> ;
+          <role> [ <https://w3id.org/lmodel/mcp/Role#assistant> <https://w3id.org/lmodel/mcp/Role#user> ]
+       ) ;
+       rdf:type [ <PromptMessage> ] ?
+    )
+}
+
+<PromptReference> CLOSED {
+    (  $<PromptReference_tes> (  &<HasName_tes> ;
+          rdf:type [ <HasName> ] ? ;
+          <type> @linkml:String ;
+          schema1:name @linkml:String ;
+          dct:title @linkml:String ?
+       ) ;
+       rdf:type [ <PromptReference> ] ?
+    )
+}
+
+<PromptsCapability> CLOSED {
+    (  $<PromptsCapability_tes> <listChanged> @linkml:Boolean ? ;
+       rdf:type [ <PromptsCapability> ] ?
+    )
+}
+
+<ReadResourceRequest> CLOSED {
+    (  $<ReadResourceRequest_tes> (  &<JSONRPCRequest_tes> ;
+          rdf:type [ <JSONRPCRequest> ] ? ;
+          <params> @<ReadResourceRequestParams> ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <ReadResourceRequest> ] ?
+    )
+}
+
+<ReadResourceRequestParams> CLOSED {
+    (  $<ReadResourceRequestParams_tes> <uri> @linkml:Uri ;
+       rdf:type [ <ReadResourceRequestParams> ] ?
+    )
+}
+
+<ReadResourceResult> CLOSED {
+    (  $<ReadResourceResult_tes> (  &<Result_tes> ;
+          rdf:type [ <Result> ] ? ;
+          <contents> @<ResourceContents> +
+       ) ;
+       rdf:type [ <ReadResourceResult> ] ?
+    )
+}
+
+<ReadResourceResultResponse> CLOSED {
+    (  $<ReadResourceResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<ReadResourceResult>
+       ) ;
+       rdf:type [ <ReadResourceResultResponse> ] ?
+    )
+}
+
+<RelatedTaskMetadata> CLOSED {
+    (  $<RelatedTaskMetadata_tes> <taskId> @linkml:String ;
+       rdf:type [ <RelatedTaskMetadata> ] ?
+    )
+}
+
+<Resource> CLOSED {
+    (  $<Resource_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          &<HasAnnotations_tes> ;
+          rdf:type [ <HasAnnotations> ] ? ;
+          &<HasName_tes> ;
+          rdf:type [ <HasName> ] ? ;
+          &<HasIcons_tes> ;
+          rdf:type [ <HasIcons> ] ? ;
+          <uri> @linkml:Uri ;
+          <mimeType> @linkml:String ? ;
+          dct:description @linkml:String ? ;
+          <size> @linkml:Integer ? ;
+          schema1:name @linkml:String ;
+          <_meta> @<MetaObject> ? ;
+          <annotations> @<Annotations> ? ;
+          dct:title @linkml:String ? ;
+          <icons> @<Icon> *
+       ) ;
+       rdf:type [ <Resource> ] ?
+    )
+}
+
+<ResourceContents> CLOSED {
+    (  $<ResourceContents_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          <uri> @linkml:Uri ;
+          <mimeType> @linkml:String ? ;
+          <text> @linkml:String ? ;
+          <blob> @linkml:String ? ;
+          <_meta> @<MetaObject> ?
+       ) ;
+       rdf:type [ <ResourceContents> ] ?
+    )
+}
+
+<ResourceLink> CLOSED {
+    (  $<ResourceLink_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          &<HasAnnotations_tes> ;
+          rdf:type [ <HasAnnotations> ] ? ;
+          &<HasName_tes> ;
+          rdf:type [ <HasName> ] ? ;
+          &<HasIcons_tes> ;
+          rdf:type [ <HasIcons> ] ? ;
+          <uri> @linkml:Uri ;
+          <mimeType> @linkml:String ? ;
+          dct:description @linkml:String ? ;
+          <size> @linkml:Integer ? ;
+          <type> @linkml:String ;
+          schema1:name @linkml:String ;
+          <_meta> @<MetaObject> ? ;
+          <annotations> @<Annotations> ? ;
+          dct:title @linkml:String ? ;
+          <icons> @<Icon> *
+       ) ;
+       rdf:type [ <ResourceLink> ] ?
+    )
+}
+
+<ResourceListChangedNotification> CLOSED {
+    (  $<ResourceListChangedNotification_tes> (  &<JSONRPCNotification_tes> ;
+          rdf:type [ <JSONRPCNotification> ] ? ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <ResourceListChangedNotification> ] ?
+    )
+}
+
+<ResourcesCapability> CLOSED {
+    (  $<ResourcesCapability_tes> (  <listChanged> @linkml:Boolean ? ;
+          <subscribe> @linkml:Boolean ?
+       ) ;
+       rdf:type [ <ResourcesCapability> ] ?
+    )
+}
+
+<ResourceTemplate> CLOSED {
+    (  $<ResourceTemplate_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          &<HasAnnotations_tes> ;
+          rdf:type [ <HasAnnotations> ] ? ;
+          &<HasName_tes> ;
+          rdf:type [ <HasName> ] ? ;
+          &<HasIcons_tes> ;
+          rdf:type [ <HasIcons> ] ? ;
+          <uriTemplate> @linkml:String ;
+          <mimeType> @linkml:String ? ;
+          dct:description @linkml:String ? ;
+          schema1:name @linkml:String ;
+          <_meta> @<MetaObject> ? ;
+          <annotations> @<Annotations> ? ;
+          dct:title @linkml:String ? ;
+          <icons> @<Icon> *
+       ) ;
+       rdf:type [ <ResourceTemplate> ] ?
+    )
+}
+
+<ResourceTemplateReference> CLOSED {
+    (  $<ResourceTemplateReference_tes> (  <type> @linkml:String ;
+          <uri> @linkml:Uri
+       ) ;
+       rdf:type [ <ResourceTemplateReference> ] ?
+    )
+}
+
+<ResourceUpdatedNotification> CLOSED {
+    (  $<ResourceUpdatedNotification_tes> (  &<JSONRPCNotification_tes> ;
+          rdf:type [ <JSONRPCNotification> ] ? ;
+          <params> @<ResourceUpdatedNotificationParams> ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <ResourceUpdatedNotification> ] ?
+    )
+}
+
+<ResourceUpdatedNotificationParams> CLOSED {
+    (  $<ResourceUpdatedNotificationParams_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          <uri> @linkml:Uri ;
+          <_meta> @<MetaObject> ?
+       ) ;
+       rdf:type [ <ResourceUpdatedNotificationParams> ] ?
+    )
+}
+
+<Result>  (
+    CLOSED {
+       (  $<Result_tes> (  &<HasMeta_tes> ;
+             rdf:type [ <HasMeta> ] ? ;
+             <_meta> @<MetaObject> ?
+          ) ;
+          rdf:type [ <Result> ] ?
+       )
+    } OR @<CallToolResult> OR @<CancelTaskResult> OR @<CompleteResult> OR @<CreateMessageResult> OR @<CreateTaskResult> OR
+    @<ElicitResult> OR @<GetPromptResult> OR @<GetTaskPayloadResult> OR @<GetTaskResult> OR @<InitializeResult> OR
+    @<ListPromptsResult> OR @<ListResourceTemplatesResult> OR @<ListResourcesResult> OR @<ListRootsResult> OR @<ListTasksResult> OR
+    @<ListToolsResult> OR @<ReadResourceResult>
+)
+
+<Root> CLOSED {
+    (  $<Root_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          <uri> @linkml:Uri ;
+          schema1:name @linkml:String ? ;
+          <_meta> @<MetaObject> ?
+       ) ;
+       rdf:type [ <Root> ] ?
+    )
+}
+
+<RootsCapability> CLOSED {
+    (  $<RootsCapability_tes> <listChanged> @linkml:Boolean ? ;
+       rdf:type [ <RootsCapability> ] ?
+    )
+}
+
+<RootsListChangedNotification> CLOSED {
+    (  $<RootsListChangedNotification_tes> (  &<JSONRPCNotification_tes> ;
+          rdf:type [ <JSONRPCNotification> ] ? ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <RootsListChangedNotification> ] ?
+    )
+}
+
+<SamplingCapability> CLOSED {
+    (  $<SamplingCapability_tes> rdf:type . * ;
+       rdf:type [ <SamplingCapability> ] ?
+    )
+}
+
+<SamplingMessage> CLOSED {
+    (  $<SamplingMessage_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          <content> @<ContentBlock> ;
+          <role> [ <https://w3id.org/lmodel/mcp/Role#assistant> <https://w3id.org/lmodel/mcp/Role#user> ] ;
+          <_meta> @<MetaObject> ?
+       ) ;
+       rdf:type [ <SamplingMessage> ] ?
+    )
+}
+
+<SamplingMessageContentBlock> CLOSED {
+    (  $<SamplingMessageContentBlock_tes> rdf:type . * ;
+       rdf:type [ <SamplingMessageContentBlock> ] ?
+    )
+}
+
+<SchemaItems> CLOSED {
+    (  $<SchemaItems_tes> (  <type> @linkml:String ? ;
+          <enum> @linkml:String * ;
+          <anyOf> @<EnumOption> *
+       ) ;
+       rdf:type [ <SchemaItems> ] ?
+    )
+}
+
+<SchemaProperties> CLOSED {
+    (  $<SchemaProperties_tes> (  schema1:name @<JsonSchema> ? ;
+          <email> @<JsonSchema> ? ;
+          <age> @<JsonSchema> ? ;
+          <city> @<JsonSchema> ? ;
+          <location> @<JsonSchema> ? ;
+          <a> @<JsonSchema> ? ;
+          <b> @<JsonSchema> ? ;
+          <temperature> @<JsonSchema> ? ;
+          <conditions> @<JsonSchema> ? ;
+          <humidity> @<JsonSchema> ?
+       ) ;
+       rdf:type [ <SchemaProperties> ] ?
+    )
+}
+
+<ServerCapabilities> CLOSED {
+    (  $<ServerCapabilities_tes> (  <experimental> @<JsonValue> ? ;
+          <extensions> @<ExtensionsCapability> ? ;
+          <prompts> @<PromptsCapability> * ;
+          <resources> @<ResourcesCapability> * ;
+          <tools> @<ToolsCapability> * ;
+          <tasks> @<TasksCapability> *
+       ) ;
+       rdf:type [ <ServerCapabilities> ] ?
+    )
+}
+
+<ServerNotification> CLOSED {
+    (  $<ServerNotification_tes> rdf:type . * ;
+       rdf:type [ <ServerNotification> ] ?
+    )
+}
+
+<ServerRequest> CLOSED {
+    (  $<ServerRequest_tes> rdf:type . * ;
+       rdf:type [ <ServerRequest> ] ?
+    )
+}
+
+<ServerResult> CLOSED {
+    (  $<ServerResult_tes> rdf:type . * ;
+       rdf:type [ <ServerResult> ] ?
+    )
+}
+
+<SetLevelRequest> CLOSED {
+    (  $<SetLevelRequest_tes> (  &<JSONRPCRequest_tes> ;
+          rdf:type [ <JSONRPCRequest> ] ? ;
+          <params> @<SetLevelRequestParams> ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <SetLevelRequest> ] ?
+    )
+}
+
+<SetLevelRequestParams> CLOSED {
+    (  $<SetLevelRequestParams_tes> <level> [ <https://w3id.org/lmodel/mcp/LoggingLevel#alert>
+          <https://w3id.org/lmodel/mcp/LoggingLevel#critical> <https://w3id.org/lmodel/mcp/LoggingLevel#debug>
+          <https://w3id.org/lmodel/mcp/LoggingLevel#emergency> <https://w3id.org/lmodel/mcp/LoggingLevel#error>
+          <https://w3id.org/lmodel/mcp/LoggingLevel#info> <https://w3id.org/lmodel/mcp/LoggingLevel#notice>
+          <https://w3id.org/lmodel/mcp/LoggingLevel#warning> ] ;
+       rdf:type [ <SetLevelRequestParams> ] ?
+    )
+}
+
+<SetLevelResultResponse> CLOSED {
+    (  $<SetLevelResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<Result> ?
+       ) ;
+       rdf:type [ <SetLevelResultResponse> ] ?
+    )
+}
+
+<SingleSelectEnumSchema> CLOSED {
+    (  $<SingleSelectEnumSchema_tes> rdf:type . * ;
+       rdf:type [ <SingleSelectEnumSchema> ] ?
+    )
+}
+
+<StringSchema> CLOSED {
+    (  $<StringSchema_tes> (  <type> @linkml:String ;
+          <default> @<JsonValue> ? ;
+          <default_value> @linkml:String ? ;
+          dct:description @linkml:String ? ;
+          <format> [ <https://w3id.org/lmodel/mcp/StringFormatEnum#date> <https://w3id.org/lmodel/mcp/StringFormatEnum#date-time>
+             <https://w3id.org/lmodel/mcp/StringFormatEnum#email> <https://w3id.org/lmodel/mcp/StringFormatEnum#uri> ] ? ;
+          <minLength> @linkml:Integer ? ;
+          <maxLength> @linkml:Integer ? ;
+          dct:title @linkml:String ?
+       ) ;
+       rdf:type [ <StringSchema> ] ?
+    )
+}
+
+<StructuredContentData> CLOSED {
+    (  $<StructuredContentData_tes> (  <temperature> @linkml:Float ? ;
+          <conditions> @linkml:String ? ;
+          <humidity> @linkml:Float ?
+       ) ;
+       rdf:type [ <StructuredContentData> ] ?
+    )
+}
+
+<SubscribeRequest> CLOSED {
+    (  $<SubscribeRequest_tes> (  &<JSONRPCRequest_tes> ;
+          rdf:type [ <JSONRPCRequest> ] ? ;
+          <params> @<SubscribeRequestParams> ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <SubscribeRequest> ] ?
+    )
+}
+
+<SubscribeRequestParams> CLOSED {
+    (  $<SubscribeRequestParams_tes> <uri> @linkml:Uri ;
+       rdf:type [ <SubscribeRequestParams> ] ?
+    )
+}
+
+<SubscribeResultResponse> CLOSED {
+    (  $<SubscribeResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<Result> ?
+       ) ;
+       rdf:type [ <SubscribeResultResponse> ] ?
+    )
+}
+
+<Task> CLOSED {
+    (  $<Task_tes> (  <taskId> @linkml:String ;
+          <status> [ <https://w3id.org/lmodel/mcp/TaskStatusEnum#cancelled> <https://w3id.org/lmodel/mcp/TaskStatusEnum#completed>
+             <https://w3id.org/lmodel/mcp/TaskStatusEnum#failed> <https://w3id.org/lmodel/mcp/TaskStatusEnum#input_required>
+             <https://w3id.org/lmodel/mcp/TaskStatusEnum#working> ] ;
+          <createdAt> @linkml:String ;
+          <lastUpdatedAt> @linkml:String ;
+          <ttl> @linkml:Integer ;
+          <statusMessage> @linkml:String ? ;
+          <pollInterval> @linkml:Integer ?
+       ) ;
+       rdf:type [ <Task> ] ?
+    )
+}
+
+<TaskMetadata> CLOSED {
+    (  $<TaskMetadata_tes> <ttl> @linkml:Integer ? ;
+       rdf:type [ <TaskMetadata> ] ?
+    )
+}
+
+<TaskRequestCapabilities> CLOSED {
+    (  $<TaskRequestCapabilities_tes> (  <elicitation> @<ElicitationCapability> ? ;
+          <sampling> @<SamplingCapability> ? ;
+          <tools> @<ToolsCapability> *
+       ) ;
+       rdf:type [ <TaskRequestCapabilities> ] ?
+    )
+}
+
+<TasksCapability> CLOSED {
+    (  $<TasksCapability_tes> <requests> @<TaskRequestCapabilities> ? ;
+       rdf:type [ <TasksCapability> ] ?
+    )
+}
+
+<TaskStatusNotification> CLOSED {
+    (  $<TaskStatusNotification_tes> (  &<JSONRPCNotification_tes> ;
+          rdf:type [ <JSONRPCNotification> ] ? ;
+          <params> @<TaskStatusNotificationParams> ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <TaskStatusNotification> ] ?
+    )
+}
+
+<TaskStatusNotificationParams> CLOSED {
+    (  $<TaskStatusNotificationParams_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          <taskId> @linkml:String ;
+          <status> [ <https://w3id.org/lmodel/mcp/TaskStatusEnum#cancelled> <https://w3id.org/lmodel/mcp/TaskStatusEnum#completed>
+             <https://w3id.org/lmodel/mcp/TaskStatusEnum#failed> <https://w3id.org/lmodel/mcp/TaskStatusEnum#input_required>
+             <https://w3id.org/lmodel/mcp/TaskStatusEnum#working> ] ;
+          <createdAt> @linkml:String ;
+          <lastUpdatedAt> @linkml:String ;
+          <ttl> @linkml:Integer ;
+          <statusMessage> @linkml:String ? ;
+          <pollInterval> @linkml:Integer ? ;
+          <_meta> @<MetaObject> ?
+       ) ;
+       rdf:type [ <TaskStatusNotificationParams> ] ?
+    )
+}
+
+<TextContent> CLOSED {
+    (  $<TextContent_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          &<HasAnnotations_tes> ;
+          rdf:type [ <HasAnnotations> ] ? ;
+          <text> @linkml:String ;
+          <type> @linkml:String ;
+          <_meta> @<MetaObject> ? ;
+          <annotations> @<Annotations> ?
+       ) ;
+       rdf:type [ <TextContent> ] ?
+    )
+}
+
+<TextResourceContents> CLOSED {
+    (  $<TextResourceContents_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          <uri> @linkml:Uri ;
+          <mimeType> @linkml:String ? ;
+          <text> @linkml:String ;
+          <_meta> @<MetaObject> ?
+       ) ;
+       rdf:type [ <TextResourceContents> ] ?
+    )
+}
+
+<TitledMultiSelectEnumSchema> CLOSED {
+    (  $<TitledMultiSelectEnumSchema_tes> (  <type> @linkml:String ;
+          <items> @<SchemaItems> ? ;
+          <default> @linkml:String * ;
+          <default_value> @linkml:String ? ;
+          dct:description @linkml:String ? ;
+          dct:title @linkml:String ? ;
+          <minItems> @linkml:Integer ? ;
+          <maxItems> @linkml:Integer ?
+       ) ;
+       rdf:type [ <TitledMultiSelectEnumSchema> ] ?
+    )
+}
+
+<TitledSingleSelectEnumSchema> CLOSED {
+    (  $<TitledSingleSelectEnumSchema_tes> (  <type> @linkml:String ;
+          <oneOf> @<EnumOption> * ;
+          <default> @<JsonValue> ? ;
+          <default_value> @linkml:String ? ;
+          dct:description @linkml:String ? ;
+          dct:title @linkml:String ?
+       ) ;
+       rdf:type [ <TitledSingleSelectEnumSchema> ] ?
+    )
+}
+
+<Tool> CLOSED {
+    (  $<Tool_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          &<HasName_tes> ;
+          rdf:type [ <HasName> ] ? ;
+          &<HasIcons_tes> ;
+          rdf:type [ <HasIcons> ] ? ;
+          <annotations> @<ToolAnnotations> ? ;
+          <execution> @<ToolExecution> ? ;
+          dct:description @linkml:String ? ;
+          <inputSchema> @<JsonSchema> ;
+          <outputSchema> @<JsonSchema> ? ;
+          schema1:name @linkml:String ;
+          <_meta> @<MetaObject> ? ;
+          dct:title @linkml:String ? ;
+          <icons> @<Icon> *
+       ) ;
+       rdf:type [ <Tool> ] ?
+    )
+}
+
+<ToolAnnotations> CLOSED {
+    (  $<ToolAnnotations_tes> (  dct:title @linkml:String ? ;
+          <destructiveHint> @linkml:Boolean ? ;
+          <idempotentHint> @linkml:Boolean ? ;
+          <openWorldHint> @linkml:Boolean ? ;
+          <readOnlyHint> @linkml:Boolean ?
+       ) ;
+       rdf:type [ <ToolAnnotations> ] ?
+    )
+}
+
+<ToolChoice> CLOSED {
+    (  $<ToolChoice_tes> <mode> [ <https://w3id.org/lmodel/mcp/ToolChoiceModeEnum#auto>
+          <https://w3id.org/lmodel/mcp/ToolChoiceModeEnum#none> <https://w3id.org/lmodel/mcp/ToolChoiceModeEnum#required> ] ? ;
+       rdf:type [ <ToolChoice> ] ?
+    )
+}
+
+<ToolExecution> CLOSED {
+    (  $<ToolExecution_tes> <taskSupport> [ <https://w3id.org/lmodel/mcp/TaskSupportEnum#forbidden>
+          <https://w3id.org/lmodel/mcp/TaskSupportEnum#optional> <https://w3id.org/lmodel/mcp/TaskSupportEnum#required> ] ? ;
+       rdf:type [ <ToolExecution> ] ?
+    )
+}
+
+<ToolInput> CLOSED {
+    (  $<ToolInput_tes> (  <city> @linkml:String ? ;
+          <location> @linkml:String ?
+       ) ;
+       rdf:type [ <ToolInput> ] ?
+    )
+}
+
+<ToolListChangedNotification> CLOSED {
+    (  $<ToolListChangedNotification_tes> (  &<JSONRPCNotification_tes> ;
+          rdf:type [ <JSONRPCNotification> ] ? ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <ToolListChangedNotification> ] ?
+    )
+}
+
+<ToolResultContent> CLOSED {
+    (  $<ToolResultContent_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          <content> @<ContentBlock> + ;
+          <type> @linkml:String ;
+          <toolUseId> @linkml:String ;
+          <isError> @linkml:Boolean ? ;
+          <structuredContent> @<StructuredContentData> ? ;
+          <_meta> @<MetaObject> ?
+       ) ;
+       rdf:type [ <ToolResultContent> ] ?
+    )
+}
+
+<ToolsCapability> CLOSED {
+    (  $<ToolsCapability_tes> <listChanged> @linkml:Boolean ? ;
+       rdf:type [ <ToolsCapability> ] ?
+    )
+}
+
+<ToolUseContent> CLOSED {
+    (  $<ToolUseContent_tes> (  &<HasMeta_tes> ;
+          rdf:type [ <HasMeta> ] ? ;
+          <id> @linkml:String ;
+          <type> @linkml:String ;
+          schema1:name @linkml:String ;
+          <input> @<ToolInput> ;
+          <_meta> @<MetaObject> ?
+       ) ;
+       rdf:type [ <ToolUseContent> ] ?
+    )
+}
+
+<UnsubscribeRequest> CLOSED {
+    (  $<UnsubscribeRequest_tes> (  &<JSONRPCRequest_tes> ;
+          rdf:type [ <JSONRPCRequest> ] ? ;
+          <params> @<UnsubscribeRequestParams> ;
+          <method> @linkml:String
+       ) ;
+       rdf:type [ <UnsubscribeRequest> ] ?
+    )
+}
+
+<UnsubscribeRequestParams> CLOSED {
+    (  $<UnsubscribeRequestParams_tes> <uri> @linkml:Uri ;
+       rdf:type [ <UnsubscribeRequestParams> ] ?
+    )
+}
+
+<UnsubscribeResultResponse> CLOSED {
+    (  $<UnsubscribeResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
+          rdf:type [ <JSONRPCResultResponse> ] ? ;
+          <result> @<Result> ?
+       ) ;
+       rdf:type [ <UnsubscribeResultResponse> ] ?
+    )
+}
+
+<UntitledMultiSelectEnumSchema> CLOSED {
+    (  $<UntitledMultiSelectEnumSchema_tes> (  <type> @linkml:String ;
+          <items> @<SchemaItems> ? ;
+          <default> @linkml:String * ;
+          <default_value> @linkml:String ? ;
+          dct:description @linkml:String ? ;
+          dct:title @linkml:String ? ;
+          <minItems> @linkml:Integer ? ;
+          <maxItems> @linkml:Integer ?
+       ) ;
+       rdf:type [ <UntitledMultiSelectEnumSchema> ] ?
+    )
+}
+
+<UntitledSingleSelectEnumSchema> CLOSED {
+    (  $<UntitledSingleSelectEnumSchema_tes> (  <type> @linkml:String ;
+          <enum> @linkml:String * ;
+          <enum_values> @linkml:String * ;
+          <default> @<JsonValue> ? ;
+          <default_value> @linkml:String ? ;
+          dct:description @linkml:String ? ;
+          dct:title @linkml:String ?
+       ) ;
+       rdf:type [ <UntitledSingleSelectEnumSchema> ] ?
+    )
+}
+
+<URLElicitation> CLOSED {
+    (  $<URLElicitation_tes> (  <mode> @linkml:String ? ;
+          <elicitationId> @linkml:String ? ;
+          <message> @linkml:String ? ;
+          <url> @linkml:Uri ?
+       ) ;
+       rdf:type [ <URLElicitation> ] ?
+    )
+}
+
+<URLElicitationRequiredError> CLOSED {
+    (  $<URLElicitationRequiredError_tes> (  &<JSONRPCErrorResponse_tes> ;
+          rdf:type [ <JSONRPCErrorResponse> ] ?
+       ) ;
+       rdf:type [ <URLElicitationRequiredError> ] ?
+    )
+}

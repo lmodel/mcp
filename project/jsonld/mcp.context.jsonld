@@ -1,0 +1,1135 @@
+{
+   "@context": {
+      "xsd": "http://www.w3.org/2001/XMLSchema#",
+      "dct": "http://purl.org/dc/terms/",
+      "jsonrpc": {
+         "@id": "jsonrpc"
+      },
+      "linkml": "https://w3id.org/linkml/",
+      "mcp": "https://w3id.org/lmodel/mcp/",
+      "schema": "http://schema.org/",
+      "skos": "http://www.w3.org/2004/02/skos/core#",
+      "@vocab": "https://w3id.org/lmodel/mcp/",
+      "_meta": {
+         "@type": "@id",
+         "@id": "_meta"
+      },
+      "a": {
+         "@type": "@id",
+         "@id": "a"
+      },
+      "action": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "action"
+      },
+      "additionalProperties": {
+         "@type": "xsd:boolean",
+         "@id": "additionalProperties"
+      },
+      "age": {
+         "@type": "xsd:integer",
+         "@id": "age"
+      },
+      "annotations": {
+         "@type": "@id",
+         "@id": "annotations"
+      },
+      "anyOf": {
+         "@type": "@id",
+         "@id": "anyOf"
+      },
+      "apps_extension": {
+         "@type": "@id",
+         "@id": "apps_extension"
+      },
+      "argument": {
+         "@type": "@id",
+         "@id": "argument"
+      },
+      "arguments": {
+         "@type": "@id",
+         "@id": "arguments"
+      },
+      "audience": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "audience"
+      },
+      "b": {
+         "@type": "@id",
+         "@id": "b"
+      },
+      "blob": {
+         "@id": "blob"
+      },
+      "capabilities": {
+         "@id": "capabilities"
+      },
+      "city": {
+         "@id": "city"
+      },
+      "clientInfo": {
+         "@type": "@id",
+         "@id": "clientInfo"
+      },
+      "code": {
+         "@type": "xsd:integer",
+         "@id": "code"
+      },
+      "completion": {
+         "@type": "@id",
+         "@id": "completion"
+      },
+      "conditions": {
+         "@id": "conditions"
+      },
+      "const": {
+         "@id": "const"
+      },
+      "content": {
+         "@type": "@id",
+         "@id": "content"
+      },
+      "contents": {
+         "@type": "@id",
+         "@id": "contents"
+      },
+      "context": {
+         "@type": "@id",
+         "@id": "context"
+      },
+      "costPriority": {
+         "@type": "xsd:float",
+         "@id": "costPriority"
+      },
+      "createdAt": {
+         "@id": "createdAt"
+      },
+      "cursor": {
+         "@id": "cursor"
+      },
+      "data": {
+         "@id": "data"
+      },
+      "default": {
+         "@type": "xsd:anyType",
+         "@id": "default"
+      },
+      "default_value": {
+         "@id": "default_value"
+      },
+      "description": {
+         "@id": "dct:description"
+      },
+      "destructiveHint": {
+         "@type": "xsd:boolean",
+         "@id": "destructiveHint"
+      },
+      "details": {
+         "@type": "@id",
+         "@id": "details"
+      },
+      "elicitation": {
+         "@type": "xsd:anyType",
+         "@id": "elicitation"
+      },
+      "elicitationId": {
+         "@id": "elicitationId"
+      },
+      "elicitations": {
+         "@type": "@id",
+         "@id": "elicitations"
+      },
+      "email": {
+         "@id": "email"
+      },
+      "enum": {
+         "@id": "enum"
+      },
+      "enum_values": {
+         "@id": "enum_values"
+      },
+      "enumNames": {
+         "@id": "enumNames"
+      },
+      "error": {
+         "@type": "@id",
+         "@id": "error"
+      },
+      "execution": {
+         "@type": "@id",
+         "@id": "execution"
+      },
+      "experimental": {
+         "@type": "xsd:anyType",
+         "@id": "experimental"
+      },
+      "extensions": {
+         "@type": "xsd:anyType",
+         "@id": "extensions"
+      },
+      "format": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "format"
+      },
+      "framework": {
+         "@id": "framework"
+      },
+      "hasMore": {
+         "@type": "xsd:boolean",
+         "@id": "hasMore"
+      },
+      "hints": {
+         "@type": "@id",
+         "@id": "hints"
+      },
+      "host": {
+         "@id": "host"
+      },
+      "humidity": {
+         "@type": "xsd:float",
+         "@id": "humidity"
+      },
+      "icons": {
+         "@type": "@id",
+         "@id": "icons"
+      },
+      "id": {
+         "@id": "id"
+      },
+      "idempotentHint": {
+         "@type": "xsd:boolean",
+         "@id": "idempotentHint"
+      },
+      "includeContext": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "includeContext"
+      },
+      "input": {
+         "@type": "@id",
+         "@id": "input"
+      },
+      "inputSchema": {
+         "@type": "@id",
+         "@id": "inputSchema"
+      },
+      "instructions": {
+         "@id": "instructions"
+      },
+      "intelligencePriority": {
+         "@type": "xsd:float",
+         "@id": "intelligencePriority"
+      },
+      "isError": {
+         "@type": "xsd:boolean",
+         "@id": "isError"
+      },
+      "items": {
+         "@type": "@id",
+         "@id": "items"
+      },
+      "language": {
+         "@id": "language"
+      },
+      "lastModified": {
+         "@id": "lastModified"
+      },
+      "lastUpdatedAt": {
+         "@id": "lastUpdatedAt"
+      },
+      "level": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "level"
+      },
+      "listChanged": {
+         "@type": "xsd:boolean",
+         "@id": "listChanged"
+      },
+      "location": {
+         "@id": "location"
+      },
+      "logger": {
+         "@id": "logger"
+      },
+      "maximum": {
+         "@type": "xsd:integer",
+         "@id": "maximum"
+      },
+      "maxItems": {
+         "@type": "xsd:integer",
+         "@id": "maxItems"
+      },
+      "maxLength": {
+         "@type": "xsd:integer",
+         "@id": "maxLength"
+      },
+      "maxTokens": {
+         "@type": "xsd:integer",
+         "@id": "maxTokens"
+      },
+      "message": {
+         "@id": "message"
+      },
+      "messages": {
+         "@type": "@id",
+         "@id": "messages"
+      },
+      "method": {
+         "@id": "method"
+      },
+      "mimeType": {
+         "@id": "mimeType"
+      },
+      "mimeTypes": {
+         "@id": "mimeTypes"
+      },
+      "minimum": {
+         "@type": "xsd:integer",
+         "@id": "minimum"
+      },
+      "minItems": {
+         "@type": "xsd:integer",
+         "@id": "minItems"
+      },
+      "minLength": {
+         "@type": "xsd:integer",
+         "@id": "minLength"
+      },
+      "mode": {
+         "@id": "mode"
+      },
+      "model": {
+         "@id": "model"
+      },
+      "modelPreferences": {
+         "@type": "@id",
+         "@id": "modelPreferences"
+      },
+      "name": {
+         "@id": "schema:name"
+      },
+      "nextCursor": {
+         "@id": "nextCursor"
+      },
+      "oneOf": {
+         "@type": "@id",
+         "@id": "oneOf"
+      },
+      "openWorldHint": {
+         "@type": "xsd:boolean",
+         "@id": "openWorldHint"
+      },
+      "outputSchema": {
+         "@type": "@id",
+         "@id": "outputSchema"
+      },
+      "params": {
+         "@id": "params"
+      },
+      "pollInterval": {
+         "@type": "xsd:integer",
+         "@id": "pollInterval"
+      },
+      "port": {
+         "@type": "xsd:integer",
+         "@id": "port"
+      },
+      "priority": {
+         "@type": "xsd:float",
+         "@id": "priority"
+      },
+      "progress": {
+         "@type": "xsd:float",
+         "@id": "progress"
+      },
+      "progressToken": {
+         "@id": "progressToken"
+      },
+      "prompts": {
+         "@type": "@id",
+         "@id": "prompts"
+      },
+      "properties": {
+         "@type": "@id",
+         "@id": "properties"
+      },
+      "protocolVersion": {
+         "@id": "protocolVersion"
+      },
+      "readOnlyHint": {
+         "@type": "xsd:boolean",
+         "@id": "readOnlyHint"
+      },
+      "reason": {
+         "@id": "reason"
+      },
+      "ref": {
+         "@type": "@id",
+         "@id": "ref"
+      },
+      "requestedSchema": {
+         "@type": "@id",
+         "@id": "requestedSchema"
+      },
+      "requestId": {
+         "@id": "requestId"
+      },
+      "requests": {
+         "@type": "@id",
+         "@id": "requests"
+      },
+      "required": {
+         "@type": "xsd:boolean",
+         "@id": "required"
+      },
+      "required_field": {
+         "@type": "xsd:boolean",
+         "@id": "required_field"
+      },
+      "required_list": {
+         "@id": "required_list"
+      },
+      "resource": {
+         "@type": "@id",
+         "@id": "resource"
+      },
+      "resources": {
+         "@type": "@id",
+         "@id": "resources"
+      },
+      "resourceTemplates": {
+         "@type": "@id",
+         "@id": "resourceTemplates"
+      },
+      "result": {
+         "@type": "@id",
+         "@id": "result"
+      },
+      "role": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "role"
+      },
+      "roots": {
+         "@type": "@id",
+         "@id": "roots"
+      },
+      "sampling": {
+         "@type": "xsd:anyType",
+         "@id": "sampling"
+      },
+      "schemaUri": {
+         "@id": "schemaUri"
+      },
+      "serverInfo": {
+         "@type": "@id",
+         "@id": "serverInfo"
+      },
+      "size": {
+         "@type": "xsd:integer",
+         "@id": "size"
+      },
+      "sizes": {
+         "@id": "sizes"
+      },
+      "speedPriority": {
+         "@type": "xsd:float",
+         "@id": "speedPriority"
+      },
+      "src": {
+         "@type": "xsd:anyURI",
+         "@id": "src"
+      },
+      "status": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "status"
+      },
+      "statusMessage": {
+         "@id": "statusMessage"
+      },
+      "stopReason": {
+         "@id": "stopReason"
+      },
+      "stopSequences": {
+         "@id": "stopSequences"
+      },
+      "structuredContent": {
+         "@type": "@id",
+         "@id": "structuredContent"
+      },
+      "subscribe": {
+         "@type": "xsd:boolean",
+         "@id": "subscribe"
+      },
+      "systemPrompt": {
+         "@id": "systemPrompt"
+      },
+      "task": {
+         "@type": "@id",
+         "@id": "task"
+      },
+      "taskId": {
+         "@id": "taskId"
+      },
+      "tasks": {
+         "@type": "@id",
+         "@id": "tasks"
+      },
+      "taskSupport": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "taskSupport"
+      },
+      "temperature": {
+         "@type": "xsd:float",
+         "@id": "temperature"
+      },
+      "text": {
+         "@id": "text"
+      },
+      "theme": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "theme"
+      },
+      "title": {
+         "@id": "dct:title"
+      },
+      "toolChoice": {
+         "@type": "@id",
+         "@id": "toolChoice"
+      },
+      "tools": {
+         "@type": "@id",
+         "@id": "tools"
+      },
+      "toolUseId": {
+         "@id": "toolUseId"
+      },
+      "total": {
+         "@type": "xsd:float",
+         "@id": "total"
+      },
+      "ttl": {
+         "@type": "xsd:integer",
+         "@id": "ttl"
+      },
+      "type": {
+         "@id": "type"
+      },
+      "uri": {
+         "@type": "xsd:anyURI",
+         "@id": "uri"
+      },
+      "uriTemplate": {
+         "@id": "uriTemplate"
+      },
+      "url": {
+         "@type": "xsd:anyURI",
+         "@id": "url"
+      },
+      "value": {
+         "@id": "value"
+      },
+      "values": {
+         "@id": "values"
+      },
+      "version": {
+         "@id": "version"
+      },
+      "websiteUrl": {
+         "@type": "xsd:anyURI",
+         "@id": "websiteUrl"
+      },
+      "Annotations": {
+         "@id": "Annotations"
+      },
+      "ArgumentMap": {
+         "@id": "ArgumentMap"
+      },
+      "AudioContent": {
+         "@id": "AudioContent"
+      },
+      "BlobResourceContents": {
+         "@id": "BlobResourceContents"
+      },
+      "BooleanSchema": {
+         "@id": "BooleanSchema"
+      },
+      "CallToolRequest": {
+         "@id": "CallToolRequest"
+      },
+      "CallToolRequestParams": {
+         "@id": "CallToolRequestParams"
+      },
+      "CallToolResult": {
+         "@id": "CallToolResult"
+      },
+      "CallToolResultResponse": {
+         "@id": "CallToolResultResponse"
+      },
+      "CancelledNotification": {
+         "@id": "CancelledNotification"
+      },
+      "CancelledNotificationParams": {
+         "@id": "CancelledNotificationParams"
+      },
+      "CancelTaskRequest": {
+         "@id": "CancelTaskRequest"
+      },
+      "CancelTaskResult": {
+         "@id": "CancelTaskResult"
+      },
+      "CancelTaskResultResponse": {
+         "@id": "CancelTaskResultResponse"
+      },
+      "ClientCapabilities": {
+         "@id": "ClientCapabilities"
+      },
+      "ClientNotification": {
+         "@id": "ClientNotification"
+      },
+      "ClientRequest": {
+         "@id": "ClientRequest"
+      },
+      "ClientResult": {
+         "@id": "ClientResult"
+      },
+      "CompleteRequest": {
+         "@id": "CompleteRequest"
+      },
+      "CompleteRequestParams": {
+         "@id": "CompleteRequestParams"
+      },
+      "CompleteResult": {
+         "@id": "CompleteResult"
+      },
+      "CompleteResultResponse": {
+         "@id": "CompleteResultResponse"
+      },
+      "CompletionArgument": {
+         "@id": "CompletionArgument"
+      },
+      "CompletionContext": {
+         "@id": "CompletionContext"
+      },
+      "CompletionData": {
+         "@id": "CompletionData"
+      },
+      "ContentBlock": {
+         "@id": "ContentBlock"
+      },
+      "ContentBlockVariants": {
+         "@id": "ContentBlockVariants"
+      },
+      "CreateMessageRequest": {
+         "@id": "CreateMessageRequest"
+      },
+      "CreateMessageRequestParams": {
+         "@id": "CreateMessageRequestParams"
+      },
+      "CreateMessageResult": {
+         "@id": "CreateMessageResult"
+      },
+      "CreateMessageResultResponse": {
+         "@id": "CreateMessageResultResponse"
+      },
+      "CreateTaskResult": {
+         "@id": "CreateTaskResult"
+      },
+      "CreateTaskResultResponse": {
+         "@id": "CreateTaskResultResponse"
+      },
+      "ElicitationCapability": {
+         "@id": "ElicitationCapability"
+      },
+      "ElicitationCompleteNotification": {
+         "@id": "ElicitationCompleteNotification"
+      },
+      "ElicitationCompleteNotificationParams": {
+         "@id": "ElicitationCompleteNotificationParams"
+      },
+      "ElicitationContent": {
+         "@id": "ElicitationContent"
+      },
+      "ElicitRequest": {
+         "@id": "ElicitRequest"
+      },
+      "ElicitRequestFormParams": {
+         "@id": "ElicitRequestFormParams"
+      },
+      "ElicitRequestParams": {
+         "@id": "ElicitRequestParams"
+      },
+      "ElicitRequestURLParams": {
+         "@id": "ElicitRequestURLParams"
+      },
+      "ElicitResult": {
+         "@id": "ElicitResult"
+      },
+      "ElicitResultResponse": {
+         "@id": "ElicitResultResponse"
+      },
+      "EmbeddedResource": {
+         "@id": "EmbeddedResource"
+      },
+      "EnumOption": {
+         "@id": "EnumOption"
+      },
+      "EnumSchema": {
+         "@id": "EnumSchema"
+      },
+      "Error": {
+         "@id": "Error"
+      },
+      "ErrorData": {
+         "@id": "ErrorData"
+      },
+      "ExtensionAppCapability": {
+         "@id": "ExtensionAppCapability"
+      },
+      "ExtensionsCapability": {
+         "@id": "ExtensionsCapability"
+      },
+      "GetPromptRequest": {
+         "@id": "GetPromptRequest"
+      },
+      "GetPromptRequestParams": {
+         "@id": "GetPromptRequestParams"
+      },
+      "GetPromptResult": {
+         "@id": "GetPromptResult"
+      },
+      "GetPromptResultResponse": {
+         "@id": "GetPromptResultResponse"
+      },
+      "GetTaskPayloadRequest": {
+         "@id": "GetTaskPayloadRequest"
+      },
+      "GetTaskPayloadResult": {
+         "@id": "GetTaskPayloadResult"
+      },
+      "GetTaskPayloadResultResponse": {
+         "@id": "GetTaskPayloadResultResponse"
+      },
+      "GetTaskRequest": {
+         "@id": "GetTaskRequest"
+      },
+      "GetTaskResult": {
+         "@id": "GetTaskResult"
+      },
+      "GetTaskResultResponse": {
+         "@id": "GetTaskResultResponse"
+      },
+      "HasAnnotations": {
+         "@id": "HasAnnotations"
+      },
+      "HasIcons": {
+         "@id": "HasIcons"
+      },
+      "HasMeta": {
+         "@id": "HasMeta"
+      },
+      "HasName": {
+         "@id": "HasName"
+      },
+      "Icon": {
+         "@id": "Icon"
+      },
+      "ImageContent": {
+         "@id": "ImageContent"
+      },
+      "Implementation": {
+         "@id": "Implementation"
+      },
+      "InitializedNotification": {
+         "@id": "InitializedNotification"
+      },
+      "InitializeRequest": {
+         "@id": "InitializeRequest"
+      },
+      "InitializeRequestParams": {
+         "@id": "InitializeRequestParams"
+      },
+      "InitializeResult": {
+         "@id": "InitializeResult"
+      },
+      "InitializeResultResponse": {
+         "@id": "InitializeResultResponse"
+      },
+      "InternalError": {
+         "@id": "InternalError"
+      },
+      "InvalidParamsError": {
+         "@id": "InvalidParamsError"
+      },
+      "InvalidRequestError": {
+         "@id": "InvalidRequestError"
+      },
+      "JSONRPCErrorResponse": {
+         "@id": "JSONRPCErrorResponse"
+      },
+      "JSONRPCMessage": {
+         "@id": "JSONRPCMessage"
+      },
+      "JSONRPCNotification": {
+         "@id": "JSONRPCNotification"
+      },
+      "JSONRPCRequest": {
+         "@id": "JSONRPCRequest"
+      },
+      "JSONRPCResponse": {
+         "@id": "JSONRPCResponse"
+      },
+      "JSONRPCResultResponse": {
+         "@id": "JSONRPCResultResponse"
+      },
+      "JsonSchema": {
+         "@id": "JsonSchema"
+      },
+      "LegacyTitledEnumSchema": {
+         "@id": "LegacyTitledEnumSchema"
+      },
+      "ListPromptsRequest": {
+         "@id": "ListPromptsRequest"
+      },
+      "ListPromptsResult": {
+         "@id": "ListPromptsResult"
+      },
+      "ListPromptsResultResponse": {
+         "@id": "ListPromptsResultResponse"
+      },
+      "ListResourcesRequest": {
+         "@id": "ListResourcesRequest"
+      },
+      "ListResourcesResult": {
+         "@id": "ListResourcesResult"
+      },
+      "ListResourcesResultResponse": {
+         "@id": "ListResourcesResultResponse"
+      },
+      "ListResourceTemplatesRequest": {
+         "@id": "ListResourceTemplatesRequest"
+      },
+      "ListResourceTemplatesResult": {
+         "@id": "ListResourceTemplatesResult"
+      },
+      "ListResourceTemplatesResultResponse": {
+         "@id": "ListResourceTemplatesResultResponse"
+      },
+      "ListRootsRequest": {
+         "@id": "ListRootsRequest"
+      },
+      "ListRootsResult": {
+         "@id": "ListRootsResult"
+      },
+      "ListRootsResultResponse": {
+         "@id": "ListRootsResultResponse"
+      },
+      "ListTasksRequest": {
+         "@id": "ListTasksRequest"
+      },
+      "ListTasksResult": {
+         "@id": "ListTasksResult"
+      },
+      "ListTasksResultResponse": {
+         "@id": "ListTasksResultResponse"
+      },
+      "ListToolsRequest": {
+         "@id": "ListToolsRequest"
+      },
+      "ListToolsResult": {
+         "@id": "ListToolsResult"
+      },
+      "ListToolsResultResponse": {
+         "@id": "ListToolsResultResponse"
+      },
+      "LogData": {
+         "@id": "LogData"
+      },
+      "LogDetails": {
+         "@id": "LogDetails"
+      },
+      "LoggingMessageNotification": {
+         "@id": "LoggingMessageNotification"
+      },
+      "LoggingMessageNotificationParams": {
+         "@id": "LoggingMessageNotificationParams"
+      },
+      "MetaObject": {
+         "@id": "MetaObject"
+      },
+      "MethodNotFoundError": {
+         "@id": "MethodNotFoundError"
+      },
+      "ModelHint": {
+         "@id": "ModelHint"
+      },
+      "ModelPreferences": {
+         "@id": "ModelPreferences"
+      },
+      "MultiSelectEnumSchema": {
+         "@id": "MultiSelectEnumSchema"
+      },
+      "NumberSchema": {
+         "@id": "NumberSchema"
+      },
+      "PaginatedRequestParams": {
+         "@id": "PaginatedRequestParams"
+      },
+      "ParseError": {
+         "@id": "ParseError"
+      },
+      "PingRequest": {
+         "@id": "PingRequest"
+      },
+      "PingResultResponse": {
+         "@id": "PingResultResponse"
+      },
+      "PrimitiveSchemaDefinition": {
+         "@id": "PrimitiveSchemaDefinition"
+      },
+      "ProgressNotification": {
+         "@id": "ProgressNotification"
+      },
+      "ProgressNotificationParams": {
+         "@id": "ProgressNotificationParams"
+      },
+      "Prompt": {
+         "@id": "Prompt"
+      },
+      "PromptArgument": {
+         "@id": "PromptArgument"
+      },
+      "PromptListChangedNotification": {
+         "@id": "PromptListChangedNotification"
+      },
+      "PromptMessage": {
+         "@id": "PromptMessage"
+      },
+      "PromptReference": {
+         "@id": "PromptReference"
+      },
+      "PromptsCapability": {
+         "@id": "PromptsCapability"
+      },
+      "ReadResourceRequest": {
+         "@id": "ReadResourceRequest"
+      },
+      "ReadResourceRequestParams": {
+         "@id": "ReadResourceRequestParams"
+      },
+      "ReadResourceResult": {
+         "@id": "ReadResourceResult"
+      },
+      "ReadResourceResultResponse": {
+         "@id": "ReadResourceResultResponse"
+      },
+      "RelatedTaskMetadata": {
+         "@id": "RelatedTaskMetadata"
+      },
+      "Resource": {
+         "@id": "Resource"
+      },
+      "ResourceContents": {
+         "@id": "ResourceContents"
+      },
+      "ResourceLink": {
+         "@id": "ResourceLink"
+      },
+      "ResourceListChangedNotification": {
+         "@id": "ResourceListChangedNotification"
+      },
+      "ResourcesCapability": {
+         "@id": "ResourcesCapability"
+      },
+      "ResourceTemplate": {
+         "@id": "ResourceTemplate"
+      },
+      "ResourceTemplateReference": {
+         "@id": "ResourceTemplateReference"
+      },
+      "ResourceUpdatedNotification": {
+         "@id": "ResourceUpdatedNotification"
+      },
+      "ResourceUpdatedNotificationParams": {
+         "@id": "ResourceUpdatedNotificationParams"
+      },
+      "Result": {
+         "@id": "Result"
+      },
+      "Root": {
+         "@id": "Root"
+      },
+      "RootsCapability": {
+         "@id": "RootsCapability"
+      },
+      "RootsListChangedNotification": {
+         "@id": "RootsListChangedNotification"
+      },
+      "SamplingCapability": {
+         "@id": "SamplingCapability"
+      },
+      "SamplingMessage": {
+         "@id": "SamplingMessage"
+      },
+      "SamplingMessageContentBlock": {
+         "@id": "SamplingMessageContentBlock"
+      },
+      "SchemaItems": {
+         "@id": "SchemaItems"
+      },
+      "SchemaProperties": {
+         "@id": "SchemaProperties"
+      },
+      "ServerCapabilities": {
+         "@id": "ServerCapabilities"
+      },
+      "ServerNotification": {
+         "@id": "ServerNotification"
+      },
+      "ServerRequest": {
+         "@id": "ServerRequest"
+      },
+      "ServerResult": {
+         "@id": "ServerResult"
+      },
+      "SetLevelRequest": {
+         "@id": "SetLevelRequest"
+      },
+      "SetLevelRequestParams": {
+         "@id": "SetLevelRequestParams"
+      },
+      "SetLevelResultResponse": {
+         "@id": "SetLevelResultResponse"
+      },
+      "SingleSelectEnumSchema": {
+         "@id": "SingleSelectEnumSchema"
+      },
+      "StringSchema": {
+         "@id": "StringSchema"
+      },
+      "StructuredContentData": {
+         "@id": "StructuredContentData"
+      },
+      "SubscribeRequest": {
+         "@id": "SubscribeRequest"
+      },
+      "SubscribeRequestParams": {
+         "@id": "SubscribeRequestParams"
+      },
+      "SubscribeResultResponse": {
+         "@id": "SubscribeResultResponse"
+      },
+      "Task": {
+         "@id": "Task"
+      },
+      "TaskMetadata": {
+         "@id": "TaskMetadata"
+      },
+      "TaskRequestCapabilities": {
+         "@id": "TaskRequestCapabilities"
+      },
+      "TasksCapability": {
+         "@id": "TasksCapability"
+      },
+      "TaskStatusNotification": {
+         "@id": "TaskStatusNotification"
+      },
+      "TaskStatusNotificationParams": {
+         "@id": "TaskStatusNotificationParams"
+      },
+      "TextContent": {
+         "@id": "TextContent"
+      },
+      "TextResourceContents": {
+         "@id": "TextResourceContents"
+      },
+      "TitledMultiSelectEnumSchema": {
+         "@id": "TitledMultiSelectEnumSchema"
+      },
+      "TitledSingleSelectEnumSchema": {
+         "@id": "TitledSingleSelectEnumSchema"
+      },
+      "Tool": {
+         "@id": "Tool"
+      },
+      "ToolAnnotations": {
+         "@id": "ToolAnnotations"
+      },
+      "ToolChoice": {
+         "@id": "ToolChoice"
+      },
+      "ToolExecution": {
+         "@id": "ToolExecution"
+      },
+      "ToolInput": {
+         "@id": "ToolInput"
+      },
+      "ToolListChangedNotification": {
+         "@id": "ToolListChangedNotification"
+      },
+      "ToolResultContent": {
+         "@id": "ToolResultContent"
+      },
+      "ToolsCapability": {
+         "@id": "ToolsCapability"
+      },
+      "ToolUseContent": {
+         "@id": "ToolUseContent"
+      },
+      "UnsubscribeRequest": {
+         "@id": "UnsubscribeRequest"
+      },
+      "UnsubscribeRequestParams": {
+         "@id": "UnsubscribeRequestParams"
+      },
+      "UnsubscribeResultResponse": {
+         "@id": "UnsubscribeResultResponse"
+      },
+      "UntitledMultiSelectEnumSchema": {
+         "@id": "UntitledMultiSelectEnumSchema"
+      },
+      "UntitledSingleSelectEnumSchema": {
+         "@id": "UntitledSingleSelectEnumSchema"
+      },
+      "URLElicitation": {
+         "@id": "URLElicitation"
+      },
+      "URLElicitationRequiredError": {
+         "@id": "URLElicitationRequiredError"
+      }
+   }
+}

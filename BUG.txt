@@ -1,0 +1,46 @@
+BUG REPORT — linkml JsonSchemaGenerator
+========================================
+linkml 1.8.x, linkml-runtime 1.8.x, Python 3.14
+
+
+BUG 1: extra_slots: allowed: true is ignored by JsonSchemaGenerator
+---------------------------------------------------------------------
+https://github.com/linkml/linkml/issues/3415
+
+
+BUG 2: $ref + anyOf siblings silently discard the anyOf in Draft 7 output
+--------------------------------------------------------------------------
+When a slot carries an any_of union AND a concrete range, JsonSchemaGenerator
+emits a property schema like:
+
+  "content": {
+    "$ref": "#/$defs/ContentBlock",
+    "anyOf": [
+      { "$ref": "#/$defs/ContentBlock" },
+      { "items": { "$ref": "#/$defs/ContentBlock" }, "type": "array" }
+    ]
+  }
+
+In JSON Schema Draft 7 a $ref causes ALL sibling keywords to be ignored.
+The anyOf branch is therefore never evaluated.  The property is validated only
+against the bare $ref, so an array value that should pass via anyOf is rejected
+with "is not of type 'object'".
+
+This affects every slot that uses any_of in slot_usage when the generator
+also emits a top-level $ref for the base range.
+
+Minimal reproducer schema slot_usage:
+  content:
+    range: ContentBlock
+    any_of:
+      - range: ContentBlock
+      - range: ContentBlock
+        multivalued: true
+
+Expected: generated property schema should use anyOf only (no sibling $ref),
+or the generator should target Draft 2019-09 / 2020-12 where $ref does not
+suppress siblings.
+
+Workaround: remove the sibling $ref from the generated schema before
+validation.  When anyOf already contains the ContentBlock ref, removing the
+outer $ref does not lose information.

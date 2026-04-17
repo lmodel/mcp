@@ -49,9 +49,13 @@ types:
     description: A uniquely identifying ID for a request in JSON-RPC.
 
   JsonValue:
-    uri: xsd:string
-    base: str
-    description: Any JSON-serializable value represented as a string.
+    uri: xsd:anyType
+    base: object
+    description: Any JSON-serializable value.
+    aliases:
+      - JSONValue
+      - JSONArray
+      - JSONObject
 
 # ────────────────────────────────────────────
 # Enums
@@ -91,6 +95,8 @@ enums:
 
   TaskStatusEnum:
     description: The status of a task.
+    aliases:
+      - TaskStatus
     permissible_values:
       cancelled:
         description: Task was cancelled.
@@ -230,6 +236,24 @@ slots:
     range: string
     description: Base64-encoded binary data.
 
+  default:
+    range: JsonValue
+    description: Default value for a schema field.
+
+  enum:
+    range: string
+    multivalued: true
+    description: Array of enum values.
+
+  oneOf:
+    range: EnumOption
+    multivalued: true
+    description: JSON Schema oneOf entries.
+
+  items:
+    range: SchemaItems
+    description: JSON Schema items definition.
+
   blob:
     range: string
     description: A base64-encoded string representing binary data.
@@ -257,8 +281,8 @@ slots:
 
   # ── Result / Error slots ──
   content:
-    range: string
-    description: Content of a message or result.
+    range: ContentBlock
+    description: Structured content block of a message or result.
 
   isError:
     range: boolean
@@ -360,13 +384,29 @@ slots:
     range: string
     description: Instructions describing how to use the server and its features.
 
+  experimental:
+    range: JsonValue
+    description: Experimental capability extensions.
+
+  extensions:
+    range: JsonValue
+    description: Implementation-specific extension capabilities.
+
+  elicitation:
+    range: JsonValue
+    description: Elicitation capability object.
+
+  sampling:
+    range: JsonValue
+    description: Sampling capability object.
+
   # ── Tool slots ──
   inputSchema:
-    range: string
+    range: JsonSchema
     description: A JSON Schema object defining the expected parameters for the tool.
 
   outputSchema:
-    range: string
+    range: JsonSchema
     description: An optional JSON Schema object defining the structure of the tool's output.
 
   # ── Resource slots ──
@@ -404,7 +444,7 @@ slots:
 
   # ── Prompt slots ──
   arguments:
-    range: string
+    range: ArgumentMap
     description: Arguments for templating.
 
   required_field:
@@ -412,6 +452,10 @@ slots:
     description: Whether this argument must be provided.
     aliases:
       - required
+
+  required:
+    range: boolean
+    description: Whether this argument must be provided.
 
   # ── Sampling slots ──
   maxTokens:
@@ -430,13 +474,23 @@ slots:
     range: IncludeContextEnum
     description: A request to include context from one or more MCP servers.
 
+  modelPreferences:
+    range: ModelPreferences
+    description: Model preferences for sampling.
+    inlined: true
+
+  toolChoice:
+    range: ToolChoice
+    description: Controls how the model uses tools.
+    inlined: true
+
   # ── Elicitation slots ──
   action:
     range: ElicitActionEnum
     description: The user action in response to the elicitation.
 
   requestedSchema:
-    range: string
+    range: JsonSchema
     description: A restricted subset of JSON Schema.
 
   elicitationId:
@@ -466,6 +520,116 @@ slots:
     description: Default value for a schema field.
     aliases:
       - default
+
+  schemaUri:
+    range: string
+    aliases:
+      - $schema
+    description: Optional JSON Schema dialect identifier.
+
+  properties:
+    range: SchemaProperties
+    inlined: true
+    description: JSON Schema properties map.
+
+  required_list:
+    range: string
+    multivalued: true
+    description: JSON Schema required property list.
+    aliases:
+      - required
+
+  additionalProperties:
+    range: boolean
+    description: JSON Schema additionalProperties flag.
+
+  anyOf:
+    range: EnumOption
+    multivalued: true
+    description: JSON Schema anyOf entries.
+
+  const:
+    range: string
+    description: JSON Schema const value.
+
+  city:
+    range: string
+    description: City value.
+
+  location:
+    range: string
+    description: Location value.
+
+  language:
+    range: string
+    description: Programming language value.
+
+  framework:
+    range: string
+    description: Framework value.
+
+  email:
+    range: string
+    description: Email value.
+
+  age:
+    range: integer
+    description: Age value.
+
+  a:
+    range: JsonSchema
+    inlined: true
+    description: JSON Schema property for key a.
+
+  b:
+    range: JsonSchema
+    inlined: true
+    description: JSON Schema property for key b.
+
+  conditions:
+    range: string
+    description: Weather conditions description.
+
+  humidity:
+    range: float
+    description: Humidity percentage value.
+
+  host:
+    range: string
+    description: Host value.
+
+  port:
+    range: integer
+    description: Port value.
+
+  details:
+    range: LogDetails
+    inlined: true
+    description: Nested log details object.
+
+  requests:
+    range: TaskRequestCapabilities
+    inlined: true
+    description: Task request capabilities.
+
+  apps_extension:
+    range: ExtensionAppCapability
+    inlined: true
+    aliases:
+      - io.modelcontextprotocol/apps
+    description: Extension capability entry for app mime types.
+
+  mimeTypes:
+    range: string
+    multivalued: true
+    inlined_as_list: true
+    description: MIME types supported by an extension capability.
+
+  elicitations:
+    range: URLElicitation
+    multivalued: true
+    inlined_as_list: true
+    description: URL elicitation entries included in error data.
 
   format:
     range: StringFormatEnum
@@ -530,11 +694,11 @@ slots:
     description: The ID of the tool use this result corresponds to.
 
   input:
-    range: string
+    range: ToolInput
     description: The arguments to pass to the tool.
 
   structuredContent:
-    range: string
+    range: StructuredContentData
     description: An optional JSON object representing structured result of the tool call.
 
   # ── Misc slots ──
@@ -600,6 +764,109 @@ slots:
     range: TaskSupportEnum
     description: Whether this tool supports task-augmented execution.
 
+  _meta:
+    range: MetaObject
+    description: Optional metadata object.
+
+  resource:
+    range: ResourceContents
+    description: The embedded resource contents (text or blob).
+
+  params:
+    range: string
+    description: JSON-RPC parameters payload.
+    inlined: true
+
+  result:
+    range: Result
+    description: JSON-RPC successful result payload.
+    inlined: true
+
+  execution:
+    range: ToolExecution
+    description: Execution-related properties for a tool.
+    inlined: true
+
+  hints:
+    range: ModelHint
+    multivalued: true
+    inlined_as_list: true
+    description: Optional hints to use for model selection.
+
+  messages:
+    range: SamplingMessage
+    multivalued: true
+    inlined_as_list: true
+    description: Messages for sampling.
+
+  prompts:
+    range: Prompt
+    multivalued: true
+    inlined_as_list: true
+    description: The list of prompts.
+
+  resources:
+    range: Resource
+    multivalued: true
+    inlined_as_list: true
+    description: The list of resources.
+
+  resourceTemplates:
+    range: ResourceTemplate
+    multivalued: true
+    inlined_as_list: true
+    description: The list of resource templates.
+
+  contents:
+    range: ResourceContents
+    multivalued: true
+    inlined_as_list: true
+    description: The resource contents.
+
+  tools:
+    range: Tool
+    multivalued: true
+    inlined_as_list: true
+    description: The list of tools.
+
+  roots:
+    range: Root
+    multivalued: true
+    inlined_as_list: true
+    description: The list of roots.
+
+  tasks:
+    range: Task
+    multivalued: true
+    inlined_as_list: true
+    description: The list of tasks.
+
+  completion:
+    range: CompletionData
+    description: The completion result object.
+
+  clientInfo:
+    range: Implementation
+    description: Information about the client implementation.
+    inlined: true
+
+  serverInfo:
+    range: Implementation
+    description: Information about the server implementation.
+    inlined: true
+
+  argument:
+    range: CompletionArgument
+    description: The argument's information.
+
+  ref:
+    range: PromptReference
+    description: A prompt or resource template reference.
+
+  context:
+    range: CompletionContext
+    description: Optional completion context.
+
 # ────────────────────────────────────────────
 # Classes
 # ────────────────────────────────────────────
@@ -612,10 +879,11 @@ classes:
   HasMeta:
     mixin: true
     description: Mixin for types that carry a _meta field.
-    attributes:
-      _meta:
-        range: string
-        description: Optional metadata object.
+    aliases:
+      - NotificationParams
+      - RequestParams
+    slots:
+      - _meta
 
   HasAnnotations:
     mixin: true
@@ -626,12 +894,16 @@ classes:
   HasIcons:
     mixin: true
     description: Mixin for types that carry icons.
+    aliases:
+      - Icons
     slots:
       - icons
 
   HasName:
     mixin: true
     description: Mixin for types that carry name and title.
+    aliases:
+      - BaseMetadata
     slots:
       - name
       - title
@@ -657,10 +929,14 @@ classes:
     description: A JSON-RPC error object.
     slots:
       - code
+      - data
       - message
     slot_usage:
       code:
         required: true
+      data:
+        range: ErrorData
+        inlined: true
       message:
         required: true
 
@@ -693,6 +969,12 @@ classes:
     description: >-
       A JSON-RPC error indicating that invalid JSON was received
       by the server (-32700).
+
+  URLElicitationRequiredError:
+    is_a: JSONRPCErrorResponse
+    description: >-
+      A response indicating that additional information is required via
+      URL elicitation.
 
   # ════════════════════════════════════════════
   # Icon
@@ -783,6 +1065,14 @@ classes:
         required: true
         equals_string: "audio"
 
+  ContentBlock:
+    description: Structured text content block.
+    extra_slots:
+      allowed: true
+    slots:
+      - type
+      - text
+
   EmbeddedResource:
     description: >-
       The contents of a resource, embedded into a prompt or tool call result.
@@ -791,12 +1081,12 @@ classes:
       - HasAnnotations
     slots:
       - type
-    attributes:
-      resource:
-        range: string
-        required: true
-        description: The embedded resource contents (text or blob).
+      - resource
     slot_usage:
+      resource:
+        required: true
+        range: ResourceContents
+        inlined: true
       type:
         required: true
         equals_string: "resource"
@@ -830,15 +1120,15 @@ classes:
     mixins:
       - HasMeta
     slots:
+      - id
       - type
       - name
       - input
-    attributes:
-      id:
-        range: string
-        required: true
-        description: A unique identifier for this tool use.
     slot_usage:
+      id:
+        required: true
+        range: string
+        description: A unique identifier for this tool use.
       type:
         required: true
         equals_string: "tool_use"
@@ -846,23 +1136,25 @@ classes:
         required: true
       input:
         required: true
+        range: ToolInput
+        inlined: true
 
   ToolResultContent:
     description: The result of a tool use, provided by the user back to the assistant.
     mixins:
       - HasMeta
     slots:
+      - content
       - type
       - toolUseId
       - isError
       - structuredContent
-    attributes:
+    slot_usage:
       content:
-        range: string
+        range: ContentBlock
         multivalued: true
         required: true
         description: The unstructured result content of the tool use.
-    slot_usage:
       type:
         required: true
         equals_string: "tool_result"
@@ -872,6 +1164,19 @@ classes:
   # ════════════════════════════════════════════
   # Resource contents
   # ════════════════════════════════════════════
+
+  ResourceContents:
+    description: Generic resource contents.
+    mixins:
+      - HasMeta
+    slots:
+      - uri
+      - mimeType
+      - text
+      - blob
+    slot_usage:
+      uri:
+        required: true
 
   TextResourceContents:
     description: Text resource contents.
@@ -957,6 +1262,7 @@ classes:
       - HasName
     slots:
       - description
+      - required
       - required_field
     slot_usage:
       name:
@@ -969,27 +1275,27 @@ classes:
       - HasName
       - HasIcons
     slots:
+      - arguments
       - description
-    attributes:
+    slot_usage:
       arguments:
         range: PromptArgument
         multivalued: true
         inlined_as_list: true
         description: A list of arguments to use for templating the prompt.
-    slot_usage:
       name:
         required: true
 
   PromptMessage:
     description: Describes a message returned as part of a prompt.
     slots:
+      - content
       - role
-    attributes:
+    slot_usage:
       content:
-        range: string
+        range: ContentBlock
         required: true
         description: The content of the prompt message.
-    slot_usage:
       role:
         required: true
 
@@ -1031,7 +1337,9 @@ classes:
 
   ToolChoice:
     description: Controls tool selection behavior for sampling requests.
-    attributes:
+    slots:
+      - mode
+    slot_usage:
       mode:
         range: ToolChoiceModeEnum
         description: Controls the tool use ability of the model.
@@ -1041,6 +1349,265 @@ classes:
     slots:
       - taskSupport
 
+  MetaObject:
+    description: Metadata object attached to protocol objects.
+    aliases:
+      - RequestMetaObject
+    slots:
+      - progressToken
+
+  ArgumentMap:
+    description: Argument object used in prompt and tool calls.
+    extra_slots:
+      allowed: true
+    slots:
+      - city
+      - location
+      - language
+      - framework
+
+  CompletionArgument:
+    description: Argument descriptor for completion requests.
+    slots:
+      - name
+      - value
+    slot_usage:
+      name:
+        required: true
+      value:
+        required: true
+
+  CompletionContext:
+    description: Additional context for completion requests.
+    slots:
+      - arguments
+
+  CompletionData:
+    description: Completion result payload.
+    slots:
+      - values
+      - total
+      - hasMore
+    slot_usage:
+      values:
+        required: true
+
+  EnumOption:
+    description: Single enumerated option with a machine value and display title.
+    slots:
+      - const
+      - title
+    slot_usage:
+      const:
+        required: true
+
+  SchemaItems:
+    description: JSON Schema items expression used by enum multi-select schemas.
+    slots:
+      - type
+      - enum
+      - anyOf
+
+  JsonSchema:
+    description: Restricted JSON Schema object used in MCP payloads.
+    extra_slots:
+      allowed: true
+    slots:
+      - schemaUri
+      - type
+      - properties
+      - required_list
+      - additionalProperties
+      - minimum
+      - maximum
+      - minLength
+      - maxLength
+      - format
+      - description
+      - title
+      - oneOf
+      - anyOf
+      - items
+      - enum
+      - const
+      - default
+
+  SchemaProperties:
+    description: Named JSON Schema property map used by vendor fixtures.
+    slots:
+      - name
+      - email
+      - age
+      - city
+      - location
+      - a
+      - b
+      - temperature
+      - conditions
+      - humidity
+    slot_usage:
+      name:
+        range: JsonSchema
+        inlined: true
+      email:
+        range: JsonSchema
+        inlined: true
+      age:
+        range: JsonSchema
+        inlined: true
+      city:
+        range: JsonSchema
+        inlined: true
+      location:
+        range: JsonSchema
+        inlined: true
+      a:
+        range: JsonSchema
+        inlined: true
+      b:
+        range: JsonSchema
+        inlined: true
+      temperature:
+        range: JsonSchema
+        inlined: true
+      conditions:
+        range: JsonSchema
+        inlined: true
+      humidity:
+        range: JsonSchema
+        inlined: true
+
+  ToolInput:
+    description: Tool input payload.
+    slots:
+      - city
+      - location
+
+  StructuredContentData:
+    description: Structured content object returned by tools.
+    slots:
+      - temperature
+      - conditions
+      - humidity
+
+  LogDetails:
+    description: Structured details attached to log data.
+    slots:
+      - host
+      - port
+
+  LogData:
+    description: Structured log data payload.
+    slots:
+      - error
+      - details
+    slot_usage:
+      error:
+        range: string
+      details:
+        range: LogDetails
+        inlined: true
+
+  ErrorData:
+    description: Structured JSON-RPC error data payload.
+    slots:
+      - reason
+      - elicitations
+    slot_usage:
+      elicitations:
+        range: URLElicitation
+        multivalued: true
+        inlined_as_list: true
+
+  ElicitationContent:
+    description: Form values returned by an elicitation.
+    slots:
+      - name
+      - email
+      - age
+
+  URLElicitation:
+    description: URL-based elicitation request payload carried in error data.
+    slots:
+      - mode
+      - elicitationId
+      - message
+      - url
+
+  ElicitationCapability:
+    description: Client elicitation capability.
+
+  SamplingCapability:
+    description: Client sampling capability.
+
+  RootsCapability:
+    description: Client roots capability.
+    slots:
+      - listChanged
+
+  PromptsCapability:
+    description: Server prompts capability.
+    slots:
+      - listChanged
+
+  ResourcesCapability:
+    description: Server resources capability.
+    slots:
+      - listChanged
+      - subscribe
+
+  ToolsCapability:
+    description: Server tools capability.
+    slots:
+      - listChanged
+
+  TaskRequestCapabilities:
+    description: Task request capability map.
+    slots:
+      - elicitation
+      - sampling
+      - tools
+    slot_usage:
+      elicitation:
+        range: ElicitationCapability
+        inlined: true
+      sampling:
+        range: SamplingCapability
+        inlined: true
+      tools:
+        range: ToolsCapability
+        multivalued: false
+        inlined: true
+
+  TasksCapability:
+    description: Task capability object.
+    slots:
+      - requests
+    slot_usage:
+      requests:
+        range: TaskRequestCapabilities
+        inlined: true
+
+  ExtensionsCapability:
+    description: Server/client extension capability object.
+    extra_slots:
+      allowed: true
+    slots:
+      - apps_extension
+    slot_usage:
+      apps_extension:
+        range: ExtensionAppCapability
+        inlined: true
+
+  ExtensionAppCapability:
+    description: Extension payload for app mime type declarations.
+    slots:
+      - mimeTypes
+    slot_usage:
+      mimeTypes:
+        multivalued: true
+        inlined_as_list: true
+
   Tool:
     description: Definition for a tool the client can call.
     mixins:
@@ -1048,10 +1615,12 @@ classes:
       - HasName
       - HasIcons
     slots:
+      - annotations
+      - execution
       - description
       - inputSchema
       - outputSchema
-    attributes:
+    slot_usage:
       annotations:
         range: ToolAnnotations
         inlined: true
@@ -1060,7 +1629,6 @@ classes:
         range: ToolExecution
         inlined: true
         description: Execution-related properties for this tool.
-    slot_usage:
       name:
         required: true
       inputSchema:
@@ -1083,12 +1651,7 @@ classes:
       - costPriority
       - intelligencePriority
       - speedPriority
-    attributes:
-      hints:
-        range: ModelHint
-        multivalued: true
-        inlined_as_list: true
-        description: Optional hints to use for model selection.
+      - hints
 
   # ════════════════════════════════════════════
   # Sampling message
@@ -1099,13 +1662,17 @@ classes:
     mixins:
       - HasMeta
     slots:
+      - content
       - role
-    attributes:
+    slot_usage:
       content:
-        range: string
+        range: ContentBlock
+        any_of:
+          - range: ContentBlock
+          - range: ContentBlock
+            multivalued: true
         required: true
         description: The message content.
-    slot_usage:
       role:
         required: true
 
@@ -1158,11 +1725,67 @@ classes:
     description: >-
       Capabilities a client may support. Known capabilities are defined here,
       but this is not a closed set.
+    extra_slots:
+      allowed: true
+    slots:
+      - elicitation
+      - experimental
+      - extensions
+      - roots
+      - sampling
+      - tasks
+    slot_usage:
+      elicitation:
+        range: ElicitationCapability
+        inlined: true
+      extensions:
+        range: ExtensionsCapability
+        inlined: true
+      sampling:
+        range: SamplingCapability
+        inlined: true
+      roots:
+        range: RootsCapability
+        multivalued: false
+        inlined: true
+      tasks:
+        range: TasksCapability
+        multivalued: false
+        inlined: true
 
   ServerCapabilities:
     description: >-
       Capabilities that a server may support. Known capabilities are defined
       here, but this is not a closed set.
+    extra_slots:
+      allowed: true
+    slots:
+      - experimental
+      - extensions
+      - prompts
+      - resources
+      - tools
+      - tasks
+    slot_usage:
+      extensions:
+        range: ExtensionsCapability
+        inlined: true
+      prompts:
+        range: PromptsCapability
+        multivalued: false
+        inlined: true
+      resources:
+        range: ResourcesCapability
+        multivalued: false
+        inlined: true
+      tools:
+        range: ToolsCapability
+        multivalued: false
+        inlined: true
+      tasks:
+        range: TasksCapability
+        multivalued: false
+        inlined: true
 
   # ════════════════════════════════════════════
   # Schema definition types (elicitation)
@@ -1172,6 +1795,7 @@ classes:
     description: String schema definition.
     slots:
       - type
+      - default
       - default_value
       - description
       - format
@@ -1187,12 +1811,15 @@ classes:
     description: Number schema definition.
     slots:
       - type
+      - default
       - default_value
       - description
       - minimum
       - maximum
       - title
     slot_usage:
+      default:
+        range: integer
       type:
         required: true
 
@@ -1200,13 +1827,16 @@ classes:
     description: Boolean schema definition.
     slots:
       - type
+      - default
+      - default_value
       - title
       - description
-    attributes:
+    slot_usage:
       default:
         range: boolean
+      default_value:
+        range: boolean
         description: Default boolean value.
-    slot_usage:
       type:
         required: true
         equals_string: "boolean"
@@ -1215,7 +1845,9 @@ classes:
     description: Single-selection enum without display titles.
     slots:
       - type
+      - enum
       - enum_values
+      - default
       - default_value
       - description
       - title
@@ -1223,17 +1855,20 @@ classes:
       type:
         required: true
         equals_string: "string"
-      enum_values:
-        required: true
 
   TitledSingleSelectEnumSchema:
     description: Single-selection enum with display titles for each option.
     slots:
       - type
+      - oneOf
+      - default
       - default_value
       - description
       - title
     slot_usage:
+      oneOf:
+        range: EnumOption
+        multivalued: true
       type:
         required: true
         equals_string: "string"
@@ -1242,12 +1877,19 @@ classes:
     description: Multi-selection enum without display titles.
     slots:
       - type
+      - items
+      - default
       - default_value
       - description
       - title
       - minItems
       - maxItems
     slot_usage:
+      items:
+        range: SchemaItems
+      default:
+        range: string
+        multivalued: true
       type:
         required: true
         equals_string: "array"
@@ -1256,12 +1898,19 @@ classes:
     description: Multi-selection enum with display titles for each option.
     slots:
       - type
+      - items
+      - default
       - default_value
       - description
       - title
       - minItems
       - maxItems
     slot_usage:
+      items:
+        range: SchemaItems
+      default:
+        range: string
+        multivalued: true
       type:
         required: true
         equals_string: "array"
@@ -1273,8 +1922,10 @@ classes:
       Use TitledSingleSelectEnumSchema instead. Will be removed in a future version.
     slots:
       - type
+      - enum
       - enum_values
       - enumNames
+      - default
       - default_value
       - description
       - title
@@ -1282,8 +1933,6 @@ classes:
       type:
         required: true
         equals_string: "string"
-      enum_values:
-        required: true
 
   # ════════════════════════════════════════════
   # Abstract bases: JSON-RPC message types
@@ -1292,6 +1941,9 @@ classes:
   JSONRPCRequest:
     abstract: true
     description: A request that expects a response.
+    aliases:
+      - Request
+      - PaginatedRequest
     slots:
       - id
       - jsonrpc
@@ -1307,6 +1959,8 @@ classes:
   JSONRPCNotification:
     abstract: true
     description: A notification which does not expect a response.
+    aliases:
+      - Notification
     slots:
       - jsonrpc
       - method
@@ -1339,9 +1993,16 @@ classes:
         required: true
       error:
         required: true
+      id:
+        any_of:
+          - range: RequestId
+          - range: integer
 
   Result:
     description: Common result fields.
+    aliases:
+      - EmptyResult
+      - PaginatedResult
     mixins:
       - HasMeta
 
@@ -1372,19 +2033,28 @@ classes:
       progressToken:
         required: true
 
+  ElicitationCompleteNotificationParams:
+    description: Parameters for a notifications/elicitation/complete notification.
+    slots:
+      - elicitationId
+    slot_usage:
+      elicitationId:
+        required: true
+
   LoggingMessageNotificationParams:
     description: Parameters for a notifications/message notification.
     mixins:
       - HasMeta
     slots:
+      - data
       - level
       - logger
-    attributes:
-      data:
-        range: string
-        required: true
-        description: The data to be logged.
     slot_usage:
+      data:
+        required: true
+        range: LogData
+        inlined: true
+        description: The data to be logged.
       level:
         required: true
 
@@ -1398,6 +2068,30 @@ classes:
       uri:
         required: true
 
+  TaskStatusNotificationParams:
+    description: Parameters for a notifications/tasks/status notification.
+    mixins:
+      - HasMeta
+    slots:
+      - taskId
+      - status
+      - createdAt
+      - lastUpdatedAt
+      - ttl
+      - statusMessage
+      - pollInterval
+    slot_usage:
+      taskId:
+        required: true
+      status:
+        required: true
+      createdAt:
+        required: true
+      lastUpdatedAt:
+        required: true
+      ttl:
+        required: true
+
   # ════════════════════════════════════════════
   # Notifications
   # ════════════════════════════════════════════
@@ -1406,12 +2100,13 @@ classes:
     is_a: JSONRPCNotification
     description: >-
       Notification to indicate that a previously-issued request is being cancelled.
-    attributes:
+    slots:
+      - params
+    slot_usage:
       params:
         range: CancelledNotificationParams
         required: true
         inlined: true
-    slot_usage:
       method:
         equals_string: "notifications/cancelled"
 
@@ -1428,12 +2123,13 @@ classes:
     is_a: JSONRPCNotification
     description: >-
       Out-of-band notification to inform the receiver of a progress update.
-    attributes:
+    slots:
+      - params
+    slot_usage:
       params:
         range: ProgressNotificationParams
         required: true
         inlined: true
-    slot_usage:
       method:
         equals_string: "notifications/progress"
 
@@ -1449,12 +2145,13 @@ classes:
     is_a: JSONRPCNotification
     description: >-
       Notification that a resource has changed and may need to be read again.
-    attributes:
+    slots:
+      - params
+    slot_usage:
       params:
         range: ResourceUpdatedNotificationParams
         required: true
         inlined: true
-    slot_usage:
       method:
         equals_string: "notifications/resources/updated"
 
@@ -1486,12 +2183,13 @@ classes:
     is_a: JSONRPCNotification
     description: >-
       Notification of a log message passed from server to client.
-    attributes:
+    slots:
+      - params
+    slot_usage:
       params:
         range: LoggingMessageNotificationParams
         required: true
         inlined: true
-    slot_usage:
       method:
         equals_string: "notifications/message"
 
@@ -1500,7 +2198,13 @@ classes:
     description: >-
       Notification from the server that an out-of-band elicitation request
       completed.
+    slots:
+      - params
     slot_usage:
+      params:
+        range: ElicitationCompleteNotificationParams
+        required: true
+        inlined: true
       method:
         equals_string: "notifications/elicitation/complete"
 
@@ -1508,7 +2212,13 @@ classes:
     is_a: JSONRPCNotification
     description: >-
       Notification that a task's status has changed.
+    slots:
+      - params
     slot_usage:
+      params:
+        range: TaskStatusNotificationParams
+        required: true
+        inlined: true
       method:
         equals_string: "notifications/tasks/status"
 
@@ -1518,46 +2228,62 @@ classes:
 
   CallToolRequestParams:
     description: Parameters for a tools/call request.
+    aliases:
+      - TaskAugmentedRequestParams
+    mixins:
+      - HasMeta
     slots:
+      - arguments
       - name
-    attributes:
+      - task
+    slot_usage:
       arguments:
-        range: string
+        range: ArgumentMap
+        inlined: true
         description: Arguments to use for the tool call.
       task:
         range: TaskMetadata
         inlined: true
         description: If specified, the caller is requesting task-augmented execution.
-    slot_usage:
       name:
         required: true
 
   GetPromptRequestParams:
     description: Parameters for a prompts/get request.
     slots:
+      - arguments
       - name
-    attributes:
-      arguments:
-        range: string
-        description: Arguments to use for templating the prompt.
     slot_usage:
+      arguments:
+        range: ArgumentMap
+        inlined: true
+        description: Arguments to use for templating the prompt.
       name:
         required: true
 
   CompleteRequestParams:
     description: Parameters for a completion/complete request.
-    attributes:
+    slots:
+      - argument
+      - context
+      - ref
+    slot_usage:
       argument:
-        range: string
         required: true
-        description: The argument's information.
+        range: CompletionArgument
+        inlined: true
+      context:
+        range: CompletionContext
+        inlined: true
       ref:
-        range: string
         required: true
-        description: A prompt or resource template reference.
+        range: PromptReference
+        inlined: true
 
   ReadResourceRequestParams:
     description: Parameters for a resources/read request.
+    aliases:
+      - ResourceRequestParams
     slots:
       - uri
     slot_usage:
@@ -1591,8 +2317,10 @@ classes:
   InitializeRequestParams:
     description: Parameters for an initialize request.
     slots:
+      - capabilities
+      - clientInfo
       - protocolVersion
-    attributes:
+    slot_usage:
       capabilities:
         range: ClientCapabilities
         required: true
@@ -1603,7 +2331,6 @@ classes:
         required: true
         inlined: true
         description: Information about the client implementation.
-    slot_usage:
       protocolVersion:
         required: true
 
@@ -1611,11 +2338,18 @@ classes:
     description: Parameters for a sampling/createMessage request.
     slots:
       - maxTokens
+      - messages
+      - modelPreferences
       - systemPrompt
       - temperature
       - includeContext
       - stopSequences
-    attributes:
+      - tools
+      - toolChoice
+      - task
+    slot_usage:
+      maxTokens:
+        required: true
       messages:
         range: SamplingMessage
         multivalued: true
@@ -1639,9 +2373,6 @@ classes:
         range: TaskMetadata
         inlined: true
         description: If specified, task-augmented execution.
-    slot_usage:
-      maxTokens:
-        required: true
 
   ElicitRequestFormParams:
     description: >-
@@ -1650,16 +2381,18 @@ classes:
       - message
       - requestedSchema
       - mode
-    attributes:
-      task:
-        range: TaskMetadata
-        inlined: true
-        description: If specified, task-augmented execution.
+      - task
     slot_usage:
       message:
         required: true
       requestedSchema:
         required: true
+        range: JsonSchema
+        inlined: true
+      task:
+        range: TaskMetadata
+        inlined: true
+        description: If specified, task-augmented execution.
 
   ElicitRequestURLParams:
     description: >-
@@ -1669,11 +2402,7 @@ classes:
       - message
       - mode
       - url
-    attributes:
-      task:
-        range: TaskMetadata
-        inlined: true
-        description: If specified, task-augmented execution.
+      - task
     slot_usage:
       elicitationId:
         required: true
@@ -1684,6 +2413,10 @@ classes:
         equals_string: "url"
       url:
         required: true
+      task:
+        range: TaskMetadata
+        inlined: true
+        description: If specified, task-augmented execution.
 
   PaginatedRequestParams:
     description: Common params for paginated requests.
@@ -1699,12 +2432,13 @@ classes:
     description: >-
       Request sent from the client to the server when it first connects,
       asking it to begin initialization.
-    attributes:
+    slots:
+      - params
+    slot_usage:
       params:
         range: InitializeRequestParams
         required: true
         inlined: true
-    slot_usage:
       method:
         equals_string: "initialize"
 
@@ -1737,12 +2471,13 @@ classes:
     is_a: JSONRPCRequest
     description: >-
       Sent from the client to the server, to read a specific resource URI.
-    attributes:
+    slots:
+      - params
+    slot_usage:
       params:
         range: ReadResourceRequestParams
         required: true
         inlined: true
-    slot_usage:
       method:
         equals_string: "resources/read"
 
@@ -1750,12 +2485,13 @@ classes:
     is_a: JSONRPCRequest
     description: >-
       Sent from the client to request resource update notifications.
-    attributes:
+    slots:
+      - params
+    slot_usage:
       params:
         range: SubscribeRequestParams
         required: true
         inlined: true
-    slot_usage:
       method:
         equals_string: "resources/subscribe"
 
@@ -1763,12 +2499,13 @@ classes:
     is_a: JSONRPCRequest
     description: >-
       Sent from the client to cancel resource update notifications.
-    attributes:
+    slots:
+      - params
+    slot_usage:
       params:
         range: UnsubscribeRequestParams
         required: true
         inlined: true
-    slot_usage:
       method:
         equals_string: "resources/unsubscribe"
 
@@ -1784,12 +2521,13 @@ classes:
     is_a: JSONRPCRequest
     description: >-
       Used by the client to get a prompt provided by the server.
-    attributes:
+    slots:
+      - params
+    slot_usage:
       params:
         range: GetPromptRequestParams
         required: true
         inlined: true
-    slot_usage:
       method:
         equals_string: "prompts/get"
 
@@ -1805,12 +2543,13 @@ classes:
     is_a: JSONRPCRequest
     description: >-
       Used by the client to invoke a tool provided by the server.
-    attributes:
+    slots:
+      - params
+    slot_usage:
       params:
         range: CallToolRequestParams
         required: true
         inlined: true
-    slot_usage:
       method:
         equals_string: "tools/call"
 
@@ -1818,12 +2557,13 @@ classes:
     is_a: JSONRPCRequest
     description: >-
       A request from the client to the server, to ask for completion options.
-    attributes:
+    slots:
+      - params
+    slot_usage:
       params:
         range: CompleteRequestParams
         required: true
         inlined: true
-    slot_usage:
       method:
         equals_string: "completion/complete"
 
@@ -1831,12 +2571,13 @@ classes:
     is_a: JSONRPCRequest
     description: >-
       A request from the client to the server, to enable or adjust logging.
-    attributes:
+    slots:
+      - params
+    slot_usage:
       params:
         range: SetLevelRequestParams
         required: true
         inlined: true
-    slot_usage:
       method:
         equals_string: "logging/setLevel"
 
@@ -1844,12 +2585,13 @@ classes:
     is_a: JSONRPCRequest
     description: >-
       A request from the server to sample an LLM via the client.
-    attributes:
+    slots:
+      - params
+    slot_usage:
       params:
         range: CreateMessageRequestParams
         required: true
         inlined: true
-    slot_usage:
       method:
         equals_string: "sampling/createMessage"
 
@@ -1866,7 +2608,13 @@ classes:
     description: >-
       A request from the server to elicit additional information from the
       user via the client.
+    slots:
+      - params
     slot_usage:
+      params:
+        range: ElicitRequestFormParams
+        required: true
+        inlined: true
       method:
         equals_string: "elicitation/create"
 
@@ -1911,46 +2659,53 @@ classes:
     description: >-
       The result returned by the server for an initialize request.
     slots:
+      - capabilities
       - protocolVersion
+      - serverInfo
       - instructions
-    attributes:
+    slot_usage:
       capabilities:
         range: ServerCapabilities
         required: true
         inlined: true
         description: Server capabilities.
+      protocolVersion:
+        required: true
       serverInfo:
         range: Implementation
         required: true
         inlined: true
         description: Information about the server implementation.
-    slot_usage:
-      protocolVersion:
-        required: true
 
   CallToolResult:
     is_a: Result
     description: >-
       The result returned by the server for a tools/call request.
     slots:
+      - content
       - isError
       - structuredContent
-    attributes:
+    slot_usage:
       content:
-        range: string
+        range: ContentBlock
         multivalued: true
         required: true
         description: A list of content objects that represent the result.
+      structuredContent:
+        range: StructuredContentData
+        inlined: true
 
   CompleteResult:
     is_a: Result
     description: >-
       The result returned by the server for a completion/complete request.
-    attributes:
+    slots:
+      - completion
+    slot_usage:
       completion:
-        range: string
         required: true
-        description: The completion result object.
+        range: CompletionData
+        inlined: true
 
   GetPromptResult:
     is_a: Result
@@ -1958,7 +2713,8 @@ classes:
       The result returned by the server for a prompts/get request.
     slots:
       - description
-    attributes:
+      - messages
+    slot_usage:
       messages:
         range: PromptMessage
         multivalued: true
@@ -1972,13 +2728,10 @@ classes:
       The result returned by the server for a prompts/list request.
     slots:
       - nextCursor
-    attributes:
+      - prompts
+    slot_usage:
       prompts:
-        range: Prompt
-        multivalued: true
-        inlined_as_list: true
         required: true
-        description: The list of prompts.
 
   ListResourcesResult:
     is_a: Result
@@ -1986,13 +2739,10 @@ classes:
       The result returned by the server for a resources/list request.
     slots:
       - nextCursor
-    attributes:
+      - resources
+    slot_usage:
       resources:
-        range: Resource
-        multivalued: true
-        inlined_as_list: true
         required: true
-        description: The list of resources.
 
   ListResourceTemplatesResult:
     is_a: Result
@@ -2000,24 +2750,20 @@ classes:
       The result returned by the server for a resources/templates/list request.
     slots:
       - nextCursor
-    attributes:
+      - resourceTemplates
+    slot_usage:
       resourceTemplates:
-        range: ResourceTemplate
-        multivalued: true
-        inlined_as_list: true
         required: true
-        description: The list of resource templates.
 
   ReadResourceResult:
     is_a: Result
     description: >-
       The result returned by the server for a resources/read request.
-    attributes:
+    slots:
+      - contents
+    slot_usage:
       contents:
-        range: string
-        multivalued: true
         required: true
-        description: The resource contents.
 
   ListToolsResult:
     is_a: Result
@@ -2025,40 +2771,39 @@ classes:
       The result returned by the server for a tools/list request.
     slots:
       - nextCursor
-    attributes:
+      - tools
+    slot_usage:
       tools:
-        range: Tool
-        multivalued: true
-        inlined_as_list: true
         required: true
-        description: The list of tools.
 
   ListRootsResult:
     is_a: Result
     description: >-
       The result returned by the client for a roots/list request.
-    attributes:
+    slots:
+      - roots
+    slot_usage:
       roots:
-        range: Root
-        multivalued: true
-        inlined_as_list: true
         required: true
-        description: The list of roots.
 
   CreateMessageResult:
     is_a: Result
     description: >-
       The result returned by the client for a sampling/createMessage request.
     slots:
+      - content
       - model
       - role
       - stopReason
-    attributes:
+    slot_usage:
       content:
-        range: string
+        range: ContentBlock
+        any_of:
+          - range: ContentBlock
+          - range: ContentBlock
+            multivalued: true
         required: true
         description: The message content.
-    slot_usage:
       model:
         required: true
       role:
@@ -2070,9 +2815,13 @@ classes:
       The result returned by the client for an elicitation/create request.
     slots:
       - action
+      - content
     slot_usage:
       action:
         required: true
+      content:
+        range: ElicitationContent
+        inlined: true
 
   CreateTaskResult:
     is_a: Result
@@ -2095,13 +2844,62 @@ classes:
       The result returned for a tasks/list request.
     slots:
       - nextCursor
-    attributes:
+      - tasks
+    slot_usage:
       tasks:
-        range: Task
-        multivalued: true
-        inlined_as_list: true
         required: true
-        description: The list of tasks.
+
+  CancelTaskResult:
+    is_a: Result
+    description: >-
+      The result returned for a tasks/cancel request.
+    mixins:
+      - HasMeta
+    slots:
+      - taskId
+      - status
+      - createdAt
+      - lastUpdatedAt
+      - ttl
+      - statusMessage
+      - pollInterval
+    slot_usage:
+      taskId:
+        required: true
+      status:
+        required: true
+      createdAt:
+        required: true
+      lastUpdatedAt:
+        required: true
+      ttl:
+        required: true
+
+  GetTaskResult:
+    is_a: Result
+    description: >-
+      The result returned for a tasks/get request.
+    mixins:
+      - HasMeta
+    slots:
+      - taskId
+      - status
+      - createdAt
+      - lastUpdatedAt
+      - ttl
+      - statusMessage
+      - pollInterval
+    slot_usage:
+      taskId:
+        required: true
+      status:
+        required: true
+      createdAt:
+        required: true
+      lastUpdatedAt:
+        required: true
+      ttl:
+        required: true
 
   # ════════════════════════════════════════════
   # Responses
@@ -2111,7 +2909,9 @@ classes:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response from the server for an initialize request.
-    attributes:
+    slots:
+      - result
+    slot_usage:
       result:
         range: InitializeResult
         required: true
@@ -2121,7 +2921,9 @@ classes:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response from the server for a tools/call request.
-    attributes:
+    slots:
+      - result
+    slot_usage:
       result:
         range: CallToolResult
         required: true
@@ -2131,7 +2933,9 @@ classes:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response from the server for a completion/complete request.
-    attributes:
+    slots:
+      - result
+    slot_usage:
       result:
         range: CompleteResult
         required: true
@@ -2141,7 +2945,9 @@ classes:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response from the server for a prompts/get request.
-    attributes:
+    slots:
+      - result
+    slot_usage:
       result:
         range: GetPromptResult
         required: true
@@ -2151,7 +2957,9 @@ classes:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response from the server for a prompts/list request.
-    attributes:
+    slots:
+      - result
+    slot_usage:
       result:
         range: ListPromptsResult
         required: true
@@ -2161,7 +2969,9 @@ classes:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response from the server for a resources/list request.
-    attributes:
+    slots:
+      - result
+    slot_usage:
       result:
         range: ListResourcesResult
         required: true
@@ -2171,7 +2981,9 @@ classes:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response from the server for a resources/templates/list request.
-    attributes:
+    slots:
+      - result
+    slot_usage:
       result:
         range: ListResourceTemplatesResult
         required: true
@@ -2181,7 +2993,9 @@ classes:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response from the server for a resources/read request.
-    attributes:
+    slots:
+      - result
+    slot_usage:
       result:
         range: ReadResourceResult
         required: true
@@ -2191,7 +3005,9 @@ classes:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response from the server for a tools/list request.
-    attributes:
+    slots:
+      - result
+    slot_usage:
       result:
         range: ListToolsResult
         required: true
@@ -2201,7 +3017,9 @@ classes:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response from the client for a roots/list request.
-    attributes:
+    slots:
+      - result
+    slot_usage:
       result:
         range: ListRootsResult
         required: true
@@ -2211,7 +3029,9 @@ classes:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response from the client for a sampling/createMessage request.
-    attributes:
+    slots:
+      - result
+    slot_usage:
       result:
         range: CreateMessageResult
         required: true
@@ -2221,7 +3041,9 @@ classes:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response from the client for an elicitation/create request.
-    attributes:
+    slots:
+      - result
+    slot_usage:
       result:
         range: ElicitResult
         required: true
@@ -2231,47 +3053,37 @@ classes:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response from the server for a logging/setLevel request.
-    attributes:
-      result:
-        range: Result
-        required: true
-        inlined: true
+    slots:
+      - result
 
   PingResultResponse:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response for a ping request.
-    attributes:
-      result:
-        range: Result
-        required: true
-        inlined: true
+    slots:
+      - result
 
   SubscribeResultResponse:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response for a resources/subscribe request.
-    attributes:
-      result:
-        range: Result
-        required: true
-        inlined: true
+    slots:
+      - result
 
   UnsubscribeResultResponse:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response for a resources/unsubscribe request.
-    attributes:
-      result:
-        range: Result
-        required: true
-        inlined: true
+    slots:
+      - result
 
   CreateTaskResultResponse:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response for a task-augmented request.
-    attributes:
+    slots:
+      - result
+    slot_usage:
       result:
         range: CreateTaskResult
         required: true
@@ -2281,12 +3093,21 @@ classes:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response for a tasks/get request.
+    slots:
+      - result
+    slot_usage:
+      result:
+        range: GetTaskResult
+        required: true
+        inlined: true
 
   GetTaskPayloadResultResponse:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response for a tasks/result request.
-    attributes:
+    slots:
+      - result
+    slot_usage:
       result:
         range: GetTaskPayloadResult
         required: true
@@ -2296,13 +3117,189 @@ classes:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response for a tasks/cancel request.
+    slots:
+      - result
+    slot_usage:
+      result:
+        range: CancelTaskResult
+        required: true
+        inlined: true
 
   ListTasksResultResponse:
     is_a: JSONRPCResultResponse
     description: >-
       A successful response for a tasks/list request.
-    attributes:
+    slots:
+      - result
+    slot_usage:
       result:
         range: ListTasksResult
         required: true
         inlined: true
+
+  # ════════════════════════════════════════════
+  # Union / dispatch types
+  # ════════════════════════════════════════════
+
+  ClientNotification:
+    description: A union of all notifications that can be sent by a client.
+    union_of:
+      - CancelledNotification
+      - InitializedNotification
+      - ProgressNotification
+      - RootsListChangedNotification
+      - TaskStatusNotification
+
+  ClientRequest:
+    description: A union of all requests that can be sent by a client.
+    union_of:
+      - CallToolRequest
+      - CancelTaskRequest
+      - CompleteRequest
+      - GetPromptRequest
+      - GetTaskPayloadRequest
+      - GetTaskRequest
+      - InitializeRequest
+      - ListPromptsRequest
+      - ListResourceTemplatesRequest
+      - ListResourcesRequest
+      - ListTasksRequest
+      - ListToolsRequest
+      - PingRequest
+      - ReadResourceRequest
+      - SetLevelRequest
+      - SubscribeRequest
+      - UnsubscribeRequest
+
+  ClientResult:
+    description: A union of all result types that a client can return.
+    union_of:
+      - CancelTaskResult
+      - CreateMessageResult
+      - ElicitResult
+      - GetTaskPayloadResult
+      - GetTaskResult
+      - ListRootsResult
+      - ListTasksResult
+      - Result
+
+  ServerNotification:
+    description: A union of all notifications that can be sent by a server.
+    union_of:
+      - CancelledNotification
+      - ElicitationCompleteNotification
+      - LoggingMessageNotification
+      - ProgressNotification
+      - PromptListChangedNotification
+      - ResourceListChangedNotification
+      - ResourceUpdatedNotification
+      - TaskStatusNotification
+      - ToolListChangedNotification
+
+  ServerRequest:
+    description: A union of all requests that can be sent by a server.
+    union_of:
+      - CancelTaskRequest
+      - CreateMessageRequest
+      - ElicitRequest
+      - GetTaskPayloadRequest
+      - GetTaskRequest
+      - ListRootsRequest
+      - ListTasksRequest
+      - PingRequest
+
+  ServerResult:
+    description: A union of all result types that a server can return.
+    union_of:
+      - CallToolResult
+      - CancelTaskResult
+      - CompleteResult
+      - CreateTaskResult
+      - GetPromptResult
+      - GetTaskPayloadResult
+      - GetTaskResult
+      - InitializeResult
+      - ListPromptsResult
+      - ListResourceTemplatesResult
+      - ListResourcesResult
+      - ListTasksResult
+      - ListToolsResult
+      - ReadResourceResult
+      - Result
+
+  JSONRPCMessage:
+    description: >-
+      A union of all JSON-RPC message types (requests, notifications,
+      and responses).
+    union_of:
+      - JSONRPCErrorResponse
+      - JSONRPCNotification
+      - JSONRPCRequest
+      - JSONRPCResultResponse
+
+  JSONRPCResponse:
+    description: A union of all JSON-RPC response types.
+    union_of:
+      - JSONRPCErrorResponse
+      - JSONRPCResultResponse
+
+  ElicitRequestParams:
+    description: A union of all elicitation request parameter types.
+    union_of:
+      - ElicitRequestFormParams
+      - ElicitRequestURLParams
+
+  EnumSchema:
+    description: A union of all enum schema types.
+    union_of:
+      - LegacyTitledEnumSchema
+      - TitledMultiSelectEnumSchema
+      - TitledSingleSelectEnumSchema
+      - UntitledMultiSelectEnumSchema
+      - UntitledSingleSelectEnumSchema
+
+  SingleSelectEnumSchema:
+    description: A union of single-select enum schema types.
+    union_of:
+      - TitledSingleSelectEnumSchema
+      - UntitledSingleSelectEnumSchema
+
+  MultiSelectEnumSchema:
+    description: A union of multi-select enum schema types.
+    union_of:
+      - TitledMultiSelectEnumSchema
+      - UntitledMultiSelectEnumSchema
+
+  PrimitiveSchemaDefinition:
+    description: A union of all primitive schema definition types.
+    union_of:
+      - BooleanSchema
+      - LegacyTitledEnumSchema
+      - NumberSchema
+      - StringSchema
+      - TitledMultiSelectEnumSchema
+      - TitledSingleSelectEnumSchema
+      - UntitledMultiSelectEnumSchema
+      - UntitledSingleSelectEnumSchema
+
+  ContentBlockVariants:
+    description: >-
+      A union of all content block types.
+      Maps to the vendor schema ContentBlock anyOf definition.
+    aliases:
+      - ContentBlock
+    union_of:
+      - AudioContent
+      - EmbeddedResource
+      - ImageContent
+      - ResourceLink
+      - TextContent
+
+  SamplingMessageContentBlock:
+    description: A union of content types valid in sampling messages.
+    union_of:
+      - AudioContent
+      - ImageContent
+      - TextContent
+      - ToolResultContent
+      - ToolUseContent

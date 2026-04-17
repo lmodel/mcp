@@ -1,0 +1,1417 @@
+# metamodel_version: 1.7.0
+# version: draft
+enum ElicitActionEnum
+  {
+    accept
+    cancel
+    decline
+  }
+
+enum IconThemeEnum
+  {
+    dark
+    light
+  }
+
+enum IncludeContextEnum
+  {
+    allServers
+    none
+    thisServer
+  }
+
+enum LoggingLevel
+  {
+    alert
+    critical
+    debug
+    emergency
+    error
+    info
+    notice
+    warning
+  }
+
+enum NumberTypeEnum
+  {
+    integer
+    number
+  }
+
+enum Role
+  {
+    assistant
+    user
+  }
+
+enum StringFormatEnum
+  {
+    date
+    date__HYPHEN_MINUS__time
+    email
+    uri
+  }
+
+enum TaskStatusEnum
+  {
+    cancelled
+    completed
+    failed
+    input_required
+    working
+  }
+
+enum TaskSupportEnum
+  {
+    forbidden
+    optional
+    required
+  }
+
+enum ToolChoiceModeEnum
+  {
+    auto
+    none
+    required
+  }
+
+type Annotations
+  {
+    audience: [Role]
+    lastModified: String
+    priority: Float
+  }
+
+type ArgumentMap
+  {
+    city: String
+    location: String
+    language: String
+    framework: String
+  }
+
+type AudioContent implements HasMeta, HasAnnotations
+  {
+    data: String!
+    mimeType: String!
+    type: String!
+    meta: MetaObject
+    annotations: Annotations
+  }
+
+type BlobResourceContents implements HasMeta
+  {
+    uri: Uri!
+    mimeType: String
+    blob: String!
+    meta: MetaObject
+  }
+
+type BooleanSchema
+  {
+    type: String!
+    default: Boolean
+    defaultValue: Boolean
+    title: String
+    description: String
+  }
+
+type CallToolRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    params: CallToolRequestParams!
+    method: String!
+  }
+
+type CallToolRequestParams implements HasMeta
+  {
+    arguments: ArgumentMap
+    name: String!
+    task: TaskMetadata
+    meta: MetaObject
+  }
+
+type CallToolResult
+  {
+    meta: MetaObject
+    content: [ContentBlock]!
+    isError: Boolean
+    structuredContent: StructuredContentData
+  }
+
+type CallToolResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: CallToolResult!
+  }
+
+type CancelledNotification
+  {
+    jsonrpc: String!
+    params: CancelledNotificationParams!
+    method: String!
+  }
+
+type CancelledNotificationParams implements HasMeta
+  {
+    requestId: RequestId
+    reason: String
+    meta: MetaObject
+  }
+
+type CancelTaskRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    method: String!
+  }
+
+type CancelTaskResult implements HasMeta
+  {
+    meta: MetaObject
+    taskId: String!
+    status: TaskStatusEnum!
+    createdAt: String!
+    lastUpdatedAt: String!
+    ttl: Int!
+    statusMessage: String
+    pollInterval: Int
+  }
+
+type CancelTaskResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: CancelTaskResult!
+  }
+
+type ClientCapabilities
+  {
+    elicitation: ElicitationCapability
+    experimental: JsonValue
+    extensions: ExtensionsCapability
+    roots: [RootsCapability]
+    sampling: SamplingCapability
+    tasks: [TasksCapability]
+  }
+
+type ClientNotification
+  {
+  }
+
+type ClientRequest
+  {
+  }
+
+type ClientResult
+  {
+  }
+
+type CompleteRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    params: CompleteRequestParams!
+    method: String!
+  }
+
+type CompleteRequestParams
+  {
+    argument: CompletionArgument!
+    context: CompletionContext
+    ref: PromptReference!
+  }
+
+type CompleteResult
+  {
+    meta: MetaObject
+    completion: CompletionData!
+  }
+
+type CompleteResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: CompleteResult!
+  }
+
+type CompletionArgument
+  {
+    name: String!
+    value: String!
+  }
+
+type CompletionContext
+  {
+    arguments: ArgumentMap
+  }
+
+type CompletionData
+  {
+    values: [String]!
+    total: Float
+    hasMore: Boolean
+  }
+
+type ContentBlock
+  {
+    type: String
+    text: String
+  }
+
+type ContentBlockVariants
+  {
+  }
+
+type CreateMessageRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    params: CreateMessageRequestParams!
+    method: String!
+  }
+
+type CreateMessageRequestParams
+  {
+    maxTokens: Int!
+    messages: [SamplingMessage]!
+    modelPreferences: ModelPreferences
+    systemPrompt: String
+    temperature: Float
+    includeContext: IncludeContextEnum
+    stopSequences: [String]
+    tools: [Tool]
+    toolChoice: ToolChoice
+    task: TaskMetadata
+  }
+
+type CreateMessageResult
+  {
+    meta: MetaObject
+    content: ContentBlock!
+    model: String!
+    role: Role!
+    stopReason: String
+  }
+
+type CreateMessageResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: CreateMessageResult!
+  }
+
+type CreateTaskResult
+  {
+    meta: MetaObject
+    task: Task!
+  }
+
+type CreateTaskResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: CreateTaskResult!
+  }
+
+type ElicitationCapability
+  {
+  }
+
+type ElicitationCompleteNotification
+  {
+    jsonrpc: String!
+    params: ElicitationCompleteNotificationParams!
+    method: String!
+  }
+
+type ElicitationCompleteNotificationParams
+  {
+    elicitationId: String!
+  }
+
+type ElicitationContent
+  {
+    name: String
+    email: String
+    age: Int
+  }
+
+type ElicitRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    params: ElicitRequestFormParams!
+    method: String!
+  }
+
+type ElicitRequestFormParams
+  {
+    message: String!
+    requestedSchema: JsonSchema!
+    mode: String
+    task: TaskMetadata
+  }
+
+type ElicitRequestParams
+  {
+  }
+
+type ElicitRequestURLParams
+  {
+    elicitationId: String!
+    message: String!
+    mode: String!
+    url: Uri!
+    task: TaskMetadata
+  }
+
+type ElicitResult
+  {
+    meta: MetaObject
+    action: ElicitActionEnum!
+    content: ElicitationContent
+  }
+
+type ElicitResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: ElicitResult!
+  }
+
+type EmbeddedResource implements HasMeta, HasAnnotations
+  {
+    type: String!
+    resource: ResourceContents!
+    meta: MetaObject
+    annotations: Annotations
+  }
+
+type EnumOption
+  {
+    const: String!
+    title: String
+  }
+
+type EnumSchema
+  {
+  }
+
+type Error
+  {
+    code: Int!
+    data: ErrorData
+    message: String!
+  }
+
+type ErrorData
+  {
+    reason: String
+    elicitations: [URLElicitation]
+  }
+
+type ExtensionAppCapability
+  {
+    mimeTypes: [String]
+  }
+
+type ExtensionsCapability
+  {
+    appsExtension: ExtensionAppCapability
+  }
+
+type GetPromptRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    params: GetPromptRequestParams!
+    method: String!
+  }
+
+type GetPromptRequestParams
+  {
+    arguments: ArgumentMap
+    name: String!
+  }
+
+type GetPromptResult
+  {
+    meta: MetaObject
+    description: String
+    messages: [PromptMessage]!
+  }
+
+type GetPromptResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: GetPromptResult!
+  }
+
+type GetTaskPayloadRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    method: String!
+  }
+
+type GetTaskPayloadResult
+  {
+    meta: MetaObject
+  }
+
+type GetTaskPayloadResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: GetTaskPayloadResult!
+  }
+
+type GetTaskRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    method: String!
+  }
+
+type GetTaskResult implements HasMeta
+  {
+    meta: MetaObject
+    taskId: String!
+    status: TaskStatusEnum!
+    createdAt: String!
+    lastUpdatedAt: String!
+    ttl: Int!
+    statusMessage: String
+    pollInterval: Int
+  }
+
+type GetTaskResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: GetTaskResult!
+  }
+
+interface HasAnnotations
+  {
+    annotations: Annotations
+  }
+
+interface HasIcons
+  {
+    icons: [Icon]
+  }
+
+interface HasMeta
+  {
+    meta: MetaObject
+  }
+
+interface HasName
+  {
+    name: String
+    title: String
+  }
+
+type Icon
+  {
+    src: Uri!
+    mimeType: String
+    sizes: [String]
+    theme: IconThemeEnum
+  }
+
+type ImageContent implements HasMeta, HasAnnotations
+  {
+    data: String!
+    mimeType: String!
+    type: String!
+    meta: MetaObject
+    annotations: Annotations
+  }
+
+type Implementation implements HasName, HasIcons
+  {
+    version: String!
+    description: String
+    websiteUrl: Uri
+    name: String!
+    title: String
+    icons: [Icon]
+  }
+
+type InitializedNotification
+  {
+    jsonrpc: String!
+    method: String!
+  }
+
+type InitializeRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    params: InitializeRequestParams!
+    method: String!
+  }
+
+type InitializeRequestParams
+  {
+    capabilities: ClientCapabilities!
+    clientInfo: Implementation!
+    protocolVersion: String!
+  }
+
+type InitializeResult
+  {
+    meta: MetaObject
+    capabilities: ServerCapabilities!
+    protocolVersion: String!
+    serverInfo: Implementation!
+    instructions: String
+  }
+
+type InitializeResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: InitializeResult!
+  }
+
+type InternalError
+  {
+    code: Int!
+    data: ErrorData
+    message: String!
+  }
+
+type InvalidParamsError
+  {
+    code: Int!
+    data: ErrorData
+    message: String!
+  }
+
+type InvalidRequestError
+  {
+    code: Int!
+    data: ErrorData
+    message: String!
+  }
+
+type JSONRPCErrorResponse
+  {
+    id: RequestId
+    jsonrpc: String!
+    error: Error!
+  }
+
+type JSONRPCMessage
+  {
+  }
+
+interface JSONRPCNotification
+  {
+    jsonrpc: String!
+    method: String!
+  }
+
+interface JSONRPCRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    method: String!
+  }
+
+type JSONRPCResponse
+  {
+  }
+
+interface JSONRPCResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+  }
+
+type JsonSchema
+  {
+    schemaUri: String
+    type: String
+    properties: SchemaProperties
+    requiredList: [String]
+    additionalProperties: Boolean
+    minimum: Int
+    maximum: Int
+    minLength: Int
+    maxLength: Int
+    format: StringFormatEnum
+    description: String
+    title: String
+    oneOf: [EnumOption]
+    anyOf: [EnumOption]
+    items: SchemaItems
+    enum: [String]
+    const: String
+    default: JsonValue
+  }
+
+type LegacyTitledEnumSchema
+  {
+    type: String!
+    enum: [String]
+    enumValues: [String]
+    enumNames: [String]
+    default: JsonValue
+    defaultValue: String
+    description: String
+    title: String
+  }
+
+type ListPromptsRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    method: String!
+  }
+
+type ListPromptsResult
+  {
+    meta: MetaObject
+    nextCursor: String
+    prompts: [Prompt]!
+  }
+
+type ListPromptsResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: ListPromptsResult!
+  }
+
+type ListResourcesRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    method: String!
+  }
+
+type ListResourcesResult
+  {
+    meta: MetaObject
+    nextCursor: String
+    resources: [Resource]!
+  }
+
+type ListResourcesResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: ListResourcesResult!
+  }
+
+type ListResourceTemplatesRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    method: String!
+  }
+
+type ListResourceTemplatesResult
+  {
+    meta: MetaObject
+    nextCursor: String
+    resourceTemplates: [ResourceTemplate]!
+  }
+
+type ListResourceTemplatesResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: ListResourceTemplatesResult!
+  }
+
+type ListRootsRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    method: String!
+  }
+
+type ListRootsResult
+  {
+    meta: MetaObject
+    roots: [Root]!
+  }
+
+type ListRootsResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: ListRootsResult!
+  }
+
+type ListTasksRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    method: String!
+  }
+
+type ListTasksResult
+  {
+    meta: MetaObject
+    nextCursor: String
+    tasks: [Task]!
+  }
+
+type ListTasksResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: ListTasksResult!
+  }
+
+type ListToolsRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    method: String!
+  }
+
+type ListToolsResult
+  {
+    meta: MetaObject
+    nextCursor: String
+    tools: [Tool]!
+  }
+
+type ListToolsResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: ListToolsResult!
+  }
+
+type LogData
+  {
+    error: String
+    details: LogDetails
+  }
+
+type LogDetails
+  {
+    host: String
+    port: Int
+  }
+
+type LoggingMessageNotification
+  {
+    jsonrpc: String!
+    params: LoggingMessageNotificationParams!
+    method: String!
+  }
+
+type LoggingMessageNotificationParams implements HasMeta
+  {
+    data: LogData!
+    level: LoggingLevel!
+    logger: String
+    meta: MetaObject
+  }
+
+type MetaObject
+  {
+    progressToken: ProgressToken
+  }
+
+type MethodNotFoundError
+  {
+    code: Int!
+    data: ErrorData
+    message: String!
+  }
+
+type ModelHint
+  {
+    name: String
+  }
+
+type ModelPreferences
+  {
+    costPriority: Float
+    intelligencePriority: Float
+    speedPriority: Float
+    hints: [ModelHint]
+  }
+
+type MultiSelectEnumSchema
+  {
+  }
+
+type NumberSchema
+  {
+    type: String!
+    default: Int
+    defaultValue: String
+    description: String
+    minimum: Int
+    maximum: Int
+    title: String
+  }
+
+type PaginatedRequestParams
+  {
+    cursor: Cursor
+  }
+
+type ParseError
+  {
+    code: Int!
+    data: ErrorData
+    message: String!
+  }
+
+type PingRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    method: String!
+  }
+
+type PingResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: Result
+  }
+
+type PrimitiveSchemaDefinition
+  {
+  }
+
+type ProgressNotification
+  {
+    jsonrpc: String!
+    params: ProgressNotificationParams!
+    method: String!
+  }
+
+type ProgressNotificationParams implements HasMeta
+  {
+    progress: Float!
+    progressToken: ProgressToken!
+    total: Float
+    message: String
+    meta: MetaObject
+  }
+
+type Prompt implements HasMeta, HasName, HasIcons
+  {
+    arguments: [PromptArgument]
+    description: String
+    name: String!
+    meta: MetaObject
+    title: String
+    icons: [Icon]
+  }
+
+type PromptArgument implements HasName
+  {
+    description: String
+    required: Boolean
+    requiredField: Boolean
+    name: String!
+    title: String
+  }
+
+type PromptListChangedNotification
+  {
+    jsonrpc: String!
+    method: String!
+  }
+
+type PromptMessage
+  {
+    content: ContentBlock!
+    role: Role!
+  }
+
+type PromptReference implements HasName
+  {
+    type: String!
+    name: String!
+    title: String
+  }
+
+type PromptsCapability
+  {
+    listChanged: Boolean
+  }
+
+type ReadResourceRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    params: ReadResourceRequestParams!
+    method: String!
+  }
+
+type ReadResourceRequestParams
+  {
+    uri: Uri!
+  }
+
+type ReadResourceResult
+  {
+    meta: MetaObject
+    contents: [ResourceContents]!
+  }
+
+type ReadResourceResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: ReadResourceResult!
+  }
+
+type RelatedTaskMetadata
+  {
+    taskId: String!
+  }
+
+type Resource implements HasMeta, HasAnnotations, HasName, HasIcons
+  {
+    uri: Uri!
+    mimeType: String
+    description: String
+    size: Int
+    name: String!
+    meta: MetaObject
+    annotations: Annotations
+    title: String
+    icons: [Icon]
+  }
+
+type ResourceContents implements HasMeta
+  {
+    uri: Uri!
+    mimeType: String
+    text: String
+    blob: String
+    meta: MetaObject
+  }
+
+type ResourceLink implements HasMeta, HasAnnotations, HasName, HasIcons
+  {
+    uri: Uri!
+    mimeType: String
+    description: String
+    size: Int
+    type: String!
+    name: String!
+    meta: MetaObject
+    annotations: Annotations
+    title: String
+    icons: [Icon]
+  }
+
+type ResourceListChangedNotification
+  {
+    jsonrpc: String!
+    method: String!
+  }
+
+type ResourcesCapability
+  {
+    listChanged: Boolean
+    subscribe: Boolean
+  }
+
+type ResourceTemplate implements HasMeta, HasAnnotations, HasName, HasIcons
+  {
+    uriTemplate: String!
+    mimeType: String
+    description: String
+    name: String!
+    meta: MetaObject
+    annotations: Annotations
+    title: String
+    icons: [Icon]
+  }
+
+type ResourceTemplateReference
+  {
+    type: String!
+    uri: Uri!
+  }
+
+type ResourceUpdatedNotification
+  {
+    jsonrpc: String!
+    params: ResourceUpdatedNotificationParams!
+    method: String!
+  }
+
+type ResourceUpdatedNotificationParams implements HasMeta
+  {
+    uri: Uri!
+    meta: MetaObject
+  }
+
+type Result implements HasMeta
+  {
+    meta: MetaObject
+  }
+
+type Root implements HasMeta
+  {
+    uri: Uri!
+    name: String
+    meta: MetaObject
+  }
+
+type RootsCapability
+  {
+    listChanged: Boolean
+  }
+
+type RootsListChangedNotification
+  {
+    jsonrpc: String!
+    method: String!
+  }
+
+type SamplingCapability
+  {
+  }
+
+type SamplingMessage implements HasMeta
+  {
+    content: ContentBlock!
+    role: Role!
+    meta: MetaObject
+  }
+
+type SamplingMessageContentBlock
+  {
+  }
+
+type SchemaItems
+  {
+    type: String
+    enum: [String]
+    anyOf: [EnumOption]
+  }
+
+type SchemaProperties
+  {
+    name: JsonSchema
+    email: JsonSchema
+    age: JsonSchema
+    city: JsonSchema
+    location: JsonSchema
+    a: JsonSchema
+    b: JsonSchema
+    temperature: JsonSchema
+    conditions: JsonSchema
+    humidity: JsonSchema
+  }
+
+type ServerCapabilities
+  {
+    experimental: JsonValue
+    extensions: ExtensionsCapability
+    prompts: [PromptsCapability]
+    resources: [ResourcesCapability]
+    tools: [ToolsCapability]
+    tasks: [TasksCapability]
+  }
+
+type ServerNotification
+  {
+  }
+
+type ServerRequest
+  {
+  }
+
+type ServerResult
+  {
+  }
+
+type SetLevelRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    params: SetLevelRequestParams!
+    method: String!
+  }
+
+type SetLevelRequestParams
+  {
+    level: LoggingLevel!
+  }
+
+type SetLevelResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: Result
+  }
+
+type SingleSelectEnumSchema
+  {
+  }
+
+type StringSchema
+  {
+    type: String!
+    default: JsonValue
+    defaultValue: String
+    description: String
+    format: StringFormatEnum
+    minLength: Int
+    maxLength: Int
+    title: String
+  }
+
+type StructuredContentData
+  {
+    temperature: Float
+    conditions: String
+    humidity: Float
+  }
+
+type SubscribeRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    params: SubscribeRequestParams!
+    method: String!
+  }
+
+type SubscribeRequestParams
+  {
+    uri: Uri!
+  }
+
+type SubscribeResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: Result
+  }
+
+type Task
+  {
+    taskId: String!
+    status: TaskStatusEnum!
+    createdAt: String!
+    lastUpdatedAt: String!
+    ttl: Int!
+    statusMessage: String
+    pollInterval: Int
+  }
+
+type TaskMetadata
+  {
+    ttl: Int
+  }
+
+type TaskRequestCapabilities
+  {
+    elicitation: ElicitationCapability
+    sampling: SamplingCapability
+    tools: [ToolsCapability]
+  }
+
+type TasksCapability
+  {
+    requests: TaskRequestCapabilities
+  }
+
+type TaskStatusNotification
+  {
+    jsonrpc: String!
+    params: TaskStatusNotificationParams!
+    method: String!
+  }
+
+type TaskStatusNotificationParams implements HasMeta
+  {
+    taskId: String!
+    status: TaskStatusEnum!
+    createdAt: String!
+    lastUpdatedAt: String!
+    ttl: Int!
+    statusMessage: String
+    pollInterval: Int
+    meta: MetaObject
+  }
+
+type TextContent implements HasMeta, HasAnnotations
+  {
+    text: String!
+    type: String!
+    meta: MetaObject
+    annotations: Annotations
+  }
+
+type TextResourceContents implements HasMeta
+  {
+    uri: Uri!
+    mimeType: String
+    text: String!
+    meta: MetaObject
+  }
+
+type TitledMultiSelectEnumSchema
+  {
+    type: String!
+    items: SchemaItems
+    default: [String]
+    defaultValue: String
+    description: String
+    title: String
+    minItems: Int
+    maxItems: Int
+  }
+
+type TitledSingleSelectEnumSchema
+  {
+    type: String!
+    oneOf: [EnumOption]
+    default: JsonValue
+    defaultValue: String
+    description: String
+    title: String
+  }
+
+type Tool implements HasMeta, HasName, HasIcons
+  {
+    annotations: ToolAnnotations
+    execution: ToolExecution
+    description: String
+    inputSchema: JsonSchema!
+    outputSchema: JsonSchema
+    name: String!
+    meta: MetaObject
+    title: String
+    icons: [Icon]
+  }
+
+type ToolAnnotations
+  {
+    title: String
+    destructiveHint: Boolean
+    idempotentHint: Boolean
+    openWorldHint: Boolean
+    readOnlyHint: Boolean
+  }
+
+type ToolChoice
+  {
+    mode: ToolChoiceModeEnum
+  }
+
+type ToolExecution
+  {
+    taskSupport: TaskSupportEnum
+  }
+
+type ToolInput
+  {
+    city: String
+    location: String
+  }
+
+type ToolListChangedNotification
+  {
+    jsonrpc: String!
+    method: String!
+  }
+
+type ToolResultContent implements HasMeta
+  {
+    content: [ContentBlock]!
+    type: String!
+    toolUseId: String!
+    isError: Boolean
+    structuredContent: StructuredContentData
+    meta: MetaObject
+  }
+
+type ToolsCapability
+  {
+    listChanged: Boolean
+  }
+
+type ToolUseContent implements HasMeta
+  {
+    id: String!
+    type: String!
+    name: String!
+    input: ToolInput!
+    meta: MetaObject
+  }
+
+type UnsubscribeRequest
+  {
+    id: RequestId!
+    jsonrpc: String!
+    params: UnsubscribeRequestParams!
+    method: String!
+  }
+
+type UnsubscribeRequestParams
+  {
+    uri: Uri!
+  }
+
+type UnsubscribeResultResponse
+  {
+    id: RequestId!
+    jsonrpc: String!
+    result: Result
+  }
+
+type UntitledMultiSelectEnumSchema
+  {
+    type: String!
+    items: SchemaItems
+    default: [String]
+    defaultValue: String
+    description: String
+    title: String
+    minItems: Int
+    maxItems: Int
+  }
+
+type UntitledSingleSelectEnumSchema
+  {
+    type: String!
+    enum: [String]
+    enumValues: [String]
+    default: JsonValue
+    defaultValue: String
+    description: String
+    title: String
+  }
+
+type URLElicitation
+  {
+    mode: String
+    elicitationId: String
+    message: String
+    url: Uri
+  }
+
+type URLElicitationRequiredError
+  {
+    id: RequestId
+    jsonrpc: String!
+    error: Error!
+  }

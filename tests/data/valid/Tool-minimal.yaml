@@ -1,2 +1,3 @@
 name: "get_weather"
-inputSchema: '{"type": "object"}'
+inputSchema:
+  type: "object"

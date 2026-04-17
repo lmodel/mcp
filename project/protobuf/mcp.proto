@@ -1,0 +1,1237 @@
+ syntax="proto3";
+ package
+// metamodel_version: 1.7.0
+// version: draft
+// Optional annotations for the client. The client can use annotations to inform how objects are used or displayed.
+message Annotations
+ {
+ repeated  role audience = 0
+  string lastModified = 0
+  float priority = 0
+ }
+// Argument object used in prompt and tool calls.
+message ArgumentMap
+ {
+  string city = 0
+  string location = 0
+  string language = 0
+  string framework = 0
+ }
+// Audio provided to or from an LLM.
+message AudioContent
+ {
+  string data = 0
+  string mimeType = 0
+  string type = 0
+  metaObject meta = 0
+  annotations annotations = 0
+ }
+// Blob resource contents.
+message BlobResourceContents
+ {
+  uri uri = 0
+  string mimeType = 0
+  string blob = 0
+  metaObject meta = 0
+ }
+// Boolean schema definition.
+message BooleanSchema
+ {
+  string type = 0
+  boolean default = 0
+  boolean defaultValue = 0
+  string title = 0
+  string description = 0
+ }
+// Used by the client to invoke a tool provided by the server.
+message CallToolRequest
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  callToolRequestParams params = 0
+  string method = 0
+ }
+// Parameters for a tools/call request.
+message CallToolRequestParams
+ {
+  argumentMap arguments = 0
+  string name = 0
+  taskMetadata task = 0
+  metaObject meta = 0
+ }
+// The result returned by the server for a tools/call request.
+message CallToolResult
+ {
+  metaObject meta = 0
+ repeated  contentBlock content = 0
+  boolean isError = 0
+  structuredContentData structuredContent = 0
+ }
+// A successful response from the server for a tools/call request.
+message CallToolResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  callToolResult result = 0
+ }
+// Notification to indicate that a previously-issued request is being cancelled.
+message CancelledNotification
+ {
+  string jsonrpc = 0
+  cancelledNotificationParams params = 0
+  string method = 0
+ }
+// Parameters for a notifications/cancelled notification.
+message CancelledNotificationParams
+ {
+  requestId requestId = 0
+  string reason = 0
+  metaObject meta = 0
+ }
+// A request to cancel a task.
+message CancelTaskRequest
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  string method = 0
+ }
+// The result returned for a tasks/cancel request.
+message CancelTaskResult
+ {
+  metaObject meta = 0
+  string taskId = 0
+  taskStatusEnum status = 0
+  string createdAt = 0
+  string lastUpdatedAt = 0
+  integer ttl = 0
+  string statusMessage = 0
+  integer pollInterval = 0
+ }
+// A successful response for a tasks/cancel request.
+message CancelTaskResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  cancelTaskResult result = 0
+ }
+// Capabilities a client may support. Known capabilities are defined here, but this is not a closed set.
+message ClientCapabilities
+ {
+  elicitationCapability elicitation = 0
+  jsonValue experimental = 0
+  extensionsCapability extensions = 0
+ repeated  rootsCapability roots = 0
+  samplingCapability sampling = 0
+ repeated  tasksCapability tasks = 0
+ }
+// A request from the client to the server, to ask for completion options.
+message CompleteRequest
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  completeRequestParams params = 0
+  string method = 0
+ }
+// Parameters for a completion/complete request.
+message CompleteRequestParams
+ {
+  completionArgument argument = 0
+  completionContext context = 0
+  promptReference ref = 0
+ }
+// The result returned by the server for a completion/complete request.
+message CompleteResult
+ {
+  metaObject meta = 0
+  completionData completion = 0
+ }
+// A successful response from the server for a completion/complete request.
+message CompleteResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  completeResult result = 0
+ }
+// Argument descriptor for completion requests.
+message CompletionArgument
+ {
+  string name = 0
+  string value = 0
+ }
+// Additional context for completion requests.
+message CompletionContext
+ {
+  argumentMap arguments = 0
+ }
+// Completion result payload.
+message CompletionData
+ {
+ repeated  string values = 0
+  float total = 0
+  boolean hasMore = 0
+ }
+// Structured text content block.
+message ContentBlock
+ {
+  string type = 0
+  string text = 0
+ }
+// A request from the server to sample an LLM via the client.
+message CreateMessageRequest
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  createMessageRequestParams params = 0
+  string method = 0
+ }
+// Parameters for a sampling/createMessage request.
+message CreateMessageRequestParams
+ {
+  integer maxTokens = 0
+ repeated  samplingMessage messages = 0
+  modelPreferences modelPreferences = 0
+  string systemPrompt = 0
+  float temperature = 0
+  includeContextEnum includeContext = 0
+ repeated  string stopSequences = 0
+ repeated  tool tools = 0
+  toolChoice toolChoice = 0
+  taskMetadata task = 0
+ }
+// The result returned by the client for a sampling/createMessage request.
+message CreateMessageResult
+ {
+  metaObject meta = 0
+  contentBlock content = 0
+  string model = 0
+  role role = 0
+  string stopReason = 0
+ }
+// A successful response from the client for a sampling/createMessage request.
+message CreateMessageResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  createMessageResult result = 0
+ }
+// The result returned for a task-augmented request.
+message CreateTaskResult
+ {
+  metaObject meta = 0
+  task task = 0
+ }
+// A successful response for a task-augmented request.
+message CreateTaskResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  createTaskResult result = 0
+ }
+// Notification from the server that an out-of-band elicitation request completed.
+message ElicitationCompleteNotification
+ {
+  string jsonrpc = 0
+  elicitationCompleteNotificationParams params = 0
+  string method = 0
+ }
+// Parameters for a notifications/elicitation/complete notification.
+message ElicitationCompleteNotificationParams
+ {
+  string elicitationId = 0
+ }
+// Form values returned by an elicitation.
+message ElicitationContent
+ {
+  string name = 0
+  string email = 0
+  integer age = 0
+ }
+// A request from the server to elicit additional information from the user via the client.
+message ElicitRequest
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  elicitRequestFormParams params = 0
+  string method = 0
+ }
+// Parameters for a form-mode elicitation request.
+message ElicitRequestFormParams
+ {
+  string message = 0
+  jsonSchema requestedSchema = 0
+  string mode = 0
+  taskMetadata task = 0
+ }
+// Parameters for a URL-mode elicitation request.
+message ElicitRequestURLParams
+ {
+  string elicitationId = 0
+  string message = 0
+  string mode = 0
+  uri url = 0
+  taskMetadata task = 0
+ }
+// The result returned by the client for an elicitation/create request.
+message ElicitResult
+ {
+  metaObject meta = 0
+  elicitActionEnum action = 0
+  elicitationContent content = 0
+ }
+// A successful response from the client for an elicitation/create request.
+message ElicitResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  elicitResult result = 0
+ }
+// The contents of a resource, embedded into a prompt or tool call result.
+message EmbeddedResource
+ {
+  string type = 0
+  resourceContents resource = 0
+  metaObject meta = 0
+  annotations annotations = 0
+ }
+// Single enumerated option with a machine value and display title.
+message EnumOption
+ {
+  string const = 0
+  string title = 0
+ }
+// A JSON-RPC error object.
+message Error
+ {
+  integer code = 0
+  errorData data = 0
+  string message = 0
+ }
+// Structured JSON-RPC error data payload.
+message ErrorData
+ {
+  string reason = 0
+ repeated  uRLElicitation elicitations = 0
+ }
+// Extension payload for app mime type declarations.
+message ExtensionAppCapability
+ {
+ repeated  string mimeTypes = 0
+ }
+// Server/client extension capability object.
+message ExtensionsCapability
+ {
+  extensionAppCapability appsExtension = 0
+ }
+// Used by the client to get a prompt provided by the server.
+message GetPromptRequest
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  getPromptRequestParams params = 0
+  string method = 0
+ }
+// Parameters for a prompts/get request.
+message GetPromptRequestParams
+ {
+  argumentMap arguments = 0
+  string name = 0
+ }
+// The result returned by the server for a prompts/get request.
+message GetPromptResult
+ {
+  metaObject meta = 0
+  string description = 0
+ repeated  promptMessage messages = 0
+ }
+// A successful response from the server for a prompts/get request.
+message GetPromptResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  getPromptResult result = 0
+ }
+// A request to retrieve the result of a completed task.
+message GetTaskPayloadRequest
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  string method = 0
+ }
+// The result returned for a tasks/result request.
+message GetTaskPayloadResult
+ {
+  metaObject meta = 0
+ }
+// A successful response for a tasks/result request.
+message GetTaskPayloadResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  getTaskPayloadResult result = 0
+ }
+// A request to retrieve the state of a task.
+message GetTaskRequest
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  string method = 0
+ }
+// The result returned for a tasks/get request.
+message GetTaskResult
+ {
+  metaObject meta = 0
+  string taskId = 0
+  taskStatusEnum status = 0
+  string createdAt = 0
+  string lastUpdatedAt = 0
+  integer ttl = 0
+  string statusMessage = 0
+  integer pollInterval = 0
+ }
+// A successful response for a tasks/get request.
+message GetTaskResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  getTaskResult result = 0
+ }
+// An optionally-sized icon that can be displayed in a user interface.
+message Icon
+ {
+  uri src = 0
+  string mimeType = 0
+ repeated  string sizes = 0
+  iconThemeEnum theme = 0
+ }
+// An image provided to or from an LLM.
+message ImageContent
+ {
+  string data = 0
+  string mimeType = 0
+  string type = 0
+  metaObject meta = 0
+  annotations annotations = 0
+ }
+// Describes the MCP implementation.
+message Implementation
+ {
+  string version = 0
+  string description = 0
+  uri websiteUrl = 0
+  string name = 0
+  string title = 0
+ repeated  icon icons = 0
+ }
+// Notification sent from the client to the server after initialization has finished.
+message InitializedNotification
+ {
+  string jsonrpc = 0
+  string method = 0
+ }
+// Request sent from the client to the server when it first connects, asking it to begin initialization.
+message InitializeRequest
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  initializeRequestParams params = 0
+  string method = 0
+ }
+// Parameters for an initialize request.
+message InitializeRequestParams
+ {
+  clientCapabilities capabilities = 0
+  implementation clientInfo = 0
+  string protocolVersion = 0
+ }
+// The result returned by the server for an initialize request.
+message InitializeResult
+ {
+  metaObject meta = 0
+  serverCapabilities capabilities = 0
+  string protocolVersion = 0
+  implementation serverInfo = 0
+  string instructions = 0
+ }
+// A successful response from the server for an initialize request.
+message InitializeResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  initializeResult result = 0
+ }
+// A JSON-RPC error indicating that an internal error occurred on the receiver (-32603).
+message InternalError
+ {
+  integer code = 0
+  errorData data = 0
+  string message = 0
+ }
+// A JSON-RPC error indicating that the method parameters are invalid or malformed (-32602).
+message InvalidParamsError
+ {
+  integer code = 0
+  errorData data = 0
+  string message = 0
+ }
+// A JSON-RPC error indicating that the request is not a valid request object (-32600).
+message InvalidRequestError
+ {
+  integer code = 0
+  errorData data = 0
+  string message = 0
+ }
+// A response to a request that indicates an error occurred.
+message JSONRPCErrorResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  error error = 0
+ }
+// Restricted JSON Schema object used in MCP payloads.
+message JsonSchema
+ {
+  string schemaUri = 0
+  string type = 0
+  schemaProperties properties = 0
+ repeated  string requiredList = 0
+  boolean additionalProperties = 0
+  integer minimum = 0
+  integer maximum = 0
+  integer minLength = 0
+  integer maxLength = 0
+  stringFormatEnum format = 0
+  string description = 0
+  string title = 0
+ repeated  enumOption oneOf = 0
+ repeated  enumOption anyOf = 0
+  schemaItems items = 0
+ repeated  string enum = 0
+  string const = 0
+  jsonValue default = 0
+ }
+// Legacy titled enum schema. Use TitledSingleSelectEnumSchema instead.
+message LegacyTitledEnumSchema
+ {
+  string type = 0
+ repeated  string enum = 0
+ repeated  string enumValues = 0
+ repeated  string enumNames = 0
+  jsonValue default = 0
+  string defaultValue = 0
+  string description = 0
+  string title = 0
+ }
+// Sent from the client to request a list of prompts and prompt templates.
+message ListPromptsRequest
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  string method = 0
+ }
+// The result returned by the server for a prompts/list request.
+message ListPromptsResult
+ {
+  metaObject meta = 0
+  string nextCursor = 0
+ repeated  prompt prompts = 0
+ }
+// A successful response from the server for a prompts/list request.
+message ListPromptsResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  listPromptsResult result = 0
+ }
+// Sent from the client to request a list of resources the server has.
+message ListResourcesRequest
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  string method = 0
+ }
+// The result returned by the server for a resources/list request.
+message ListResourcesResult
+ {
+  metaObject meta = 0
+  string nextCursor = 0
+ repeated  resource resources = 0
+ }
+// A successful response from the server for a resources/list request.
+message ListResourcesResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  listResourcesResult result = 0
+ }
+// Sent from the client to request a list of resource templates the server has.
+message ListResourceTemplatesRequest
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  string method = 0
+ }
+// The result returned by the server for a resources/templates/list request.
+message ListResourceTemplatesResult
+ {
+  metaObject meta = 0
+  string nextCursor = 0
+ repeated  resourceTemplate resourceTemplates = 0
+ }
+// A successful response from the server for a resources/templates/list request.
+message ListResourceTemplatesResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  listResourceTemplatesResult result = 0
+ }
+// Sent from the server to request a list of root URIs from the client.
+message ListRootsRequest
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  string method = 0
+ }
+// The result returned by the client for a roots/list request.
+message ListRootsResult
+ {
+  metaObject meta = 0
+ repeated  root roots = 0
+ }
+// A successful response from the client for a roots/list request.
+message ListRootsResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  listRootsResult result = 0
+ }
+// A request to retrieve a list of tasks.
+message ListTasksRequest
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  string method = 0
+ }
+// The result returned for a tasks/list request.
+message ListTasksResult
+ {
+  metaObject meta = 0
+  string nextCursor = 0
+ repeated  task tasks = 0
+ }
+// A successful response for a tasks/list request.
+message ListTasksResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  listTasksResult result = 0
+ }
+// Sent from the client to request a list of tools the server has.
+message ListToolsRequest
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  string method = 0
+ }
+// The result returned by the server for a tools/list request.
+message ListToolsResult
+ {
+  metaObject meta = 0
+  string nextCursor = 0
+ repeated  tool tools = 0
+ }
+// A successful response from the server for a tools/list request.
+message ListToolsResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  listToolsResult result = 0
+ }
+// Structured log data payload.
+message LogData
+ {
+  string error = 0
+  logDetails details = 0
+ }
+// Structured details attached to log data.
+message LogDetails
+ {
+  string host = 0
+  integer port = 0
+ }
+// Notification of a log message passed from server to client.
+message LoggingMessageNotification
+ {
+  string jsonrpc = 0
+  loggingMessageNotificationParams params = 0
+  string method = 0
+ }
+// Parameters for a notifications/message notification.
+message LoggingMessageNotificationParams
+ {
+  logData data = 0
+  loggingLevel level = 0
+  string logger = 0
+  metaObject meta = 0
+ }
+// Metadata object attached to protocol objects.
+message MetaObject
+ {
+  progressToken progressToken = 0
+ }
+// A JSON-RPC error indicating that the requested method does not exist or is not available (-32601).
+message MethodNotFoundError
+ {
+  integer code = 0
+  errorData data = 0
+  string message = 0
+ }
+// Hints to use for model selection.
+message ModelHint
+ {
+  string name = 0
+ }
+// The server's preferences for model selection, requested of the client during sampling.
+message ModelPreferences
+ {
+  float costPriority = 0
+  float intelligencePriority = 0
+  float speedPriority = 0
+ repeated  modelHint hints = 0
+ }
+// Number schema definition.
+message NumberSchema
+ {
+  string type = 0
+  integer default = 0
+  string defaultValue = 0
+  string description = 0
+  integer minimum = 0
+  integer maximum = 0
+  string title = 0
+ }
+// Common params for paginated requests.
+message PaginatedRequestParams
+ {
+  cursor cursor = 0
+ }
+// A JSON-RPC error indicating that invalid JSON was received by the server (-32700).
+message ParseError
+ {
+  integer code = 0
+  errorData data = 0
+  string message = 0
+ }
+// A ping, issued by either the server or the client, to check that the other party is still alive.
+message PingRequest
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  string method = 0
+ }
+// A successful response for a ping request.
+message PingResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  result result = 0
+ }
+// Out-of-band notification to inform the receiver of a progress update.
+message ProgressNotification
+ {
+  string jsonrpc = 0
+  progressNotificationParams params = 0
+  string method = 0
+ }
+// Parameters for a notifications/progress notification.
+message ProgressNotificationParams
+ {
+  float progress = 0
+  progressToken progressToken = 0
+  float total = 0
+  string message = 0
+  metaObject meta = 0
+ }
+// A prompt or prompt template that the server offers.
+message Prompt
+ {
+ repeated  promptArgument arguments = 0
+  string description = 0
+  string name = 0
+  metaObject meta = 0
+  string title = 0
+ repeated  icon icons = 0
+ }
+// Describes an argument that a prompt can accept.
+message PromptArgument
+ {
+  string description = 0
+  boolean required = 0
+  boolean requiredField = 0
+  string name = 0
+  string title = 0
+ }
+// Notification that the list of prompts the server offers has changed.
+message PromptListChangedNotification
+ {
+  string jsonrpc = 0
+  string method = 0
+ }
+// Describes a message returned as part of a prompt.
+message PromptMessage
+ {
+  contentBlock content = 0
+  role role = 0
+ }
+// Identifies a prompt.
+message PromptReference
+ {
+  string type = 0
+  string name = 0
+  string title = 0
+ }
+// Server prompts capability.
+message PromptsCapability
+ {
+  boolean listChanged = 0
+ }
+// Sent from the client to the server, to read a specific resource URI.
+message ReadResourceRequest
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  readResourceRequestParams params = 0
+  string method = 0
+ }
+// Parameters for a resources/read request.
+message ReadResourceRequestParams
+ {
+  uri uri = 0
+ }
+// The result returned by the server for a resources/read request.
+message ReadResourceResult
+ {
+  metaObject meta = 0
+ repeated  resourceContents contents = 0
+ }
+// A successful response from the server for a resources/read request.
+message ReadResourceResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  readResourceResult result = 0
+ }
+// Metadata for associating messages with a task.
+message RelatedTaskMetadata
+ {
+  string taskId = 0
+ }
+// A known resource that the server is capable of reading.
+message Resource
+ {
+  uri uri = 0
+  string mimeType = 0
+  string description = 0
+  integer size = 0
+  string name = 0
+  metaObject meta = 0
+  annotations annotations = 0
+  string title = 0
+ repeated  icon icons = 0
+ }
+// Generic resource contents.
+message ResourceContents
+ {
+  uri uri = 0
+  string mimeType = 0
+  string text = 0
+  string blob = 0
+  metaObject meta = 0
+ }
+// A resource that the server is capable of reading, included in a prompt or tool call result.
+message ResourceLink
+ {
+  uri uri = 0
+  string mimeType = 0
+  string description = 0
+  integer size = 0
+  string type = 0
+  string name = 0
+  metaObject meta = 0
+  annotations annotations = 0
+  string title = 0
+ repeated  icon icons = 0
+ }
+// Notification that the list of resources the server can read from has changed.
+message ResourceListChangedNotification
+ {
+  string jsonrpc = 0
+  string method = 0
+ }
+// Server resources capability.
+message ResourcesCapability
+ {
+  boolean listChanged = 0
+  boolean subscribe = 0
+ }
+// A template description for resources available on the server.
+message ResourceTemplate
+ {
+  string uriTemplate = 0
+  string mimeType = 0
+  string description = 0
+  string name = 0
+  metaObject meta = 0
+  annotations annotations = 0
+  string title = 0
+ repeated  icon icons = 0
+ }
+// A reference to a resource or resource template definition.
+message ResourceTemplateReference
+ {
+  string type = 0
+  uri uri = 0
+ }
+// Notification that a resource has changed and may need to be read again.
+message ResourceUpdatedNotification
+ {
+  string jsonrpc = 0
+  resourceUpdatedNotificationParams params = 0
+  string method = 0
+ }
+// Parameters for a notifications/resources/updated notification.
+message ResourceUpdatedNotificationParams
+ {
+  uri uri = 0
+  metaObject meta = 0
+ }
+// Common result fields.
+message Result
+ {
+  metaObject meta = 0
+ }
+// Represents a root directory or file that the server can operate on.
+message Root
+ {
+  uri uri = 0
+  string name = 0
+  metaObject meta = 0
+ }
+// Client roots capability.
+message RootsCapability
+ {
+  boolean listChanged = 0
+ }
+// Notification from the client that the list of roots has changed.
+message RootsListChangedNotification
+ {
+  string jsonrpc = 0
+  string method = 0
+ }
+// Describes a message issued to or received from an LLM API.
+message SamplingMessage
+ {
+  contentBlock content = 0
+  role role = 0
+  metaObject meta = 0
+ }
+// JSON Schema items expression used by enum multi-select schemas.
+message SchemaItems
+ {
+  string type = 0
+ repeated  string enum = 0
+ repeated  enumOption anyOf = 0
+ }
+// Named JSON Schema property map used by vendor fixtures.
+message SchemaProperties
+ {
+  jsonSchema name = 0
+  jsonSchema email = 0
+  jsonSchema age = 0
+  jsonSchema city = 0
+  jsonSchema location = 0
+  jsonSchema a = 0
+  jsonSchema b = 0
+  jsonSchema temperature = 0
+  jsonSchema conditions = 0
+  jsonSchema humidity = 0
+ }
+// Capabilities that a server may support. Known capabilities are defined here, but this is not a closed set.
+message ServerCapabilities
+ {
+  jsonValue experimental = 0
+  extensionsCapability extensions = 0
+ repeated  promptsCapability prompts = 0
+ repeated  resourcesCapability resources = 0
+ repeated  toolsCapability tools = 0
+ repeated  tasksCapability tasks = 0
+ }
+// A request from the client to the server, to enable or adjust logging.
+message SetLevelRequest
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  setLevelRequestParams params = 0
+  string method = 0
+ }
+// Parameters for a logging/setLevel request.
+message SetLevelRequestParams
+ {
+  loggingLevel level = 0
+ }
+// A successful response from the server for a logging/setLevel request.
+message SetLevelResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  result result = 0
+ }
+// String schema definition.
+message StringSchema
+ {
+  string type = 0
+  jsonValue default = 0
+  string defaultValue = 0
+  string description = 0
+  stringFormatEnum format = 0
+  integer minLength = 0
+  integer maxLength = 0
+  string title = 0
+ }
+// Structured content object returned by tools.
+message StructuredContentData
+ {
+  float temperature = 0
+  string conditions = 0
+  float humidity = 0
+ }
+// Sent from the client to request resource update notifications.
+message SubscribeRequest
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  subscribeRequestParams params = 0
+  string method = 0
+ }
+// Parameters for a resources/subscribe request.
+message SubscribeRequestParams
+ {
+  uri uri = 0
+ }
+// A successful response for a resources/subscribe request.
+message SubscribeResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  result result = 0
+ }
+// Data associated with a task.
+message Task
+ {
+  string taskId = 0
+  taskStatusEnum status = 0
+  string createdAt = 0
+  string lastUpdatedAt = 0
+  integer ttl = 0
+  string statusMessage = 0
+  integer pollInterval = 0
+ }
+// Metadata for augmenting a request with task execution.
+message TaskMetadata
+ {
+  integer ttl = 0
+ }
+// Task request capability map.
+message TaskRequestCapabilities
+ {
+  elicitationCapability elicitation = 0
+  samplingCapability sampling = 0
+ repeated  toolsCapability tools = 0
+ }
+// Task capability object.
+message TasksCapability
+ {
+  taskRequestCapabilities requests = 0
+ }
+// Notification that a task's status has changed.
+message TaskStatusNotification
+ {
+  string jsonrpc = 0
+  taskStatusNotificationParams params = 0
+  string method = 0
+ }
+// Parameters for a notifications/tasks/status notification.
+message TaskStatusNotificationParams
+ {
+  string taskId = 0
+  taskStatusEnum status = 0
+  string createdAt = 0
+  string lastUpdatedAt = 0
+  integer ttl = 0
+  string statusMessage = 0
+  integer pollInterval = 0
+  metaObject meta = 0
+ }
+// Text provided to or from an LLM.
+message TextContent
+ {
+  string text = 0
+  string type = 0
+  metaObject meta = 0
+  annotations annotations = 0
+ }
+// Text resource contents.
+message TextResourceContents
+ {
+  uri uri = 0
+  string mimeType = 0
+  string text = 0
+  metaObject meta = 0
+ }
+// Multi-selection enum with display titles for each option.
+message TitledMultiSelectEnumSchema
+ {
+  string type = 0
+  schemaItems items = 0
+ repeated  string default = 0
+  string defaultValue = 0
+  string description = 0
+  string title = 0
+  integer minItems = 0
+  integer maxItems = 0
+ }
+// Single-selection enum with display titles for each option.
+message TitledSingleSelectEnumSchema
+ {
+  string type = 0
+ repeated  enumOption oneOf = 0
+  jsonValue default = 0
+  string defaultValue = 0
+  string description = 0
+  string title = 0
+ }
+// Definition for a tool the client can call.
+message Tool
+ {
+  toolAnnotations annotations = 0
+  toolExecution execution = 0
+  string description = 0
+  jsonSchema inputSchema = 0
+  jsonSchema outputSchema = 0
+  string name = 0
+  metaObject meta = 0
+  string title = 0
+ repeated  icon icons = 0
+ }
+// Additional properties describing a Tool to clients. All properties are hints, not guarantees.
+message ToolAnnotations
+ {
+  string title = 0
+  boolean destructiveHint = 0
+  boolean idempotentHint = 0
+  boolean openWorldHint = 0
+  boolean readOnlyHint = 0
+ }
+// Controls tool selection behavior for sampling requests.
+message ToolChoice
+ {
+  toolChoiceModeEnum mode = 0
+ }
+// Execution-related properties for a tool.
+message ToolExecution
+ {
+  taskSupportEnum taskSupport = 0
+ }
+// Tool input payload.
+message ToolInput
+ {
+  string city = 0
+  string location = 0
+ }
+// Notification that the list of tools the server offers has changed.
+message ToolListChangedNotification
+ {
+  string jsonrpc = 0
+  string method = 0
+ }
+// The result of a tool use, provided by the user back to the assistant.
+message ToolResultContent
+ {
+ repeated  contentBlock content = 0
+  string type = 0
+  string toolUseId = 0
+  boolean isError = 0
+  structuredContentData structuredContent = 0
+  metaObject meta = 0
+ }
+// Server tools capability.
+message ToolsCapability
+ {
+  boolean listChanged = 0
+ }
+// A request from the assistant to call a tool.
+message ToolUseContent
+ {
+  string id = 0
+  string type = 0
+  string name = 0
+  toolInput input = 0
+  metaObject meta = 0
+ }
+// Sent from the client to cancel resource update notifications.
+message UnsubscribeRequest
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  unsubscribeRequestParams params = 0
+  string method = 0
+ }
+// Parameters for a resources/unsubscribe request.
+message UnsubscribeRequestParams
+ {
+  uri uri = 0
+ }
+// A successful response for a resources/unsubscribe request.
+message UnsubscribeResultResponse
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  result result = 0
+ }
+// Multi-selection enum without display titles.
+message UntitledMultiSelectEnumSchema
+ {
+  string type = 0
+  schemaItems items = 0
+ repeated  string default = 0
+  string defaultValue = 0
+  string description = 0
+  string title = 0
+  integer minItems = 0
+  integer maxItems = 0
+ }
+// Single-selection enum without display titles.
+message UntitledSingleSelectEnumSchema
+ {
+  string type = 0
+ repeated  string enum = 0
+ repeated  string enumValues = 0
+  jsonValue default = 0
+  string defaultValue = 0
+  string description = 0
+  string title = 0
+ }
+// URL-based elicitation request payload carried in error data.
+message URLElicitation
+ {
+  string mode = 0
+  string elicitationId = 0
+  string message = 0
+  uri url = 0
+ }
+// A response indicating that additional information is required via URL elicitation.
+message URLElicitationRequiredError
+ {
+  requestId id = 0
+  string jsonrpc = 0
+  error error = 0
+ }

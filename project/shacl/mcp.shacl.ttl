@@ -1,0 +1,4997 @@
+@prefix dct: <http://purl.org/dc/terms/> .
+@prefix mcp: <https://w3id.org/lmodel/mcp/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema1: <http://schema.org/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+mcp:AudioContent a sh:NodeShape ;
+    rdfs:comment "Audio provided to or from an LLM." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path mcp:_meta ],
+        [ sh:datatype xsd:string ;
+            sh:description "Base64-encoded binary data." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:data ],
+        [ sh:datatype xsd:string ;
+            sh:description "Type discriminator field." ;
+            sh:in ( "audio" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:type ],
+        [ sh:datatype xsd:string ;
+            sh:description "The MIME type of a resource, if known." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:mimeType ],
+        [ sh:class mcp:Annotations ;
+            sh:description "Optional annotations for the client." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path mcp:annotations ] ;
+    sh:targetClass mcp:AudioContent .
+
+mcp:BlobResourceContents a sh:NodeShape ;
+    rdfs:comment "Blob resource contents." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The MIME type of a resource, if known." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:mimeType ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path mcp:_meta ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "A resource URI." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:uri ],
+        [ sh:datatype xsd:string ;
+            sh:description "A base64-encoded string representing binary data." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:blob ] ;
+    sh:targetClass mcp:BlobResourceContents .
+
+mcp:BooleanSchema a sh:NodeShape ;
+    rdfs:comment "Boolean schema definition." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Type discriminator field." ;
+            sh:in ( "boolean" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:type ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for UI and end-user contexts — optimized to be human-readable and easily understood." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path dct:title ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Default boolean value." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:default_value ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Default value for a schema field." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:default ],
+        [ sh:datatype xsd:string ;
+            sh:description "A human-readable description." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path dct:description ] ;
+    sh:targetClass mcp:BooleanSchema .
+
+mcp:CallToolRequest a sh:NodeShape ;
+    rdfs:comment "Used by the client to invoke a tool provided by the server." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:class mcp:CallToolRequestParams ;
+            sh:description "JSON-RPC parameters payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:params ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "tools/call" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ] ;
+    sh:targetClass mcp:CallToolRequest .
+
+mcp:CallToolResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response from the server for a tools/call request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:class mcp:CallToolResult ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ] ;
+    sh:targetClass mcp:CallToolResultResponse .
+
+mcp:CancelTaskRequest a sh:NodeShape ;
+    rdfs:comment "A request to cancel a task." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "tasks/cancel" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:id ] ;
+    sh:targetClass mcp:CancelTaskRequest .
+
+mcp:CancelTaskResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response for a tasks/cancel request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:class mcp:CancelTaskResult ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:CancelTaskResultResponse .
+
+mcp:CancelledNotification a sh:NodeShape ;
+    rdfs:comment "Notification to indicate that a previously-issued request is being cancelled." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:CancelledNotificationParams ;
+            sh:description "JSON-RPC parameters payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:params ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "notifications/cancelled" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:CancelledNotification .
+
+mcp:ClientNotification a sh:NodeShape ;
+    rdfs:comment "A union of all notifications that can be sent by a client." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass mcp:ClientNotification .
+
+mcp:ClientRequest a sh:NodeShape ;
+    rdfs:comment "A union of all requests that can be sent by a client." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass mcp:ClientRequest .
+
+mcp:ClientResult a sh:NodeShape ;
+    rdfs:comment "A union of all result types that a client can return." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass mcp:ClientResult .
+
+mcp:CompleteRequest a sh:NodeShape ;
+    rdfs:comment "A request from the client to the server, to ask for completion options." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:class mcp:CompleteRequestParams ;
+            sh:description "JSON-RPC parameters payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:params ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "completion/complete" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:method ] ;
+    sh:targetClass mcp:CompleteRequest .
+
+mcp:CompleteResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response from the server for a completion/complete request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:CompleteResult ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:CompleteResultResponse .
+
+mcp:ContentBlockVariants a sh:NodeShape ;
+    rdfs:comment "A union of all content block types. Maps to the vendor schema ContentBlock anyOf definition." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass mcp:ContentBlockVariants .
+
+mcp:CreateMessageRequest a sh:NodeShape ;
+    rdfs:comment "A request from the server to sample an LLM via the client." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:class mcp:CreateMessageRequestParams ;
+            sh:description "JSON-RPC parameters payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:params ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "sampling/createMessage" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:method ] ;
+    sh:targetClass mcp:CreateMessageRequest .
+
+mcp:CreateMessageResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response from the client for a sampling/createMessage request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:class mcp:CreateMessageResult ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ] ;
+    sh:targetClass mcp:CreateMessageResultResponse .
+
+mcp:CreateTaskResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response for a task-augmented request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:CreateTaskResult ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ] ;
+    sh:targetClass mcp:CreateTaskResultResponse .
+
+mcp:ElicitRequest a sh:NodeShape ;
+    rdfs:comment "A request from the server to elicit additional information from the user via the client." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:class mcp:ElicitRequestFormParams ;
+            sh:description "JSON-RPC parameters payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:params ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "elicitation/create" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:method ] ;
+    sh:targetClass mcp:ElicitRequest .
+
+mcp:ElicitRequestParams a sh:NodeShape ;
+    rdfs:comment "A union of all elicitation request parameter types." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass mcp:ElicitRequestParams .
+
+mcp:ElicitRequestURLParams a sh:NodeShape ;
+    rdfs:comment "Parameters for a URL-mode elicitation request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The ID of the elicitation." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:elicitationId ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "The URL that the user should navigate to." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:url ],
+        [ sh:datatype xsd:string ;
+            sh:description "A message string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:message ],
+        [ sh:class mcp:TaskMetadata ;
+            sh:description "If specified, task-augmented execution." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path mcp:task ],
+        [ sh:datatype xsd:string ;
+            sh:description "The elicitation mode." ;
+            sh:in ( "url" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:mode ] ;
+    sh:targetClass mcp:ElicitRequestURLParams .
+
+mcp:ElicitResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response from the client for an elicitation/create request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:class mcp:ElicitResult ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ] ;
+    sh:targetClass mcp:ElicitResultResponse .
+
+mcp:ElicitationCompleteNotification a sh:NodeShape ;
+    rdfs:comment "Notification from the server that an out-of-band elicitation request completed." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "notifications/elicitation/complete" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:class mcp:ElicitationCompleteNotificationParams ;
+            sh:description "JSON-RPC parameters payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:params ] ;
+    sh:targetClass mcp:ElicitationCompleteNotification .
+
+mcp:EmbeddedResource a sh:NodeShape ;
+    rdfs:comment "The contents of a resource, embedded into a prompt or tool call result." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:ResourceContents ;
+            sh:description "The embedded resource contents (text or blob)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:resource ],
+        [ sh:class mcp:Annotations ;
+            sh:description "Optional annotations for the client." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path mcp:annotations ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:_meta ],
+        [ sh:datatype xsd:string ;
+            sh:description "Type discriminator field." ;
+            sh:in ( "resource" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:type ] ;
+    sh:targetClass mcp:EmbeddedResource .
+
+mcp:EnumSchema a sh:NodeShape ;
+    rdfs:comment "A union of all enum schema types." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass mcp:EnumSchema .
+
+mcp:GetPromptRequest a sh:NodeShape ;
+    rdfs:comment "Used by the client to get a prompt provided by the server." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "prompts/get" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:class mcp:GetPromptRequestParams ;
+            sh:description "JSON-RPC parameters payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:params ] ;
+    sh:targetClass mcp:GetPromptRequest .
+
+mcp:GetPromptResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response from the server for a prompts/get request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:class mcp:GetPromptResult ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ] ;
+    sh:targetClass mcp:GetPromptResultResponse .
+
+mcp:GetTaskPayloadRequest a sh:NodeShape ;
+    rdfs:comment "A request to retrieve the result of a completed task." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "tasks/result" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:id ] ;
+    sh:targetClass mcp:GetTaskPayloadRequest .
+
+mcp:GetTaskPayloadResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response for a tasks/result request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:class mcp:GetTaskPayloadResult ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:GetTaskPayloadResultResponse .
+
+mcp:GetTaskRequest a sh:NodeShape ;
+    rdfs:comment "A request to retrieve the state of a task." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "tasks/get" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:method ] ;
+    sh:targetClass mcp:GetTaskRequest .
+
+mcp:GetTaskResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response for a tasks/get request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:class mcp:GetTaskResult ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ] ;
+    sh:targetClass mcp:GetTaskResultResponse .
+
+mcp:HasAnnotations a sh:NodeShape ;
+    rdfs:comment "Mixin for types that carry annotations." ;
+    sh:closed false ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:Annotations ;
+            sh:description "Optional annotations for the client." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:annotations ] ;
+    sh:targetClass mcp:HasAnnotations .
+
+mcp:HasIcons a sh:NodeShape ;
+    rdfs:comment "Mixin for types that carry icons." ;
+    sh:closed false ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:Icon ;
+            sh:description "Optional set of sized icons that the client can display in a user interface." ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:icons ] ;
+    sh:targetClass mcp:HasIcons .
+
+mcp:HasMeta a sh:NodeShape ;
+    rdfs:comment "Mixin for types that carry a _meta field." ;
+    sh:closed false ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:_meta ] ;
+    sh:targetClass mcp:HasMeta .
+
+mcp:HasName a sh:NodeShape ;
+    rdfs:comment "Mixin for types that carry name and title." ;
+    sh:closed false ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path schema1:name ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for UI and end-user contexts — optimized to be human-readable and easily understood." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path dct:title ] ;
+    sh:targetClass mcp:HasName .
+
+mcp:ImageContent a sh:NodeShape ;
+    rdfs:comment "An image provided to or from an LLM." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Base64-encoded binary data." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:data ],
+        [ sh:datatype xsd:string ;
+            sh:description "The MIME type of a resource, if known." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:mimeType ],
+        [ sh:class mcp:Annotations ;
+            sh:description "Optional annotations for the client." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path mcp:annotations ],
+        [ sh:datatype xsd:string ;
+            sh:description "Type discriminator field." ;
+            sh:in ( "image" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:type ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path mcp:_meta ] ;
+    sh:targetClass mcp:ImageContent .
+
+mcp:InitializeRequest a sh:NodeShape ;
+    rdfs:comment "Request sent from the client to the server when it first connects, asking it to begin initialization." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "initialize" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:class mcp:InitializeRequestParams ;
+            sh:description "JSON-RPC parameters payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:params ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ] ;
+    sh:targetClass mcp:InitializeRequest .
+
+mcp:InitializeResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response from the server for an initialize request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:class mcp:InitializeResult ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:InitializeResultResponse .
+
+mcp:InitializedNotification a sh:NodeShape ;
+    rdfs:comment "Notification sent from the client to the server after initialization has finished." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "notifications/initialized" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:InitializedNotification .
+
+mcp:InternalError a sh:NodeShape ;
+    rdfs:comment "A JSON-RPC error indicating that an internal error occurred on the receiver (-32603)." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "A message string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:message ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The error type that occurred." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:code ],
+        [ sh:class mcp:ErrorData ;
+            sh:description "Base64-encoded binary data." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:data ] ;
+    sh:targetClass mcp:InternalError .
+
+mcp:InvalidParamsError a sh:NodeShape ;
+    rdfs:comment "A JSON-RPC error indicating that the method parameters are invalid or malformed (-32602)." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "A message string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:message ],
+        [ sh:class mcp:ErrorData ;
+            sh:description "Base64-encoded binary data." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:data ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The error type that occurred." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:code ] ;
+    sh:targetClass mcp:InvalidParamsError .
+
+mcp:InvalidRequestError a sh:NodeShape ;
+    rdfs:comment "A JSON-RPC error indicating that the request is not a valid request object (-32600)." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "A message string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:message ],
+        [ sh:class mcp:ErrorData ;
+            sh:description "Base64-encoded binary data." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:data ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The error type that occurred." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:code ] ;
+    sh:targetClass mcp:InvalidRequestError .
+
+mcp:JSONRPCErrorResponse a sh:NodeShape ;
+    rdfs:comment "A response to a request that indicates an error occurred." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:or ( [ sh:datatype xsd:string ;
+                        sh:nodeKind sh:Literal ] [ sh:datatype xsd:integer ;
+                        sh:nodeKind sh:Literal ] ) ;
+            sh:order 0 ;
+            sh:path mcp:id ],
+        [ sh:class mcp:Error ;
+            sh:description "The error object." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:error ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:JSONRPCErrorResponse .
+
+mcp:JSONRPCMessage a sh:NodeShape ;
+    rdfs:comment "A union of all JSON-RPC message types (requests, notifications, and responses)." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass mcp:JSONRPCMessage .
+
+mcp:JSONRPCNotification a sh:NodeShape ;
+    rdfs:comment "A notification which does not expect a response." ;
+    sh:closed false ;
+    sh:ignoredProperties ( mcp:params rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:method ] ;
+    sh:targetClass mcp:JSONRPCNotification .
+
+mcp:JSONRPCRequest a sh:NodeShape ;
+    rdfs:comment "A request that expects a response." ;
+    sh:closed false ;
+    sh:ignoredProperties ( mcp:params rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:id ] ;
+    sh:targetClass mcp:JSONRPCRequest .
+
+mcp:JSONRPCResponse a sh:NodeShape ;
+    rdfs:comment "A union of all JSON-RPC response types." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass mcp:JSONRPCResponse .
+
+mcp:JSONRPCResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful (non-error) response to a request." ;
+    sh:closed false ;
+    sh:ignoredProperties ( rdf:type mcp:result ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:JSONRPCResultResponse .
+
+mcp:LegacyTitledEnumSchema a sh:NodeShape ;
+    rdfs:comment "Legacy titled enum schema. Use TitledSingleSelectEnumSchema instead." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Array of enum values." ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:enum ],
+        [ sh:datatype xsd:string ;
+            sh:description "Array of enum values." ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:enum_values ],
+        [ sh:datatype xsd:string ;
+            sh:description "A human-readable description." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path dct:description ],
+        [ sh:datatype xsd:anyType ;
+            sh:description "Default value for a schema field." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path mcp:default ],
+        [ sh:datatype xsd:string ;
+            sh:description "Type discriminator field." ;
+            sh:in ( "string" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:type ],
+        [ sh:datatype xsd:string ;
+            sh:description "Default value for a schema field." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path mcp:default_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for UI and end-user contexts — optimized to be human-readable and easily understood." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path dct:title ],
+        [ sh:datatype xsd:string ;
+            sh:description "Display names for enum values (legacy)." ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:enumNames ] ;
+    sh:targetClass mcp:LegacyTitledEnumSchema .
+
+mcp:ListPromptsRequest a sh:NodeShape ;
+    rdfs:comment "Sent from the client to request a list of prompts and prompt templates." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "prompts/list" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:method ] ;
+    sh:targetClass mcp:ListPromptsRequest .
+
+mcp:ListPromptsResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response from the server for a prompts/list request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:class mcp:ListPromptsResult ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ] ;
+    sh:targetClass mcp:ListPromptsResultResponse .
+
+mcp:ListResourceTemplatesRequest a sh:NodeShape ;
+    rdfs:comment "Sent from the client to request a list of resource templates the server has." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "resources/templates/list" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:ListResourceTemplatesRequest .
+
+mcp:ListResourceTemplatesResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response from the server for a resources/templates/list request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:class mcp:ListResourceTemplatesResult ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ] ;
+    sh:targetClass mcp:ListResourceTemplatesResultResponse .
+
+mcp:ListResourcesRequest a sh:NodeShape ;
+    rdfs:comment "Sent from the client to request a list of resources the server has." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "resources/list" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:ListResourcesRequest .
+
+mcp:ListResourcesResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response from the server for a resources/list request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:class mcp:ListResourcesResult ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ] ;
+    sh:targetClass mcp:ListResourcesResultResponse .
+
+mcp:ListRootsRequest a sh:NodeShape ;
+    rdfs:comment "Sent from the server to request a list of root URIs from the client." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "roots/list" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:ListRootsRequest .
+
+mcp:ListRootsResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response from the client for a roots/list request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:class mcp:ListRootsResult ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ] ;
+    sh:targetClass mcp:ListRootsResultResponse .
+
+mcp:ListTasksRequest a sh:NodeShape ;
+    rdfs:comment "A request to retrieve a list of tasks." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "tasks/list" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:ListTasksRequest .
+
+mcp:ListTasksResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response for a tasks/list request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:class mcp:ListTasksResult ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ] ;
+    sh:targetClass mcp:ListTasksResultResponse .
+
+mcp:ListToolsRequest a sh:NodeShape ;
+    rdfs:comment "Sent from the client to request a list of tools the server has." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "tools/list" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:ListToolsRequest .
+
+mcp:ListToolsResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response from the server for a tools/list request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:class mcp:ListToolsResult ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ] ;
+    sh:targetClass mcp:ListToolsResultResponse .
+
+mcp:LoggingMessageNotification a sh:NodeShape ;
+    rdfs:comment "Notification of a log message passed from server to client." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:class mcp:LoggingMessageNotificationParams ;
+            sh:description "JSON-RPC parameters payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:params ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "notifications/message" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:method ] ;
+    sh:targetClass mcp:LoggingMessageNotification .
+
+mcp:MethodNotFoundError a sh:NodeShape ;
+    rdfs:comment "A JSON-RPC error indicating that the requested method does not exist or is not available (-32601)." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:ErrorData ;
+            sh:description "Base64-encoded binary data." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:data ],
+        [ sh:datatype xsd:string ;
+            sh:description "A message string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:message ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The error type that occurred." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:code ] ;
+    sh:targetClass mcp:MethodNotFoundError .
+
+mcp:MultiSelectEnumSchema a sh:NodeShape ;
+    rdfs:comment "A union of multi-select enum schema types." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass mcp:MultiSelectEnumSchema .
+
+mcp:NumberSchema a sh:NodeShape ;
+    rdfs:comment "Number schema definition." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:integer ;
+            sh:description "Default value for a schema field." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:default ],
+        [ sh:datatype xsd:string ;
+            sh:description "A human-readable description." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path dct:description ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Maximum value constraint." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path mcp:maximum ],
+        [ sh:datatype xsd:string ;
+            sh:description "Default value for a schema field." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:default_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Type discriminator field." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:type ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for UI and end-user contexts — optimized to be human-readable and easily understood." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path dct:title ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Minimum value constraint." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path mcp:minimum ] ;
+    sh:targetClass mcp:NumberSchema .
+
+mcp:PaginatedRequestParams a sh:NodeShape ;
+    rdfs:comment "Common params for paginated requests." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "An opaque token representing the current pagination position. If provided, the server should return results starting after this cursor." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:cursor ] ;
+    sh:targetClass mcp:PaginatedRequestParams .
+
+mcp:ParseError a sh:NodeShape ;
+    rdfs:comment "A JSON-RPC error indicating that invalid JSON was received by the server (-32700)." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "A message string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:message ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The error type that occurred." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:code ],
+        [ sh:class mcp:ErrorData ;
+            sh:description "Base64-encoded binary data." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:data ] ;
+    sh:targetClass mcp:ParseError .
+
+mcp:PingRequest a sh:NodeShape ;
+    rdfs:comment "A ping, issued by either the server or the client, to check that the other party is still alive." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "ping" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:PingRequest .
+
+mcp:PingResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response for a ping request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:class mcp:Result ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ] ;
+    sh:targetClass mcp:PingResultResponse .
+
+mcp:PrimitiveSchemaDefinition a sh:NodeShape ;
+    rdfs:comment "A union of all primitive schema definition types." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass mcp:PrimitiveSchemaDefinition .
+
+mcp:ProgressNotification a sh:NodeShape ;
+    rdfs:comment "Out-of-band notification to inform the receiver of a progress update." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "notifications/progress" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:class mcp:ProgressNotificationParams ;
+            sh:description "JSON-RPC parameters payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:params ] ;
+    sh:targetClass mcp:ProgressNotification .
+
+mcp:PromptListChangedNotification a sh:NodeShape ;
+    rdfs:comment "Notification that the list of prompts the server offers has changed." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "notifications/prompts/list_changed" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:method ] ;
+    sh:targetClass mcp:PromptListChangedNotification .
+
+mcp:ReadResourceRequest a sh:NodeShape ;
+    rdfs:comment "Sent from the client to the server, to read a specific resource URI." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "resources/read" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:method ],
+        [ sh:class mcp:ReadResourceRequestParams ;
+            sh:description "JSON-RPC parameters payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:params ] ;
+    sh:targetClass mcp:ReadResourceRequest .
+
+mcp:ReadResourceResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response from the server for a resources/read request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:class mcp:ReadResourceResult ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ] ;
+    sh:targetClass mcp:ReadResourceResultResponse .
+
+mcp:RelatedTaskMetadata a sh:NodeShape ;
+    rdfs:comment "Metadata for associating messages with a task." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The task identifier." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:taskId ] ;
+    sh:targetClass mcp:RelatedTaskMetadata .
+
+mcp:ResourceLink a sh:NodeShape ;
+    rdfs:comment "A resource that the server is capable of reading, included in a prompt or tool call result." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The MIME type of a resource, if known." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:mimeType ],
+        [ sh:class mcp:Annotations ;
+            sh:description "Optional annotations for the client." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 6 ;
+            sh:path mcp:annotations ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The size of the raw resource content, in bytes." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:size ],
+        [ sh:class mcp:Icon ;
+            sh:description "Optional set of sized icons that the client can display in a user interface." ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 9 ;
+            sh:path mcp:icons ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for UI and end-user contexts — optimized to be human-readable and easily understood." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path dct:title ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 5 ;
+            sh:path mcp:_meta ],
+        [ sh:datatype xsd:string ;
+            sh:description "Type discriminator field." ;
+            sh:in ( "resource_link" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path mcp:type ],
+        [ sh:datatype xsd:string ;
+            sh:description "A human-readable description." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path dct:description ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "A resource URI." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:uri ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path schema1:name ] ;
+    sh:targetClass mcp:ResourceLink .
+
+mcp:ResourceListChangedNotification a sh:NodeShape ;
+    rdfs:comment "Notification that the list of resources the server can read from has changed." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "notifications/resources/list_changed" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:ResourceListChangedNotification .
+
+mcp:ResourceTemplateReference a sh:NodeShape ;
+    rdfs:comment "A reference to a resource or resource template definition." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:anyURI ;
+            sh:description "A resource URI." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:uri ],
+        [ sh:datatype xsd:string ;
+            sh:description "Type discriminator field." ;
+            sh:in ( "ref/resource" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:type ] ;
+    sh:targetClass mcp:ResourceTemplateReference .
+
+mcp:ResourceUpdatedNotification a sh:NodeShape ;
+    rdfs:comment "Notification that a resource has changed and may need to be read again." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:ResourceUpdatedNotificationParams ;
+            sh:description "JSON-RPC parameters payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:params ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "notifications/resources/updated" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:method ] ;
+    sh:targetClass mcp:ResourceUpdatedNotification .
+
+mcp:RootsListChangedNotification a sh:NodeShape ;
+    rdfs:comment "Notification from the client that the list of roots has changed." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "notifications/roots/list_changed" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:method ] ;
+    sh:targetClass mcp:RootsListChangedNotification .
+
+mcp:SamplingMessageContentBlock a sh:NodeShape ;
+    rdfs:comment "A union of content types valid in sampling messages." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass mcp:SamplingMessageContentBlock .
+
+mcp:ServerNotification a sh:NodeShape ;
+    rdfs:comment "A union of all notifications that can be sent by a server." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass mcp:ServerNotification .
+
+mcp:ServerRequest a sh:NodeShape ;
+    rdfs:comment "A union of all requests that can be sent by a server." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass mcp:ServerRequest .
+
+mcp:ServerResult a sh:NodeShape ;
+    rdfs:comment "A union of all result types that a server can return." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass mcp:ServerResult .
+
+mcp:SetLevelRequest a sh:NodeShape ;
+    rdfs:comment "A request from the client to the server, to enable or adjust logging." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:SetLevelRequestParams ;
+            sh:description "JSON-RPC parameters payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:params ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "logging/setLevel" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:SetLevelRequest .
+
+mcp:SetLevelResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response from the server for a logging/setLevel request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:Result ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:SetLevelResultResponse .
+
+mcp:SingleSelectEnumSchema a sh:NodeShape ;
+    rdfs:comment "A union of single-select enum schema types." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass mcp:SingleSelectEnumSchema .
+
+mcp:StringSchema a sh:NodeShape ;
+    rdfs:comment "String schema definition." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:integer ;
+            sh:description "Maximum length constraint." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path mcp:maxLength ],
+        [ sh:datatype xsd:string ;
+            sh:description "Type discriminator field." ;
+            sh:in ( "string" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:type ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for UI and end-user contexts — optimized to be human-readable and easily understood." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path dct:title ],
+        [ sh:datatype xsd:string ;
+            sh:description "A human-readable description." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path dct:description ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Minimum length constraint." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path mcp:minLength ],
+        [ sh:datatype xsd:string ;
+            sh:description "Default value for a schema field." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:default_value ],
+        [ sh:datatype xsd:anyType ;
+            sh:description "Default value for a schema field." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:default ],
+        [ sh:description "String format constraint." ;
+            sh:in ( "date" "date-time" "email" "uri" ) ;
+            sh:maxCount 1 ;
+            sh:order 4 ;
+            sh:path mcp:format ] ;
+    sh:targetClass mcp:StringSchema .
+
+mcp:SubscribeRequest a sh:NodeShape ;
+    rdfs:comment "Sent from the client to request resource update notifications." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:class mcp:SubscribeRequestParams ;
+            sh:description "JSON-RPC parameters payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:params ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "resources/subscribe" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ] ;
+    sh:targetClass mcp:SubscribeRequest .
+
+mcp:SubscribeResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response for a resources/subscribe request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:Result ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:SubscribeResultResponse .
+
+mcp:TaskStatusNotification a sh:NodeShape ;
+    rdfs:comment "Notification that a task's status has changed." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "notifications/tasks/status" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:method ],
+        [ sh:class mcp:TaskStatusNotificationParams ;
+            sh:description "JSON-RPC parameters payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:params ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:TaskStatusNotification .
+
+mcp:TextContent a sh:NodeShape ;
+    rdfs:comment "Text provided to or from an LLM." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Type discriminator field." ;
+            sh:in ( "text" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:type ],
+        [ sh:datatype xsd:string ;
+            sh:description "Text content." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:text ],
+        [ sh:class mcp:Annotations ;
+            sh:description "Optional annotations for the client." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path mcp:annotations ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:_meta ] ;
+    sh:targetClass mcp:TextContent .
+
+mcp:TextResourceContents a sh:NodeShape ;
+    rdfs:comment "Text resource contents." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The MIME type of a resource, if known." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:mimeType ],
+        [ sh:datatype xsd:string ;
+            sh:description "Text content." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:text ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "A resource URI." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:uri ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path mcp:_meta ] ;
+    sh:targetClass mcp:TextResourceContents .
+
+mcp:TitledMultiSelectEnumSchema a sh:NodeShape ;
+    rdfs:comment "Multi-selection enum with display titles for each option." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:SchemaItems ;
+            sh:description "JSON Schema items definition." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:items ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Minimum number of items." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path mcp:minItems ],
+        [ sh:datatype xsd:string ;
+            sh:description "Default value for a schema field." ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:default ],
+        [ sh:datatype xsd:string ;
+            sh:description "A human-readable description." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path dct:description ],
+        [ sh:datatype xsd:string ;
+            sh:description "Default value for a schema field." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:default_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Type discriminator field." ;
+            sh:in ( "array" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:type ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Maximum number of items." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path mcp:maxItems ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for UI and end-user contexts — optimized to be human-readable and easily understood." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path dct:title ] ;
+    sh:targetClass mcp:TitledMultiSelectEnumSchema .
+
+mcp:TitledSingleSelectEnumSchema a sh:NodeShape ;
+    rdfs:comment "Single-selection enum with display titles for each option." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "A human-readable description." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path dct:description ],
+        [ sh:datatype xsd:string ;
+            sh:description "Default value for a schema field." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:default_value ],
+        [ sh:datatype xsd:anyType ;
+            sh:description "Default value for a schema field." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:default ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for UI and end-user contexts — optimized to be human-readable and easily understood." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path dct:title ],
+        [ sh:datatype xsd:string ;
+            sh:description "Type discriminator field." ;
+            sh:in ( "string" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:type ],
+        [ sh:class mcp:EnumOption ;
+            sh:description "JSON Schema oneOf entries." ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:oneOf ] ;
+    sh:targetClass mcp:TitledSingleSelectEnumSchema .
+
+mcp:ToolListChangedNotification a sh:NodeShape ;
+    rdfs:comment "Notification that the list of tools the server offers has changed." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "notifications/tools/list_changed" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:ToolListChangedNotification .
+
+mcp:ToolResultContent a sh:NodeShape ;
+    rdfs:comment "The result of a tool use, provided by the user back to the assistant." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:ContentBlock ;
+            sh:description "The unstructured result content of the tool use." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:content ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 5 ;
+            sh:path mcp:_meta ],
+        [ sh:class mcp:StructuredContentData ;
+            sh:description "An optional JSON object representing structured result of the tool call." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path mcp:structuredContent ],
+        [ sh:datatype xsd:string ;
+            sh:description "The ID of the tool use this result corresponds to." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:toolUseId ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Whether the tool call ended in an error." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:isError ],
+        [ sh:datatype xsd:string ;
+            sh:description "Type discriminator field." ;
+            sh:in ( "tool_result" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:type ] ;
+    sh:targetClass mcp:ToolResultContent .
+
+mcp:ToolUseContent a sh:NodeShape ;
+    rdfs:comment "A request from the assistant to call a tool." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "A unique identifier for this tool use." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:id ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path mcp:_meta ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path schema1:name ],
+        [ sh:datatype xsd:string ;
+            sh:description "Type discriminator field." ;
+            sh:in ( "tool_use" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:type ],
+        [ sh:class mcp:ToolInput ;
+            sh:description "The arguments to pass to the tool." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path mcp:input ] ;
+    sh:targetClass mcp:ToolUseContent .
+
+mcp:URLElicitationRequiredError a sh:NodeShape ;
+    rdfs:comment "A response indicating that additional information is required via URL elicitation." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:Error ;
+            sh:description "The error object." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:error ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:or ( [ sh:datatype xsd:string ;
+                        sh:nodeKind sh:Literal ] [ sh:datatype xsd:integer ;
+                        sh:nodeKind sh:Literal ] ) ;
+            sh:order 0 ;
+            sh:path mcp:id ] ;
+    sh:targetClass mcp:URLElicitationRequiredError .
+
+mcp:UnsubscribeRequest a sh:NodeShape ;
+    rdfs:comment "Sent from the client to cancel resource update notifications." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ],
+        [ sh:class mcp:UnsubscribeRequestParams ;
+            sh:description "JSON-RPC parameters payload." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:params ],
+        [ sh:datatype xsd:string ;
+            sh:description "The JSON-RPC method name." ;
+            sh:in ( "resources/unsubscribe" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:method ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ] ;
+    sh:targetClass mcp:UnsubscribeRequest .
+
+mcp:UnsubscribeResultResponse a sh:NodeShape ;
+    rdfs:comment "A successful response for a resources/unsubscribe request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:Result ;
+            sh:description "JSON-RPC successful result payload." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:result ],
+        [ sh:datatype xsd:string ;
+            sh:description "Uniquely identifying ID for a JSON-RPC request." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:id ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON-RPC version string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:jsonrpc ] ;
+    sh:targetClass mcp:UnsubscribeResultResponse .
+
+mcp:UntitledMultiSelectEnumSchema a sh:NodeShape ;
+    rdfs:comment "Multi-selection enum without display titles." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:SchemaItems ;
+            sh:description "JSON Schema items definition." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:items ],
+        [ sh:datatype xsd:string ;
+            sh:description "Default value for a schema field." ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:default ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Minimum number of items." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path mcp:minItems ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for UI and end-user contexts — optimized to be human-readable and easily understood." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path dct:title ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Maximum number of items." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path mcp:maxItems ],
+        [ sh:datatype xsd:string ;
+            sh:description "Default value for a schema field." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:default_value ],
+        [ sh:datatype xsd:string ;
+            sh:description "Type discriminator field." ;
+            sh:in ( "array" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:type ],
+        [ sh:datatype xsd:string ;
+            sh:description "A human-readable description." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path dct:description ] ;
+    sh:targetClass mcp:UntitledMultiSelectEnumSchema .
+
+mcp:UntitledSingleSelectEnumSchema a sh:NodeShape ;
+    rdfs:comment "Single-selection enum without display titles." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Type discriminator field." ;
+            sh:in ( "string" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:type ],
+        [ sh:datatype xsd:string ;
+            sh:description "A human-readable description." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path dct:description ],
+        [ sh:datatype xsd:string ;
+            sh:description "Array of enum values." ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:enum ],
+        [ sh:datatype xsd:anyType ;
+            sh:description "Default value for a schema field." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:default ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for UI and end-user contexts — optimized to be human-readable and easily understood." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path dct:title ],
+        [ sh:datatype xsd:string ;
+            sh:description "Array of enum values." ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:enum_values ],
+        [ sh:datatype xsd:string ;
+            sh:description "Default value for a schema field." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path mcp:default_value ] ;
+    sh:targetClass mcp:UntitledSingleSelectEnumSchema .
+
+mcp:CallToolRequestParams a sh:NodeShape ;
+    rdfs:comment "Parameters for a tools/call request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:TaskMetadata ;
+            sh:description "If specified, the caller is requesting task-augmented execution." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:task ],
+        [ sh:class mcp:ArgumentMap ;
+            sh:description "Arguments to use for the tool call." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:arguments ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path schema1:name ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path mcp:_meta ] ;
+    sh:targetClass mcp:CallToolRequestParams .
+
+mcp:CallToolResult a sh:NodeShape ;
+    rdfs:comment "The result returned by the server for a tools/call request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:StructuredContentData ;
+            sh:description "An optional JSON object representing structured result of the tool call." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:structuredContent ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path mcp:_meta ],
+        [ sh:class mcp:ContentBlock ;
+            sh:description "A list of content objects that represent the result." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:content ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Whether the tool call ended in an error." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:isError ] ;
+    sh:targetClass mcp:CallToolResult .
+
+mcp:CancelTaskResult a sh:NodeShape ;
+    rdfs:comment "The result returned for a tasks/cancel request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "ISO 8601 timestamp when the task was last updated." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:lastUpdatedAt ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 7 ;
+            sh:path mcp:_meta ],
+        [ sh:datatype xsd:string ;
+            sh:description "Optional human-readable message describing the current task state." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path mcp:statusMessage ],
+        [ sh:datatype xsd:string ;
+            sh:description "The task identifier." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:taskId ],
+        [ sh:datatype xsd:string ;
+            sh:description "ISO 8601 timestamp when the task was created." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:createdAt ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Actual retention duration from creation in milliseconds, null for unlimited." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path mcp:ttl ],
+        [ sh:description "Current task state." ;
+            sh:in ( "cancelled" "completed" "failed" "input_required" "working" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path mcp:status ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Suggested polling interval in milliseconds." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path mcp:pollInterval ] ;
+    sh:targetClass mcp:CancelTaskResult .
+
+mcp:CancelledNotificationParams a sh:NodeShape ;
+    rdfs:comment "Parameters for a notifications/cancelled notification." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The ID of a request." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:requestId ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:_meta ],
+        [ sh:datatype xsd:string ;
+            sh:description "An optional string describing the reason." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:reason ] ;
+    sh:targetClass mcp:CancelledNotificationParams .
+
+mcp:ClientCapabilities a sh:NodeShape ;
+    rdfs:comment "Capabilities a client may support. Known capabilities are defined here, but this is not a closed set." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:RootsCapability ;
+            sh:description "The list of roots." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path mcp:roots ],
+        [ sh:datatype xsd:anyType ;
+            sh:description "Experimental capability extensions." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:experimental ],
+        [ sh:class mcp:ExtensionsCapability ;
+            sh:description "Implementation-specific extension capabilities." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:extensions ],
+        [ sh:class mcp:TasksCapability ;
+            sh:description "The list of tasks." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 5 ;
+            sh:path mcp:tasks ],
+        [ sh:class mcp:ElicitationCapability ;
+            sh:description "Elicitation capability object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:elicitation ],
+        [ sh:class mcp:SamplingCapability ;
+            sh:description "Sampling capability object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path mcp:sampling ] ;
+    sh:targetClass mcp:ClientCapabilities .
+
+mcp:CompleteRequestParams a sh:NodeShape ;
+    rdfs:comment "Parameters for a completion/complete request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:CompletionContext ;
+            sh:description "Optional completion context." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:context ],
+        [ sh:class mcp:PromptReference ;
+            sh:description "A prompt or resource template reference." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:ref ],
+        [ sh:class mcp:CompletionArgument ;
+            sh:description "The argument's information." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:argument ] ;
+    sh:targetClass mcp:CompleteRequestParams .
+
+mcp:CompleteResult a sh:NodeShape ;
+    rdfs:comment "The result returned by the server for a completion/complete request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:CompletionData ;
+            sh:description "The completion result object." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:completion ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:_meta ] ;
+    sh:targetClass mcp:CompleteResult .
+
+mcp:CompletionArgument a sh:NodeShape ;
+    rdfs:comment "Argument descriptor for completion requests." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path schema1:name ],
+        [ sh:datatype xsd:string ;
+            sh:description "A value string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:value ] ;
+    sh:targetClass mcp:CompletionArgument .
+
+mcp:CompletionContext a sh:NodeShape ;
+    rdfs:comment "Additional context for completion requests." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:ArgumentMap ;
+            sh:description "Arguments for templating." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:arguments ] ;
+    sh:targetClass mcp:CompletionContext .
+
+mcp:CompletionData a sh:NodeShape ;
+    rdfs:comment "Completion result payload." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:boolean ;
+            sh:description "Indicates whether there are additional completion options." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:hasMore ],
+        [ sh:datatype xsd:string ;
+            sh:description "An array of completion values." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:values ],
+        [ sh:datatype xsd:float ;
+            sh:description "Total number of items to process (or total progress required), if known." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:total ] ;
+    sh:targetClass mcp:CompletionData .
+
+mcp:CreateMessageRequestParams a sh:NodeShape ;
+    rdfs:comment "Parameters for a sampling/createMessage request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:TaskMetadata ;
+            sh:description "If specified, task-augmented execution." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 9 ;
+            sh:path mcp:task ],
+        [ sh:datatype xsd:string ;
+            sh:description "An optional system prompt the server wants to use for sampling." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:systemPrompt ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The requested maximum number of tokens to sample." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:maxTokens ],
+        [ sh:class mcp:Tool ;
+            sh:description "Tools that the model may use during generation." ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 7 ;
+            sh:path mcp:tools ],
+        [ sh:class mcp:ToolChoice ;
+            sh:description "Controls how the model uses tools." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 8 ;
+            sh:path mcp:toolChoice ],
+        [ sh:class mcp:SamplingMessage ;
+            sh:description "Messages for sampling." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:messages ],
+        [ sh:description "A request to include context from one or more MCP servers." ;
+            sh:in ( "allServers" "none" "thisServer" ) ;
+            sh:maxCount 1 ;
+            sh:order 5 ;
+            sh:path mcp:includeContext ],
+        [ sh:datatype xsd:string ;
+            sh:description "Stop sequences for sampling." ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path mcp:stopSequences ],
+        [ sh:class mcp:ModelPreferences ;
+            sh:description "Model preferences for sampling." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:modelPreferences ],
+        [ sh:datatype xsd:float ;
+            sh:description "Sampling temperature." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path mcp:temperature ] ;
+    sh:targetClass mcp:CreateMessageRequestParams .
+
+mcp:CreateMessageResult a sh:NodeShape ;
+    rdfs:comment "The result returned by the client for a sampling/createMessage request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "The role of the sender or recipient." ;
+            sh:in ( "assistant" "user" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 2 ;
+            sh:path mcp:role ],
+        [ sh:datatype xsd:string ;
+            sh:description "The reason why sampling stopped, if known." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:stopReason ],
+        [ sh:description "The message content." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:or ( [ sh:class mcp:ContentBlock ] [ sh:class mcp:ContentBlock ] ) ;
+            sh:order 0 ;
+            sh:path mcp:content ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path mcp:_meta ],
+        [ sh:datatype xsd:string ;
+            sh:description "The name of the model that generated the message." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:model ] ;
+    sh:targetClass mcp:CreateMessageResult .
+
+mcp:CreateTaskResult a sh:NodeShape ;
+    rdfs:comment "The result returned for a task-augmented request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:_meta ],
+        [ sh:class mcp:Task ;
+            sh:description "Task data." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:task ] ;
+    sh:targetClass mcp:CreateTaskResult .
+
+mcp:ElicitRequestFormParams a sh:NodeShape ;
+    rdfs:comment "Parameters for a form-mode elicitation request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The elicitation mode." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:mode ],
+        [ sh:class mcp:TaskMetadata ;
+            sh:description "If specified, task-augmented execution." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path mcp:task ],
+        [ sh:class mcp:JsonSchema ;
+            sh:description "A restricted subset of JSON Schema." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:requestedSchema ],
+        [ sh:datatype xsd:string ;
+            sh:description "A message string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:message ] ;
+    sh:targetClass mcp:ElicitRequestFormParams .
+
+mcp:ElicitResult a sh:NodeShape ;
+    rdfs:comment "The result returned by the client for an elicitation/create request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:_meta ],
+        [ sh:description "The user action in response to the elicitation." ;
+            sh:in ( "accept" "cancel" "decline" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path mcp:action ],
+        [ sh:class mcp:ElicitationContent ;
+            sh:description "Structured content block of a message or result." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:content ] ;
+    sh:targetClass mcp:ElicitResult .
+
+mcp:ElicitationCompleteNotificationParams a sh:NodeShape ;
+    rdfs:comment "Parameters for a notifications/elicitation/complete notification." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The ID of the elicitation." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:elicitationId ] ;
+    sh:targetClass mcp:ElicitationCompleteNotificationParams .
+
+mcp:ElicitationContent a sh:NodeShape ;
+    rdfs:comment "Form values returned by an elicitation." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Email value." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:email ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path schema1:name ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Age value." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:age ] ;
+    sh:targetClass mcp:ElicitationContent .
+
+mcp:ExtensionAppCapability a sh:NodeShape ;
+    rdfs:comment "Extension payload for app mime type declarations." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "MIME types supported by an extension capability." ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:mimeTypes ] ;
+    sh:targetClass mcp:ExtensionAppCapability .
+
+mcp:GetPromptRequestParams a sh:NodeShape ;
+    rdfs:comment "Parameters for a prompts/get request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:ArgumentMap ;
+            sh:description "Arguments to use for templating the prompt." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:arguments ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path schema1:name ] ;
+    sh:targetClass mcp:GetPromptRequestParams .
+
+mcp:GetPromptResult a sh:NodeShape ;
+    rdfs:comment "The result returned by the server for a prompts/get request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:PromptMessage ;
+            sh:description "The prompt messages." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:messages ],
+        [ sh:datatype xsd:string ;
+            sh:description "A human-readable description." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path dct:description ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:_meta ] ;
+    sh:targetClass mcp:GetPromptResult .
+
+mcp:GetTaskPayloadResult a sh:NodeShape ;
+    rdfs:comment "The result returned for a tasks/result request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:_meta ] ;
+    sh:targetClass mcp:GetTaskPayloadResult .
+
+mcp:GetTaskResult a sh:NodeShape ;
+    rdfs:comment "The result returned for a tasks/get request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "Current task state." ;
+            sh:in ( "cancelled" "completed" "failed" "input_required" "working" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path mcp:status ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 7 ;
+            sh:path mcp:_meta ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Actual retention duration from creation in milliseconds, null for unlimited." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path mcp:ttl ],
+        [ sh:datatype xsd:string ;
+            sh:description "The task identifier." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:taskId ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Suggested polling interval in milliseconds." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path mcp:pollInterval ],
+        [ sh:datatype xsd:string ;
+            sh:description "ISO 8601 timestamp when the task was last updated." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:lastUpdatedAt ],
+        [ sh:datatype xsd:string ;
+            sh:description "Optional human-readable message describing the current task state." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path mcp:statusMessage ],
+        [ sh:datatype xsd:string ;
+            sh:description "ISO 8601 timestamp when the task was created." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:createdAt ] ;
+    sh:targetClass mcp:GetTaskResult .
+
+mcp:InitializeRequestParams a sh:NodeShape ;
+    rdfs:comment "Parameters for an initialize request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:Implementation ;
+            sh:description "Information about the client implementation." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:clientInfo ],
+        [ sh:class mcp:ClientCapabilities ;
+            sh:description "Client capabilities." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:capabilities ],
+        [ sh:datatype xsd:string ;
+            sh:description "The version of the Model Context Protocol." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:protocolVersion ] ;
+    sh:targetClass mcp:InitializeRequestParams .
+
+mcp:InitializeResult a sh:NodeShape ;
+    rdfs:comment "The result returned by the server for an initialize request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:ServerCapabilities ;
+            sh:description "Server capabilities." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:capabilities ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path mcp:_meta ],
+        [ sh:datatype xsd:string ;
+            sh:description "The version of the Model Context Protocol." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:protocolVersion ],
+        [ sh:datatype xsd:string ;
+            sh:description "Instructions describing how to use the server and its features." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:instructions ],
+        [ sh:class mcp:Implementation ;
+            sh:description "Information about the server implementation." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:serverInfo ] ;
+    sh:targetClass mcp:InitializeResult .
+
+mcp:ListPromptsResult a sh:NodeShape ;
+    rdfs:comment "The result returned by the server for a prompts/list request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "An opaque token representing the pagination position after the last returned result. If present, there may be more results available." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:nextCursor ],
+        [ sh:class mcp:Prompt ;
+            sh:description "The list of prompts." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:prompts ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:_meta ] ;
+    sh:targetClass mcp:ListPromptsResult .
+
+mcp:ListResourceTemplatesResult a sh:NodeShape ;
+    rdfs:comment "The result returned by the server for a resources/templates/list request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:ResourceTemplate ;
+            sh:description "The list of resource templates." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:resourceTemplates ],
+        [ sh:datatype xsd:string ;
+            sh:description "An opaque token representing the pagination position after the last returned result. If present, there may be more results available." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:nextCursor ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:_meta ] ;
+    sh:targetClass mcp:ListResourceTemplatesResult .
+
+mcp:ListResourcesResult a sh:NodeShape ;
+    rdfs:comment "The result returned by the server for a resources/list request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:_meta ],
+        [ sh:class mcp:Resource ;
+            sh:description "The list of resources." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:resources ],
+        [ sh:datatype xsd:string ;
+            sh:description "An opaque token representing the pagination position after the last returned result. If present, there may be more results available." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:nextCursor ] ;
+    sh:targetClass mcp:ListResourcesResult .
+
+mcp:ListRootsResult a sh:NodeShape ;
+    rdfs:comment "The result returned by the client for a roots/list request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:Root ;
+            sh:description "The list of roots." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:roots ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:_meta ] ;
+    sh:targetClass mcp:ListRootsResult .
+
+mcp:ListTasksResult a sh:NodeShape ;
+    rdfs:comment "The result returned for a tasks/list request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:_meta ],
+        [ sh:class mcp:Task ;
+            sh:description "The list of tasks." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:tasks ],
+        [ sh:datatype xsd:string ;
+            sh:description "An opaque token representing the pagination position after the last returned result. If present, there may be more results available." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:nextCursor ] ;
+    sh:targetClass mcp:ListTasksResult .
+
+mcp:ListToolsResult a sh:NodeShape ;
+    rdfs:comment "The result returned by the server for a tools/list request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:_meta ],
+        [ sh:class mcp:Tool ;
+            sh:description "The list of tools." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:tools ],
+        [ sh:datatype xsd:string ;
+            sh:description "An opaque token representing the pagination position after the last returned result. If present, there may be more results available." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:nextCursor ] ;
+    sh:targetClass mcp:ListToolsResult .
+
+mcp:LogData a sh:NodeShape ;
+    rdfs:comment "Structured log data payload." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:LogDetails ;
+            sh:description "Nested log details object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:details ],
+        [ sh:datatype xsd:string ;
+            sh:description "The error object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:error ] ;
+    sh:targetClass mcp:LogData .
+
+mcp:LogDetails a sh:NodeShape ;
+    rdfs:comment "Structured details attached to log data." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:integer ;
+            sh:description "Port value." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:port ],
+        [ sh:datatype xsd:string ;
+            sh:description "Host value." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:host ] ;
+    sh:targetClass mcp:LogDetails .
+
+mcp:LoggingMessageNotificationParams a sh:NodeShape ;
+    rdfs:comment "Parameters for a notifications/message notification." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:LogData ;
+            sh:description "The data to be logged." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:data ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path mcp:_meta ],
+        [ sh:datatype xsd:string ;
+            sh:description "An optional name of the logger issuing this message." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:logger ],
+        [ sh:description "The severity of a log message." ;
+            sh:in ( "alert" "critical" "debug" "emergency" "error" "info" "notice" "warning" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path mcp:level ] ;
+    sh:targetClass mcp:LoggingMessageNotificationParams .
+
+mcp:ModelHint a sh:NodeShape ;
+    rdfs:comment "Hints to use for model selection." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path schema1:name ] ;
+    sh:targetClass mcp:ModelHint .
+
+mcp:ModelPreferences a sh:NodeShape ;
+    rdfs:comment "The server's preferences for model selection, requested of the client during sampling." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:float ;
+            sh:description "How much to prioritize cost when selecting a model (0-1)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:costPriority ],
+        [ sh:class mcp:ModelHint ;
+            sh:description "Optional hints to use for model selection." ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path mcp:hints ],
+        [ sh:datatype xsd:float ;
+            sh:description "How much to prioritize sampling speed when selecting a model (0-1)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:speedPriority ],
+        [ sh:datatype xsd:float ;
+            sh:description "How much to prioritize intelligence when selecting a model (0-1)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:intelligencePriority ] ;
+    sh:targetClass mcp:ModelPreferences .
+
+mcp:ProgressNotificationParams a sh:NodeShape ;
+    rdfs:comment "Parameters for a notifications/progress notification." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:float ;
+            sh:description "The progress thus far." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:progress ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path mcp:_meta ],
+        [ sh:datatype xsd:string ;
+            sh:description "The progress token which was given in the initial request, used to associate this notification with the request that is proceeding." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:progressToken ],
+        [ sh:datatype xsd:float ;
+            sh:description "Total number of items to process (or total progress required), if known." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:total ],
+        [ sh:datatype xsd:string ;
+            sh:description "A message string." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:message ] ;
+    sh:targetClass mcp:ProgressNotificationParams .
+
+mcp:Prompt a sh:NodeShape ;
+    rdfs:comment "A prompt or prompt template that the server offers." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:PromptArgument ;
+            sh:description "A list of arguments to use for templating the prompt." ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:arguments ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:_meta ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path schema1:name ],
+        [ sh:datatype xsd:string ;
+            sh:description "A human-readable description." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path dct:description ],
+        [ sh:class mcp:Icon ;
+            sh:description "Optional set of sized icons that the client can display in a user interface." ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 5 ;
+            sh:path mcp:icons ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for UI and end-user contexts — optimized to be human-readable and easily understood." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path dct:title ] ;
+    sh:targetClass mcp:Prompt .
+
+mcp:PromptArgument a sh:NodeShape ;
+    rdfs:comment "Describes an argument that a prompt can accept." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path schema1:name ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for UI and end-user contexts — optimized to be human-readable and easily understood." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path dct:title ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Whether this argument must be provided." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:required_field ],
+        [ sh:datatype xsd:string ;
+            sh:description "A human-readable description." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path dct:description ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Whether this argument must be provided." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:required ] ;
+    sh:targetClass mcp:PromptArgument .
+
+mcp:PromptMessage a sh:NodeShape ;
+    rdfs:comment "Describes a message returned as part of a prompt." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "The role of the sender or recipient." ;
+            sh:in ( "assistant" "user" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path mcp:role ],
+        [ sh:class mcp:ContentBlock ;
+            sh:description "The content of the prompt message." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:content ] ;
+    sh:targetClass mcp:PromptMessage .
+
+mcp:PromptReference a sh:NodeShape ;
+    rdfs:comment "Identifies a prompt." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Intended for UI and end-user contexts — optimized to be human-readable and easily understood." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path dct:title ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path schema1:name ],
+        [ sh:datatype xsd:string ;
+            sh:description "Type discriminator field." ;
+            sh:in ( "ref/prompt" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:type ] ;
+    sh:targetClass mcp:PromptReference .
+
+mcp:PromptsCapability a sh:NodeShape ;
+    rdfs:comment "Server prompts capability." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:boolean ;
+            sh:description "Whether notifications for list changes are supported." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:listChanged ] ;
+    sh:targetClass mcp:PromptsCapability .
+
+mcp:ReadResourceRequestParams a sh:NodeShape ;
+    rdfs:comment "Parameters for a resources/read request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:anyURI ;
+            sh:description "A resource URI." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:uri ] ;
+    sh:targetClass mcp:ReadResourceRequestParams .
+
+mcp:ReadResourceResult a sh:NodeShape ;
+    rdfs:comment "The result returned by the server for a resources/read request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:ResourceContents ;
+            sh:description "The resource contents." ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:contents ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:_meta ] ;
+    sh:targetClass mcp:ReadResourceResult .
+
+mcp:Resource a sh:NodeShape ;
+    rdfs:comment "A known resource that the server is capable of reading." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The MIME type of a resource, if known." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:mimeType ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path schema1:name ],
+        [ sh:class mcp:Icon ;
+            sh:description "Optional set of sized icons that the client can display in a user interface." ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 8 ;
+            sh:path mcp:icons ],
+        [ sh:class mcp:Annotations ;
+            sh:description "Optional annotations for the client." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 5 ;
+            sh:path mcp:annotations ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path mcp:_meta ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "A resource URI." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:uri ],
+        [ sh:datatype xsd:string ;
+            sh:description "A human-readable description." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path dct:description ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The size of the raw resource content, in bytes." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:size ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for UI and end-user contexts — optimized to be human-readable and easily understood." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path dct:title ] ;
+    sh:targetClass mcp:Resource .
+
+mcp:ResourceTemplate a sh:NodeShape ;
+    rdfs:comment "A template description for resources available on the server." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The MIME type of a resource, if known." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:mimeType ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path mcp:_meta ],
+        [ sh:class mcp:Annotations ;
+            sh:description "Optional annotations for the client." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path mcp:annotations ],
+        [ sh:datatype xsd:string ;
+            sh:description "A URI template (RFC 6570) for constructing resource URIs." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:uriTemplate ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path schema1:name ],
+        [ sh:datatype xsd:string ;
+            sh:description "A human-readable description." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path dct:description ],
+        [ sh:class mcp:Icon ;
+            sh:description "Optional set of sized icons that the client can display in a user interface." ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 7 ;
+            sh:path mcp:icons ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for UI and end-user contexts — optimized to be human-readable and easily understood." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path dct:title ] ;
+    sh:targetClass mcp:ResourceTemplate .
+
+mcp:ResourceUpdatedNotificationParams a sh:NodeShape ;
+    rdfs:comment "Parameters for a notifications/resources/updated notification." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:_meta ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "A resource URI." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:uri ] ;
+    sh:targetClass mcp:ResourceUpdatedNotificationParams .
+
+mcp:ResourcesCapability a sh:NodeShape ;
+    rdfs:comment "Server resources capability." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:boolean ;
+            sh:description "Whether subscribing to resource updates is supported." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:subscribe ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "Whether notifications for list changes are supported." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:listChanged ] ;
+    sh:targetClass mcp:ResourcesCapability .
+
+mcp:Root a sh:NodeShape ;
+    rdfs:comment "Represents a root directory or file that the server can operate on." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path schema1:name ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "A resource URI." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:uri ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:_meta ] ;
+    sh:targetClass mcp:Root .
+
+mcp:RootsCapability a sh:NodeShape ;
+    rdfs:comment "Client roots capability." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:boolean ;
+            sh:description "Whether notifications for list changes are supported." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:listChanged ] ;
+    sh:targetClass mcp:RootsCapability .
+
+mcp:SamplingMessage a sh:NodeShape ;
+    rdfs:comment "Describes a message issued to or received from an LLM API." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:_meta ],
+        [ sh:description "The role of the sender or recipient." ;
+            sh:in ( "assistant" "user" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path mcp:role ],
+        [ sh:description "The message content." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:or ( [ sh:class mcp:ContentBlock ] [ sh:class mcp:ContentBlock ] ) ;
+            sh:order 0 ;
+            sh:path mcp:content ] ;
+    sh:targetClass mcp:SamplingMessage .
+
+mcp:SchemaProperties a sh:NodeShape ;
+    rdfs:comment "Named JSON Schema property map used by vendor fixtures." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:JsonSchema ;
+            sh:description "Humidity percentage value." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 9 ;
+            sh:path mcp:humidity ],
+        [ sh:class mcp:JsonSchema ;
+            sh:description "Age value." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:age ],
+        [ sh:class mcp:JsonSchema ;
+            sh:description "JSON Schema property for key b." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 6 ;
+            sh:path mcp:b ],
+        [ sh:class mcp:JsonSchema ;
+            sh:description "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path schema1:name ],
+        [ sh:class mcp:JsonSchema ;
+            sh:description "Location value." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path mcp:location ],
+        [ sh:class mcp:JsonSchema ;
+            sh:description "Email value." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:email ],
+        [ sh:class mcp:JsonSchema ;
+            sh:description "Sampling temperature." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 7 ;
+            sh:path mcp:temperature ],
+        [ sh:class mcp:JsonSchema ;
+            sh:description "JSON Schema property for key a." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 5 ;
+            sh:path mcp:a ],
+        [ sh:class mcp:JsonSchema ;
+            sh:description "City value." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path mcp:city ],
+        [ sh:class mcp:JsonSchema ;
+            sh:description "Weather conditions description." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 8 ;
+            sh:path mcp:conditions ] ;
+    sh:targetClass mcp:SchemaProperties .
+
+mcp:ServerCapabilities a sh:NodeShape ;
+    rdfs:comment "Capabilities that a server may support. Known capabilities are defined here, but this is not a closed set." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:ExtensionsCapability ;
+            sh:description "Implementation-specific extension capabilities." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:extensions ],
+        [ sh:class mcp:ToolsCapability ;
+            sh:description "The list of tools." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path mcp:tools ],
+        [ sh:datatype xsd:anyType ;
+            sh:description "Experimental capability extensions." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:experimental ],
+        [ sh:class mcp:TasksCapability ;
+            sh:description "The list of tasks." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 5 ;
+            sh:path mcp:tasks ],
+        [ sh:class mcp:PromptsCapability ;
+            sh:description "The list of prompts." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:prompts ],
+        [ sh:class mcp:ResourcesCapability ;
+            sh:description "The list of resources." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path mcp:resources ] ;
+    sh:targetClass mcp:ServerCapabilities .
+
+mcp:SetLevelRequestParams a sh:NodeShape ;
+    rdfs:comment "Parameters for a logging/setLevel request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "The severity of a log message." ;
+            sh:in ( "alert" "critical" "debug" "emergency" "error" "info" "notice" "warning" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 0 ;
+            sh:path mcp:level ] ;
+    sh:targetClass mcp:SetLevelRequestParams .
+
+mcp:SubscribeRequestParams a sh:NodeShape ;
+    rdfs:comment "Parameters for a resources/subscribe request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:anyURI ;
+            sh:description "A resource URI." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:uri ] ;
+    sh:targetClass mcp:SubscribeRequestParams .
+
+mcp:TaskRequestCapabilities a sh:NodeShape ;
+    rdfs:comment "Task request capability map." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:ToolsCapability ;
+            sh:description "The list of tools." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:tools ],
+        [ sh:class mcp:SamplingCapability ;
+            sh:description "Sampling capability object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:sampling ],
+        [ sh:class mcp:ElicitationCapability ;
+            sh:description "Elicitation capability object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:elicitation ] ;
+    sh:targetClass mcp:TaskRequestCapabilities .
+
+mcp:TaskStatusNotificationParams a sh:NodeShape ;
+    rdfs:comment "Parameters for a notifications/tasks/status notification." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:integer ;
+            sh:description "Actual retention duration from creation in milliseconds, null for unlimited." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path mcp:ttl ],
+        [ sh:datatype xsd:string ;
+            sh:description "The task identifier." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:taskId ],
+        [ sh:description "Current task state." ;
+            sh:in ( "cancelled" "completed" "failed" "input_required" "working" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path mcp:status ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 7 ;
+            sh:path mcp:_meta ],
+        [ sh:datatype xsd:string ;
+            sh:description "ISO 8601 timestamp when the task was last updated." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:lastUpdatedAt ],
+        [ sh:datatype xsd:string ;
+            sh:description "ISO 8601 timestamp when the task was created." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:createdAt ],
+        [ sh:datatype xsd:string ;
+            sh:description "Optional human-readable message describing the current task state." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path mcp:statusMessage ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Suggested polling interval in milliseconds." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path mcp:pollInterval ] ;
+    sh:targetClass mcp:TaskStatusNotificationParams .
+
+mcp:ToolAnnotations a sh:NodeShape ;
+    rdfs:comment "Additional properties describing a Tool to clients. All properties are hints, not guarantees." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:boolean ;
+            sh:description "If true, the tool does not modify its environment." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path mcp:readOnlyHint ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "If true, tool may interact with an open world of external entities." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:openWorldHint ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for UI and end-user contexts — optimized to be human-readable and easily understood." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path dct:title ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "If true, calling repeatedly with same arguments has no additional effect." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:idempotentHint ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "If true, the tool may perform destructive updates." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:destructiveHint ] ;
+    sh:targetClass mcp:ToolAnnotations .
+
+mcp:ToolChoice a sh:NodeShape ;
+    rdfs:comment "Controls tool selection behavior for sampling requests." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "Controls the tool use ability of the model." ;
+            sh:in ( "auto" "none" "required" ) ;
+            sh:maxCount 1 ;
+            sh:order 0 ;
+            sh:path mcp:mode ] ;
+    sh:targetClass mcp:ToolChoice .
+
+mcp:ToolExecution a sh:NodeShape ;
+    rdfs:comment "Execution-related properties for a tool." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "Whether this tool supports task-augmented execution." ;
+            sh:in ( "forbidden" "optional" "required" ) ;
+            sh:maxCount 1 ;
+            sh:order 0 ;
+            sh:path mcp:taskSupport ] ;
+    sh:targetClass mcp:ToolExecution .
+
+mcp:ToolInput a sh:NodeShape ;
+    rdfs:comment "Tool input payload." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "City value." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:city ],
+        [ sh:datatype xsd:string ;
+            sh:description "Location value." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:location ] ;
+    sh:targetClass mcp:ToolInput .
+
+mcp:URLElicitation a sh:NodeShape ;
+    rdfs:comment "URL-based elicitation request payload carried in error data." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The ID of the elicitation." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:elicitationId ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "The URL that the user should navigate to." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:url ],
+        [ sh:datatype xsd:string ;
+            sh:description "The elicitation mode." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:mode ],
+        [ sh:datatype xsd:string ;
+            sh:description "A message string." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:message ] ;
+    sh:targetClass mcp:URLElicitation .
+
+mcp:UnsubscribeRequestParams a sh:NodeShape ;
+    rdfs:comment "Parameters for a resources/unsubscribe request." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:anyURI ;
+            sh:description "A resource URI." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:uri ] ;
+    sh:targetClass mcp:UnsubscribeRequestParams .
+
+mcp:ElicitationCapability a sh:NodeShape ;
+    rdfs:comment "Client elicitation capability." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass mcp:ElicitationCapability .
+
+mcp:Error a sh:NodeShape ;
+    rdfs:comment "A JSON-RPC error object." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "A message string." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:message ],
+        [ sh:class mcp:ErrorData ;
+            sh:description "Base64-encoded binary data." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:data ],
+        [ sh:datatype xsd:integer ;
+            sh:description "The error type that occurred." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:code ] ;
+    sh:targetClass mcp:Error .
+
+mcp:ExtensionsCapability a sh:NodeShape ;
+    rdfs:comment "Server/client extension capability object." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:ExtensionAppCapability ;
+            sh:description "Extension capability entry for app mime types." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:apps_extension ] ;
+    sh:targetClass mcp:ExtensionsCapability .
+
+mcp:Implementation a sh:NodeShape ;
+    rdfs:comment "Describes the MCP implementation." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "A human-readable description." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path dct:description ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "An optional URL of the website for this implementation." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:websiteUrl ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for UI and end-user contexts — optimized to be human-readable and easily understood." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path dct:title ],
+        [ sh:datatype xsd:string ;
+            sh:description "The version of this implementation." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:version ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path schema1:name ],
+        [ sh:class mcp:Icon ;
+            sh:description "Optional set of sized icons that the client can display in a user interface." ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 5 ;
+            sh:path mcp:icons ] ;
+    sh:targetClass mcp:Implementation .
+
+mcp:ResourceContents a sh:NodeShape ;
+    rdfs:comment "Generic resource contents." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:anyURI ;
+            sh:description "A resource URI." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:uri ],
+        [ sh:datatype xsd:string ;
+            sh:description "Text content." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:text ],
+        [ sh:datatype xsd:string ;
+            sh:description "The MIME type of a resource, if known." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:mimeType ],
+        [ sh:datatype xsd:string ;
+            sh:description "A base64-encoded string representing binary data." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:blob ],
+        [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path mcp:_meta ] ;
+    sh:targetClass mcp:ResourceContents .
+
+mcp:SamplingCapability a sh:NodeShape ;
+    rdfs:comment "Client sampling capability." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:targetClass mcp:SamplingCapability .
+
+mcp:StructuredContentData a sh:NodeShape ;
+    rdfs:comment "Structured content object returned by tools." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:float ;
+            sh:description "Humidity percentage value." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:humidity ],
+        [ sh:datatype xsd:string ;
+            sh:description "Weather conditions description." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:conditions ],
+        [ sh:datatype xsd:float ;
+            sh:description "Sampling temperature." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:temperature ] ;
+    sh:targetClass mcp:StructuredContentData .
+
+mcp:Task a sh:NodeShape ;
+    rdfs:comment "Data associated with a task." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "Current task state." ;
+            sh:in ( "cancelled" "completed" "failed" "input_required" "working" ) ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:order 1 ;
+            sh:path mcp:status ],
+        [ sh:datatype xsd:string ;
+            sh:description "ISO 8601 timestamp when the task was last updated." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:lastUpdatedAt ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Actual retention duration from creation in milliseconds, null for unlimited." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path mcp:ttl ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Suggested polling interval in milliseconds." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path mcp:pollInterval ],
+        [ sh:datatype xsd:string ;
+            sh:description "Optional human-readable message describing the current task state." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path mcp:statusMessage ],
+        [ sh:datatype xsd:string ;
+            sh:description "ISO 8601 timestamp when the task was created." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:createdAt ],
+        [ sh:datatype xsd:string ;
+            sh:description "The task identifier." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:taskId ] ;
+    sh:targetClass mcp:Task .
+
+mcp:TasksCapability a sh:NodeShape ;
+    rdfs:comment "Task capability object." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:TaskRequestCapabilities ;
+            sh:description "Task request capabilities." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:requests ] ;
+    sh:targetClass mcp:TasksCapability .
+
+mcp:Tool a sh:NodeShape ;
+    rdfs:comment "Definition for a tool the client can call." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 5 ;
+            sh:path mcp:_meta ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for UI and end-user contexts — optimized to be human-readable and easily understood." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path dct:title ],
+        [ sh:class mcp:JsonSchema ;
+            sh:description "A JSON Schema object defining the expected parameters for the tool." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 3 ;
+            sh:path mcp:inputSchema ],
+        [ sh:class mcp:ToolExecution ;
+            sh:description "Execution-related properties for this tool." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:execution ],
+        [ sh:class mcp:Icon ;
+            sh:description "Optional set of sized icons that the client can display in a user interface." ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 8 ;
+            sh:path mcp:icons ],
+        [ sh:class mcp:JsonSchema ;
+            sh:description "An optional JSON Schema object defining the structure of the tool's output." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 4 ;
+            sh:path mcp:outputSchema ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present)." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path schema1:name ],
+        [ sh:datatype xsd:string ;
+            sh:description "A human-readable description." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path dct:description ],
+        [ sh:class mcp:ToolAnnotations ;
+            sh:description "Optional additional tool information." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:annotations ] ;
+    sh:targetClass mcp:Tool .
+
+mcp:ToolsCapability a sh:NodeShape ;
+    rdfs:comment "Server tools capability." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:boolean ;
+            sh:description "Whether notifications for list changes are supported." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:listChanged ] ;
+    sh:targetClass mcp:ToolsCapability .
+
+mcp:ArgumentMap a sh:NodeShape ;
+    rdfs:comment "Argument object used in prompt and tool calls." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Location value." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:location ],
+        [ sh:datatype xsd:string ;
+            sh:description "City value." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:city ],
+        [ sh:datatype xsd:string ;
+            sh:description "Programming language value." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:language ],
+        [ sh:datatype xsd:string ;
+            sh:description "Framework value." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:framework ] ;
+    sh:targetClass mcp:ArgumentMap .
+
+mcp:SchemaItems a sh:NodeShape ;
+    rdfs:comment "JSON Schema items expression used by enum multi-select schemas." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:class mcp:EnumOption ;
+            sh:description "JSON Schema anyOf entries." ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:anyOf ],
+        [ sh:datatype xsd:string ;
+            sh:description "Array of enum values." ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:enum ],
+        [ sh:datatype xsd:string ;
+            sh:description "Type discriminator field." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:type ] ;
+    sh:targetClass mcp:SchemaItems .
+
+mcp:EnumOption a sh:NodeShape ;
+    rdfs:comment "Single enumerated option with a machine value and display title." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Intended for UI and end-user contexts — optimized to be human-readable and easily understood." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path dct:title ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON Schema const value." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:const ] ;
+    sh:targetClass mcp:EnumOption .
+
+mcp:Result a sh:NodeShape ;
+    rdfs:comment "Common result fields." ;
+    sh:closed true ;
+    sh:ignoredProperties ( mcp:prompts mcp:taskId mcp:resources mcp:protocolVersion mcp:tasks mcp:messages mcp:task mcp:lastUpdatedAt mcp:createdAt mcp:ttl mcp:tools mcp:structuredContent mcp:stopReason mcp:action mcp:serverInfo mcp:pollInterval mcp:isError mcp:statusMessage dct:description mcp:roots mcp:instructions mcp:capabilities mcp:status rdf:type mcp:resourceTemplates mcp:model mcp:content mcp:nextCursor mcp:role mcp:contents mcp:completion ) ;
+    sh:property [ sh:class mcp:MetaObject ;
+            sh:description "Optional metadata object." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 0 ;
+            sh:path mcp:_meta ] ;
+    sh:targetClass mcp:Result .
+
+mcp:TaskMetadata a sh:NodeShape ;
+    rdfs:comment "Metadata for augmenting a request with task execution." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:integer ;
+            sh:description "Actual retention duration from creation in milliseconds, null for unlimited." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:ttl ] ;
+    sh:targetClass mcp:TaskMetadata .
+
+mcp:ErrorData a sh:NodeShape ;
+    rdfs:comment "Structured JSON-RPC error data payload." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "An optional string describing the reason." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:reason ],
+        [ sh:class mcp:URLElicitation ;
+            sh:description "URL elicitation entries included in error data." ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 1 ;
+            sh:path mcp:elicitations ] ;
+    sh:targetClass mcp:ErrorData .
+
+mcp:ContentBlock a sh:NodeShape ;
+    rdfs:comment "Structured text content block." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Text content." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:text ],
+        [ sh:datatype xsd:string ;
+            sh:description "Type discriminator field." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:type ] ;
+    sh:targetClass mcp:ContentBlock .
+
+mcp:Icon a sh:NodeShape ;
+    rdfs:comment "An optionally-sized icon that can be displayed in a user interface." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Optional array of strings specifying sizes (WxH format or \"any\")." ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:sizes ],
+        [ sh:datatype xsd:string ;
+            sh:description "The MIME type of a resource, if known." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:mimeType ],
+        [ sh:description "Optional theme specifier for the icon." ;
+            sh:in ( "dark" "light" ) ;
+            sh:maxCount 1 ;
+            sh:order 3 ;
+            sh:path mcp:theme ],
+        [ sh:datatype xsd:anyURI ;
+            sh:description "A standard URI pointing to an icon resource." ;
+            sh:maxCount 1 ;
+            sh:minCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:src ] ;
+    sh:targetClass mcp:Icon .
+
+mcp:Annotations a sh:NodeShape ;
+    rdfs:comment "Optional annotations for the client. The client can use annotations to inform how objects are used or displayed." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:description "Describes who the intended audience of this object or data is." ;
+            sh:in ( "assistant" "user" ) ;
+            sh:order 0 ;
+            sh:path mcp:audience ],
+        [ sh:datatype xsd:float ;
+            sh:description "How important this data is for operating the server. 1 means most important (required), 0 means least important (optional)." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 2 ;
+            sh:path mcp:priority ],
+        [ sh:datatype xsd:string ;
+            sh:description "The moment the resource was last modified, as an ISO 8601 formatted string." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:lastModified ] ;
+    sh:targetClass mcp:Annotations .
+
+mcp:JsonSchema a sh:NodeShape ;
+    rdfs:comment "Restricted JSON Schema object used in MCP payloads." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "Type discriminator field." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 1 ;
+            sh:path mcp:type ],
+        [ sh:class mcp:EnumOption ;
+            sh:description "JSON Schema anyOf entries." ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 13 ;
+            sh:path mcp:anyOf ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Maximum length constraint." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 8 ;
+            sh:path mcp:maxLength ],
+        [ sh:class mcp:SchemaItems ;
+            sh:description "JSON Schema items definition." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 14 ;
+            sh:path mcp:items ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Minimum value constraint." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 5 ;
+            sh:path mcp:minimum ],
+        [ sh:datatype xsd:anyType ;
+            sh:description "Default value for a schema field." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 17 ;
+            sh:path mcp:default ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON Schema required property list." ;
+            sh:nodeKind sh:Literal ;
+            sh:order 3 ;
+            sh:path mcp:required_list ],
+        [ sh:datatype xsd:string ;
+            sh:description "A human-readable description." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 10 ;
+            sh:path dct:description ],
+        [ sh:class mcp:SchemaProperties ;
+            sh:description "JSON Schema properties map." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 2 ;
+            sh:path mcp:properties ],
+        [ sh:datatype xsd:boolean ;
+            sh:description "JSON Schema additionalProperties flag." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 4 ;
+            sh:path mcp:additionalProperties ],
+        [ sh:datatype xsd:string ;
+            sh:description "Intended for UI and end-user contexts — optimized to be human-readable and easily understood." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 11 ;
+            sh:path dct:title ],
+        [ sh:datatype xsd:string ;
+            sh:description "Array of enum values." ;
+            sh:nodeKind sh:Literal ;
+            sh:order 15 ;
+            sh:path mcp:enum ],
+        [ sh:datatype xsd:string ;
+            sh:description "JSON Schema const value." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 16 ;
+            sh:path mcp:const ],
+        [ sh:datatype xsd:string ;
+            sh:description "Optional JSON Schema dialect identifier." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:schemaUri ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Minimum length constraint." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 7 ;
+            sh:path mcp:minLength ],
+        [ sh:datatype xsd:integer ;
+            sh:description "Maximum value constraint." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 6 ;
+            sh:path mcp:maximum ],
+        [ sh:class mcp:EnumOption ;
+            sh:description "JSON Schema oneOf entries." ;
+            sh:nodeKind sh:BlankNodeOrIRI ;
+            sh:order 12 ;
+            sh:path mcp:oneOf ],
+        [ sh:description "String format constraint." ;
+            sh:in ( "date" "date-time" "email" "uri" ) ;
+            sh:maxCount 1 ;
+            sh:order 9 ;
+            sh:path mcp:format ] ;
+    sh:targetClass mcp:JsonSchema .
+
+mcp:MetaObject a sh:NodeShape ;
+    rdfs:comment "Metadata object attached to protocol objects." ;
+    sh:closed true ;
+    sh:ignoredProperties ( rdf:type ) ;
+    sh:property [ sh:datatype xsd:string ;
+            sh:description "The progress token which was given in the initial request, used to associate this notification with the request that is proceeding." ;
+            sh:maxCount 1 ;
+            sh:nodeKind sh:Literal ;
+            sh:order 0 ;
+            sh:path mcp:progressToken ] ;
+    sh:targetClass mcp:MetaObject .
+

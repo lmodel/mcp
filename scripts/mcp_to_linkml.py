@@ -20,7 +20,7 @@ copy of both under upstream/ and writes src/mcp/schema/mcp.yaml:
 A key that is no Python name, such as ``$schema`` or ``io.modelcontextprotocol/clientInfo``,
 goes under the attribute's ``aliases``, because gen-python writes an ``alias`` as an
 attribute name. So does a key LOKF defines with another meaning, such as ``type`` or
-``id`` (SHARED_MEANING and OWN_NAMES below). scripts/mcp_meta.py gives each such key
+``id`` (OWN_NAMES and lokf_naming below). scripts/mcp_meta.py gives each such key
 back when it writes MCP's form.
 Description text MCP leaves out is this project's, from DESCRIPTIONS below.
 

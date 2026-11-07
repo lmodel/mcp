@@ -2,9 +2,18 @@
 
 import hashlib
 import json
+from functools import cache
 from pathlib import Path
 
 import yaml
+
+# libyaml's loader, where PyYAML has it, reads the 38 neighbours in a fraction of the time.
+_LOADER = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
+
+
+@cache
+def _load(path):
+    return yaml.load(path.read_text(encoding="utf-8"), Loader=_LOADER)
 
 ROOT = Path(__file__).parent.parent
 
@@ -219,7 +228,7 @@ def _names(path):
     attribute key with the IRI it expands to. A slot's key is its alias where it
     has one, with a hyphen read as an underscore, as the JSON-LD context and
     JSON Schema generators write it."""
-    doc = yaml.safe_load(path.read_text())
+    doc = _load(path)
     prefixes = doc.get("prefixes") or {}
 
     def expand(curie):

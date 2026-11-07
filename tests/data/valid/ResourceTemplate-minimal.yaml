@@ -1,2 +1,0 @@
-name: "weather-template"
-uriTemplate: "https://api.example.com/weather/{city}"

@@ -13,6 +13,12 @@ status: draft
 
 # The parity allowances
 
-`parity/probes.yaml` lists the definition the generated file leaves out (`JSONArray`), the values it accepts where MCP's file does not (a fraction or null inside a JSON object), the rule it states that MCP's file does not, MCP's example that rule rejects, and documents written to test one claim each.
+`parity/probes.yaml` lists these:
+
+- the definition the generated file leaves out (`JSONArray`);
+- the values the generated file accepts where MCP's file does not (a fraction or null inside a JSON object);
+- the rule the generated file states that MCP's file does not;
+- MCP's example that rule rejects;
+- documents written to test one claim each.
 
 `parity/structural.yaml` lists each definition whose normalised shape differs, with its reason.

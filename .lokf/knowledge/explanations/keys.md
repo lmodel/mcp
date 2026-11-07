@@ -15,6 +15,6 @@ status: draft
 
 # How the schema names MCP's keys
 
-A slot's alias is MCP's key, such as `input_schema` for `inputSchema`. `$schema` and the reserved `io.modelcontextprotocol/...` keys are no Python names, so they sit under `aliases`.
+A slot's alias is MCP's key, such as `input_schema` for `inputSchema`. `$schema` and the reserved `io.modelcontextprotocol/...` keys are no Python names, so they are listed under `aliases`.
 
 `name`, `title`, `description`, `url` and `version` mean what LOKF means by them, so they are slots with LOKF's schema.org IRIs. Eight keys LOKF defines with another meaning take a name of their own, with MCP's key under `aliases`: `kind`, `identifier`, `intended_audience`, `context_info`, `reason_text`, `resource_contents`, `url_settings` and `required_names`.

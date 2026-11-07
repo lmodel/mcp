@@ -15,4 +15,4 @@ status: draft
 
 # The release
 
-On a merge to `main`, semantic-release promotes the changelog's `## [Unreleased]` section, tags `vX.Y.Z` and publishes the release. Once `KNOWLEDGE_RELEASE_ENABLED` is `true`, it dispatches `knowledge-release.yaml`, which attaches `schema-<tag>-mcp.yaml` with its checksum and attestation. A `v0.0.0` tag on `main` must come first, so the first release is 0.1.0.
+On a merge to `main`, semantic-release retitles the changelog's `## [Unreleased]` section, tags `vX.Y.Z` and publishes the release. Once `KNOWLEDGE_RELEASE_ENABLED` is `true`, it dispatches `knowledge-release.yaml`, which attaches `schema-<tag>-mcp.yaml` with its checksum and attestation. A `v0.0.0` tag on `main` must come first, so the first release is 0.1.0.

@@ -15,4 +15,4 @@ status: draft
 
 # The example messages
 
-Each file is named for the class it is an instance of, such as `McpTool-weather.yaml`. The examples sit under `problem/`, where the example runner does not look, because they carry keys the LinkML form names differently. Each class a concept may name as its type has a valid example.
+Each file is named for the class it is an instance of, such as `McpTool-weather.yaml`. The examples are kept under `problem/`, where the example runner does not look, because they carry keys that the LinkML form names differently. Each class a concept may name as its type has a valid example.

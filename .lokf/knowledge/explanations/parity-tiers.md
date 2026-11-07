@@ -23,8 +23,8 @@ status: draft
 
 The tests compare `meta/schema.json` with MCP's `schema.json` in three tiers.[^about]
 
-1. Addresses: every definition MCP publishes is there but `JSONArray`.
-2. Verdicts: MCP's 129 examples, the examples under `tests/data/problem/`, a smallest instance of each definition and about 11,000 mutations get the same verdict from both files, with the rule the schema adds to MCP's.
-3. Shapes: nine definitions differ once both sides are normalised, each listed with its reason.
+1. Addresses: `meta/schema.json` holds every definition MCP publishes except `JSONArray`.
+2. Verdicts: both files give the same verdict on MCP's 129 examples, the examples under `tests/data/problem/`, a smallest instance of each definition and about 11,000 mutations. For this tier, the rule the schema adds is added to MCP's file too.
+3. Shapes: after both files are normalised, nine definitions differ, each listed with its reason.
 
 [^about]: docs/about.md, How the tests hold it to MCP

@@ -2,6 +2,7 @@
 
 ## 2026-11-07
 
+* **Prose**: reworded 8 concept bodies in plain English. No fact, link, number or frontmatter changed.
 * **Changed**: The Model Context Protocol, version 2026-07-28 links its specification site rather than naming it bare.
 * **Added**: The Model Context Protocol, version 2026-07-28, from NOTICE and MCP's repository.
 * **Added**: The copy of the upstream, from `upstream/`.

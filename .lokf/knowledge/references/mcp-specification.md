@@ -18,7 +18,7 @@ status: draft
 
 # The Model Context Protocol, version 2026-07-28
 
-The Model Context Protocol (MCP) is the work of Model Context Protocol a Series of LF Projects, LLC. Its specification for version 2026-07-28 is at <https://modelcontextprotocol.io/specification/2026-07-28>, and its schema sits in the repository's `schema/2026-07-28/` folder as `schema.ts` and `schema.json`.
+The Model Context Protocol (MCP) is the work of Model Context Protocol a Series of LF Projects, LLC. Its specification for version 2026-07-28 is at <https://modelcontextprotocol.io/specification/2026-07-28>, and its schema is in the repository's `schema/2026-07-28/` folder as `schema.ts` and `schema.json`.
 
 The MCP project licenses new code and specification contributions under the Apache License 2.0. Contributions whose authors have not agreed to relicense them remain under the MIT License.[^notice]
 

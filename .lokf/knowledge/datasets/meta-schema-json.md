@@ -17,4 +17,4 @@ status: draft
 
 # MCP's schema.json, written from the schema
 
-`meta/schema.json` is a JSON Schema 2020-12 document whose `$defs` carry MCP's definition names. Any validator of that draft checks a message against one of them. `just check-mcp` fails when the file differs from what the writer gives.
+`meta/schema.json` is a JSON Schema 2020-12 document whose `$defs` carry MCP's definition names. Any validator of that draft checks a message against one of them. `just check-mcp` fails when the file differs from the writer's output.

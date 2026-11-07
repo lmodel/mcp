@@ -32,6 +32,7 @@ def _files(watch, ref):
         for path, sha in watch.pins().items()
         if path.startswith(prefix)
     }
+    files |= {p.removeprefix(f"{watch.FOLDER}/"): s for p, s in watch.NOT_COPIED.items()}
     if ref == watch.BRANCH:
         folder = f"{watch.FOLDER}/"
         files |= {p.removeprefix(folder): s for p, s in watch.EDITED_ON_BRANCH.items()}
@@ -152,6 +153,30 @@ def test_a_further_edit_on_the_branch_is_reported_by_path(watch, capsys):
     assert code == 1
     assert f"1 pinned files changed on {watch.BRANCH}" in report
     assert f"`{watch.FOLDER}/schema.json`" in report
+
+
+def test_a_file_added_on_the_branch_is_reported_by_path(watch, capsys):
+    """A new example in the pinned version's folder may be one the parity tests should read."""
+    answers = _answers(watch)
+    key = f"/{watch.SPEC}/git/trees/{watch.VERSION}-{watch.BRANCH}?recursive=1"
+    answers[key]["tree"].append(
+        {"path": "examples/Tool/new-example.json", "type": "blob", "sha": "4" * 40}
+    )
+    code, report = _run(watch, answers, capsys)
+    assert code == 1
+    assert f"1 files added on {watch.BRANCH}" in report
+    assert f"`{watch.FOLDER}/examples/Tool/new-example.json`" in report
+
+
+def test_a_change_to_the_file_not_copied_is_reported(watch, capsys):
+    answers = _answers(watch)
+    key = f"/{watch.SPEC}/git/trees/{watch.VERSION}-{watch.BRANCH}?recursive=1"
+    for entry in answers[key]["tree"]:
+        if entry["path"] == "schema.mdx":
+            entry["sha"] = "5" * 40
+    code, report = _run(watch, answers, capsys)
+    assert code == 1
+    assert f"`{watch.FOLDER}/schema.mdx`" in report
 
 
 def test_a_file_gone_at_the_tag_is_reported_by_path(watch, capsys):

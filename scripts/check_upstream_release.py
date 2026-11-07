@@ -10,8 +10,9 @@ upstream/ holds that folder's schema.json, schema.ts and examples, and the repos
 LICENSE, unchanged. These things can change without any change in this repository:
 
 - a new tag appears, or a new version folder under schema/;
-- the pinned tag moves, or a pinned file changes or is deleted, at the tag or on the default
-  branch, beyond the edits the default branch already held when the pins were read;
+- the pinned tag moves, or a pinned file changes or is deleted, or a file is added to the
+  version folder, at the tag or on the default branch, beyond the edits the default branch
+  already held when the pins were read;
 - the licence file on the default branch changes.
 
 The script lists the repository's trees through GitHub's API and compares git object hashes,
@@ -66,6 +67,13 @@ EDITED_ON_BRANCH = {
     ),
     f"{FOLDER}/schema.json": "0b9ba317f95c3bc4b44724d65790f7aaaf557dbb",
     f"{FOLDER}/schema.ts": "0abde3c55dd07ee038c8614ce74f116150ff1c8c",
+}
+
+# The one file of the version folder that upstream/ leaves out, with its hash at the tag
+# and on the default branch: schema.mdx, the outline of MCP's schema reference page, a
+# heading per @category and no definition. A change to it is reported as for a pinned file.
+NOT_COPIED = {
+    f"{FOLDER}/schema.mdx": "023e8b9e758e9db4cd0f876e2ead8540b6652449",
 }
 
 # Everything the repository held when the pins were read, so anything new stands out. The
@@ -186,10 +194,15 @@ def _compare(found: dict[str, str], expected: dict[str, str], place: str) -> lis
     changed = sorted(
         path for path, sha in expected.items() if path in found and found[path] != sha
     )
-    for label, paths in (("gone", gone), ("changed", changed)):
+    added = sorted(path for path in found if path not in expected)
+    for label, paths in (
+        ("pinned files gone", gone),
+        ("pinned files changed", changed),
+        ("files added", added),
+    ):
         if paths:
             shown = ", ".join(_code(path) for path in paths)
-            lines.append(f"- **{len(paths)} pinned files {label} {place}:** {shown}.")
+            lines.append(f"- **{len(paths)} {label} {place}:** {shown}.")
     return lines
 
 
@@ -247,8 +260,9 @@ def check_version() -> tuple[list[str], bool]:
         for path, sha in _pins_of(SPEC).items()
         if path.startswith(f"{FOLDER}/")
     }
-    lines += _compare(_blobs(SPEC, commit, FOLDER), expected, f"at {TAG}")
-    on_branch = expected | EDITED_ON_BRANCH
+    at_tag = expected | NOT_COPIED
+    lines += _compare(_blobs(SPEC, commit, FOLDER), at_tag, f"at {TAG}")
+    on_branch = at_tag | EDITED_ON_BRANCH
     lines += _compare(_blobs(SPEC, BRANCH, FOLDER), on_branch, f"on {BRANCH}")
     if lines:
         return lines, True

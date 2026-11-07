@@ -75,3 +75,11 @@ jobs:
       - name: Check the schema and meta/ against MCP's files
         if: matrix.python-version == '3.13'
         run: just check-mcp
+
+      # .lokf/schema/mcp.yaml is the copy the knowledge bundle validates against and
+      # the release attaches, so it must match the schema and lokf.yaml.
+      - name: Check the adapted schema copy
+        if: matrix.python-version == '3.13'
+        run: |
+          uv sync --locked --project .lokf
+          just lokf-adapt-check

@@ -2,6 +2,7 @@
 
 ## 2026-11-07
 
+* **Changed**: The Model Context Protocol, version 2026-07-28 links its specification site rather than naming it bare.
 * **Added**: The Model Context Protocol, version 2026-07-28, from NOTICE and MCP's repository.
 * **Added**: The copy of the upstream, from `upstream/`.
 * **Added**: The converter, from `scripts/mcp_to_linkml.py`.

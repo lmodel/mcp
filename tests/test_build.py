@@ -111,9 +111,9 @@ def _by_definition():
 
 
 def _tagged(tag: str):
-    """Where schema.ts puts a doc comment's tag, read line by line apart from the converter's
-    reader: (declaration, None, text) for a declaration, and (interface, key, text) for a
-    property, which sits two spaces in."""
+    """Where schema.ts puts a doc comment's tag, read line by line, independently of the
+    converter's reader: (declaration, None, text) for a declaration, and (interface, key,
+    text) for a property, which is indented by two spaces."""
     lines = TYPESCRIPT.read_text(encoding="utf-8").splitlines()
     interface = None
     for i, line in enumerate(lines):

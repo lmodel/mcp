@@ -19,12 +19,12 @@ upstream/ and writes src/mcp/schema/mcp.yaml:
 - Each class and enum, and each type but the two format types, maps exactly to what it
   renders, by a JSON pointer into the published file.
 
-A key that is no Python name, such as ``$schema``, goes under the attribute's ``aliases``,
-since gen-python writes an ``alias`` as an attribute name; scripts/mcp_meta.py writes the
-key in the attribute's place in MCP's form. A key LOKF defines with another meaning is a
-slot under MCP's key, which lokf adapt renames in the copy (KEY_SLOTS); of a key MCP uses
-in two meanings, one takes a name of its own, with MCP's key under ``aliases``
-(lokf_naming). Where MCP gives no description, the words are this project's:
+A key that is not a valid Python name, such as ``$schema``, goes under the attribute's
+``aliases``, since gen-python writes an ``alias`` as an attribute name. scripts/mcp_meta.py
+writes the key in the attribute's place in MCP's form. A key LOKF defines with another
+meaning is a slot under MCP's key, which lokf adapt renames in the copy (KEY_SLOTS). Of a
+key MCP uses in two meanings, one meaning takes a name of its own, with MCP's key under
+``aliases`` (lokf_naming). Where MCP gives no description, the words are this project's:
 CLASS_DESCRIPTIONS, CONST_DESCRIPTIONS, DESCRIPTIONS, and the sentences that name a
 union's members or where MCP holds an inline object.
 
@@ -137,7 +137,7 @@ DESCRIPTIONS = {
     "url": "Settings for elicitation by URL.",
     "data": "Details of the error.",
 }
-# This project's words for a definition MCP leaves undescribed and that is no union of
+# This project's words for a definition MCP leaves undescribed and that is not a union of
 # others, which takes the names of its members.
 CLASS_DESCRIPTIONS = {
     "BlobResourceContents": "A resource's contents as binary data, given as base64 text.",
@@ -166,14 +166,15 @@ CONST_DESCRIPTIONS = {
 
 
 def pascal(key: str) -> str:
-    """anyOf -> AnyOf, io.modelcontextprotocol/clientInfo -> ClientInfo."""
+    """The last part of a key with its first letter in capitals, such as AnyOf for anyOf
+    and ClientInfo for io.modelcontextprotocol/clientInfo."""
     key = key.split("/")[-1].lstrip("_$")
     return key[:1].upper() + key[1:]
 
 
 def snake(key: str) -> str:
-    """The attribute name for a key: inputSchema -> input_schema, _meta -> meta,
-    io.modelcontextprotocol/clientInfo -> mcp_client_info."""
+    """The attribute name for a key, such as input_schema for inputSchema, meta for _meta
+    and mcp_client_info for io.modelcontextprotocol/clientInfo."""
     if key == "_meta":
         return "meta"
     if key == "$schema":
@@ -210,10 +211,10 @@ SHARED_SLOTS = {
         "description": "A version string.",
     },
 }
-# Keys LOKF defines with another meaning. Each is a slot under MCP's key with an IRI in the
-# schema's namespace, which every class with the key uses through slots and slot_usage, as
-# in lmodel/in-toto and lmodel/opa. lokf adapt renames each in the copy, as mcp_type, and
-# keeps its IRI, so no composite with LOKF reads MCP's key as LOKF's. url and required,
+# Keys LOKF defines with another meaning. Each is a slot under MCP's key, with an IRI in
+# the schema's namespace. Every class with the key uses the slot through slots and
+# slot_usage, as in lmodel/in-toto and lmodel/opa. lokf adapt renames each in the copy, as
+# mcp_type, and keeps its IRI, so no composite with LOKF reads MCP's key as LOKF's. url and required,
 # which MCP uses in two meanings, cannot be one slot: lokf_naming names the meaning LOKF
 # does not share.
 KEY_SLOTS = {
@@ -251,7 +252,8 @@ def lokf_naming(key: str, prop: dict) -> tuple[str, str | None]:
 
 
 def subset_name(category: str) -> str:
-    """`tools/list` -> tools_list, Common Types -> common_types."""
+    """The subset name for a category, such as tools_list for `tools/list` and
+    common_types for Common Types."""
     return re.sub(r"[^a-z0-9]+", "_", category.strip("`").lower()).strip("_")
 
 

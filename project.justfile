@@ -22,10 +22,10 @@ check-mcp:
 # `.lokf/schema/lokf.yaml` (`lokf adapt --help` lists the moves). The roots are what a person
 # documents about an MCP server: the implementation, and the tools, resources, resource templates
 # and prompts it offers. A concept names one of them as its `type`. Messages stay values. MCP's
-# description, title and version fold into LOKF's, which mean the same; name, url and the six
-# slots LOKF defines with another meaning keep theirs, as mcp_name, mcp_url and mcp_type and its
-# siblings. The recipes run the `lokf` the sidecar's floor pins (0.9.0 or later); LOKF_CMD runs
-# another, such as a checkout:
+# description, title and version fold into LOKF's, which mean the same. The keys name and url,
+# and the six slots LOKF defines with another meaning, keep slots of their own, renamed
+# mcp_name, mcp_url, and mcp_type and its siblings. The recipes run the `lokf` the sidecar's
+# floor pins (0.9.0 or later); LOKF_CMD runs another, such as a checkout:
 # LOKF_CMD="uv run --project ../lokf lokf" just lokf-adapt
 lokf_cmd := env_var_or_default("LOKF_CMD", "uv run --project .lokf lokf")
 lokf_adapt_roots := "--root McpImplementation --root McpTool --root McpResource --root McpResourceTemplate --root McpPrompt --keep name --keep url"

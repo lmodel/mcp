@@ -42,7 +42,7 @@ npx skills add noelmcloughlin/knowledge-trust-ladder --skill ktl-curator --yes  
 ## Before opening a pull request
 
 - **Change the converter, never its output.** Edit `scripts/mcp_to_linkml.py`, then run `just gen-mcp`, `just gen-project`, `just gen-doc` and `just lokf-adapt`, and commit the output. `src/mcp/schema/mcp.yaml`, `meta/`, `project/`, `src/mcp/datamodel/`, `docs/schema/` and `.lokf/schema/mcp.yaml` are generated.
-- **The schema says what MCP's files say.** `tests/test_parity.py` holds `meta/schema.json` to MCP's `schema.json` over MCP's examples, a smallest instance of each definition and their mutations. A difference goes in `parity/probes.yaml` or `parity/structural.yaml`, with its reason.
+- **The schema says what MCP's files say.** `tests/test_parity.py` checks `meta/schema.json` against MCP's `schema.json` over MCP's examples, a smallest instance of each definition and their mutations. A difference goes in `parity/probes.yaml` or `parity/structural.yaml`, with its reason.
 - **MCP's words stay MCP's.** `tests/test_build.py` checks that each description MCP gives is carried unchanged. Text for what MCP leaves undescribed goes in the converter's `DESCRIPTIONS`.
 - **Model the pinned version.** `tests/test_upstream.py` checks that the schema header, `scripts/check_upstream_release.py` and `upstream/` agree.
 - **Keep names apart.** A host imports this adapt copy beside the Linked Open Knowledge Format (LOKF) schema and the released copies in `tests/neighbours/`. `tests/test_schema_rules.py` checks this.

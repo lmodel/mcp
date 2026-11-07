@@ -16,11 +16,11 @@ Model Context Protocol (MCP) 2026-07-28 (LinkML)
 
 The schema renders the [Model Context Protocol](https://modelcontextprotocol.io/specification/2026-07-28) at version 2026-07-28, as its `schema.json` states it: the JSON-RPC requests, results, notifications and errors, and the tools, resources, prompts, content and capabilities they carry.
 
-[scripts/mcp_to_linkml.py](scripts/mcp_to_linkml.py) writes the schema from MCP's own files in [upstream/](upstream), which are pinned by hash and watched weekly. [meta/schema.json](meta/schema.json) is MCP's `schema.json` written again from the schema, and [tests/test_parity.py](tests/test_parity.py) holds it to MCP's. [docs/about.md](docs/about.md) says how the schema reads MCP and what it adds or leaves out.
+[scripts/mcp_to_linkml.py](scripts/mcp_to_linkml.py) writes the schema from MCP's own files in [upstream/](upstream), which are pinned by hash and watched weekly. [meta/schema.json](meta/schema.json) is MCP's `schema.json` written again from the schema, and [tests/test_parity.py](tests/test_parity.py) checks it against MCP's. [docs/about.md](docs/about.md) says how the schema reads MCP and what it adds or leaves out.
 
 ## Mappings
 
-* **MCP's own definitions**: each class, enum and type names the place in MCP's `schema.json` it renders in `exact_mappings`, such as `mcp_schema:Tool`. [tests/test_build.py](tests/test_build.py) resolves each one in the pinned copy.
+* **MCP's own definitions**: the `exact_mappings` of each class, enum and type name the place in MCP's `schema.json` it renders, such as `mcp_schema:Tool`. [tests/test_build.py](tests/test_build.py) resolves each one in the pinned copy.
 
 ## Repository Structure
 
@@ -43,13 +43,13 @@ Run `just` to list the project's [just](https://github.com/casey/just/) recipes.
 
 `.lokf/` holds this project's [KTL](https://w3id.org/ktl/) knowledge bundle. Its domain schema, `.lokf/schema/mcp.yaml`, is the copy `just lokf-adapt` writes from `src/mcp/schema/mcp.yaml`, and `just lokf-adapt-check` says when it is stale. Edit the converter, never the copy.
 
-The copy roots what a person documents about an MCP server on `Concept`: the implementation, and the tools, resources, resource templates and prompts it offers. Messages stay values. In Obsidian, add these to the KTL plugins' *Known LOKF types* setting:
+In the copy, the classes a person documents about an MCP server descend from `Concept`: the implementation, and the tools, resources, resource templates and prompts it offers. Messages stay values. In Obsidian, add these to the KTL plugins' *Known LOKF types* setting:
 
 ```text
 McpImplementation, McpPrompt, McpResource, McpResourceLink, McpResourceTemplate, McpTool
 ```
 
-MCP's `description`, `title` and `version` fold into LOKF's, which mean the same. `name` and `url` keep their own meaning in the copy as `mcp_name` and `mcp_url`. Eight keys LOKF defines with another meaning take a name of their own in the schema, such as `kind` for `type`; [docs/about.md](docs/about.md#keys) lists them. `tests/test_schema_rules.py` keeps the copy's keys apart from LOKF and the released copies in `tests/neighbours/`.
+MCP's `description`, `title` and `version` fold into LOKF's, which mean the same. `name` and `url` keep their own meaning in the copy as `mcp_name` and `mcp_url`. Eight keys LOKF defines with another meaning take a name of their own in the schema, such as `kind` for `type`. [docs/about.md](docs/about.md#keys) lists them. `tests/test_schema_rules.py` keeps the copy's keys apart from LOKF and the released copies in `tests/neighbours/`.
 
 ## License
 

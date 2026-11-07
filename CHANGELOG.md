@@ -18,7 +18,7 @@ The `v0.0.0` tag is a baseline, not a release: it marks where versioning starts 
 
 ### Changed
 
-- **The schema models MCP 2026-07-28**, where it was written by hand against an earlier draft, with initialization, tasks and the requests that version drops.
+- **The schema models MCP 2026-07-28.** Before, it was written by hand against an earlier draft, which had initialization, tasks and the requests that 2026-07-28 drops.
 - **Every class, enum and type takes the `Mcp` prefix** and MCP's definition name, such as `McpCallToolRequest`.
 - **Keys LOKF defines with another meaning take a name of their own**, with MCP's key under `aliases`, such as `kind` for `type`.
 - **The template settings** turn PyPI publishing and the docs preview off, linkml and linkml-runtime are locked at 1.12.1, and the Python project is named `mcp-linkml`.

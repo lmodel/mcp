@@ -14,6 +14,7 @@ from pathlib import Path
 import pytest
 
 import mcp_parity as parity
+from test_schema_rules import KNOWN_TYPES
 
 DATA = Path(__file__).parent / "data" / "problem"
 VALID = sorted((DATA / "valid").glob("*.yaml"))
@@ -32,3 +33,8 @@ def test_counter_example(path):
     name, data = parity.definition_of(path), parity._yaml(path)
     assert not parity.verdict("generated", name, data)
     assert not parity.verdict("published", name, data)
+
+
+def test_every_concept_class_has_an_example():
+    """Each class a concept may name as its type has a valid example."""
+    assert KNOWN_TYPES <= {path.stem.split("-")[0] for path in VALID}

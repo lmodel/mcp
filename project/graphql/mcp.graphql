@@ -1,26 +1,32 @@
-# metamodel_version: 1.7.0
-# version: draft
-enum ElicitActionEnum
+# metamodel_version: 1.12.0
+# version: 2026-07-28
+enum McpCacheScope
   {
-    accept
-    cancel
-    decline
+    private
+    public
   }
 
-enum IconThemeEnum
-  {
-    dark
-    light
-  }
-
-enum IncludeContextEnum
+enum McpCreateMessageRequestParamsIncludeContext
   {
     allServers
     none
     thisServer
   }
 
-enum LoggingLevel
+enum McpElicitResultAction
+  {
+    accept
+    cancel
+    decline
+  }
+
+enum McpIconTheme
+  {
+    dark
+    light
+  }
+
+enum McpLoggingLevel
   {
     alert
     critical
@@ -32,19 +38,19 @@ enum LoggingLevel
     warning
   }
 
-enum NumberTypeEnum
+enum McpNumberSchemaType
   {
     integer
     number
   }
 
-enum Role
+enum McpRole
   {
     assistant
     user
   }
 
-enum StringFormatEnum
+enum McpStringSchemaFormat
   {
     date
     date__HYPHEN_MINUS__time
@@ -52,1366 +58,1244 @@ enum StringFormatEnum
     uri
   }
 
-enum TaskStatusEnum
-  {
-    cancelled
-    completed
-    failed
-    input_required
-    working
-  }
-
-enum TaskSupportEnum
-  {
-    forbidden
-    optional
-    required
-  }
-
-enum ToolChoiceModeEnum
+enum McpToolChoiceMode
   {
     auto
     none
     required
   }
 
-type Annotations
+type McpAnnotations
   {
-    audience: [Role]
+    audience: [McpRole]
     lastModified: String
     priority: Float
   }
 
-type ArgumentMap
+type McpAudioContent
   {
-    city: String
-    location: String
-    language: String
-    framework: String
-  }
-
-type AudioContent implements HasMeta, HasAnnotations
-  {
-    data: String!
+    meta: McpMetaObject
+    annotations: McpAnnotations
+    data: McpBase64!
     mimeType: String!
     type: String!
-    meta: MetaObject
-    annotations: Annotations
   }
 
-type BlobResourceContents implements HasMeta
+type McpBaseMetadata
   {
-    uri: Uri!
-    mimeType: String
-    blob: String!
-    meta: MetaObject
-  }
-
-type BooleanSchema
-  {
-    type: String!
-    default: Boolean
-    defaultValue: Boolean
-    title: String
-    description: String
-  }
-
-type CallToolRequest
-  {
-    id: RequestId!
-    jsonrpc: String!
-    params: CallToolRequestParams!
-    method: String!
-  }
-
-type CallToolRequestParams implements HasMeta
-  {
-    arguments: ArgumentMap
     name: String!
-    task: TaskMetadata
-    meta: MetaObject
+    title: String
   }
 
-type CallToolResult
+type McpBlobResourceContents
   {
-    meta: MetaObject
-    content: [ContentBlock]!
+    meta: McpMetaObject
+    blob: McpBase64!
+    mimeType: String
+    uri: String!
+  }
+
+type McpBooleanSchema
+  {
+    default: Boolean
+    description: String
+    title: String
+    type: String!
+  }
+
+type McpCacheableResult
+  {
+    meta: McpResultMetaObject
+    cacheScope: McpCacheScope!
+    resultType: String!
+    ttlMs: Int!
+  }
+
+type McpCallToolRequest
+  {
+    id: String!
+    jsonrpc: String!
+    method: String!
+    params: McpCallToolRequestParams!
+  }
+
+type McpCallToolRequestParams
+  {
+    meta: McpRequestMetaObject!
+    arguments: McpJSONObject
+    inputResponses: McpInputResponses
+    name: String!
+    requestState: String
+  }
+
+type McpCallToolResult
+  {
+    meta: McpResultMetaObject
+    content: [McpContentBlock]!
     isError: Boolean
-    structuredContent: StructuredContentData
+    resultType: String!
+    structuredContent: McpJSONValue
   }
 
-type CallToolResultResponse
+type McpCallToolResultResponse
   {
-    id: RequestId!
+    id: String!
     jsonrpc: String!
-    result: CallToolResult!
+    result: String!
   }
 
-type CancelledNotification
+type McpCancelledNotification
   {
     jsonrpc: String!
-    params: CancelledNotificationParams!
     method: String!
+    params: McpCancelledNotificationParams!
   }
 
-type CancelledNotificationParams implements HasMeta
+type McpCancelledNotificationParams
   {
-    requestId: RequestId
+    meta: McpNotificationMetaObject
     reason: String
-    meta: MetaObject
+    requestId: String!
   }
 
-type CancelTaskRequest
+type McpClientCapabilities
   {
-    id: RequestId!
+    elicitation: McpClientCapabilitiesElicitation
+    experimental: McpClientCapabilitiesExperimental
+    extensions: McpClientCapabilitiesExtensions
+    roots: McpClientCapabilitiesRoots
+    sampling: McpClientCapabilitiesSampling
+  }
+
+type McpClientCapabilitiesElicitation
+  {
+    form: McpJSONObject
+    url: McpJSONObject
+  }
+
+type McpClientCapabilitiesExperimental
+  {
+  }
+
+type McpClientCapabilitiesExtensions
+  {
+  }
+
+type McpClientCapabilitiesRoots
+  {
+  }
+
+type McpClientCapabilitiesSampling
+  {
+    context: McpJSONObject
+    tools: McpJSONObject
+  }
+
+type McpClientNotification
+  {
     jsonrpc: String!
     method: String!
+    params: McpCancelledNotificationParams!
   }
 
-type CancelTaskResult implements HasMeta
+type McpClientRequest
   {
-    meta: MetaObject
-    taskId: String!
-    status: TaskStatusEnum!
-    createdAt: String!
-    lastUpdatedAt: String!
-    ttl: Int!
-    statusMessage: String
-    pollInterval: Int
   }
 
-type CancelTaskResultResponse
+type McpClientResult
   {
-    id: RequestId!
+    meta: McpResultMetaObject
+    resultType: String!
+  }
+
+type McpCompleteRequest
+  {
+    id: String!
     jsonrpc: String!
-    result: CancelTaskResult!
-  }
-
-type ClientCapabilities
-  {
-    elicitation: ElicitationCapability
-    experimental: JsonValue
-    extensions: ExtensionsCapability
-    roots: [RootsCapability]
-    sampling: SamplingCapability
-    tasks: [TasksCapability]
-  }
-
-type ClientNotification
-  {
-  }
-
-type ClientRequest
-  {
-  }
-
-type ClientResult
-  {
-  }
-
-type CompleteRequest
-  {
-    id: RequestId!
-    jsonrpc: String!
-    params: CompleteRequestParams!
     method: String!
+    params: McpCompleteRequestParams!
   }
 
-type CompleteRequestParams
+type McpCompleteRequestParams
   {
-    argument: CompletionArgument!
-    context: CompletionContext
-    ref: PromptReference!
+    meta: McpRequestMetaObject!
+    argument: McpCompleteRequestParamsArgument!
+    context: McpCompleteRequestParamsContext
+    ref: String!
   }
 
-type CompleteResult
-  {
-    meta: MetaObject
-    completion: CompletionData!
-  }
-
-type CompleteResultResponse
-  {
-    id: RequestId!
-    jsonrpc: String!
-    result: CompleteResult!
-  }
-
-type CompletionArgument
+type McpCompleteRequestParamsArgument
   {
     name: String!
     value: String!
   }
 
-type CompletionContext
+type McpCompleteRequestParamsContext
   {
-    arguments: ArgumentMap
+    arguments: McpCompleteRequestParamsContextArguments
   }
 
-type CompletionData
+type McpCompleteRequestParamsContextArguments
   {
-    values: [String]!
-    total: Float
+  }
+
+type McpCompleteResult
+  {
+    meta: McpResultMetaObject
+    completion: McpCompleteResultCompletion!
+    resultType: String!
+  }
+
+type McpCompleteResultCompletion
+  {
     hasMore: Boolean
+    total: Int
+    values: [String]!
   }
 
-type ContentBlock
+type McpCompleteResultResponse
   {
-    type: String
-    text: String
-  }
-
-type ContentBlockVariants
-  {
-  }
-
-type CreateMessageRequest
-  {
-    id: RequestId!
+    id: String!
     jsonrpc: String!
-    params: CreateMessageRequestParams!
-    method: String!
+    result: McpCompleteResult!
   }
 
-type CreateMessageRequestParams
+type McpContentBlock
   {
+  }
+
+type McpCreateMessageRequest
+  {
+    method: String!
+    params: McpCreateMessageRequestParams!
+  }
+
+type McpCreateMessageRequestParams
+  {
+    includeContext: McpCreateMessageRequestParamsIncludeContext
     maxTokens: Int!
-    messages: [SamplingMessage]!
-    modelPreferences: ModelPreferences
+    messages: [McpSamplingMessage]!
+    metadata: McpJSONObject
+    modelPreferences: McpModelPreferences
+    stopSequences: [String]
     systemPrompt: String
     temperature: Float
-    includeContext: IncludeContextEnum
-    stopSequences: [String]
-    tools: [Tool]
-    toolChoice: ToolChoice
-    task: TaskMetadata
+    toolChoice: McpToolChoice
+    tools: [McpTool]
   }
 
-type CreateMessageResult
+type McpCreateMessageResult
   {
-    meta: MetaObject
-    content: ContentBlock!
+    meta: McpMetaObject
+    content: String!
     model: String!
-    role: Role!
+    role: McpRole!
     stopReason: String
   }
 
-type CreateMessageResultResponse
+type McpDiscoverRequest
   {
-    id: RequestId!
+    id: String!
     jsonrpc: String!
-    result: CreateMessageResult!
-  }
-
-type CreateTaskResult
-  {
-    meta: MetaObject
-    task: Task!
-  }
-
-type CreateTaskResultResponse
-  {
-    id: RequestId!
-    jsonrpc: String!
-    result: CreateTaskResult!
-  }
-
-type ElicitationCapability
-  {
-  }
-
-type ElicitationCompleteNotification
-  {
-    jsonrpc: String!
-    params: ElicitationCompleteNotificationParams!
     method: String!
+    params: McpRequestParams!
   }
 
-type ElicitationCompleteNotificationParams
+type McpDiscoverResult
   {
-    elicitationId: String!
+    meta: McpResultMetaObject
+    cacheScope: McpCacheScope!
+    capabilities: McpServerCapabilities!
+    instructions: String
+    resultType: String!
+    supportedVersions: [String]!
+    ttlMs: Int!
   }
 
-type ElicitationContent
+type McpDiscoverResultResponse
   {
-    name: String
-    email: String
-    age: Int
-  }
-
-type ElicitRequest
-  {
-    id: RequestId!
+    id: String!
     jsonrpc: String!
-    params: ElicitRequestFormParams!
-    method: String!
+    result: McpDiscoverResult!
   }
 
-type ElicitRequestFormParams
+type McpElicitRequest
+  {
+    method: String!
+    params: McpElicitRequestParams!
+  }
+
+type McpElicitRequestFormParams
   {
     message: String!
-    requestedSchema: JsonSchema!
     mode: String
-    task: TaskMetadata
+    requestedSchema: McpElicitRequestFormParamsRequestedSchema!
   }
 
-type ElicitRequestParams
+type McpElicitRequestFormParamsRequestedSchema
+  {
+    schemaDialect: String
+    properties: McpElicitRequestFormParamsRequestedSchemaProperties!
+    required: [String]
+    type: String!
+  }
+
+type McpElicitRequestFormParamsRequestedSchemaProperties
   {
   }
 
-type ElicitRequestURLParams
+type McpElicitRequestParams
   {
-    elicitationId: String!
+  }
+
+type McpElicitRequestURLParams
+  {
     message: String!
     mode: String!
-    url: Uri!
-    task: TaskMetadata
+    url: String!
   }
 
-type ElicitResult
+type McpElicitResult
   {
-    meta: MetaObject
-    action: ElicitActionEnum!
-    content: ElicitationContent
+    action: McpElicitResultAction!
+    content: McpElicitResultContent
   }
 
-type ElicitResultResponse
+type McpElicitResultContent
   {
-    id: RequestId!
-    jsonrpc: String!
-    result: ElicitResult!
   }
 
-type EmbeddedResource implements HasMeta, HasAnnotations
+type McpEmbeddedResource
   {
+    meta: McpMetaObject
+    annotations: McpAnnotations
+    resource: String!
     type: String!
-    resource: ResourceContents!
-    meta: MetaObject
-    annotations: Annotations
   }
 
-type EnumOption
+type McpEmptyResult
   {
-    const: String!
-    title: String
+    meta: McpResultMetaObject
+    resultType: String!
   }
 
-type EnumSchema
+type McpEnumSchema
   {
   }
 
-type Error
+type McpError
   {
     code: Int!
-    data: ErrorData
+    data: McpJSONValue
     message: String!
   }
 
-type ErrorData
+type McpGetPromptRequest
   {
-    reason: String
-    elicitations: [URLElicitation]
-  }
-
-type ExtensionAppCapability
-  {
-    mimeTypes: [String]
-  }
-
-type ExtensionsCapability
-  {
-    appsExtension: ExtensionAppCapability
-  }
-
-type GetPromptRequest
-  {
-    id: RequestId!
+    id: String!
     jsonrpc: String!
-    params: GetPromptRequestParams!
     method: String!
+    params: McpGetPromptRequestParams!
   }
 
-type GetPromptRequestParams
+type McpGetPromptRequestParams
   {
-    arguments: ArgumentMap
+    meta: McpRequestMetaObject!
+    arguments: McpGetPromptRequestParamsArguments
+    inputResponses: McpInputResponses
     name: String!
+    requestState: String
   }
 
-type GetPromptResult
+type McpGetPromptRequestParamsArguments
   {
-    meta: MetaObject
+  }
+
+type McpGetPromptResult
+  {
+    meta: McpResultMetaObject
     description: String
-    messages: [PromptMessage]!
+    messages: [McpPromptMessage]!
+    resultType: String!
   }
 
-type GetPromptResultResponse
+type McpGetPromptResultResponse
   {
-    id: RequestId!
+    id: String!
     jsonrpc: String!
-    result: GetPromptResult!
+    result: String!
   }
 
-type GetTaskPayloadRequest
+type McpHeaderMismatchError
   {
-    id: RequestId!
+    error: McpHeaderMismatchErrorError!
+    id: String
     jsonrpc: String!
-    method: String!
   }
 
-type GetTaskPayloadResult
+type McpHeaderMismatchErrorError
   {
-    meta: MetaObject
+    data: McpJSONValue
+    message: String!
+    code: Int!
   }
 
-type GetTaskPayloadResultResponse
+type McpIcon
   {
-    id: RequestId!
-    jsonrpc: String!
-    result: GetTaskPayloadResult!
-  }
-
-type GetTaskRequest
-  {
-    id: RequestId!
-    jsonrpc: String!
-    method: String!
-  }
-
-type GetTaskResult implements HasMeta
-  {
-    meta: MetaObject
-    taskId: String!
-    status: TaskStatusEnum!
-    createdAt: String!
-    lastUpdatedAt: String!
-    ttl: Int!
-    statusMessage: String
-    pollInterval: Int
-  }
-
-type GetTaskResultResponse
-  {
-    id: RequestId!
-    jsonrpc: String!
-    result: GetTaskResult!
-  }
-
-interface HasAnnotations
-  {
-    annotations: Annotations
-  }
-
-interface HasIcons
-  {
-    icons: [Icon]
-  }
-
-interface HasMeta
-  {
-    meta: MetaObject
-  }
-
-interface HasName
-  {
-    name: String
-    title: String
-  }
-
-type Icon
-  {
-    src: Uri!
     mimeType: String
     sizes: [String]
-    theme: IconThemeEnum
+    src: String!
+    theme: McpIconTheme
   }
 
-type ImageContent implements HasMeta, HasAnnotations
+type McpIcons
   {
-    data: String!
+    icons: [McpIcon]
+  }
+
+type McpImageContent
+  {
+    meta: McpMetaObject
+    annotations: McpAnnotations
+    data: McpBase64!
     mimeType: String!
     type: String!
-    meta: MetaObject
-    annotations: Annotations
   }
 
-type Implementation implements HasName, HasIcons
+type McpImplementation implements McpIcons
   {
-    version: String!
     description: String
-    websiteUrl: Uri
+    icons: [McpIcon]
     name: String!
     title: String
-    icons: [Icon]
+    version: String!
+    websiteUrl: String
   }
 
-type InitializedNotification
+type McpInputRequest
   {
-    jsonrpc: String!
-    method: String!
   }
 
-type InitializeRequest
+type McpInputRequests
   {
-    id: RequestId!
-    jsonrpc: String!
-    params: InitializeRequestParams!
-    method: String!
   }
 
-type InitializeRequestParams
+type McpInputRequiredResult
   {
-    capabilities: ClientCapabilities!
-    clientInfo: Implementation!
-    protocolVersion: String!
+    meta: McpResultMetaObject
+    inputRequests: McpInputRequests
+    requestState: String
+    resultType: String!
   }
 
-type InitializeResult
+type McpInputResponse
   {
-    meta: MetaObject
-    capabilities: ServerCapabilities!
-    protocolVersion: String!
-    serverInfo: Implementation!
-    instructions: String
   }
 
-type InitializeResultResponse
+type McpInputResponseRequestParams
   {
-    id: RequestId!
-    jsonrpc: String!
-    result: InitializeResult!
+    meta: McpRequestMetaObject!
+    inputResponses: McpInputResponses
+    requestState: String
   }
 
-type InternalError
+type McpInputResponses
+  {
+  }
+
+type McpInternalError
   {
     code: Int!
-    data: ErrorData
+    data: McpJSONValue
     message: String!
   }
 
-type InvalidParamsError
+type McpInvalidParamsError
   {
     code: Int!
-    data: ErrorData
+    data: McpJSONValue
     message: String!
   }
 
-type InvalidRequestError
+type McpInvalidRequestError
   {
     code: Int!
-    data: ErrorData
+    data: McpJSONValue
     message: String!
   }
 
-type JSONRPCErrorResponse
+type McpJSONObject
   {
-    id: RequestId
+  }
+
+type McpJSONRPCErrorResponse
+  {
+    error: McpError!
+    id: String
     jsonrpc: String!
-    error: Error!
   }
 
-type JSONRPCMessage
+type McpJSONRPCMessage
   {
   }
 
-interface JSONRPCNotification
+type McpJSONRPCNotification
   {
-    jsonrpc: String!
-    method: String!
-  }
-
-interface JSONRPCRequest
-  {
-    id: RequestId!
     jsonrpc: String!
     method: String!
+    params: McpJSONObject
   }
 
-type JSONRPCResponse
+type McpJSONRPCRequest
   {
-  }
-
-interface JSONRPCResultResponse
-  {
-    id: RequestId!
+    id: String!
     jsonrpc: String!
+    method: String!
+    params: McpJSONObject
   }
 
-type JsonSchema
+type McpJSONRPCResponse
   {
-    schemaUri: String
-    type: String
-    properties: SchemaProperties
-    requiredList: [String]
-    additionalProperties: Boolean
-    minimum: Int
-    maximum: Int
-    minLength: Int
-    maxLength: Int
-    format: StringFormatEnum
+  }
+
+type McpJSONRPCResultResponse
+  {
+    id: String!
+    jsonrpc: String!
+    result: McpResult!
+  }
+
+scalar McpJSONValue
+
+type McpLegacyTitledEnumSchema
+  {
+    default: String
     description: String
-    title: String
-    oneOf: [EnumOption]
-    anyOf: [EnumOption]
-    items: SchemaItems
-    enum: [String]
-    const: String
-    default: JsonValue
-  }
-
-type LegacyTitledEnumSchema
-  {
-    type: String!
-    enum: [String]
-    enumValues: [String]
+    enum: [String]!
     enumNames: [String]
-    default: JsonValue
-    defaultValue: String
-    description: String
     title: String
+    type: String!
   }
 
-type ListPromptsRequest
+type McpListPromptsRequest
   {
-    id: RequestId!
+    id: String!
     jsonrpc: String!
     method: String!
+    params: McpPaginatedRequestParams!
   }
 
-type ListPromptsResult
+type McpListPromptsResult implements McpCacheableResult
   {
-    meta: MetaObject
+    meta: McpResultMetaObject
+    cacheScope: McpCacheScope!
     nextCursor: String
-    prompts: [Prompt]!
+    prompts: [McpPrompt]!
+    resultType: String!
+    ttlMs: Int!
   }
 
-type ListPromptsResultResponse
+type McpListPromptsResultResponse
   {
-    id: RequestId!
+    id: String!
     jsonrpc: String!
-    result: ListPromptsResult!
+    result: McpListPromptsResult!
   }
 
-type ListResourcesRequest
+type McpListResourcesRequest
   {
-    id: RequestId!
+    id: String!
     jsonrpc: String!
     method: String!
+    params: McpPaginatedRequestParams!
   }
 
-type ListResourcesResult
+type McpListResourcesResult implements McpCacheableResult
   {
-    meta: MetaObject
+    meta: McpResultMetaObject
+    cacheScope: McpCacheScope!
     nextCursor: String
-    resources: [Resource]!
+    resources: [McpResource]!
+    resultType: String!
+    ttlMs: Int!
   }
 
-type ListResourcesResultResponse
+type McpListResourcesResultResponse
   {
-    id: RequestId!
+    id: String!
     jsonrpc: String!
-    result: ListResourcesResult!
+    result: McpListResourcesResult!
   }
 
-type ListResourceTemplatesRequest
+type McpListResourceTemplatesRequest
   {
-    id: RequestId!
+    id: String!
     jsonrpc: String!
     method: String!
+    params: McpPaginatedRequestParams!
   }
 
-type ListResourceTemplatesResult
+type McpListResourceTemplatesResult implements McpCacheableResult
   {
-    meta: MetaObject
+    meta: McpResultMetaObject
+    cacheScope: McpCacheScope!
     nextCursor: String
-    resourceTemplates: [ResourceTemplate]!
+    resourceTemplates: [McpResourceTemplate]!
+    resultType: String!
+    ttlMs: Int!
   }
 
-type ListResourceTemplatesResultResponse
+type McpListResourceTemplatesResultResponse
   {
-    id: RequestId!
+    id: String!
     jsonrpc: String!
-    result: ListResourceTemplatesResult!
+    result: McpListResourceTemplatesResult!
   }
 
-type ListRootsRequest
+type McpListRootsRequest
   {
-    id: RequestId!
+    method: String!
+    params: McpListRootsRequestParams
+  }
+
+type McpListRootsRequestParams
+  {
+    meta: McpMetaObject
+  }
+
+type McpListRootsResult
+  {
+    roots: [McpRoot]!
+  }
+
+type McpListToolsRequest
+  {
+    id: String!
     jsonrpc: String!
     method: String!
+    params: McpPaginatedRequestParams!
   }
 
-type ListRootsResult
+type McpListToolsResult implements McpCacheableResult
   {
-    meta: MetaObject
-    roots: [Root]!
-  }
-
-type ListRootsResultResponse
-  {
-    id: RequestId!
-    jsonrpc: String!
-    result: ListRootsResult!
-  }
-
-type ListTasksRequest
-  {
-    id: RequestId!
-    jsonrpc: String!
-    method: String!
-  }
-
-type ListTasksResult
-  {
-    meta: MetaObject
+    meta: McpResultMetaObject
+    cacheScope: McpCacheScope!
     nextCursor: String
-    tasks: [Task]!
+    resultType: String!
+    tools: [McpTool]!
+    ttlMs: Int!
   }
 
-type ListTasksResultResponse
+type McpListToolsResultResponse
   {
-    id: RequestId!
+    id: String!
     jsonrpc: String!
-    result: ListTasksResult!
+    result: McpListToolsResult!
   }
 
-type ListToolsRequest
+type McpLoggingMessageNotification
   {
-    id: RequestId!
     jsonrpc: String!
     method: String!
+    params: McpLoggingMessageNotificationParams!
   }
 
-type ListToolsResult
+type McpLoggingMessageNotificationParams
   {
-    meta: MetaObject
-    nextCursor: String
-    tools: [Tool]!
-  }
-
-type ListToolsResultResponse
-  {
-    id: RequestId!
-    jsonrpc: String!
-    result: ListToolsResult!
-  }
-
-type LogData
-  {
-    error: String
-    details: LogDetails
-  }
-
-type LogDetails
-  {
-    host: String
-    port: Int
-  }
-
-type LoggingMessageNotification
-  {
-    jsonrpc: String!
-    params: LoggingMessageNotificationParams!
-    method: String!
-  }
-
-type LoggingMessageNotificationParams implements HasMeta
-  {
-    data: LogData!
-    level: LoggingLevel!
+    meta: McpNotificationMetaObject
+    data: McpJSONValue!
+    level: McpLoggingLevel!
     logger: String
-    meta: MetaObject
   }
 
-type MetaObject
+type McpMetaObject
   {
-    progressToken: ProgressToken
   }
 
-type MethodNotFoundError
+type McpMethodNotFoundError
   {
     code: Int!
-    data: ErrorData
+    data: McpJSONValue
     message: String!
   }
 
-type ModelHint
+type McpMissingRequiredClientCapabilityError
+  {
+    error: McpMissingRequiredClientCapabilityErrorError!
+    id: String
+    jsonrpc: String!
+  }
+
+type McpMissingRequiredClientCapabilityErrorError
+  {
+    message: String!
+    code: Int!
+    data: McpMissingRequiredClientCapabilityErrorErrorData!
+  }
+
+type McpMissingRequiredClientCapabilityErrorErrorData
+  {
+    requiredCapabilities: McpClientCapabilities!
+  }
+
+type McpModelHint
   {
     name: String
   }
 
-type ModelPreferences
+type McpModelPreferences
   {
     costPriority: Float
+    hints: [McpModelHint]
     intelligencePriority: Float
     speedPriority: Float
-    hints: [ModelHint]
   }
 
-type MultiSelectEnumSchema
+type McpMultiSelectEnumSchema
   {
   }
 
-type NumberSchema
+type McpNotification
   {
-    type: String!
-    default: Int
-    defaultValue: String
+    method: String!
+    params: McpJSONObject
+  }
+
+type McpNotificationMetaObject
+  {
+    mcpSubscriptionId: String
+  }
+
+type McpNotificationParams
+  {
+    meta: McpNotificationMetaObject
+  }
+
+type McpNumberSchema
+  {
+    default: Float
     description: String
-    minimum: Int
-    maximum: Int
+    maximum: Float
+    minimum: Float
     title: String
+    type: McpNumberSchemaType!
   }
 
-type PaginatedRequestParams
+type McpPaginatedRequest
   {
-    cursor: Cursor
+    id: String!
+    jsonrpc: String!
+    method: String!
+    params: McpPaginatedRequestParams!
   }
 
-type ParseError
+type McpPaginatedRequestParams
+  {
+    meta: McpRequestMetaObject!
+    cursor: String
+  }
+
+type McpPaginatedResult
+  {
+    meta: McpResultMetaObject
+    nextCursor: String
+    resultType: String!
+  }
+
+type McpParseError
   {
     code: Int!
-    data: ErrorData
+    data: McpJSONValue
     message: String!
   }
 
-type PingRequest
+type McpPrimitiveSchemaDefinition
   {
-    id: RequestId!
+  }
+
+type McpProgressNotification
+  {
     jsonrpc: String!
     method: String!
+    params: McpProgressNotificationParams!
   }
 
-type PingResultResponse
+type McpProgressNotificationParams
   {
-    id: RequestId!
-    jsonrpc: String!
-    result: Result
-  }
-
-type PrimitiveSchemaDefinition
-  {
-  }
-
-type ProgressNotification
-  {
-    jsonrpc: String!
-    params: ProgressNotificationParams!
-    method: String!
-  }
-
-type ProgressNotificationParams implements HasMeta
-  {
-    progress: Float!
-    progressToken: ProgressToken!
-    total: Float
+    meta: McpNotificationMetaObject
     message: String
-    meta: MetaObject
+    progress: Float!
+    progressToken: String!
+    total: Float
   }
 
-type Prompt implements HasMeta, HasName, HasIcons
+type McpPrompt implements McpIcons
   {
-    arguments: [PromptArgument]
+    meta: McpMetaObject
+    arguments: [McpPromptArgument]
+    description: String
+    icons: [McpIcon]
+    name: String!
+    title: String
+  }
+
+type McpPromptArgument
+  {
     description: String
     name: String!
-    meta: MetaObject
-    title: String
-    icons: [Icon]
-  }
-
-type PromptArgument implements HasName
-  {
-    description: String
     required: Boolean
-    requiredField: Boolean
-    name: String!
     title: String
   }
 
-type PromptListChangedNotification
+type McpPromptListChangedNotification
   {
     jsonrpc: String!
     method: String!
+    params: McpNotificationParams
   }
 
-type PromptMessage
+type McpPromptMessage
   {
-    content: ContentBlock!
-    role: Role!
+    content: McpContentBlock!
+    role: McpRole!
   }
 
-type PromptReference implements HasName
+type McpPromptReference
+  {
+    name: String!
+    title: String
+    type: String!
+  }
+
+type McpReadResourceRequest
+  {
+    id: String!
+    jsonrpc: String!
+    method: String!
+    params: McpReadResourceRequestParams!
+  }
+
+type McpReadResourceRequestParams implements McpInputResponseRequestParams
+  {
+    meta: McpRequestMetaObject!
+    inputResponses: McpInputResponses
+    requestState: String
+    uri: String!
+  }
+
+type McpReadResourceResult
+  {
+    meta: McpResultMetaObject
+    cacheScope: McpCacheScope!
+    contents: [String]!
+    resultType: String!
+    ttlMs: Int!
+  }
+
+type McpReadResourceResultResponse
+  {
+    id: String!
+    jsonrpc: String!
+    result: String!
+  }
+
+type McpRequest
+  {
+    method: String!
+    params: McpJSONObject
+  }
+
+type McpRequestMetaObject
+  {
+    mcpClientCapabilities: McpClientCapabilities!
+    mcpClientInfo: McpImplementation
+    mcpLogLevel: McpLoggingLevel
+    mcpProtocolVersion: String!
+    progressToken: String
+  }
+
+type McpRequestParams
+  {
+    meta: McpRequestMetaObject!
+  }
+
+type McpResource implements McpIcons
+  {
+    meta: McpMetaObject
+    annotations: McpAnnotations
+    description: String
+    icons: [McpIcon]
+    mimeType: String
+    name: String!
+    size: Int
+    title: String
+    uri: String!
+  }
+
+type McpResourceContents
+  {
+    meta: McpMetaObject
+    mimeType: String
+    uri: String!
+  }
+
+type McpResourceLink
+  {
+    meta: McpMetaObject
+    annotations: McpAnnotations
+    description: String
+    icons: [McpIcon]
+    mimeType: String
+    name: String!
+    size: Int
+    title: String
+    type: String!
+    uri: String!
+  }
+
+type McpResourceListChangedNotification
+  {
+    jsonrpc: String!
+    method: String!
+    params: McpNotificationParams
+  }
+
+type McpResourceRequestParams
+  {
+    meta: McpRequestMetaObject!
+    uri: String!
+  }
+
+type McpResourceTemplate implements McpIcons
+  {
+    meta: McpMetaObject
+    annotations: McpAnnotations
+    description: String
+    icons: [McpIcon]
+    mimeType: String
+    name: String!
+    title: String
+    uriTemplate: McpUriTemplate!
+  }
+
+type McpResourceTemplateReference
   {
     type: String!
-    name: String!
-    title: String
+    uri: McpUriTemplate!
   }
 
-type PromptsCapability
+type McpResourceUpdatedNotification
+  {
+    jsonrpc: String!
+    method: String!
+    params: McpResourceUpdatedNotificationParams!
+  }
+
+type McpResourceUpdatedNotificationParams
+  {
+    meta: McpNotificationMetaObject
+    uri: String!
+  }
+
+type McpResult
+  {
+    meta: McpResultMetaObject
+    resultType: String!
+  }
+
+type McpResultMetaObject
+  {
+    mcpServerInfo: McpImplementation
+  }
+
+type McpRoot
+  {
+    meta: McpMetaObject
+    name: String
+    uri: String!
+  }
+
+type McpSamplingMessage
+  {
+    meta: McpMetaObject
+    content: String!
+    role: McpRole!
+  }
+
+type McpSamplingMessageContentBlock
+  {
+  }
+
+type McpServerCapabilities
+  {
+    completions: McpJSONObject
+    experimental: McpServerCapabilitiesExperimental
+    extensions: McpServerCapabilitiesExtensions
+    logging: McpJSONObject
+    prompts: McpServerCapabilitiesPrompts
+    resources: McpServerCapabilitiesResources
+    tools: McpServerCapabilitiesTools
+  }
+
+type McpServerCapabilitiesExperimental
+  {
+  }
+
+type McpServerCapabilitiesExtensions
+  {
+  }
+
+type McpServerCapabilitiesPrompts
   {
     listChanged: Boolean
   }
 
-type ReadResourceRequest
-  {
-    id: RequestId!
-    jsonrpc: String!
-    params: ReadResourceRequestParams!
-    method: String!
-  }
-
-type ReadResourceRequestParams
-  {
-    uri: Uri!
-  }
-
-type ReadResourceResult
-  {
-    meta: MetaObject
-    contents: [ResourceContents]!
-  }
-
-type ReadResourceResultResponse
-  {
-    id: RequestId!
-    jsonrpc: String!
-    result: ReadResourceResult!
-  }
-
-type RelatedTaskMetadata
-  {
-    taskId: String!
-  }
-
-type Resource implements HasMeta, HasAnnotations, HasName, HasIcons
-  {
-    uri: Uri!
-    mimeType: String
-    description: String
-    size: Int
-    name: String!
-    meta: MetaObject
-    annotations: Annotations
-    title: String
-    icons: [Icon]
-  }
-
-type ResourceContents implements HasMeta
-  {
-    uri: Uri!
-    mimeType: String
-    text: String
-    blob: String
-    meta: MetaObject
-  }
-
-type ResourceLink implements HasMeta, HasAnnotations, HasName, HasIcons
-  {
-    uri: Uri!
-    mimeType: String
-    description: String
-    size: Int
-    type: String!
-    name: String!
-    meta: MetaObject
-    annotations: Annotations
-    title: String
-    icons: [Icon]
-  }
-
-type ResourceListChangedNotification
-  {
-    jsonrpc: String!
-    method: String!
-  }
-
-type ResourcesCapability
+type McpServerCapabilitiesResources
   {
     listChanged: Boolean
     subscribe: Boolean
   }
 
-type ResourceTemplate implements HasMeta, HasAnnotations, HasName, HasIcons
-  {
-    uriTemplate: String!
-    mimeType: String
-    description: String
-    name: String!
-    meta: MetaObject
-    annotations: Annotations
-    title: String
-    icons: [Icon]
-  }
-
-type ResourceTemplateReference
-  {
-    type: String!
-    uri: Uri!
-  }
-
-type ResourceUpdatedNotification
-  {
-    jsonrpc: String!
-    params: ResourceUpdatedNotificationParams!
-    method: String!
-  }
-
-type ResourceUpdatedNotificationParams implements HasMeta
-  {
-    uri: Uri!
-    meta: MetaObject
-  }
-
-type Result implements HasMeta
-  {
-    meta: MetaObject
-  }
-
-type Root implements HasMeta
-  {
-    uri: Uri!
-    name: String
-    meta: MetaObject
-  }
-
-type RootsCapability
+type McpServerCapabilitiesTools
   {
     listChanged: Boolean
   }
 
-type RootsListChangedNotification
-  {
-    jsonrpc: String!
-    method: String!
-  }
-
-type SamplingCapability
+type McpServerNotification
   {
   }
 
-type SamplingMessage implements HasMeta
-  {
-    content: ContentBlock!
-    role: Role!
-    meta: MetaObject
-  }
-
-type SamplingMessageContentBlock
+type McpServerResult
   {
   }
 
-type SchemaItems
-  {
-    type: String
-    enum: [String]
-    anyOf: [EnumOption]
-  }
-
-type SchemaProperties
-  {
-    name: JsonSchema
-    email: JsonSchema
-    age: JsonSchema
-    city: JsonSchema
-    location: JsonSchema
-    a: JsonSchema
-    b: JsonSchema
-    temperature: JsonSchema
-    conditions: JsonSchema
-    humidity: JsonSchema
-  }
-
-type ServerCapabilities
-  {
-    experimental: JsonValue
-    extensions: ExtensionsCapability
-    prompts: [PromptsCapability]
-    resources: [ResourcesCapability]
-    tools: [ToolsCapability]
-    tasks: [TasksCapability]
-  }
-
-type ServerNotification
+type McpSingleSelectEnumSchema
   {
   }
 
-type ServerRequest
+type McpStringSchema
   {
-  }
-
-type ServerResult
-  {
-  }
-
-type SetLevelRequest
-  {
-    id: RequestId!
-    jsonrpc: String!
-    params: SetLevelRequestParams!
-    method: String!
-  }
-
-type SetLevelRequestParams
-  {
-    level: LoggingLevel!
-  }
-
-type SetLevelResultResponse
-  {
-    id: RequestId!
-    jsonrpc: String!
-    result: Result
-  }
-
-type SingleSelectEnumSchema
-  {
-  }
-
-type StringSchema
-  {
-    type: String!
-    default: JsonValue
-    defaultValue: String
+    default: String
     description: String
-    format: StringFormatEnum
-    minLength: Int
+    format: McpStringSchemaFormat
     maxLength: Int
+    minLength: Int
     title: String
+    type: String!
   }
 
-type StructuredContentData
+type McpSubscriptionFilter
   {
-    temperature: Float
-    conditions: String
-    humidity: Float
+    promptsListChanged: Boolean
+    resourceSubscriptions: [String]
+    resourcesListChanged: Boolean
+    toolsListChanged: Boolean
   }
 
-type SubscribeRequest
+type McpSubscriptionsAcknowledgedNotification
   {
-    id: RequestId!
     jsonrpc: String!
-    params: SubscribeRequestParams!
     method: String!
+    params: McpSubscriptionsAcknowledgedNotificationParams!
   }
 
-type SubscribeRequestParams
+type McpSubscriptionsAcknowledgedNotificationParams
   {
-    uri: Uri!
+    meta: McpNotificationMetaObject
+    notifications: McpSubscriptionFilter!
   }
 
-type SubscribeResultResponse
+type McpSubscriptionsListenRequest
   {
-    id: RequestId!
+    id: String!
     jsonrpc: String!
-    result: Result
-  }
-
-type Task
-  {
-    taskId: String!
-    status: TaskStatusEnum!
-    createdAt: String!
-    lastUpdatedAt: String!
-    ttl: Int!
-    statusMessage: String
-    pollInterval: Int
-  }
-
-type TaskMetadata
-  {
-    ttl: Int
-  }
-
-type TaskRequestCapabilities
-  {
-    elicitation: ElicitationCapability
-    sampling: SamplingCapability
-    tools: [ToolsCapability]
-  }
-
-type TasksCapability
-  {
-    requests: TaskRequestCapabilities
-  }
-
-type TaskStatusNotification
-  {
-    jsonrpc: String!
-    params: TaskStatusNotificationParams!
     method: String!
+    params: McpSubscriptionsListenRequestParams!
   }
 
-type TaskStatusNotificationParams implements HasMeta
+type McpSubscriptionsListenRequestParams
   {
-    taskId: String!
-    status: TaskStatusEnum!
-    createdAt: String!
-    lastUpdatedAt: String!
-    ttl: Int!
-    statusMessage: String
-    pollInterval: Int
-    meta: MetaObject
+    meta: McpRequestMetaObject!
+    notifications: McpSubscriptionFilter!
   }
 
-type TextContent implements HasMeta, HasAnnotations
+type McpSubscriptionsListenResult
   {
+    meta: McpSubscriptionsListenResultMetaObject!
+    resultType: String!
+  }
+
+type McpSubscriptionsListenResultMetaObject
+  {
+    mcpServerInfo: McpImplementation
+    mcpSubscriptionId: String!
+  }
+
+type McpSubscriptionsListenResultResponse
+  {
+    id: String!
+    jsonrpc: String!
+    result: McpSubscriptionsListenResult!
+  }
+
+type McpTextContent
+  {
+    meta: McpMetaObject
+    annotations: McpAnnotations
     text: String!
     type: String!
-    meta: MetaObject
-    annotations: Annotations
   }
 
-type TextResourceContents implements HasMeta
+type McpTextResourceContents
   {
-    uri: Uri!
+    meta: McpMetaObject
     mimeType: String
     text: String!
-    meta: MetaObject
+    uri: String!
   }
 
-type TitledMultiSelectEnumSchema
+type McpTitledMultiSelectEnumSchema
   {
-    type: String!
-    items: SchemaItems
     default: [String]
-    defaultValue: String
     description: String
-    title: String
-    minItems: Int
+    items: McpTitledMultiSelectEnumSchemaItems!
     maxItems: Int
-  }
-
-type TitledSingleSelectEnumSchema
-  {
+    minItems: Int
+    title: String
     type: String!
-    oneOf: [EnumOption]
-    default: JsonValue
-    defaultValue: String
-    description: String
-    title: String
   }
 
-type Tool implements HasMeta, HasName, HasIcons
+type McpTitledMultiSelectEnumSchemaItems
   {
-    annotations: ToolAnnotations
-    execution: ToolExecution
+    anyOf: [McpTitledMultiSelectEnumSchemaItemsAnyOf]!
+  }
+
+type McpTitledMultiSelectEnumSchemaItemsAnyOf
+  {
+    const: String!
+    title: String!
+  }
+
+type McpTitledSingleSelectEnumSchema
+  {
+    default: String
     description: String
-    inputSchema: JsonSchema!
-    outputSchema: JsonSchema
+    oneOf: [McpTitledSingleSelectEnumSchemaOneOf]!
+    title: String
+    type: String!
+  }
+
+type McpTitledSingleSelectEnumSchemaOneOf
+  {
+    const: String!
+    title: String!
+  }
+
+type McpTool implements McpIcons
+  {
+    meta: McpMetaObject
+    annotations: McpToolAnnotations
+    description: String
+    icons: [McpIcon]
+    inputSchema: McpToolInputSchema!
     name: String!
-    meta: MetaObject
+    outputSchema: McpToolOutputSchema
     title: String
-    icons: [Icon]
   }
 
-type ToolAnnotations
+type McpToolAnnotations
   {
-    title: String
     destructiveHint: Boolean
     idempotentHint: Boolean
     openWorldHint: Boolean
     readOnlyHint: Boolean
+    title: String
   }
 
-type ToolChoice
+type McpToolChoice
   {
-    mode: ToolChoiceModeEnum
+    mode: McpToolChoiceMode
   }
 
-type ToolExecution
+type McpToolInputSchema
   {
-    taskSupport: TaskSupportEnum
+    schemaDialect: String
+    type: String!
   }
 
-type ToolInput
-  {
-    city: String
-    location: String
-  }
-
-type ToolListChangedNotification
+type McpToolListChangedNotification
   {
     jsonrpc: String!
     method: String!
+    params: McpNotificationParams
   }
 
-type ToolResultContent implements HasMeta
+type McpToolOutputSchema
   {
-    content: [ContentBlock]!
-    type: String!
-    toolUseId: String!
+    schemaDialect: String
+  }
+
+type McpToolResultContent
+  {
+    meta: McpMetaObject
+    content: [McpContentBlock]!
     isError: Boolean
-    structuredContent: StructuredContentData
-    meta: MetaObject
+    structuredContent: McpJSONValue
+    toolUseId: String!
+    type: String!
   }
 
-type ToolsCapability
+type McpToolUseContent
   {
-    listChanged: Boolean
-  }
-
-type ToolUseContent implements HasMeta
-  {
+    meta: McpMetaObject
     id: String!
-    type: String!
+    input: McpJSONObject!
     name: String!
-    input: ToolInput!
-    meta: MetaObject
-  }
-
-type UnsubscribeRequest
-  {
-    id: RequestId!
-    jsonrpc: String!
-    params: UnsubscribeRequestParams!
-    method: String!
-  }
-
-type UnsubscribeRequestParams
-  {
-    uri: Uri!
-  }
-
-type UnsubscribeResultResponse
-  {
-    id: RequestId!
-    jsonrpc: String!
-    result: Result
-  }
-
-type UntitledMultiSelectEnumSchema
-  {
     type: String!
-    items: SchemaItems
+  }
+
+type McpUnsupportedProtocolVersionError
+  {
+    error: McpUnsupportedProtocolVersionErrorError!
+    id: String
+    jsonrpc: String!
+  }
+
+type McpUnsupportedProtocolVersionErrorError
+  {
+    message: String!
+    code: Int!
+    data: McpUnsupportedProtocolVersionErrorErrorData!
+  }
+
+type McpUnsupportedProtocolVersionErrorErrorData
+  {
+    requested: String!
+    supported: [String]!
+  }
+
+type McpUntitledMultiSelectEnumSchema
+  {
     default: [String]
-    defaultValue: String
     description: String
-    title: String
-    minItems: Int
+    items: McpUntitledMultiSelectEnumSchemaItems!
     maxItems: Int
-  }
-
-type UntitledSingleSelectEnumSchema
-  {
-    type: String!
-    enum: [String]
-    enumValues: [String]
-    default: JsonValue
-    defaultValue: String
-    description: String
+    minItems: Int
     title: String
+    type: String!
   }
 
-type URLElicitation
+type McpUntitledMultiSelectEnumSchemaItems
   {
-    mode: String
-    elicitationId: String
-    message: String
-    url: Uri
+    enum: [String]!
+    type: String!
   }
 
-type URLElicitationRequiredError
+type McpUntitledSingleSelectEnumSchema
   {
-    id: RequestId
-    jsonrpc: String!
-    error: Error!
+    default: String
+    description: String
+    enum: [String]!
+    title: String
+    type: String!
   }

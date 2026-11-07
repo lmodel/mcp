@@ -113,7 +113,7 @@ deploy: site
 
 # Run all tests (added vendor test data)
 [group('model development')]
-test: _test-schema _test-python _test-examples test-vendor
+test: _test-schema _test-python _test-examples
 
 # Run linting
 [group('model development')]

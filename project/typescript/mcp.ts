@@ -1,1271 +1,1687 @@
 /**
-* The sender or recipient of messages and data in a conversation.
+* The values MCP allows for `cacheScope`.
 */
-export enum Role {
+export enum McpCacheScope {
     
-    /** The assistant role. */
-    assistant = "assistant",
-    /** The user role. */
-    user = "user",
+    private = "private",
+    public = "public",
 };
 /**
-* The severity of a log message. Maps to syslog message severities (RFC-5424).
+* The values MCP allows for `includeContext`.
 */
-export enum LoggingLevel {
+export enum McpCreateMessageRequestParamsIncludeContext {
     
-    /** Alert severity. */
-    alert = "alert",
-    /** Critical severity. */
-    critical = "critical",
-    /** Debug severity. */
-    debug = "debug",
-    /** Emergency severity. */
-    emergency = "emergency",
-    /** Error severity. */
-    error = "error",
-    /** Informational severity. */
-    info = "info",
-    /** Notice severity. */
-    notice = "notice",
-    /** Warning severity. */
-    warning = "warning",
-};
-/**
-* The status of a task.
-*/
-export enum TaskStatusEnum {
-    
-    /** Task was cancelled. */
-    cancelled = "cancelled",
-    /** Task completed successfully. */
-    completed = "completed",
-    /** Task failed. */
-    failed = "failed",
-    /** Task requires additional input. */
-    input_required = "input_required",
-    /** Task is currently in progress. */
-    working = "working",
-};
-/**
-* Context inclusion mode for sampling requests.
-*/
-export enum IncludeContextEnum {
-    
-    /** Include context from all servers. */
     allServers = "allServers",
-    /** Include no context. */
     none = "none",
-    /** Include context from calling server only. */
     thisServer = "thisServer",
 };
 /**
-* User action in response to an elicitation.
+* The values MCP allows for `action`.
 */
-export enum ElicitActionEnum {
+export enum McpElicitResultAction {
     
-    /** User submitted the form/confirmed the action. */
     accept = "accept",
-    /** User dismissed without making an explicit choice. */
     cancel = "cancel",
-    /** User explicitly declined the action. */
     decline = "decline",
 };
 /**
-* Controls tool selection behavior for sampling requests.
+* The values MCP allows for `theme`.
 */
-export enum ToolChoiceModeEnum {
+export enum McpIconTheme {
     
-    /** Model decides whether to use tools (default). */
-    auto = "auto",
-    /** Model MUST NOT use any tools. */
-    none = "none",
-    /** Model MUST use at least one tool before completing. */
-    required = "required",
-};
-/**
-* Indicates whether a tool supports task-augmented execution.
-*/
-export enum TaskSupportEnum {
-    
-    /** Tool does not support task-augmented execution (default). */
-    forbidden = "forbidden",
-    /** Tool may support task-augmented execution. */
-    optional = "optional",
-    /** Tool requires task-augmented execution. */
-    required = "required",
-};
-/**
-* Theme specifier for an icon.
-*/
-export enum IconThemeEnum {
-    
-    /** Icon designed for a dark background. */
     dark = "dark",
-    /** Icon designed for a light background. */
     light = "light",
 };
 /**
-* Number type discriminator.
+* The severity of a log message.
+
+These map to syslog message severities, as specified in RFC-5424:
+https://datatracker.ietf.org/doc/html/rfc5424#section-6.2.1
 */
-export enum NumberTypeEnum {
+export enum McpLoggingLevel {
     
-    /** Integer type. */
+    alert = "alert",
+    critical = "critical",
+    debug = "debug",
+    emergency = "emergency",
+    error = "error",
+    info = "info",
+    notice = "notice",
+    warning = "warning",
+};
+/**
+* The values MCP allows for `type`.
+*/
+export enum McpNumberSchemaType {
+    
     integer = "integer",
-    /** Number type. */
     number = "number",
 };
 /**
-* String format constraints.
+* The sender or recipient of messages and data in a conversation.
 */
-export enum StringFormatEnum {
+export enum McpRole {
     
-    /** Date format. */
+    assistant = "assistant",
+    user = "user",
+};
+/**
+* The values MCP allows for `format`.
+*/
+export enum McpStringSchemaFormat {
+    
     date = "date",
-    /** Date-time format. */
     date_time = "date-time",
-    /** Email format. */
     email = "email",
-    /** URI format. */
     uri = "uri",
+};
+/**
+* The values MCP allows for `mode`.
+*/
+export enum McpToolChoiceMode {
+    
+    auto = "auto",
+    none = "none",
+    required = "required",
 };
 
 
 /**
- * Mixin for types that carry a _meta field.
+ * Optional annotations for the client. The client can use annotations to inform how objects are used or displayed
  */
-export interface HasMeta {
-    /** Optional metadata object. */
-    _meta?: MetaObject,
-}
+export interface McpAnnotations {
+    /** Describes who the intended audience of this object or data is.
 
-
-/**
- * Mixin for types that carry annotations.
- */
-export interface HasAnnotations {
-    /** Optional annotations for the client. */
-    annotations?: Annotations,
-}
-
-
-/**
- * Mixin for types that carry icons.
- */
-export interface HasIcons {
-    /** Optional set of sized icons that the client can display in a user interface. */
-    icons?: Icon[],
-}
-
-
-/**
- * Mixin for types that carry name and title.
- */
-export interface HasName {
-    /** Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present). */
-    name?: string,
-    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood. */
-    title?: string,
-}
-
-
-/**
- * Optional annotations for the client. The client can use annotations to inform how objects are used or displayed.
- */
-export interface Annotations {
-    /** Describes who the intended audience of this object or data is. */
+It can include multiple entries to indicate content useful for multiple audiences (e.g., `["user", "assistant"]`). */
     audience?: string,
-    /** The moment the resource was last modified, as an ISO 8601 formatted string. */
+    /** The moment the resource was last modified, as an ISO 8601 formatted string.
+
+Should be an ISO 8601 formatted string (e.g., "2025-01-12T15:00:58Z").
+
+Examples: last activity timestamp in an open file, timestamp when the resource
+was attached, etc. */
     lastModified?: string,
-    /** How important this data is for operating the server. 1 means most important (required), 0 means least important (optional). */
+    /** Describes how important this data is for operating the server.
+
+A value of 1 means "most important," and indicates that the data is
+effectively required, while 0 means "least important," and indicates that
+the data is entirely optional. */
     priority?: number,
-}
-
-
-/**
- * A JSON-RPC error object.
- */
-export interface Error {
-    /** The error type that occurred. */
-    code: number,
-    /** Base64-encoded binary data. */
-    data?: ErrorData,
-    /** A message string. */
-    message: string,
-}
-
-
-/**
- * A JSON-RPC error indicating that an internal error occurred on the receiver (-32603).
- */
-export interface InternalError extends Error {
-}
-
-
-/**
- * A JSON-RPC error indicating that the method parameters are invalid or malformed (-32602).
- */
-export interface InvalidParamsError extends Error {
-}
-
-
-/**
- * A JSON-RPC error indicating that the request is not a valid request object (-32600).
- */
-export interface InvalidRequestError extends Error {
-}
-
-
-/**
- * A JSON-RPC error indicating that the requested method does not exist or is not available (-32601).
- */
-export interface MethodNotFoundError extends Error {
-}
-
-
-/**
- * A JSON-RPC error indicating that invalid JSON was received by the server (-32700).
- */
-export interface ParseError extends Error {
-}
-
-
-/**
- * A response indicating that additional information is required via URL elicitation.
- */
-export interface URLElicitationRequiredError extends JSONRPCErrorResponse {
-}
-
-
-/**
- * An optionally-sized icon that can be displayed in a user interface.
- */
-export interface Icon {
-    /** A standard URI pointing to an icon resource. */
-    src: string,
-    /** The MIME type of a resource, if known. */
-    mimeType?: string,
-    /** Optional array of strings specifying sizes (WxH format or "any"). */
-    sizes?: string[],
-    /** Optional theme specifier for the icon. */
-    theme?: string,
-}
-
-
-/**
- * Describes the MCP implementation.
- */
-export interface Implementation extends HasName, HasIcons {
-    /** The version of this implementation. */
-    version: string,
-    /** A human-readable description. */
-    description?: string,
-    /** An optional URL of the website for this implementation. */
-    websiteUrl?: string,
-}
-
-
-/**
- * Text provided to or from an LLM.
- */
-export interface TextContent extends HasMeta, HasAnnotations {
-    /** Text content. */
-    text: string,
-    /** Type discriminator field. */
-    type: string,
-}
-
-
-/**
- * An image provided to or from an LLM.
- */
-export interface ImageContent extends HasMeta, HasAnnotations {
-    /** Base64-encoded binary data. */
-    data: string,
-    /** The MIME type of a resource, if known. */
-    mimeType: string,
-    /** Type discriminator field. */
-    type: string,
 }
 
 
 /**
  * Audio provided to or from an LLM.
  */
-export interface AudioContent extends HasMeta, HasAnnotations {
-    /** Base64-encoded binary data. */
+export interface McpAudioContent {
+    /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
+
+Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
+
+Valid keys have two segments:
+
+**Prefix:**
+- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).
+- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).
+- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).
+- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.
+
+**Name:**
+- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
+- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`). */
+    _meta?: McpMetaObject,
+    /** Optional annotations for the client. */
+    annotations?: McpAnnotations,
+    /** The base64-encoded audio data. */
     data: string,
-    /** The MIME type of a resource, if known. */
+    /** The MIME type of the audio. Different providers may support different audio types. */
     mimeType: string,
-    /** Type discriminator field. */
+    /** The kind of object, always `audio`. */
     type: string,
 }
 
 
 /**
- * Structured text content block.
+ * Base interface for metadata with name (identifier) and title (display name) properties.
  */
-export interface ContentBlock {
-    /** Type discriminator field. */
-    type?: string,
-    /** Text content. */
-    text?: string,
-}
-
-
-/**
- * The contents of a resource, embedded into a prompt or tool call result.
- */
-export interface EmbeddedResource extends HasMeta, HasAnnotations {
-    /** Type discriminator field. */
-    type: string,
-    /** The embedded resource contents (text or blob). */
-    resource: ResourceContents,
-}
-
-
-/**
- * A resource that the server is capable of reading, included in a prompt or tool call result.
- */
-export interface ResourceLink extends HasMeta, HasAnnotations, HasName, HasIcons {
-    /** A resource URI. */
-    uri: string,
-    /** The MIME type of a resource, if known. */
-    mimeType?: string,
-    /** A human-readable description. */
-    description?: string,
-    /** The size of the raw resource content, in bytes. */
-    size?: number,
-    /** Type discriminator field. */
-    type: string,
-}
-
-
-/**
- * A request from the assistant to call a tool.
- */
-export interface ToolUseContent extends HasMeta {
-    /** A unique identifier for this tool use. */
-    id: string,
-    /** Type discriminator field. */
-    type: string,
-    /** Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present). */
+export interface McpBaseMetadata {
+    /** Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present). */
     name: string,
-    /** The arguments to pass to the tool. */
-    input: ToolInput,
+    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
+even by those unfamiliar with domain-specific terminology.
+
+If not provided, the name should be used for display (except for {@link Tool},
+where `annotations.title` should be given precedence over using `name`,
+if present). */
+    title?: string,
 }
 
 
 /**
- * The result of a tool use, provided by the user back to the assistant.
+ * MCP's `BlobResourceContents`.
  */
-export interface ToolResultContent extends HasMeta {
-    /** The unstructured result content of the tool use. */
-    content: ContentBlock[],
-    /** Type discriminator field. */
-    type: string,
-    /** The ID of the tool use this result corresponds to. */
-    toolUseId: string,
-    /** Whether the tool call ended in an error. */
-    isError?: boolean,
-    /** An optional JSON object representing structured result of the tool call. */
-    structuredContent?: StructuredContentData,
-}
+export interface McpBlobResourceContents extends McpResourceContents {
+    /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
 
+Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
 
-/**
- * Generic resource contents.
- */
-export interface ResourceContents extends HasMeta {
-    /** A resource URI. */
-    uri: string,
-    /** The MIME type of a resource, if known. */
-    mimeType?: string,
-    /** Text content. */
-    text?: string,
-    /** A base64-encoded string representing binary data. */
-    blob?: string,
-}
+Valid keys have two segments:
 
+**Prefix:**
+- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).
+- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).
+- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).
+- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.
 
-/**
- * Text resource contents.
- */
-export interface TextResourceContents extends HasMeta {
-    /** A resource URI. */
-    uri: string,
-    /** The MIME type of a resource, if known. */
-    mimeType?: string,
-    /** Text content. */
-    text: string,
-}
-
-
-/**
- * Blob resource contents.
- */
-export interface BlobResourceContents extends HasMeta {
-    /** A resource URI. */
-    uri: string,
-    /** The MIME type of a resource, if known. */
-    mimeType?: string,
-    /** A base64-encoded string representing binary data. */
+**Name:**
+- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
+- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`). */
+    _meta?: McpMetaObject,
+    /** A base64-encoded string representing the binary data of the item. */
     blob: string,
-}
-
-
-/**
- * A known resource that the server is capable of reading.
- */
-export interface Resource extends HasMeta, HasAnnotations, HasName, HasIcons {
-    /** A resource URI. */
-    uri: string,
-    /** The MIME type of a resource, if known. */
+    /** The MIME type of this resource, if known. */
     mimeType?: string,
-    /** A human-readable description. */
-    description?: string,
-    /** The size of the raw resource content, in bytes. */
-    size?: number,
-}
-
-
-/**
- * A template description for resources available on the server.
- */
-export interface ResourceTemplate extends HasMeta, HasAnnotations, HasName, HasIcons {
-    /** A URI template (RFC 6570) for constructing resource URIs. */
-    uriTemplate: string,
-    /** The MIME type of a resource, if known. */
-    mimeType?: string,
-    /** A human-readable description. */
-    description?: string,
-}
-
-
-/**
- * Represents a root directory or file that the server can operate on.
- */
-export interface Root extends HasMeta {
-    /** A resource URI. */
-    uri: string,
-    /** Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present). */
-    name?: string,
-}
-
-
-/**
- * Describes an argument that a prompt can accept.
- */
-export interface PromptArgument extends HasName {
-    /** A human-readable description. */
-    description?: string,
-    /** Whether this argument must be provided. */
-    required?: boolean,
-    /** Whether this argument must be provided. */
-    required_field?: boolean,
-}
-
-
-/**
- * A prompt or prompt template that the server offers.
- */
-export interface Prompt extends HasMeta, HasName, HasIcons {
-    /** A list of arguments to use for templating the prompt. */
-    arguments?: PromptArgument[],
-    /** A human-readable description. */
-    description?: string,
-}
-
-
-/**
- * Describes a message returned as part of a prompt.
- */
-export interface PromptMessage {
-    /** The content of the prompt message. */
-    content: ContentBlock,
-    /** The role of the sender or recipient. */
-    role: string,
-}
-
-
-/**
- * Identifies a prompt.
- */
-export interface PromptReference extends HasName {
-    /** Type discriminator field. */
-    type: string,
-}
-
-
-/**
- * A reference to a resource or resource template definition.
- */
-export interface ResourceTemplateReference {
-    /** Type discriminator field. */
-    type: string,
-    /** A resource URI. */
+    /** The URI of this resource. */
     uri: string,
 }
 
 
 /**
- * Additional properties describing a Tool to clients. All properties are hints, not guarantees.
+ * MCP's `BooleanSchema`.
  */
-export interface ToolAnnotations {
-    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood. */
-    title?: string,
-    /** If true, the tool may perform destructive updates. */
-    destructiveHint?: boolean,
-    /** If true, calling repeatedly with same arguments has no additional effect. */
-    idempotentHint?: boolean,
-    /** If true, tool may interact with an open world of external entities. */
-    openWorldHint?: boolean,
-    /** If true, the tool does not modify its environment. */
-    readOnlyHint?: boolean,
-}
-
-
-/**
- * Controls tool selection behavior for sampling requests.
- */
-export interface ToolChoice {
-    /** Controls the tool use ability of the model. */
-    mode?: string,
-}
-
-
-/**
- * Execution-related properties for a tool.
- */
-export interface ToolExecution {
-    /** Whether this tool supports task-augmented execution. */
-    taskSupport?: string,
-}
-
-
-/**
- * Metadata object attached to protocol objects.
- */
-export interface MetaObject {
-    /** The progress token which was given in the initial request, used to associate this notification with the request that is proceeding. */
-    progressToken?: string,
-}
-
-
-/**
- * Argument object used in prompt and tool calls.
- */
-export interface ArgumentMap {
-    /** City value. */
-    city?: string,
-    /** Location value. */
-    location?: string,
-    /** Programming language value. */
-    language?: string,
-    /** Framework value. */
-    framework?: string,
-}
-
-
-/**
- * Argument descriptor for completion requests.
- */
-export interface CompletionArgument {
-    /** Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present). */
-    name: string,
-    /** A value string. */
-    value: string,
-}
-
-
-/**
- * Additional context for completion requests.
- */
-export interface CompletionContext {
-    /** Arguments for templating. */
-    arguments?: ArgumentMap,
-}
-
-
-/**
- * Completion result payload.
- */
-export interface CompletionData {
-    /** An array of completion values. */
-    values: string[],
-    /** Total number of items to process (or total progress required), if known. */
-    total?: number,
-    /** Indicates whether there are additional completion options. */
-    hasMore?: boolean,
-}
-
-
-/**
- * Single enumerated option with a machine value and display title.
- */
-export interface EnumOption {
-    /** JSON Schema const value. */
-    const: string,
-    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood. */
-    title?: string,
-}
-
-
-/**
- * JSON Schema items expression used by enum multi-select schemas.
- */
-export interface SchemaItems {
-    /** Type discriminator field. */
-    type?: string,
-    /** Array of enum values. */
-    enum?: string[],
-    /** JSON Schema anyOf entries. */
-    anyOf?: EnumOption[],
-}
-
-
-/**
- * Restricted JSON Schema object used in MCP payloads.
- */
-export interface JsonSchema {
-    /** Optional JSON Schema dialect identifier. */
-    schemaUri?: string,
-    /** Type discriminator field. */
-    type?: string,
-    /** JSON Schema properties map. */
-    properties?: SchemaProperties,
-    /** JSON Schema required property list. */
-    required_list?: string[],
-    /** JSON Schema additionalProperties flag. */
-    additionalProperties?: boolean,
-    /** Minimum value constraint. */
-    minimum?: number,
-    /** Maximum value constraint. */
-    maximum?: number,
-    /** Minimum length constraint. */
-    minLength?: number,
-    /** Maximum length constraint. */
-    maxLength?: number,
-    /** String format constraint. */
-    format?: string,
-    /** A human-readable description. */
-    description?: string,
-    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood. */
-    title?: string,
-    /** JSON Schema oneOf entries. */
-    oneOf?: EnumOption[],
-    /** JSON Schema anyOf entries. */
-    anyOf?: EnumOption[],
-    /** JSON Schema items definition. */
-    items?: SchemaItems,
-    /** Array of enum values. */
-    enum?: string[],
-    /** JSON Schema const value. */
-    const?: string,
-    /** Default value for a schema field. */
-    default?: string,
-}
-
-
-/**
- * Named JSON Schema property map used by vendor fixtures.
- */
-export interface SchemaProperties {
-    /** Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present). */
-    name?: JsonSchema,
-    /** Email value. */
-    email?: JsonSchema,
-    /** Age value. */
-    age?: JsonSchema,
-    /** City value. */
-    city?: JsonSchema,
-    /** Location value. */
-    location?: JsonSchema,
-    /** JSON Schema property for key a. */
-    a?: JsonSchema,
-    /** JSON Schema property for key b. */
-    b?: JsonSchema,
-    /** Sampling temperature. */
-    temperature?: JsonSchema,
-    /** Weather conditions description. */
-    conditions?: JsonSchema,
-    /** Humidity percentage value. */
-    humidity?: JsonSchema,
-}
-
-
-/**
- * Tool input payload.
- */
-export interface ToolInput {
-    /** City value. */
-    city?: string,
-    /** Location value. */
-    location?: string,
-}
-
-
-/**
- * Structured content object returned by tools.
- */
-export interface StructuredContentData {
-    /** Sampling temperature. */
-    temperature?: number,
-    /** Weather conditions description. */
-    conditions?: string,
-    /** Humidity percentage value. */
-    humidity?: number,
-}
-
-
-/**
- * Structured details attached to log data.
- */
-export interface LogDetails {
-    /** Host value. */
-    host?: string,
-    /** Port value. */
-    port?: number,
-}
-
-
-/**
- * Structured log data payload.
- */
-export interface LogData {
-    /** The error object. */
-    error?: string,
-    /** Nested log details object. */
-    details?: LogDetails,
-}
-
-
-/**
- * Structured JSON-RPC error data payload.
- */
-export interface ErrorData {
-    /** An optional string describing the reason. */
-    reason?: string,
-    /** URL elicitation entries included in error data. */
-    elicitations?: URLElicitation[],
-}
-
-
-/**
- * Form values returned by an elicitation.
- */
-export interface ElicitationContent {
-    /** Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present). */
-    name?: string,
-    /** Email value. */
-    email?: string,
-    /** Age value. */
-    age?: number,
-}
-
-
-/**
- * URL-based elicitation request payload carried in error data.
- */
-export interface URLElicitation {
-    /** The elicitation mode. */
-    mode?: string,
-    /** The ID of the elicitation. */
-    elicitationId?: string,
-    /** A message string. */
-    message?: string,
-    /** The URL that the user should navigate to. */
-    url?: string,
-}
-
-
-/**
- * Client elicitation capability.
- */
-export interface ElicitationCapability {
-}
-
-
-/**
- * Client sampling capability.
- */
-export interface SamplingCapability {
-}
-
-
-/**
- * Client roots capability.
- */
-export interface RootsCapability {
-    /** Whether notifications for list changes are supported. */
-    listChanged?: boolean,
-}
-
-
-/**
- * Server prompts capability.
- */
-export interface PromptsCapability {
-    /** Whether notifications for list changes are supported. */
-    listChanged?: boolean,
-}
-
-
-/**
- * Server resources capability.
- */
-export interface ResourcesCapability {
-    /** Whether notifications for list changes are supported. */
-    listChanged?: boolean,
-    /** Whether subscribing to resource updates is supported. */
-    subscribe?: boolean,
-}
-
-
-/**
- * Server tools capability.
- */
-export interface ToolsCapability {
-    /** Whether notifications for list changes are supported. */
-    listChanged?: boolean,
-}
-
-
-/**
- * Task request capability map.
- */
-export interface TaskRequestCapabilities {
-    /** Elicitation capability object. */
-    elicitation?: ElicitationCapability,
-    /** Sampling capability object. */
-    sampling?: SamplingCapability,
-    /** The list of tools. */
-    tools?: ToolsCapability,
-}
-
-
-/**
- * Task capability object.
- */
-export interface TasksCapability {
-    /** Task request capabilities. */
-    requests?: TaskRequestCapabilities,
-}
-
-
-/**
- * Server/client extension capability object.
- */
-export interface ExtensionsCapability {
-    /** Extension capability entry for app mime types. */
-    apps_extension?: ExtensionAppCapability,
-}
-
-
-/**
- * Extension payload for app mime type declarations.
- */
-export interface ExtensionAppCapability {
-    /** MIME types supported by an extension capability. */
-    mimeTypes?: string[],
-}
-
-
-/**
- * Definition for a tool the client can call.
- */
-export interface Tool extends HasMeta, HasName, HasIcons {
-    /** Optional additional tool information. */
-    annotations?: ToolAnnotations,
-    /** Execution-related properties for this tool. */
-    execution?: ToolExecution,
-    /** A human-readable description. */
-    description?: string,
-    /** A JSON Schema object defining the expected parameters for the tool. */
-    inputSchema: JsonSchema,
-    /** An optional JSON Schema object defining the structure of the tool's output. */
-    outputSchema?: JsonSchema,
-}
-
-
-/**
- * Hints to use for model selection.
- */
-export interface ModelHint {
-    /** Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present). */
-    name?: string,
-}
-
-
-/**
- * The server's preferences for model selection, requested of the client during sampling.
- */
-export interface ModelPreferences {
-    /** How much to prioritize cost when selecting a model (0-1). */
-    costPriority?: number,
-    /** How much to prioritize intelligence when selecting a model (0-1). */
-    intelligencePriority?: number,
-    /** How much to prioritize sampling speed when selecting a model (0-1). */
-    speedPriority?: number,
-    /** Optional hints to use for model selection. */
-    hints?: ModelHint[],
-}
-
-
-/**
- * Describes a message issued to or received from an LLM API.
- */
-export interface SamplingMessage extends HasMeta {
-    /** The message content. */
-    content: ContentBlock,
-    /** The role of the sender or recipient. */
-    role: string,
-}
-
-
-/**
- * Data associated with a task.
- */
-export interface Task {
-    /** The task identifier. */
-    taskId: string,
-    /** Current task state. */
-    status: string,
-    /** ISO 8601 timestamp when the task was created. */
-    createdAt: string,
-    /** ISO 8601 timestamp when the task was last updated. */
-    lastUpdatedAt: string,
-    /** Actual retention duration from creation in milliseconds, null for unlimited. */
-    ttl: number,
-    /** Optional human-readable message describing the current task state. */
-    statusMessage?: string,
-    /** Suggested polling interval in milliseconds. */
-    pollInterval?: number,
-}
-
-
-/**
- * Metadata for augmenting a request with task execution.
- */
-export interface TaskMetadata {
-    /** Actual retention duration from creation in milliseconds, null for unlimited. */
-    ttl?: number,
-}
-
-
-/**
- * Metadata for associating messages with a task.
- */
-export interface RelatedTaskMetadata {
-    /** The task identifier. */
-    taskId: string,
-}
-
-
-/**
- * Capabilities a client may support. Known capabilities are defined here, but this is not a closed set.
- */
-export interface ClientCapabilities {
-    /** Elicitation capability object. */
-    elicitation?: ElicitationCapability,
-    /** Experimental capability extensions. */
-    experimental?: string,
-    /** Implementation-specific extension capabilities. */
-    extensions?: ExtensionsCapability,
-    /** The list of roots. */
-    roots?: RootsCapability,
-    /** Sampling capability object. */
-    sampling?: SamplingCapability,
-    /** The list of tasks. */
-    tasks?: TasksCapability,
-}
-
-
-/**
- * Capabilities that a server may support. Known capabilities are defined here, but this is not a closed set.
- */
-export interface ServerCapabilities {
-    /** Experimental capability extensions. */
-    experimental?: string,
-    /** Implementation-specific extension capabilities. */
-    extensions?: ExtensionsCapability,
-    /** The list of prompts. */
-    prompts?: PromptsCapability,
-    /** The list of resources. */
-    resources?: ResourcesCapability,
-    /** The list of tools. */
-    tools?: ToolsCapability,
-    /** The list of tasks. */
-    tasks?: TasksCapability,
-}
-
-
-/**
- * String schema definition.
- */
-export interface StringSchema {
-    /** Type discriminator field. */
-    type: string,
-    /** Default value for a schema field. */
-    default?: string,
-    /** Default value for a schema field. */
-    default_value?: string,
-    /** A human-readable description. */
-    description?: string,
-    /** String format constraint. */
-    format?: string,
-    /** Minimum length constraint. */
-    minLength?: number,
-    /** Maximum length constraint. */
-    maxLength?: number,
-    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood. */
-    title?: string,
-}
-
-
-/**
- * Number schema definition.
- */
-export interface NumberSchema {
-    /** Type discriminator field. */
-    type: string,
-    /** Default value for a schema field. */
-    default?: number,
-    /** Default value for a schema field. */
-    default_value?: string,
-    /** A human-readable description. */
-    description?: string,
-    /** Minimum value constraint. */
-    minimum?: number,
-    /** Maximum value constraint. */
-    maximum?: number,
-    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood. */
-    title?: string,
-}
-
-
-/**
- * Boolean schema definition.
- */
-export interface BooleanSchema {
-    /** Type discriminator field. */
-    type: string,
-    /** Default value for a schema field. */
+export interface McpBooleanSchema {
+    /** The value the field takes when the user gives none. */
     default?: boolean,
-    /** Default boolean value. */
-    default_value?: boolean,
-    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood. */
-    title?: string,
-    /** A human-readable description. */
+    /** A description of the field for the user. */
     description?: string,
-}
-
-
-/**
- * Single-selection enum without display titles.
- */
-export interface UntitledSingleSelectEnumSchema {
-    /** Type discriminator field. */
+    /** A title for the field. */
+    title?: string,
+    /** The kind of object, always `boolean`. */
     type: string,
-    /** Array of enum values. */
-    enum?: string[],
-    /** Array of enum values. */
-    enum_values?: string[],
-    /** Default value for a schema field. */
-    default?: string,
-    /** Default value for a schema field. */
-    default_value?: string,
-    /** A human-readable description. */
-    description?: string,
-    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood. */
-    title?: string,
 }
 
 
 /**
- * Single-selection enum with display titles for each option.
+ * A result that supports a time-to-live (TTL) hint for client-side caching.
  */
-export interface TitledSingleSelectEnumSchema {
-    /** Type discriminator field. */
-    type: string,
-    /** JSON Schema oneOf entries. */
-    oneOf?: EnumOption[],
-    /** Default value for a schema field. */
-    default?: string,
-    /** Default value for a schema field. */
-    default_value?: string,
-    /** A human-readable description. */
-    description?: string,
-    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood. */
-    title?: string,
+export interface McpCacheableResult extends McpResult {
+    /** Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta?: McpResultMetaObject,
+    /** Indicates the intended scope of the cached response, analogous to HTTP
+`Cache-Control: public` vs `Cache-Control: private`.
+
+- `"public"`: The response does not contain user-specific data. Any
+  client or intermediary (e.g., shared gateway, caching proxy) MAY cache
+  the response and serve it across authorization contexts.
+- `"private"`: The response MAY be cached and reused only within the
+  same authorization context. Caches MUST NOT be shared across
+  authorization contexts (e.g., a different access token requires a
+  different cache). */
+    cacheScope: string,
+    /** Indicates the type of the result, which allows the client to determine
+how to parse the result object.
+
+Servers implementing this protocol version MUST include this field.
+For backward compatibility, when a client receives a result from a
+server implementing an earlier protocol version (which does not include
+`resultType`), the client MUST treat the absent field as `"complete"`. */
+    resultType: string,
+    /** A hint from the server indicating how long (in milliseconds) the
+client MAY cache this response before re-fetching. Semantics are
+analogous to HTTP Cache-Control max-age.
+
+- If 0, The response SHOULD be considered immediately stale,
+  The client MAY re-fetch every time the result is needed.
+- If positive, the client SHOULD consider the result fresh for this many
+  milliseconds after receiving the response. */
+    ttlMs: number,
 }
 
 
 /**
- * Multi-selection enum without display titles.
+ * Used by the client to invoke a tool provided by the server.
  */
-export interface UntitledMultiSelectEnumSchema {
-    /** Type discriminator field. */
-    type: string,
-    /** JSON Schema items definition. */
-    items?: SchemaItems,
-    /** Default value for a schema field. */
-    default?: string[],
-    /** Default value for a schema field. */
-    default_value?: string,
-    /** A human-readable description. */
-    description?: string,
-    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood. */
-    title?: string,
-    /** Minimum number of items. */
-    minItems?: number,
-    /** Maximum number of items. */
-    maxItems?: number,
-}
-
-
-/**
- * Multi-selection enum with display titles for each option.
- */
-export interface TitledMultiSelectEnumSchema {
-    /** Type discriminator field. */
-    type: string,
-    /** JSON Schema items definition. */
-    items?: SchemaItems,
-    /** Default value for a schema field. */
-    default?: string[],
-    /** Default value for a schema field. */
-    default_value?: string,
-    /** A human-readable description. */
-    description?: string,
-    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood. */
-    title?: string,
-    /** Minimum number of items. */
-    minItems?: number,
-    /** Maximum number of items. */
-    maxItems?: number,
-}
-
-
-/**
- * Legacy titled enum schema. Use TitledSingleSelectEnumSchema instead.
- */
-export interface LegacyTitledEnumSchema {
-    /** Type discriminator field. */
-    type: string,
-    /** Array of enum values. */
-    enum?: string[],
-    /** Array of enum values. */
-    enum_values?: string[],
-    /** Display names for enum values (legacy). */
-    enumNames?: string[],
-    /** Default value for a schema field. */
-    default?: string,
-    /** Default value for a schema field. */
-    default_value?: string,
-    /** A human-readable description. */
-    description?: string,
-    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood. */
-    title?: string,
-}
-
-
-/**
- * A request that expects a response.
- */
-export interface JSONRPCRequest {
-    /** Uniquely identifying ID for a JSON-RPC request. */
+export interface McpCallToolRequest extends McpJSONRPCRequest {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
     id: string,
-    /** JSON-RPC version string. */
+    /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
-    /** The JSON-RPC method name. */
+    /** The method's name, always `tools/call`. */
     method: string,
+    /** Parameters for a `tools/call` request. */
+    params: McpCallToolRequestParams,
 }
 
 
 /**
- * A notification which does not expect a response.
+ * Parameters for a `tools/call` request.
  */
-export interface JSONRPCNotification {
-    /** JSON-RPC version string. */
-    jsonrpc: string,
-    /** The JSON-RPC method name. */
-    method: string,
+export interface McpCallToolRequestParams extends McpInputResponseRequestParams {
+    /** Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta: McpRequestMetaObject,
+    /** Arguments to use for the tool call. */
+    arguments?: McpJSONObject,
+    /** A map of client responses to server-initiated requests.
+Keys correspond to the keys in the {@link InputRequests} map;
+values are the client's result for each request. */
+    inputResponses?: McpInputResponses,
+    /** The name of the tool. */
+    name: string,
+    /** State the server handed out with an input-required result, sent back unchanged when the request is retried. */
+    requestState?: string,
 }
 
 
 /**
- * A successful (non-error) response to a request.
+ * The result returned by the server for a {@link CallToolRequesttools/call} request.
  */
-export interface JSONRPCResultResponse {
-    /** Uniquely identifying ID for a JSON-RPC request. */
+export interface McpCallToolResult extends McpResult {
+    /** Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta?: McpResultMetaObject,
+    /** A list of content objects that represent the unstructured result of the tool call. */
+    content: McpContentBlock[],
+    /** Whether the tool call ended in an error.
+
+If not set, this is assumed to be false (the call was successful).
+
+Any errors that originate from the tool SHOULD be reported inside the result
+object, with `isError` set to true, _not_ as an MCP protocol-level error
+response. Otherwise, the LLM would not be able to see that an error occurred
+and self-correct.
+
+However, any errors in _finding_ the tool, an error indicating that the
+server does not support tool calls, or any other exceptional conditions,
+should be reported as an MCP error response. */
+    isError?: boolean,
+    /** Indicates the type of the result, which allows the client to determine
+how to parse the result object.
+
+Servers implementing this protocol version MUST include this field.
+For backward compatibility, when a client receives a result from a
+server implementing an earlier protocol version (which does not include
+`resultType`), the client MUST treat the absent field as `"complete"`. */
+    resultType: string,
+    /** An optional JSON value that represents the structured result of the tool call.
+
+This can be any JSON value (object, array, string, number, boolean, or null)
+that conforms to the tool's outputSchema if one is defined. */
+    structuredContent?: McpJSONValue,
+}
+
+
+/**
+ * A successful response from the server for a {@link CallToolRequesttools/call} request.
+ */
+export interface McpCallToolResultResponse extends McpJSONRPCResultResponse {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
     id: string,
-    /** JSON-RPC version string. */
+    /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
+    /** What the request returned. */
+    result: string,
 }
 
 
 /**
- * A response to a request that indicates an error occurred.
+ * This notification is sent by the client to indicate that it is cancelling a request it previously issued.
+
+On stdio, the server also sends this notification, solely to terminate a {@link SubscriptionsListenRequestsubscriptions/listen} stream: it references the ID of the `subscriptions/listen` request that opened the stream. Servers MUST NOT use this notification to cancel any other request.
+
+The request SHOULD still be in-flight, but due to communication latency, it is always possible that this notification MAY arrive after the request has already finished.
+
+This notification indicates that the result will be unused, so any associated processing SHOULD cease.
  */
-export interface JSONRPCErrorResponse {
-    /** Uniquely identifying ID for a JSON-RPC request. */
-    id?: string,
-    /** JSON-RPC version string. */
+export interface McpCancelledNotification extends McpJSONRPCNotification {
+    /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
-    /** The error object. */
-    error: Error,
+    /** The method's name, always `notifications/cancelled`. */
+    method: string,
+    /** Parameters for a `notifications/cancelled` notification. */
+    params: McpCancelledNotificationParams,
+}
+
+
+/**
+ * Parameters for a `notifications/cancelled` notification.
+ */
+export interface McpCancelledNotificationParams extends McpNotificationParams {
+    /** Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta?: McpNotificationMetaObject,
+    /** An optional string describing the reason for the cancellation. This MAY be logged or presented to the user. */
+    reason?: string,
+    /** The ID of the request to cancel.
+
+This MUST correspond to the ID of a request the client previously issued. */
+    requestId: string,
+}
+
+
+/**
+ * Capabilities a client may support. Known capabilities are defined here, in this schema, but this is not a closed set: any client can define its own, additional capabilities.
+ */
+export interface McpClientCapabilities {
+    /** Present if the client supports elicitation from the server. */
+    elicitation?: McpClientCapabilitiesElicitation,
+    /** Experimental, non-standard capabilities that the client supports. */
+    experimental?: McpClientCapabilitiesExperimental,
+    /** Optional MCP extensions that the client supports. Keys are extension identifiers
+(e.g., "io.modelcontextprotocol/oauth-client-credentials"), and values are
+per-extension settings objects. An empty object indicates support with no settings.
+
+Keys MUST follow the {@link MetaObject`_meta` key naming rules}, with a
+mandatory prefix. */
+    extensions?: McpClientCapabilitiesExtensions,
+    /** Present if the client supports listing roots. */
+    roots?: McpClientCapabilitiesRoots,
+    /** Present if the client supports sampling from an LLM. */
+    sampling?: McpClientCapabilitiesSampling,
+}
+
+
+/**
+ * Present if the client supports elicitation from the server.
+ */
+export interface McpClientCapabilitiesElicitation {
+    /** Settings for elicitation by form. */
+    form?: McpJSONObject,
+    /** Settings for elicitation by URL. */
+    url?: McpJSONObject,
+}
+
+
+/**
+ * Experimental, non-standard capabilities that the client supports.
+ */
+export interface McpClientCapabilitiesExperimental {
+}
+
+
+/**
+ * Optional MCP extensions that the client supports. Keys are extension identifiers
+(e.g., "io.modelcontextprotocol/oauth-client-credentials"), and values are
+per-extension settings objects. An empty object indicates support with no settings.
+
+Keys MUST follow the {@link MetaObject`_meta` key naming rules}, with a
+mandatory prefix.
+ */
+export interface McpClientCapabilitiesExtensions {
+}
+
+
+/**
+ * Present if the client supports listing roots.
+ */
+export interface McpClientCapabilitiesRoots {
+}
+
+
+/**
+ * Present if the client supports sampling from an LLM.
+ */
+export interface McpClientCapabilitiesSampling {
+    /** Whether the client supports context inclusion via `includeContext` parameter.
+If not declared, servers SHOULD only use `includeContext: "none"` (or omit it). */
+    context?: McpJSONObject,
+    /** Whether the client supports tool use via `tools` and `toolChoice` parameters. */
+    tools?: McpJSONObject,
+}
+
+
+/**
+ * This notification is sent by the client to indicate that it is cancelling a request it previously issued.
+
+On stdio, the server also sends this notification, solely to terminate a {@link SubscriptionsListenRequestsubscriptions/listen} stream: it references the ID of the `subscriptions/listen` request that opened the stream. Servers MUST NOT use this notification to cancel any other request.
+
+The request SHOULD still be in-flight, but due to communication latency, it is always possible that this notification MAY arrive after the request has already finished.
+
+This notification indicates that the result will be unused, so any associated processing SHOULD cease.
+ */
+export interface McpClientNotification extends McpCancelledNotification {
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The method's name, always `notifications/cancelled`. */
+    method: string,
+    /** Parameters for a `notifications/cancelled` notification. */
+    params: McpCancelledNotificationParams,
+}
+
+
+/**
+ * One of `DiscoverRequest`, `ListResourcesRequest`, `ListResourceTemplatesRequest`, `ReadResourceRequest`, `SubscriptionsListenRequest`, `ListPromptsRequest`, `GetPromptRequest`, `ListToolsRequest`, `CallToolRequest`, `CompleteRequest`.
+ */
+export interface McpClientRequest {
 }
 
 
 /**
  * Common result fields.
  */
-export interface Result extends HasMeta {
+export interface McpClientResult extends McpEmptyResult {
 }
 
 
 /**
- * Parameters for a notifications/cancelled notification.
+ * A request from the client to the server, to ask for completion options.
  */
-export interface CancelledNotificationParams extends HasMeta {
-    /** The ID of a request. */
-    requestId?: string,
-    /** An optional string describing the reason. */
-    reason?: string,
+export interface McpCompleteRequest extends McpJSONRPCRequest {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The method's name, always `completion/complete`. */
+    method: string,
+    /** Parameters for a `completion/complete` request. */
+    params: McpCompleteRequestParams,
 }
 
 
 /**
- * Parameters for a notifications/progress notification.
+ * Parameters for a `completion/complete` request.
  */
-export interface ProgressNotificationParams extends HasMeta {
-    /** The progress thus far. */
-    progress: number,
-    /** The progress token which was given in the initial request, used to associate this notification with the request that is proceeding. */
-    progressToken: string,
-    /** Total number of items to process (or total progress required), if known. */
+export interface McpCompleteRequestParams extends McpRequestParams {
+    /** Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta: McpRequestMetaObject,
+    /** The argument's information */
+    argument: McpCompleteRequestParamsArgument,
+    /** Additional, optional context for completions */
+    context?: McpCompleteRequestParamsContext,
+    /** What the completion is for: a prompt or a resource template. */
+    ref: string,
+}
+
+
+/**
+ * The argument's information
+ */
+export interface McpCompleteRequestParamsArgument {
+    /** The name of the argument */
+    name: string,
+    /** The value of the argument to use for completion matching. */
+    value: string,
+}
+
+
+/**
+ * Additional, optional context for completions
+ */
+export interface McpCompleteRequestParamsContext {
+    /** Previously-resolved variables in a URI template or prompt. */
+    arguments?: McpCompleteRequestParamsContextArguments,
+}
+
+
+/**
+ * Previously-resolved variables in a URI template or prompt.
+ */
+export interface McpCompleteRequestParamsContextArguments {
+}
+
+
+/**
+ * The result returned by the server for a {@link CompleteRequestcompletion/complete} request.
+ */
+export interface McpCompleteResult extends McpResult {
+    /** Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta?: McpResultMetaObject,
+    /** The completion values and whether more are available. */
+    completion: McpCompleteResultCompletion,
+    /** Indicates the type of the result, which allows the client to determine
+how to parse the result object.
+
+Servers implementing this protocol version MUST include this field.
+For backward compatibility, when a client receives a result from a
+server implementing an earlier protocol version (which does not include
+`resultType`), the client MUST treat the absent field as `"complete"`. */
+    resultType: string,
+}
+
+
+/**
+ * The object MCP's `CompleteResult` holds under `completion`.
+ */
+export interface McpCompleteResultCompletion {
+    /** Indicates whether there are additional completion options beyond those provided in the current response, even if the exact total is unknown. */
+    hasMore?: boolean,
+    /** The total number of completion options available. This can exceed the number of values actually sent in the response. */
     total?: number,
-    /** A message string. */
-    message?: string,
+    /** An array of completion values. Must not exceed 100 items. */
+    values: string[],
 }
 
 
 /**
- * Parameters for a notifications/elicitation/complete notification.
+ * A successful response from the server for a {@link CompleteRequestcompletion/complete} request.
  */
-export interface ElicitationCompleteNotificationParams {
-    /** The ID of the elicitation. */
-    elicitationId: string,
+export interface McpCompleteResultResponse extends McpJSONRPCResultResponse {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The result returned by the server for a {@link CompleteRequestcompletion/complete} request. */
+    result: McpCompleteResult,
 }
 
 
 /**
- * Parameters for a notifications/message notification.
+ * One of `TextContent`, `ImageContent`, `AudioContent`, `ResourceLink`, `EmbeddedResource`.
  */
-export interface LoggingMessageNotificationParams extends HasMeta {
-    /** The data to be logged. */
-    data: LogData,
-    /** The severity of a log message. */
+export interface McpContentBlock {
+}
+
+
+/**
+ * A request from the server to sample an LLM via the client. The client has full discretion over which model to select. The client should also inform the user before beginning sampling, to allow them to inspect the request (human in the loop) and decide whether to approve it.
+ */
+export interface McpCreateMessageRequest {
+    /** The method's name, always `sampling/createMessage`. */
+    method: string,
+    /** Parameters for a `sampling/createMessage` request. */
+    params: McpCreateMessageRequestParams,
+}
+
+
+/**
+ * Parameters for a `sampling/createMessage` request.
+ */
+export interface McpCreateMessageRequestParams {
+    /** A request to include context from one or more MCP servers (including the caller), to be attached to the prompt.
+The client MAY ignore this request.
+
+Default is `"none"`. The values `"thisServer"` and `"allServers"` are deprecated (SEP-2596): servers SHOULD
+omit this field or use `"none"`, and SHOULD only use the deprecated values if the client declares
+{@link ClientCapabilities.sampling.context}. */
+    includeContext?: string,
+    /** The requested maximum number of tokens to sample (to prevent runaway completions).
+
+The client MAY choose to sample fewer tokens than the requested maximum. */
+    maxTokens: number,
+    /** Describes a message issued to or received from an LLM API. */
+    messages: McpSamplingMessage[],
+    /** Optional metadata to pass through to the LLM provider. The format of this metadata is provider-specific. */
+    metadata?: McpJSONObject,
+    /** The server's preferences for which model to select. The client MAY ignore these preferences. */
+    modelPreferences?: McpModelPreferences,
+    /** Sequences at which the model should stop generating. */
+    stopSequences?: string[],
+    /** An optional system prompt the server wants to use for sampling. The client MAY modify or omit this prompt. */
+    systemPrompt?: string,
+    /** The sampling temperature the server asks the model to use. */
+    temperature?: number,
+    /** Controls how the model uses tools.
+The client MUST return an error if this field is provided but {@link ClientCapabilities.sampling.tools} is not declared.
+Default is `{ mode: "auto" }`. */
+    toolChoice?: McpToolChoice,
+    /** Tools that the model may use during generation.
+The client MUST return an error if this field is provided but {@link ClientCapabilities.sampling.tools} is not declared. */
+    tools?: McpTool[],
+}
+
+
+/**
+ * The result returned by the client for a {@link CreateMessageRequestsampling/createMessage} request.
+The client should inform the user before returning the sampled message, to allow them
+to inspect the response (human in the loop) and decide whether to allow the server to see it.
+ */
+export interface McpCreateMessageResult extends McpSamplingMessage {
+    /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
+
+Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
+
+Valid keys have two segments:
+
+**Prefix:**
+- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).
+- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).
+- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).
+- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.
+
+**Name:**
+- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
+- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`). */
+    _meta?: McpMetaObject,
+    /** The content the message carries. */
+    content: string,
+    /** The name of the model that generated the message. */
+    model: string,
+    /** The sender or recipient of messages and data in a conversation. */
+    role: string,
+    /** The reason why sampling stopped, if known.
+
+Standard values:
+- `"endTurn"`: Natural end of the assistant's turn
+- `"stopSequence"`: A stop sequence was encountered
+- `"maxTokens"`: Maximum token limit was reached
+- `"toolUse"`: The model wants to use one or more tools
+
+This field is an open string to allow for provider-specific stop reasons. */
+    stopReason?: string,
+}
+
+
+/**
+ * A request from the client asking the server to advertise its supported
+protocol versions, capabilities, and other metadata. Servers **MUST**
+implement `server/discover`. Clients **MAY** call it but are not required
+to — version negotiation can also happen inline via per-request `_meta`.
+ */
+export interface McpDiscoverRequest extends McpJSONRPCRequest {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The method's name, always `server/discover`. */
+    method: string,
+    /** Common params for any request. */
+    params: McpRequestParams,
+}
+
+
+/**
+ * The result returned by the server for a {@link DiscoverRequestserver/discover} request.
+ */
+export interface McpDiscoverResult extends McpCacheableResult {
+    /** Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta?: McpResultMetaObject,
+    /** Indicates the intended scope of the cached response, analogous to HTTP
+`Cache-Control: public` vs `Cache-Control: private`.
+
+- `"public"`: The response does not contain user-specific data. Any
+  client or intermediary (e.g., shared gateway, caching proxy) MAY cache
+  the response and serve it across authorization contexts.
+- `"private"`: The response MAY be cached and reused only within the
+  same authorization context. Caches MUST NOT be shared across
+  authorization contexts (e.g., a different access token requires a
+  different cache). */
+    cacheScope: string,
+    /** The capabilities of the server. */
+    capabilities: McpServerCapabilities,
+    /** Natural-language guidance describing the server and its features.
+
+This can be used by clients to improve an LLM's understanding of
+available tools (e.g., by including it in a system prompt). It should
+focus on information that helps the model use the server effectively
+and should not duplicate information already in tool descriptions. */
+    instructions?: string,
+    /** Indicates the type of the result, which allows the client to determine
+how to parse the result object.
+
+Servers implementing this protocol version MUST include this field.
+For backward compatibility, when a client receives a result from a
+server implementing an earlier protocol version (which does not include
+`resultType`), the client MUST treat the absent field as `"complete"`. */
+    resultType: string,
+    /** MCP Protocol Versions this server supports. The client should choose a
+version from this list for use in subsequent requests. */
+    supportedVersions: string[],
+    /** A hint from the server indicating how long (in milliseconds) the
+client MAY cache this response before re-fetching. Semantics are
+analogous to HTTP Cache-Control max-age.
+
+- If 0, The response SHOULD be considered immediately stale,
+  The client MAY re-fetch every time the result is needed.
+- If positive, the client SHOULD consider the result fresh for this many
+  milliseconds after receiving the response. */
+    ttlMs: number,
+}
+
+
+/**
+ * A successful response from the server for a {@link DiscoverRequestserver/discover} request.
+ */
+export interface McpDiscoverResultResponse extends McpJSONRPCResultResponse {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The result returned by the server for a {@link DiscoverRequestserver/discover} request. */
+    result: McpDiscoverResult,
+}
+
+
+/**
+ * A request from the server to elicit additional information from the user via the client.
+ */
+export interface McpElicitRequest {
+    /** The method's name, always `elicitation/create`. */
+    method: string,
+    /** The parameters for a request to elicit additional information from the user via the client. */
+    params: McpElicitRequestParams,
+}
+
+
+/**
+ * The parameters for a request to elicit non-sensitive information from the user via a form in the client.
+ */
+export interface McpElicitRequestFormParams {
+    /** The message to present to the user describing what information is being requested. */
+    message: string,
+    /** The elicitation mode. */
+    mode?: string,
+    /** A restricted subset of JSON Schema.
+Only top-level properties are allowed, without nesting. */
+    requestedSchema: McpElicitRequestFormParamsRequestedSchema,
+}
+
+
+/**
+ * A restricted subset of JSON Schema.
+Only top-level properties are allowed, without nesting.
+ */
+export interface McpElicitRequestFormParamsRequestedSchema {
+    /** The JSON Schema dialect the schema is written in. */
+    schema_dialect?: string,
+    /** The fields of the form, by name. */
+    properties: McpElicitRequestFormParamsRequestedSchemaProperties,
+    /** The names of the fields the user must fill in. */
+    required?: string[],
+    /** The kind of object, always `object`. */
+    type: string,
+}
+
+
+/**
+ * The object MCP's `ElicitRequestFormParams` holds under `properties`.
+ */
+export interface McpElicitRequestFormParamsRequestedSchemaProperties {
+}
+
+
+/**
+ * The parameters for a request to elicit additional information from the user via the client.
+ */
+export interface McpElicitRequestParams {
+}
+
+
+/**
+ * The parameters for a request to elicit information from the user via a URL in the client.
+ */
+export interface McpElicitRequestURLParams {
+    /** The message to present to the user explaining why the interaction is needed. */
+    message: string,
+    /** The elicitation mode. */
+    mode: string,
+    /** The URL that the user should navigate to. */
+    url: string,
+}
+
+
+/**
+ * The result returned by the client for an {@link ElicitRequestelicitation/create} request.
+ */
+export interface McpElicitResult {
+    /** The user action in response to the elicitation.
+- `"accept"`: User submitted the form/confirmed the action
+- `"decline"`: User explicitly declined the action
+- `"cancel"`: User dismissed without making an explicit choice */
+    action: string,
+    /** The submitted form data, only present when action is `"accept"` and mode was `"form"`.
+Contains values matching the requested schema.
+Omitted for out-of-band mode responses. */
+    content?: McpElicitResultContent,
+}
+
+
+/**
+ * The submitted form data, only present when action is `"accept"` and mode was `"form"`.
+Contains values matching the requested schema.
+Omitted for out-of-band mode responses.
+ */
+export interface McpElicitResultContent {
+}
+
+
+/**
+ * The contents of a resource, embedded into a prompt or tool call result.
+
+It is up to the client how best to render embedded resources for the benefit
+of the LLM and/or the user.
+ */
+export interface McpEmbeddedResource {
+    /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
+
+Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
+
+Valid keys have two segments:
+
+**Prefix:**
+- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).
+- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).
+- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).
+- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.
+
+**Name:**
+- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
+- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`). */
+    _meta?: McpMetaObject,
+    /** Optional annotations for the client. */
+    annotations?: McpAnnotations,
+    /** The resource's contents, as text or as binary data. */
+    resource: string,
+    /** The kind of object, always `resource`. */
+    type: string,
+}
+
+
+/**
+ * Common result fields.
+ */
+export interface McpEmptyResult extends McpResult {
+}
+
+
+/**
+ * One of `UntitledSingleSelectEnumSchema`, `TitledSingleSelectEnumSchema`, `UntitledMultiSelectEnumSchema`, `TitledMultiSelectEnumSchema`, `LegacyTitledEnumSchema`.
+ */
+export interface McpEnumSchema {
+}
+
+
+/**
+ * MCP's `Error`.
+ */
+export interface McpError {
+    /** The error type that occurred. */
+    code: number,
+    /** Additional information about the error. The value of this member is defined by the sender (e.g. detailed error information, nested errors etc.). */
+    data?: McpJSONValue,
+    /** A short description of the error. The message SHOULD be limited to a concise single sentence. */
+    message: string,
+}
+
+
+/**
+ * Used by the client to get a prompt provided by the server.
+ */
+export interface McpGetPromptRequest extends McpJSONRPCRequest {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The method's name, always `prompts/get`. */
+    method: string,
+    /** Parameters for a `prompts/get` request. */
+    params: McpGetPromptRequestParams,
+}
+
+
+/**
+ * Parameters for a `prompts/get` request.
+ */
+export interface McpGetPromptRequestParams extends McpInputResponseRequestParams {
+    /** Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta: McpRequestMetaObject,
+    /** Arguments to use for templating the prompt. */
+    arguments?: McpGetPromptRequestParamsArguments,
+    /** A map of client responses to server-initiated requests.
+Keys correspond to the keys in the {@link InputRequests} map;
+values are the client's result for each request. */
+    inputResponses?: McpInputResponses,
+    /** The name of the prompt or prompt template. */
+    name: string,
+    /** State the server handed out with an input-required result, sent back unchanged when the request is retried. */
+    requestState?: string,
+}
+
+
+/**
+ * Arguments to use for templating the prompt.
+ */
+export interface McpGetPromptRequestParamsArguments {
+}
+
+
+/**
+ * The result returned by the server for a {@link GetPromptRequestprompts/get} request.
+ */
+export interface McpGetPromptResult extends McpResult {
+    /** Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta?: McpResultMetaObject,
+    /** An optional description for the prompt. */
+    description?: string,
+    /** Describes a message returned as part of a prompt.
+
+This is similar to {@link SamplingMessage}, but also supports the embedding of
+resources from the MCP server. */
+    messages: McpPromptMessage[],
+    /** Indicates the type of the result, which allows the client to determine
+how to parse the result object.
+
+Servers implementing this protocol version MUST include this field.
+For backward compatibility, when a client receives a result from a
+server implementing an earlier protocol version (which does not include
+`resultType`), the client MUST treat the absent field as `"complete"`. */
+    resultType: string,
+}
+
+
+/**
+ * A successful response from the server for a {@link GetPromptRequestprompts/get} request.
+ */
+export interface McpGetPromptResultResponse extends McpJSONRPCResultResponse {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** What the request returned. */
+    result: string,
+}
+
+
+/**
+ * Returned when a server rejects a request because the values in the HTTP
+headers do not match the corresponding values in the request body, or
+because required headers are missing or malformed. For HTTP, the response
+status code MUST be `400 Bad Request`.
+ */
+export interface McpHeaderMismatchError extends McpJSONRPCErrorResponse {
+    /** The error the request ended with. */
+    error: McpHeaderMismatchErrorError,
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id?: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+}
+
+
+/**
+ * MCP's `Error`, with the code and data this error carries.
+ */
+export interface McpHeaderMismatchErrorError extends McpError {
+    /** The error code, always `-32020`. */
+    code: number,
+}
+
+
+/**
+ * An optionally-sized icon that can be displayed in a user interface.
+ */
+export interface McpIcon {
+    /** Optional MIME type override if the source MIME type is missing or generic.
+For example: `"image/png"`, `"image/jpeg"`, or `"image/svg+xml"`. */
+    mimeType?: string,
+    /** Optional array of strings that specify sizes at which the icon can be used.
+Each string should be in WxH format (e.g., `"48x48"`, `"96x96"`) or `"any"` for scalable formats like SVG.
+
+If not provided, the client should assume that the icon can be used at any size. */
+    sizes?: string[],
+    /** A standard URI pointing to an icon resource. May be an HTTP/HTTPS URL or a
+`data:` URI with Base64-encoded image data.
+
+Consumers SHOULD take steps to ensure URLs serving icons are from the
+same domain as the client/server or a trusted domain.
+
+Consumers SHOULD take appropriate precautions when consuming SVGs as they can contain
+executable JavaScript. */
+    src: string,
+    /** Optional specifier for the theme this icon is designed for. `"light"` indicates
+the icon is designed to be used with a light background, and `"dark"` indicates
+the icon is designed to be used with a dark background.
+
+If not provided, the client should assume the icon can be used with any theme. */
+    theme?: string,
+}
+
+
+/**
+ * Base interface to add `icons` property.
+ */
+export interface McpIcons {
+    /** Optional set of sized icons that the client can display in a user interface.
+
+Clients that support rendering icons MUST support at least the following MIME types:
+- `image/png` - PNG images (safe, universal compatibility)
+- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)
+
+Clients that support rendering icons SHOULD also support:
+- `image/svg+xml` - SVG images (scalable but requires security precautions)
+- `image/webp` - WebP images (modern, efficient format) */
+    icons?: McpIcon[],
+}
+
+
+/**
+ * An image provided to or from an LLM.
+ */
+export interface McpImageContent {
+    /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
+
+Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
+
+Valid keys have two segments:
+
+**Prefix:**
+- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).
+- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).
+- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).
+- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.
+
+**Name:**
+- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
+- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`). */
+    _meta?: McpMetaObject,
+    /** Optional annotations for the client. */
+    annotations?: McpAnnotations,
+    /** The base64-encoded image data. */
+    data: string,
+    /** The MIME type of the image. Different providers may support different image types. */
+    mimeType: string,
+    /** The kind of object, always `image`. */
+    type: string,
+}
+
+
+/**
+ * Describes the MCP implementation.
+ */
+export interface McpImplementation extends McpBaseMetadata, McpIcons {
+    /** An optional human-readable description of what this implementation does.
+
+This can be used by clients or servers to provide context about their purpose
+and capabilities. For example, a server might describe the types of resources
+or tools it provides, while a client might describe its intended use case. */
+    description?: string,
+    /** Optional set of sized icons that the client can display in a user interface.
+
+Clients that support rendering icons MUST support at least the following MIME types:
+- `image/png` - PNG images (safe, universal compatibility)
+- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)
+
+Clients that support rendering icons SHOULD also support:
+- `image/svg+xml` - SVG images (scalable but requires security precautions)
+- `image/webp` - WebP images (modern, efficient format) */
+    icons?: McpIcon[],
+    /** Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present). */
+    name: string,
+    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
+even by those unfamiliar with domain-specific terminology.
+
+If not provided, the name should be used for display (except for {@link Tool},
+where `annotations.title` should be given precedence over using `name`,
+if present). */
+    title?: string,
+    /** The version of this implementation. */
+    version: string,
+    /** An optional URL of the website for this implementation. */
+    websiteUrl?: string,
+}
+
+
+/**
+ * One of `CreateMessageRequest`, `ListRootsRequest`, `ElicitRequest`.
+ */
+export interface McpInputRequest {
+}
+
+
+/**
+ * A map of server-initiated requests that the client must fulfill.
+Keys are server-assigned identifiers; values are the request objects.
+ */
+export interface McpInputRequests {
+}
+
+
+/**
+ * An InputRequiredResult sent by the server to indicate that additional input is needed
+before the request can be completed.
+
+At least one of `inputRequests` or `requestState` MUST be present.
+ */
+export interface McpInputRequiredResult extends McpResult {
+    /** Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta?: McpResultMetaObject,
+    /** A map of server-initiated requests that the client must fulfill.
+Keys are server-assigned identifiers; values are the request objects. */
+    inputRequests?: McpInputRequests,
+    /** State for the client to send back unchanged when it retries the request. */
+    requestState?: string,
+    /** Indicates the type of the result, which allows the client to determine
+how to parse the result object.
+
+Servers implementing this protocol version MUST include this field.
+For backward compatibility, when a client receives a result from a
+server implementing an earlier protocol version (which does not include
+`resultType`), the client MUST treat the absent field as `"complete"`. */
+    resultType: string,
+}
+
+
+/**
+ * One of `CreateMessageResult`, `ListRootsResult`, `ElicitResult`.
+ */
+export interface McpInputResponse {
+}
+
+
+/**
+ * MCP's `InputResponseRequestParams`.
+ */
+export interface McpInputResponseRequestParams extends McpRequestParams {
+    /** Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta: McpRequestMetaObject,
+    /** A map of client responses to server-initiated requests.
+Keys correspond to the keys in the {@link InputRequests} map;
+values are the client's result for each request. */
+    inputResponses?: McpInputResponses,
+    /** State the server handed out with an input-required result, sent back unchanged when the request is retried. */
+    requestState?: string,
+}
+
+
+/**
+ * A map of client responses to server-initiated requests.
+Keys correspond to the keys in the {@link InputRequests} map;
+values are the client's result for each request.
+ */
+export interface McpInputResponses {
+}
+
+
+/**
+ * A JSON-RPC error indicating that an internal error occurred on the receiver. This error is returned when the receiver encounters an unexpected condition that prevents it from fulfilling the request.
+ */
+export interface McpInternalError extends McpError {
+    /** The error type that occurred. */
+    code: number,
+    /** Additional information about the error. The value of this member is defined by the sender (e.g. detailed error information, nested errors etc.). */
+    data?: McpJSONValue,
+    /** A short description of the error. The message SHOULD be limited to a concise single sentence. */
+    message: string,
+}
+
+
+/**
+ * A JSON-RPC error indicating that the method parameters are invalid or malformed.
+
+In MCP, this error is returned in various contexts when request parameters fail validation:
+
+- **Tools**: Unknown tool name or invalid tool arguments
+- **Prompts**: Unknown prompt name or missing required arguments
+- **Pagination**: Invalid or expired cursor values
+- **Logging**: Invalid log level
+- **Elicitation**: Server requests an elicitation mode not declared in client capabilities
+- **Sampling**: Missing tool result or tool results mixed with other content
+ */
+export interface McpInvalidParamsError extends McpError {
+    /** The error type that occurred. */
+    code: number,
+    /** Additional information about the error. The value of this member is defined by the sender (e.g. detailed error information, nested errors etc.). */
+    data?: McpJSONValue,
+    /** A short description of the error. The message SHOULD be limited to a concise single sentence. */
+    message: string,
+}
+
+
+/**
+ * A JSON-RPC error indicating that the request is not a valid request object. This error is returned when the message structure does not conform to the JSON-RPC 2.0 specification requirements for a request (e.g., missing required fields like `jsonrpc` or `method`, or using invalid types for these fields).
+ */
+export interface McpInvalidRequestError extends McpError {
+    /** The error type that occurred. */
+    code: number,
+    /** Additional information about the error. The value of this member is defined by the sender (e.g. detailed error information, nested errors etc.). */
+    data?: McpJSONValue,
+    /** A short description of the error. The message SHOULD be limited to a concise single sentence. */
+    message: string,
+}
+
+
+/**
+ * A JSON object, whose values are JSON values.
+ */
+export interface McpJSONObject {
+}
+
+
+/**
+ * A response to a request that indicates an error occurred.
+ */
+export interface McpJSONRPCErrorResponse {
+    /** The error the request ended with. */
+    error: McpError,
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id?: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+}
+
+
+/**
+ * Refers to any valid JSON-RPC object that can be decoded off the wire, or encoded to be sent.
+ */
+export interface McpJSONRPCMessage {
+}
+
+
+/**
+ * A notification which does not expect a response.
+ */
+export interface McpJSONRPCNotification extends McpNotification {
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The name of the method. */
+    method: string,
+    /** The parameters the message carries. */
+    params?: McpJSONObject,
+}
+
+
+/**
+ * A request that expects a response.
+ */
+export interface McpJSONRPCRequest extends McpRequest {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The name of the method. */
+    method: string,
+    /** The parameters the message carries. */
+    params?: McpJSONObject,
+}
+
+
+/**
+ * A response to a request, containing either the result or error.
+ */
+export interface McpJSONRPCResponse {
+}
+
+
+/**
+ * A successful (non-error) response to a request.
+ */
+export interface McpJSONRPCResultResponse {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** Common result fields. */
+    result: McpResult,
+}
+
+
+/**
+ * One of `JSONObject`.
+ */
+export interface McpJSONValue {
+}
+
+
+/**
+ * Use {@link TitledSingleSelectEnumSchema} instead.
+This interface will be removed in a future version.
+ */
+export interface McpLegacyTitledEnumSchema {
+    /** The value the field takes when the user gives none. */
+    default?: string,
+    /** A description of the field for the user. */
+    description?: string,
+    /** The values the field offers. */
+    enum: string[],
+    /** (Legacy) Display names for enum values.
+Non-standard according to JSON schema 2020-12. */
+    enumNames?: string[],
+    /** A title for the field. */
+    title?: string,
+    /** The kind of object, always `string`. */
+    type: string,
+}
+
+
+/**
+ * Sent from the client to request a list of prompts and prompt templates the server has.
+ */
+export interface McpListPromptsRequest extends McpPaginatedRequest {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The method's name, always `prompts/list`. */
+    method: string,
+    /** Common params for paginated requests. */
+    params: McpPaginatedRequestParams,
+}
+
+
+/**
+ * The result returned by the server for a {@link ListPromptsRequestprompts/list} request.
+ */
+export interface McpListPromptsResult extends McpPaginatedResult, McpCacheableResult {
+    /** Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta?: McpResultMetaObject,
+    /** Indicates the intended scope of the cached response, analogous to HTTP
+`Cache-Control: public` vs `Cache-Control: private`.
+
+- `"public"`: The response does not contain user-specific data. Any
+  client or intermediary (e.g., shared gateway, caching proxy) MAY cache
+  the response and serve it across authorization contexts.
+- `"private"`: The response MAY be cached and reused only within the
+  same authorization context. Caches MUST NOT be shared across
+  authorization contexts (e.g., a different access token requires a
+  different cache). */
+    cacheScope: string,
+    /** An opaque token representing the pagination position after the last returned result.
+If present, there may be more results available. */
+    nextCursor?: string,
+    /** A prompt or prompt template that the server offers. */
+    prompts: McpPrompt[],
+    /** Indicates the type of the result, which allows the client to determine
+how to parse the result object.
+
+Servers implementing this protocol version MUST include this field.
+For backward compatibility, when a client receives a result from a
+server implementing an earlier protocol version (which does not include
+`resultType`), the client MUST treat the absent field as `"complete"`. */
+    resultType: string,
+    /** A hint from the server indicating how long (in milliseconds) the
+client MAY cache this response before re-fetching. Semantics are
+analogous to HTTP Cache-Control max-age.
+
+- If 0, The response SHOULD be considered immediately stale,
+  The client MAY re-fetch every time the result is needed.
+- If positive, the client SHOULD consider the result fresh for this many
+  milliseconds after receiving the response. */
+    ttlMs: number,
+}
+
+
+/**
+ * A successful response from the server for a {@link ListPromptsRequestprompts/list} request.
+ */
+export interface McpListPromptsResultResponse extends McpJSONRPCResultResponse {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The result returned by the server for a {@link ListPromptsRequestprompts/list} request. */
+    result: McpListPromptsResult,
+}
+
+
+/**
+ * Sent from the client to request a list of resource templates the server has.
+ */
+export interface McpListResourceTemplatesRequest extends McpPaginatedRequest {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The method's name, always `resources/templates/list`. */
+    method: string,
+    /** Common params for paginated requests. */
+    params: McpPaginatedRequestParams,
+}
+
+
+/**
+ * The result returned by the server for a {@link ListResourceTemplatesRequestresources/templates/list} request.
+ */
+export interface McpListResourceTemplatesResult extends McpPaginatedResult, McpCacheableResult {
+    /** Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta?: McpResultMetaObject,
+    /** Indicates the intended scope of the cached response, analogous to HTTP
+`Cache-Control: public` vs `Cache-Control: private`.
+
+- `"public"`: The response does not contain user-specific data. Any
+  client or intermediary (e.g., shared gateway, caching proxy) MAY cache
+  the response and serve it across authorization contexts.
+- `"private"`: The response MAY be cached and reused only within the
+  same authorization context. Caches MUST NOT be shared across
+  authorization contexts (e.g., a different access token requires a
+  different cache). */
+    cacheScope: string,
+    /** An opaque token representing the pagination position after the last returned result.
+If present, there may be more results available. */
+    nextCursor?: string,
+    /** A template description for resources available on the server. */
+    resourceTemplates: McpResourceTemplate[],
+    /** Indicates the type of the result, which allows the client to determine
+how to parse the result object.
+
+Servers implementing this protocol version MUST include this field.
+For backward compatibility, when a client receives a result from a
+server implementing an earlier protocol version (which does not include
+`resultType`), the client MUST treat the absent field as `"complete"`. */
+    resultType: string,
+    /** A hint from the server indicating how long (in milliseconds) the
+client MAY cache this response before re-fetching. Semantics are
+analogous to HTTP Cache-Control max-age.
+
+- If 0, The response SHOULD be considered immediately stale,
+  The client MAY re-fetch every time the result is needed.
+- If positive, the client SHOULD consider the result fresh for this many
+  milliseconds after receiving the response. */
+    ttlMs: number,
+}
+
+
+/**
+ * A successful response from the server for a {@link ListResourceTemplatesRequestresources/templates/list} request.
+ */
+export interface McpListResourceTemplatesResultResponse extends McpJSONRPCResultResponse {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The result returned by the server for a {@link ListResourceTemplatesRequestresources/templates/list} request. */
+    result: McpListResourceTemplatesResult,
+}
+
+
+/**
+ * Sent from the client to request a list of resources the server has.
+ */
+export interface McpListResourcesRequest extends McpPaginatedRequest {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The method's name, always `resources/list`. */
+    method: string,
+    /** Common params for paginated requests. */
+    params: McpPaginatedRequestParams,
+}
+
+
+/**
+ * The result returned by the server for a {@link ListResourcesRequestresources/list} request.
+ */
+export interface McpListResourcesResult extends McpPaginatedResult, McpCacheableResult {
+    /** Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta?: McpResultMetaObject,
+    /** Indicates the intended scope of the cached response, analogous to HTTP
+`Cache-Control: public` vs `Cache-Control: private`.
+
+- `"public"`: The response does not contain user-specific data. Any
+  client or intermediary (e.g., shared gateway, caching proxy) MAY cache
+  the response and serve it across authorization contexts.
+- `"private"`: The response MAY be cached and reused only within the
+  same authorization context. Caches MUST NOT be shared across
+  authorization contexts (e.g., a different access token requires a
+  different cache). */
+    cacheScope: string,
+    /** An opaque token representing the pagination position after the last returned result.
+If present, there may be more results available. */
+    nextCursor?: string,
+    /** A known resource that the server is capable of reading. */
+    resources: McpResource[],
+    /** Indicates the type of the result, which allows the client to determine
+how to parse the result object.
+
+Servers implementing this protocol version MUST include this field.
+For backward compatibility, when a client receives a result from a
+server implementing an earlier protocol version (which does not include
+`resultType`), the client MUST treat the absent field as `"complete"`. */
+    resultType: string,
+    /** A hint from the server indicating how long (in milliseconds) the
+client MAY cache this response before re-fetching. Semantics are
+analogous to HTTP Cache-Control max-age.
+
+- If 0, The response SHOULD be considered immediately stale,
+  The client MAY re-fetch every time the result is needed.
+- If positive, the client SHOULD consider the result fresh for this many
+  milliseconds after receiving the response. */
+    ttlMs: number,
+}
+
+
+/**
+ * A successful response from the server for a {@link ListResourcesRequestresources/list} request.
+ */
+export interface McpListResourcesResultResponse extends McpJSONRPCResultResponse {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The result returned by the server for a {@link ListResourcesRequestresources/list} request. */
+    result: McpListResourcesResult,
+}
+
+
+/**
+ * Sent from the server to request a list of root URIs from the client. Roots allow
+servers to ask for specific directories or files to operate on. A common example
+for roots is providing a set of repositories or directories a server should operate
+on.
+
+This request is typically used when the server needs to understand the file system
+structure or access specific locations that the client has permission to read from.
+ */
+export interface McpListRootsRequest {
+    /** The method's name, always `roots/list`. */
+    method: string,
+    /** The parameters the message carries. */
+    params?: McpListRootsRequestParams,
+}
+
+
+/**
+ * The object MCP's `ListRootsRequest` holds under `params`.
+ */
+export interface McpListRootsRequestParams {
+    /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
+
+Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
+
+Valid keys have two segments:
+
+**Prefix:**
+- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).
+- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).
+- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).
+- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.
+
+**Name:**
+- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
+- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`). */
+    _meta?: McpMetaObject,
+}
+
+
+/**
+ * The result returned by the client for a {@link ListRootsRequestroots/list} request.
+This result contains an array of {@link Root} objects, each representing a root directory
+or file that the server can operate on.
+ */
+export interface McpListRootsResult {
+    /** Represents a root directory or file that the server can operate on. */
+    roots: McpRoot[],
+}
+
+
+/**
+ * Sent from the client to request a list of tools the server has.
+ */
+export interface McpListToolsRequest extends McpPaginatedRequest {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The method's name, always `tools/list`. */
+    method: string,
+    /** Common params for paginated requests. */
+    params: McpPaginatedRequestParams,
+}
+
+
+/**
+ * The result returned by the server for a {@link ListToolsRequesttools/list} request.
+ */
+export interface McpListToolsResult extends McpPaginatedResult, McpCacheableResult {
+    /** Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta?: McpResultMetaObject,
+    /** Indicates the intended scope of the cached response, analogous to HTTP
+`Cache-Control: public` vs `Cache-Control: private`.
+
+- `"public"`: The response does not contain user-specific data. Any
+  client or intermediary (e.g., shared gateway, caching proxy) MAY cache
+  the response and serve it across authorization contexts.
+- `"private"`: The response MAY be cached and reused only within the
+  same authorization context. Caches MUST NOT be shared across
+  authorization contexts (e.g., a different access token requires a
+  different cache). */
+    cacheScope: string,
+    /** An opaque token representing the pagination position after the last returned result.
+If present, there may be more results available. */
+    nextCursor?: string,
+    /** Indicates the type of the result, which allows the client to determine
+how to parse the result object.
+
+Servers implementing this protocol version MUST include this field.
+For backward compatibility, when a client receives a result from a
+server implementing an earlier protocol version (which does not include
+`resultType`), the client MUST treat the absent field as `"complete"`. */
+    resultType: string,
+    /** Definition for a tool the client can call. */
+    tools: McpTool[],
+    /** A hint from the server indicating how long (in milliseconds) the
+client MAY cache this response before re-fetching. Semantics are
+analogous to HTTP Cache-Control max-age.
+
+- If 0, The response SHOULD be considered immediately stale,
+  The client MAY re-fetch every time the result is needed.
+- If positive, the client SHOULD consider the result fresh for this many
+  milliseconds after receiving the response. */
+    ttlMs: number,
+}
+
+
+/**
+ * A successful response from the server for a {@link ListToolsRequesttools/list} request.
+ */
+export interface McpListToolsResultResponse extends McpJSONRPCResultResponse {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The result returned by the server for a {@link ListToolsRequesttools/list} request. */
+    result: McpListToolsResult,
+}
+
+
+/**
+ * JSONRPCNotification of a log message passed from server to client. The client opts in by setting `"io.modelcontextprotocol/logLevel"` in a request's `_meta`.
+ */
+export interface McpLoggingMessageNotification extends McpJSONRPCNotification {
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The method's name, always `notifications/message`. */
+    method: string,
+    /** Parameters for a `notifications/message` notification. */
+    params: McpLoggingMessageNotificationParams,
+}
+
+
+/**
+ * Parameters for a `notifications/message` notification.
+ */
+export interface McpLoggingMessageNotificationParams extends McpNotificationParams {
+    /** Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta?: McpNotificationMetaObject,
+    /** The data to be logged, such as a string message or an object. Any JSON serializable type is allowed here. */
+    data: McpJSONValue,
+    /** The severity of this log message. */
     level: string,
     /** An optional name of the logger issuing this message. */
     logger?: string,
@@ -1273,934 +1689,1610 @@ export interface LoggingMessageNotificationParams extends HasMeta {
 
 
 /**
- * Parameters for a notifications/resources/updated notification.
+ * Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
+
+Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
+
+Valid keys have two segments:
+
+**Prefix:**
+- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).
+- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).
+- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).
+- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.
+
+**Name:**
+- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
+- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
  */
-export interface ResourceUpdatedNotificationParams extends HasMeta {
-    /** A resource URI. */
-    uri: string,
+export interface McpMetaObject {
 }
 
 
 /**
- * Parameters for a notifications/tasks/status notification.
+ * A JSON-RPC error indicating that the requested method does not exist or is not available.
+
+In MCP, a server returns this error when a client invokes a method the server does not implement — either a genuinely unknown method, or one gated behind a server capability the server did not advertise (e.g., calling `prompts/list` when the `prompts` capability was not advertised).
+
+A request that requires a client capability the client did not declare is signalled instead by {@link MissingRequiredClientCapabilityError} (`-32021`).
  */
-export interface TaskStatusNotificationParams extends HasMeta {
-    /** The task identifier. */
-    taskId: string,
-    /** Current task state. */
-    status: string,
-    /** ISO 8601 timestamp when the task was created. */
-    createdAt: string,
-    /** ISO 8601 timestamp when the task was last updated. */
-    lastUpdatedAt: string,
-    /** Actual retention duration from creation in milliseconds, null for unlimited. */
-    ttl: number,
-    /** Optional human-readable message describing the current task state. */
-    statusMessage?: string,
-    /** Suggested polling interval in milliseconds. */
-    pollInterval?: number,
-}
-
-
-/**
- * Notification to indicate that a previously-issued request is being cancelled.
- */
-export interface CancelledNotification extends JSONRPCNotification {
-    /** JSON-RPC parameters payload. */
-    params: CancelledNotificationParams,
-}
-
-
-/**
- * Notification sent from the client to the server after initialization has finished.
- */
-export interface InitializedNotification extends JSONRPCNotification {
-}
-
-
-/**
- * Out-of-band notification to inform the receiver of a progress update.
- */
-export interface ProgressNotification extends JSONRPCNotification {
-    /** JSON-RPC parameters payload. */
-    params: ProgressNotificationParams,
-}
-
-
-/**
- * Notification that the list of resources the server can read from has changed.
- */
-export interface ResourceListChangedNotification extends JSONRPCNotification {
-}
-
-
-/**
- * Notification that a resource has changed and may need to be read again.
- */
-export interface ResourceUpdatedNotification extends JSONRPCNotification {
-    /** JSON-RPC parameters payload. */
-    params: ResourceUpdatedNotificationParams,
-}
-
-
-/**
- * Notification that the list of prompts the server offers has changed.
- */
-export interface PromptListChangedNotification extends JSONRPCNotification {
-}
-
-
-/**
- * Notification that the list of tools the server offers has changed.
- */
-export interface ToolListChangedNotification extends JSONRPCNotification {
-}
-
-
-/**
- * Notification from the client that the list of roots has changed.
- */
-export interface RootsListChangedNotification extends JSONRPCNotification {
-}
-
-
-/**
- * Notification of a log message passed from server to client.
- */
-export interface LoggingMessageNotification extends JSONRPCNotification {
-    /** JSON-RPC parameters payload. */
-    params: LoggingMessageNotificationParams,
-}
-
-
-/**
- * Notification from the server that an out-of-band elicitation request completed.
- */
-export interface ElicitationCompleteNotification extends JSONRPCNotification {
-    /** JSON-RPC parameters payload. */
-    params: ElicitationCompleteNotificationParams,
-}
-
-
-/**
- * Notification that a task's status has changed.
- */
-export interface TaskStatusNotification extends JSONRPCNotification {
-    /** JSON-RPC parameters payload. */
-    params: TaskStatusNotificationParams,
-}
-
-
-/**
- * Parameters for a tools/call request.
- */
-export interface CallToolRequestParams extends HasMeta {
-    /** Arguments to use for the tool call. */
-    arguments?: ArgumentMap,
-    /** Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present). */
-    name: string,
-    /** If specified, the caller is requesting task-augmented execution. */
-    task?: TaskMetadata,
-}
-
-
-/**
- * Parameters for a prompts/get request.
- */
-export interface GetPromptRequestParams {
-    /** Arguments to use for templating the prompt. */
-    arguments?: ArgumentMap,
-    /** Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present). */
-    name: string,
-}
-
-
-/**
- * Parameters for a completion/complete request.
- */
-export interface CompleteRequestParams {
-    /** The argument's information. */
-    argument: CompletionArgument,
-    /** Optional completion context. */
-    context?: CompletionContext,
-    /** A prompt or resource template reference. */
-    ref: PromptReference,
-}
-
-
-/**
- * Parameters for a resources/read request.
- */
-export interface ReadResourceRequestParams {
-    /** A resource URI. */
-    uri: string,
-}
-
-
-/**
- * Parameters for a resources/subscribe request.
- */
-export interface SubscribeRequestParams {
-    /** A resource URI. */
-    uri: string,
-}
-
-
-/**
- * Parameters for a resources/unsubscribe request.
- */
-export interface UnsubscribeRequestParams {
-    /** A resource URI. */
-    uri: string,
-}
-
-
-/**
- * Parameters for a logging/setLevel request.
- */
-export interface SetLevelRequestParams {
-    /** The severity of a log message. */
-    level: string,
-}
-
-
-/**
- * Parameters for an initialize request.
- */
-export interface InitializeRequestParams {
-    /** Client capabilities. */
-    capabilities: ClientCapabilities,
-    /** Information about the client implementation. */
-    clientInfo: Implementation,
-    /** The version of the Model Context Protocol. */
-    protocolVersion: string,
-}
-
-
-/**
- * Parameters for a sampling/createMessage request.
- */
-export interface CreateMessageRequestParams {
-    /** The requested maximum number of tokens to sample. */
-    maxTokens: number,
-    /** Messages for sampling. */
-    messages: SamplingMessage[],
-    /** Model preferences for sampling. */
-    modelPreferences?: ModelPreferences,
-    /** An optional system prompt the server wants to use for sampling. */
-    systemPrompt?: string,
-    /** Sampling temperature. */
-    temperature?: number,
-    /** A request to include context from one or more MCP servers. */
-    includeContext?: string,
-    /** Stop sequences for sampling. */
-    stopSequences?: string[],
-    /** Tools that the model may use during generation. */
-    tools?: Tool[],
-    /** Controls how the model uses tools. */
-    toolChoice?: ToolChoice,
-    /** If specified, task-augmented execution. */
-    task?: TaskMetadata,
-}
-
-
-/**
- * Parameters for a form-mode elicitation request.
- */
-export interface ElicitRequestFormParams {
-    /** A message string. */
+export interface McpMethodNotFoundError extends McpError {
+    /** The error type that occurred. */
+    code: number,
+    /** Additional information about the error. The value of this member is defined by the sender (e.g. detailed error information, nested errors etc.). */
+    data?: McpJSONValue,
+    /** A short description of the error. The message SHOULD be limited to a concise single sentence. */
     message: string,
-    /** A restricted subset of JSON Schema. */
-    requestedSchema: JsonSchema,
-    /** The elicitation mode. */
-    mode?: string,
-    /** If specified, task-augmented execution. */
-    task?: TaskMetadata,
 }
 
 
 /**
- * Parameters for a URL-mode elicitation request.
+ * Returned when processing a request requires a capability the client did not
+declare in `clientCapabilities`. For HTTP, the response status code MUST be
+`400 Bad Request`.
  */
-export interface ElicitRequestURLParams {
-    /** The ID of the elicitation. */
-    elicitationId: string,
-    /** A message string. */
-    message: string,
-    /** The elicitation mode. */
-    mode: string,
-    /** The URL that the user should navigate to. */
-    url: string,
-    /** If specified, task-augmented execution. */
-    task?: TaskMetadata,
+export interface McpMissingRequiredClientCapabilityError extends McpJSONRPCErrorResponse {
+    /** The error the request ended with. */
+    error: McpMissingRequiredClientCapabilityErrorError,
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id?: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+}
+
+
+/**
+ * MCP's `Error`, with the code and data this error carries.
+ */
+export interface McpMissingRequiredClientCapabilityErrorError extends McpError {
+    /** The error code, always `-32021`. */
+    code: number,
+    /** Details of the error. */
+    data: McpMissingRequiredClientCapabilityErrorErrorData,
+}
+
+
+/**
+ * The object MCP's `MissingRequiredClientCapabilityError` holds under `data`.
+ */
+export interface McpMissingRequiredClientCapabilityErrorErrorData {
+    /** The capabilities the server requires from the client to process this request. */
+    requiredCapabilities: McpClientCapabilities,
+}
+
+
+/**
+ * Hints to use for model selection.
+
+Keys not declared here are currently left unspecified by the spec and are up
+to the client to interpret.
+ */
+export interface McpModelHint {
+    /** A hint for a model name.
+
+The client SHOULD treat this as a substring of a model name; for example:
+ - `claude-3-5-sonnet` should match `claude-3-5-sonnet-20241022`
+ - `sonnet` should match `claude-3-5-sonnet-20241022`, `claude-3-sonnet-20240229`, etc.
+ - `claude` should match any Claude model
+
+The client MAY also map the string to a different provider's model name or a different model family, as long as it fills a similar niche; for example:
+ - `gemini-1.5-flash` could match `claude-3-haiku-20240307` */
+    name?: string,
+}
+
+
+/**
+ * The server's preferences for model selection, requested of the client during sampling.
+
+Because LLMs can vary along multiple dimensions, choosing the "best" model is
+rarely straightforward.  Different models excel in different areas—some are
+faster but less capable, others are more capable but more expensive, and so
+on. This interface allows servers to express their priorities across multiple
+dimensions to help clients make an appropriate selection for their use case.
+
+These preferences are always advisory. The client MAY ignore them. It is also
+up to the client to decide how to interpret these preferences and how to
+balance them against other considerations.
+ */
+export interface McpModelPreferences {
+    /** How much to prioritize cost when selecting a model. A value of 0 means cost
+is not important, while a value of 1 means cost is the most important
+factor. */
+    costPriority?: number,
+    /** Optional hints to use for model selection.
+
+If multiple hints are specified, the client MUST evaluate them in order
+(such that the first match is taken).
+
+The client SHOULD prioritize these hints over the numeric priorities, but
+MAY still use the priorities to select from ambiguous matches. */
+    hints?: McpModelHint[],
+    /** How much to prioritize intelligence and capabilities when selecting a
+model. A value of 0 means intelligence is not important, while a value of 1
+means intelligence is the most important factor. */
+    intelligencePriority?: number,
+    /** How much to prioritize sampling speed (latency) when selecting a model. A
+value of 0 means speed is not important, while a value of 1 means speed is
+the most important factor. */
+    speedPriority?: number,
+}
+
+
+/**
+ * One of `UntitledMultiSelectEnumSchema`, `TitledMultiSelectEnumSchema`.
+ */
+export interface McpMultiSelectEnumSchema {
+}
+
+
+/**
+ * MCP's `Notification`.
+ */
+export interface McpNotification {
+    /** The name of the method. */
+    method: string,
+    /** The parameters the message carries. */
+    params?: McpJSONObject,
+}
+
+
+/**
+ * Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply.
+ */
+export interface McpNotificationMetaObject extends McpMetaObject {
+    /** Identifies the subscription stream a notification was delivered on. The
+server MUST include this key on every notification delivered via a
+{@link SubscriptionsListenRequestsubscriptions/listen} stream, so the
+client can correlate the notification with the originating subscription.
+The key is absent on notifications not delivered via a subscription
+stream (e.g. progress notifications for an in-flight request), which is
+why it is optional here.
+
+The value is the JSON-RPC ID of the `subscriptions/listen` request that
+opened the stream. */
+    mcp_subscription_id?: string,
+}
+
+
+/**
+ * Common params for any notification.
+ */
+export interface McpNotificationParams {
+    /** Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta?: McpNotificationMetaObject,
+}
+
+
+/**
+ * MCP's `NumberSchema`.
+ */
+export interface McpNumberSchema {
+    /** The value the field takes when the user gives none. */
+    default?: number,
+    /** A description of the field for the user. */
+    description?: string,
+    /** The largest value the field accepts. */
+    maximum?: number,
+    /** The smallest value the field accepts. */
+    minimum?: number,
+    /** A title for the field. */
+    title?: string,
+    /** The kind of value the field takes. */
+    type: string,
+}
+
+
+/**
+ * MCP's `PaginatedRequest`.
+ */
+export interface McpPaginatedRequest extends McpJSONRPCRequest {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The name of the method. */
+    method: string,
+    /** Common params for paginated requests. */
+    params: McpPaginatedRequestParams,
 }
 
 
 /**
  * Common params for paginated requests.
  */
-export interface PaginatedRequestParams {
-    /** An opaque token representing the current pagination position. If provided, the server should return results starting after this cursor. */
+export interface McpPaginatedRequestParams extends McpRequestParams {
+    /** Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta: McpRequestMetaObject,
+    /** An opaque token representing the current pagination position.
+If provided, the server should return results starting after this cursor. */
     cursor?: string,
 }
 
 
 /**
- * Request sent from the client to the server when it first connects, asking it to begin initialization.
+ * MCP's `PaginatedResult`.
  */
-export interface InitializeRequest extends JSONRPCRequest {
-    /** JSON-RPC parameters payload. */
-    params: InitializeRequestParams,
+export interface McpPaginatedResult extends McpResult {
+    /** Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta?: McpResultMetaObject,
+    /** An opaque token representing the pagination position after the last returned result.
+If present, there may be more results available. */
+    nextCursor?: string,
+    /** Indicates the type of the result, which allows the client to determine
+how to parse the result object.
+
+Servers implementing this protocol version MUST include this field.
+For backward compatibility, when a client receives a result from a
+server implementing an earlier protocol version (which does not include
+`resultType`), the client MUST treat the absent field as `"complete"`. */
+    resultType: string,
 }
 
 
 /**
- * A ping, issued by either the server or the client, to check that the other party is still alive.
+ * A JSON-RPC error indicating that invalid JSON was received by the server. This error is returned when the server cannot parse the JSON text of a message.
  */
-export interface PingRequest extends JSONRPCRequest {
+export interface McpParseError extends McpError {
+    /** The error type that occurred. */
+    code: number,
+    /** Additional information about the error. The value of this member is defined by the sender (e.g. detailed error information, nested errors etc.). */
+    data?: McpJSONValue,
+    /** A short description of the error. The message SHOULD be limited to a concise single sentence. */
+    message: string,
 }
 
 
 /**
- * Sent from the client to request a list of resources the server has.
+ * Restricted schema definitions that only allow primitive types
+without nested objects or arrays.
  */
-export interface ListResourcesRequest extends JSONRPCRequest {
+export interface McpPrimitiveSchemaDefinition {
 }
 
 
 /**
- * Sent from the client to request a list of resource templates the server has.
+ * An out-of-band notification used to inform the receiver of a progress update for a long-running request.
  */
-export interface ListResourceTemplatesRequest extends JSONRPCRequest {
+export interface McpProgressNotification extends McpJSONRPCNotification {
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The method's name, always `notifications/progress`. */
+    method: string,
+    /** Parameters for a {@link ProgressNotificationnotifications/progress} notification. */
+    params: McpProgressNotificationParams,
+}
+
+
+/**
+ * Parameters for a {@link ProgressNotificationnotifications/progress} notification.
+ */
+export interface McpProgressNotificationParams extends McpNotificationParams {
+    /** Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta?: McpNotificationMetaObject,
+    /** An optional message describing the current progress. */
+    message?: string,
+    /** The progress thus far. This should increase every time progress is made, even if the total is unknown. */
+    progress: number,
+    /** The progress token which was given in the initial request, used to associate this notification with the request that is proceeding. */
+    progressToken: string,
+    /** Total number of items to process (or total progress required), if known. */
+    total?: number,
+}
+
+
+/**
+ * A prompt or prompt template that the server offers.
+ */
+export interface McpPrompt extends McpBaseMetadata, McpIcons {
+    /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
+
+Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
+
+Valid keys have two segments:
+
+**Prefix:**
+- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).
+- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).
+- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).
+- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.
+
+**Name:**
+- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
+- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`). */
+    _meta?: McpMetaObject,
+    /** A list of arguments to use for templating the prompt. */
+    arguments?: McpPromptArgument[],
+    /** An optional description of what this prompt provides */
+    description?: string,
+    /** Optional set of sized icons that the client can display in a user interface.
+
+Clients that support rendering icons MUST support at least the following MIME types:
+- `image/png` - PNG images (safe, universal compatibility)
+- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)
+
+Clients that support rendering icons SHOULD also support:
+- `image/svg+xml` - SVG images (scalable but requires security precautions)
+- `image/webp` - WebP images (modern, efficient format) */
+    icons?: McpIcon[],
+    /** Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present). */
+    name: string,
+    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
+even by those unfamiliar with domain-specific terminology.
+
+If not provided, the name should be used for display (except for {@link Tool},
+where `annotations.title` should be given precedence over using `name`,
+if present). */
+    title?: string,
+}
+
+
+/**
+ * Describes an argument that a prompt can accept.
+ */
+export interface McpPromptArgument extends McpBaseMetadata {
+    /** A human-readable description of the argument. */
+    description?: string,
+    /** Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present). */
+    name: string,
+    /** Whether this argument must be provided. */
+    required?: boolean,
+    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
+even by those unfamiliar with domain-specific terminology.
+
+If not provided, the name should be used for display (except for {@link Tool},
+where `annotations.title` should be given precedence over using `name`,
+if present). */
+    title?: string,
+}
+
+
+/**
+ * An optional notification from the server to the client, informing it that the list of prompts it offers has changed. This is only delivered on a {@link SubscriptionsListenRequestsubscriptions/listen} stream when the client requested it via the `promptsListChanged` filter field.
+ */
+export interface McpPromptListChangedNotification extends McpJSONRPCNotification {
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The method's name, always `notifications/prompts/list_changed`. */
+    method: string,
+    /** Common params for any notification. */
+    params?: McpNotificationParams,
+}
+
+
+/**
+ * Describes a message returned as part of a prompt.
+
+This is similar to {@link SamplingMessage}, but also supports the embedding of
+resources from the MCP server.
+ */
+export interface McpPromptMessage {
+    /** The content the message carries. */
+    content: McpContentBlock,
+    /** The sender or recipient of messages and data in a conversation. */
+    role: string,
+}
+
+
+/**
+ * Identifies a prompt.
+ */
+export interface McpPromptReference extends McpBaseMetadata {
+    /** Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present). */
+    name: string,
+    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
+even by those unfamiliar with domain-specific terminology.
+
+If not provided, the name should be used for display (except for {@link Tool},
+where `annotations.title` should be given precedence over using `name`,
+if present). */
+    title?: string,
+    /** The kind of object, always `ref/prompt`. */
+    type: string,
 }
 
 
 /**
  * Sent from the client to the server, to read a specific resource URI.
  */
-export interface ReadResourceRequest extends JSONRPCRequest {
-    /** JSON-RPC parameters payload. */
-    params: ReadResourceRequestParams,
+export interface McpReadResourceRequest extends McpJSONRPCRequest {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The method's name, always `resources/read`. */
+    method: string,
+    /** Parameters for a `resources/read` request. */
+    params: McpReadResourceRequestParams,
 }
 
 
 /**
- * Sent from the client to request resource update notifications.
+ * Parameters for a `resources/read` request.
  */
-export interface SubscribeRequest extends JSONRPCRequest {
-    /** JSON-RPC parameters payload. */
-    params: SubscribeRequestParams,
+export interface McpReadResourceRequestParams extends McpResourceRequestParams, McpInputResponseRequestParams {
+    /** Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta: McpRequestMetaObject,
+    /** A map of client responses to server-initiated requests.
+Keys correspond to the keys in the {@link InputRequests} map;
+values are the client's result for each request. */
+    inputResponses?: McpInputResponses,
+    /** State the server handed out with an input-required result, sent back unchanged when the request is retried. */
+    requestState?: string,
+    /** The URI of the resource. The URI can use any protocol; it is up to the server how to interpret it. */
+    uri: string,
 }
 
 
 /**
- * Sent from the client to cancel resource update notifications.
+ * The result returned by the server for a {@link ReadResourceRequestresources/read} request.
  */
-export interface UnsubscribeRequest extends JSONRPCRequest {
-    /** JSON-RPC parameters payload. */
-    params: UnsubscribeRequestParams,
+export interface McpReadResourceResult extends McpCacheableResult {
+    /** Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta?: McpResultMetaObject,
+    /** Indicates the intended scope of the cached response, analogous to HTTP
+`Cache-Control: public` vs `Cache-Control: private`.
+
+- `"public"`: The response does not contain user-specific data. Any
+  client or intermediary (e.g., shared gateway, caching proxy) MAY cache
+  the response and serve it across authorization contexts.
+- `"private"`: The response MAY be cached and reused only within the
+  same authorization context. Caches MUST NOT be shared across
+  authorization contexts (e.g., a different access token requires a
+  different cache). */
+    cacheScope: string,
+    /** The contents of the resource that was read. */
+    contents: string[],
+    /** Indicates the type of the result, which allows the client to determine
+how to parse the result object.
+
+Servers implementing this protocol version MUST include this field.
+For backward compatibility, when a client receives a result from a
+server implementing an earlier protocol version (which does not include
+`resultType`), the client MUST treat the absent field as `"complete"`. */
+    resultType: string,
+    /** A hint from the server indicating how long (in milliseconds) the
+client MAY cache this response before re-fetching. Semantics are
+analogous to HTTP Cache-Control max-age.
+
+- If 0, The response SHOULD be considered immediately stale,
+  The client MAY re-fetch every time the result is needed.
+- If positive, the client SHOULD consider the result fresh for this many
+  milliseconds after receiving the response. */
+    ttlMs: number,
 }
 
 
 /**
- * Sent from the client to request a list of prompts and prompt templates.
+ * A successful response from the server for a {@link ReadResourceRequestresources/read} request.
  */
-export interface ListPromptsRequest extends JSONRPCRequest {
+export interface McpReadResourceResultResponse extends McpJSONRPCResultResponse {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** What the request returned. */
+    result: string,
 }
 
 
 /**
- * Used by the client to get a prompt provided by the server.
+ * MCP's `Request`.
  */
-export interface GetPromptRequest extends JSONRPCRequest {
-    /** JSON-RPC parameters payload. */
-    params: GetPromptRequestParams,
+export interface McpRequest {
+    /** The name of the method. */
+    method: string,
+    /** The parameters the message carries. */
+    params?: McpJSONObject,
 }
 
 
 /**
- * Sent from the client to request a list of tools the server has.
+ * Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.
  */
-export interface ListToolsRequest extends JSONRPCRequest {
+export interface McpRequestMetaObject extends McpMetaObject {
+    /** The client's capabilities for this specific request. Required.
+
+Capabilities are declared per-request rather than once at initialization;
+an empty object means the client supports no optional capabilities.
+Servers MUST NOT infer capabilities from prior requests. */
+    mcp_client_capabilities: McpClientCapabilities,
+    /** Identifies the client software making the request. Clients SHOULD
+include this field on every request unless specifically configured not
+to do so.
+
+The {@link Implementation} schema requires `name` and `version`; other
+fields are optional.
+
+The value is self-reported by the client and is not verified by the
+protocol. It is intended for display, logging, and debugging. Servers
+SHOULD NOT use it to change their behavior, and SHOULD NOT rely on it for
+security decisions. */
+    mcp_client_info?: McpImplementation,
+    /** The desired log level for this request. Optional.
+
+If absent, the server MUST NOT send any {@link LoggingMessageNotificationnotifications/message}
+notifications for this request. The client opts in to log messages by
+explicitly setting a level. Replaces the former `logging/setLevel` RPC. */
+    mcp_log_level?: string,
+    /** The MCP Protocol Version being used for this request. Required.
+
+For the HTTP transport, this value MUST match the `MCP-Protocol-Version`
+header; otherwise the server MUST return a `400 Bad Request`. If the
+server does not support the requested version, it MUST return an
+{@link UnsupportedProtocolVersionError}. */
+    mcp_protocol_version: string,
+    /** If specified, the caller is requesting out-of-band progress notifications for this request (as represented by {@link ProgressNotificationnotifications/progress}). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications. */
+    progressToken?: string,
 }
 
 
 /**
- * Used by the client to invoke a tool provided by the server.
+ * Common params for any request.
  */
-export interface CallToolRequest extends JSONRPCRequest {
-    /** JSON-RPC parameters payload. */
-    params: CallToolRequestParams,
+export interface McpRequestParams {
+    /** Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta: McpRequestMetaObject,
 }
 
 
 /**
- * A request from the client to the server, to ask for completion options.
+ * A known resource that the server is capable of reading.
  */
-export interface CompleteRequest extends JSONRPCRequest {
-    /** JSON-RPC parameters payload. */
-    params: CompleteRequestParams,
-}
+export interface McpResource extends McpBaseMetadata, McpIcons {
+    /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
 
+Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
 
-/**
- * A request from the client to the server, to enable or adjust logging.
- */
-export interface SetLevelRequest extends JSONRPCRequest {
-    /** JSON-RPC parameters payload. */
-    params: SetLevelRequestParams,
-}
+Valid keys have two segments:
 
+**Prefix:**
+- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).
+- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).
+- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).
+- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.
 
-/**
- * A request from the server to sample an LLM via the client.
- */
-export interface CreateMessageRequest extends JSONRPCRequest {
-    /** JSON-RPC parameters payload. */
-    params: CreateMessageRequestParams,
-}
+**Name:**
+- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
+- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`). */
+    _meta?: McpMetaObject,
+    /** Optional annotations for the client. */
+    annotations?: McpAnnotations,
+    /** A description of what this resource represents.
 
-
-/**
- * Sent from the server to request a list of root URIs from the client.
- */
-export interface ListRootsRequest extends JSONRPCRequest {
-}
-
-
-/**
- * A request from the server to elicit additional information from the user via the client.
- */
-export interface ElicitRequest extends JSONRPCRequest {
-    /** JSON-RPC parameters payload. */
-    params: ElicitRequestFormParams,
-}
-
-
-/**
- * A request to retrieve a list of tasks.
- */
-export interface ListTasksRequest extends JSONRPCRequest {
-}
-
-
-/**
- * A request to retrieve the state of a task.
- */
-export interface GetTaskRequest extends JSONRPCRequest {
-}
-
-
-/**
- * A request to retrieve the result of a completed task.
- */
-export interface GetTaskPayloadRequest extends JSONRPCRequest {
-}
-
-
-/**
- * A request to cancel a task.
- */
-export interface CancelTaskRequest extends JSONRPCRequest {
-}
-
-
-/**
- * The result returned by the server for an initialize request.
- */
-export interface InitializeResult extends Result {
-    /** Server capabilities. */
-    capabilities: ServerCapabilities,
-    /** The version of the Model Context Protocol. */
-    protocolVersion: string,
-    /** Information about the server implementation. */
-    serverInfo: Implementation,
-    /** Instructions describing how to use the server and its features. */
-    instructions?: string,
-}
-
-
-/**
- * The result returned by the server for a tools/call request.
- */
-export interface CallToolResult extends Result {
-    /** A list of content objects that represent the result. */
-    content: ContentBlock[],
-    /** Whether the tool call ended in an error. */
-    isError?: boolean,
-    /** An optional JSON object representing structured result of the tool call. */
-    structuredContent?: StructuredContentData,
-}
-
-
-/**
- * The result returned by the server for a completion/complete request.
- */
-export interface CompleteResult extends Result {
-    /** The completion result object. */
-    completion: CompletionData,
-}
-
-
-/**
- * The result returned by the server for a prompts/get request.
- */
-export interface GetPromptResult extends Result {
-    /** A human-readable description. */
+This can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a "hint" to the model. */
     description?: string,
-    /** The prompt messages. */
-    messages: PromptMessage[],
+    /** Optional set of sized icons that the client can display in a user interface.
+
+Clients that support rendering icons MUST support at least the following MIME types:
+- `image/png` - PNG images (safe, universal compatibility)
+- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)
+
+Clients that support rendering icons SHOULD also support:
+- `image/svg+xml` - SVG images (scalable but requires security precautions)
+- `image/webp` - WebP images (modern, efficient format) */
+    icons?: McpIcon[],
+    /** The MIME type of this resource, if known. */
+    mimeType?: string,
+    /** Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present). */
+    name: string,
+    /** The size of the raw resource content, in bytes (i.e., before base64 encoding or any tokenization), if known.
+
+This can be used by Hosts to display file sizes and estimate context window usage. */
+    size?: number,
+    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
+even by those unfamiliar with domain-specific terminology.
+
+If not provided, the name should be used for display (except for {@link Tool},
+where `annotations.title` should be given precedence over using `name`,
+if present). */
+    title?: string,
+    /** The URI of this resource. */
+    uri: string,
 }
 
 
 /**
- * The result returned by the server for a prompts/list request.
+ * The contents of a specific resource or sub-resource.
  */
-export interface ListPromptsResult extends Result {
-    /** An opaque token representing the pagination position after the last returned result. If present, there may be more results available. */
-    nextCursor?: string,
-    /** The list of prompts. */
-    prompts: Prompt[],
+export interface McpResourceContents {
+    /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
+
+Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
+
+Valid keys have two segments:
+
+**Prefix:**
+- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).
+- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).
+- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).
+- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.
+
+**Name:**
+- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
+- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`). */
+    _meta?: McpMetaObject,
+    /** The MIME type of this resource, if known. */
+    mimeType?: string,
+    /** The URI of this resource. */
+    uri: string,
 }
 
 
 /**
- * The result returned by the server for a resources/list request.
+ * A resource that the server is capable of reading, included in a prompt or tool call result.
+
+Note: resource links returned by tools are not guaranteed to appear in the results of {@link ListResourcesRequestresources/list} requests.
  */
-export interface ListResourcesResult extends Result {
-    /** An opaque token representing the pagination position after the last returned result. If present, there may be more results available. */
-    nextCursor?: string,
-    /** The list of resources. */
-    resources: Resource[],
+export interface McpResourceLink extends McpResource {
+    /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
+
+Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
+
+Valid keys have two segments:
+
+**Prefix:**
+- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).
+- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).
+- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).
+- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.
+
+**Name:**
+- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
+- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`). */
+    _meta?: McpMetaObject,
+    /** Optional annotations for the client. */
+    annotations?: McpAnnotations,
+    /** A description of what this resource represents.
+
+This can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a "hint" to the model. */
+    description?: string,
+    /** Optional set of sized icons that the client can display in a user interface.
+
+Clients that support rendering icons MUST support at least the following MIME types:
+- `image/png` - PNG images (safe, universal compatibility)
+- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)
+
+Clients that support rendering icons SHOULD also support:
+- `image/svg+xml` - SVG images (scalable but requires security precautions)
+- `image/webp` - WebP images (modern, efficient format) */
+    icons?: McpIcon[],
+    /** The MIME type of this resource, if known. */
+    mimeType?: string,
+    /** Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present). */
+    name: string,
+    /** The size of the raw resource content, in bytes (i.e., before base64 encoding or any tokenization), if known.
+
+This can be used by Hosts to display file sizes and estimate context window usage. */
+    size?: number,
+    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
+even by those unfamiliar with domain-specific terminology.
+
+If not provided, the name should be used for display (except for {@link Tool},
+where `annotations.title` should be given precedence over using `name`,
+if present). */
+    title?: string,
+    /** The kind of object, always `resource_link`. */
+    type: string,
+    /** The URI of this resource. */
+    uri: string,
 }
 
 
 /**
- * The result returned by the server for a resources/templates/list request.
+ * An optional notification from the server to the client, informing it that the list of resources it can read from has changed. This is only delivered on a {@link SubscriptionsListenRequestsubscriptions/listen} stream when the client requested it via the `resourcesListChanged` filter field.
  */
-export interface ListResourceTemplatesResult extends Result {
-    /** An opaque token representing the pagination position after the last returned result. If present, there may be more results available. */
-    nextCursor?: string,
-    /** The list of resource templates. */
-    resourceTemplates: ResourceTemplate[],
+export interface McpResourceListChangedNotification extends McpJSONRPCNotification {
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The method's name, always `notifications/resources/list_changed`. */
+    method: string,
+    /** Common params for any notification. */
+    params?: McpNotificationParams,
 }
 
 
 /**
- * The result returned by the server for a resources/read request.
+ * Common params for resource-related requests.
  */
-export interface ReadResourceResult extends Result {
-    /** The resource contents. */
-    contents: ResourceContents[],
+export interface McpResourceRequestParams extends McpRequestParams {
+    /** Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta: McpRequestMetaObject,
+    /** The URI of the resource. The URI can use any protocol; it is up to the server how to interpret it. */
+    uri: string,
 }
 
 
 /**
- * The result returned by the server for a tools/list request.
+ * A template description for resources available on the server.
  */
-export interface ListToolsResult extends Result {
-    /** An opaque token representing the pagination position after the last returned result. If present, there may be more results available. */
-    nextCursor?: string,
-    /** The list of tools. */
-    tools: Tool[],
+export interface McpResourceTemplate extends McpBaseMetadata, McpIcons {
+    /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
+
+Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
+
+Valid keys have two segments:
+
+**Prefix:**
+- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).
+- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).
+- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).
+- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.
+
+**Name:**
+- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
+- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`). */
+    _meta?: McpMetaObject,
+    /** Optional annotations for the client. */
+    annotations?: McpAnnotations,
+    /** A description of what this template is for.
+
+This can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a "hint" to the model. */
+    description?: string,
+    /** Optional set of sized icons that the client can display in a user interface.
+
+Clients that support rendering icons MUST support at least the following MIME types:
+- `image/png` - PNG images (safe, universal compatibility)
+- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)
+
+Clients that support rendering icons SHOULD also support:
+- `image/svg+xml` - SVG images (scalable but requires security precautions)
+- `image/webp` - WebP images (modern, efficient format) */
+    icons?: McpIcon[],
+    /** The MIME type for all resources that match this template. This should only be included if all resources matching this template have the same type. */
+    mimeType?: string,
+    /** Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present). */
+    name: string,
+    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
+even by those unfamiliar with domain-specific terminology.
+
+If not provided, the name should be used for display (except for {@link Tool},
+where `annotations.title` should be given precedence over using `name`,
+if present). */
+    title?: string,
+    /** A URI template (according to RFC 6570) that can be used to construct resource URIs. */
+    uriTemplate: string,
 }
 
 
 /**
- * The result returned by the client for a roots/list request.
+ * A reference to a resource or resource template definition.
  */
-export interface ListRootsResult extends Result {
-    /** The list of roots. */
-    roots: Root[],
+export interface McpResourceTemplateReference {
+    /** The kind of object, always `ref/resource`. */
+    type: string,
+    /** The URI or URI template of the resource. */
+    uri: string,
 }
 
 
 /**
- * The result returned by the client for a sampling/createMessage request.
+ * A notification from the server to the client, informing it that a resource has changed and may need to be read again. This is only sent for resources the client opted in to via the `resourceSubscriptions` field of a {@link SubscriptionsListenRequestsubscriptions/listen} request.
  */
-export interface CreateMessageResult extends Result {
-    /** The message content. */
-    content: ContentBlock,
-    /** The name of the model that generated the message. */
-    model: string,
-    /** The role of the sender or recipient. */
+export interface McpResourceUpdatedNotification extends McpJSONRPCNotification {
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The method's name, always `notifications/resources/updated`. */
+    method: string,
+    /** Parameters for a `notifications/resources/updated` notification. */
+    params: McpResourceUpdatedNotificationParams,
+}
+
+
+/**
+ * Parameters for a `notifications/resources/updated` notification.
+ */
+export interface McpResourceUpdatedNotificationParams extends McpNotificationParams {
+    /** Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta?: McpNotificationMetaObject,
+    /** The URI of the resource that has been updated. This might be a sub-resource of the one that the client actually subscribed to. */
+    uri: string,
+}
+
+
+/**
+ * Common result fields.
+ */
+export interface McpResult {
+    /** Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta?: McpResultMetaObject,
+    /** Indicates the type of the result, which allows the client to determine
+how to parse the result object.
+
+Servers implementing this protocol version MUST include this field.
+For backward compatibility, when a client receives a result from a
+server implementing an earlier protocol version (which does not include
+`resultType`), the client MUST treat the absent field as `"complete"`. */
+    resultType: string,
+}
+
+
+/**
+ * Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
+ */
+export interface McpResultMetaObject extends McpMetaObject {
+    /** Identifies the server software producing the response. Servers SHOULD
+include this field on every response unless specifically configured not
+to do so.
+
+The {@link Implementation} schema requires `name` and `version`; other
+fields are optional.
+
+The value is self-reported by the server and is not verified by the
+protocol. It is intended for display, logging, and debugging. Clients
+SHOULD NOT use it to change their behavior, and SHOULD NOT rely on it for
+security decisions. */
+    mcp_server_info?: McpImplementation,
+}
+
+
+/**
+ * Represents a root directory or file that the server can operate on.
+ */
+export interface McpRoot {
+    /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
+
+Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
+
+Valid keys have two segments:
+
+**Prefix:**
+- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).
+- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).
+- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).
+- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.
+
+**Name:**
+- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
+- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`). */
+    _meta?: McpMetaObject,
+    /** An optional name for the root. This can be used to provide a human-readable
+identifier for the root, which may be useful for display purposes or for
+referencing the root in other parts of the application. */
+    name?: string,
+    /** The URI identifying the root. This *must* start with `file://` for now.
+This restriction may be relaxed in future versions of the protocol to allow
+other URI schemes. */
+    uri: string,
+}
+
+
+/**
+ * Describes a message issued to or received from an LLM API.
+ */
+export interface McpSamplingMessage {
+    /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
+
+Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
+
+Valid keys have two segments:
+
+**Prefix:**
+- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).
+- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).
+- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).
+- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.
+
+**Name:**
+- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
+- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`). */
+    _meta?: McpMetaObject,
+    /** The content the message carries. */
+    content: string,
+    /** The sender or recipient of messages and data in a conversation. */
     role: string,
-    /** The reason why sampling stopped, if known. */
-    stopReason?: string,
 }
 
 
 /**
- * The result returned by the client for an elicitation/create request.
+ * One of `TextContent`, `ImageContent`, `AudioContent`, `ToolUseContent`, `ToolResultContent`.
  */
-export interface ElicitResult extends Result {
-    /** The user action in response to the elicitation. */
-    action: string,
-    /** Structured content block of a message or result. */
-    content?: ElicitationContent,
+export interface McpSamplingMessageContentBlock {
 }
 
 
 /**
- * The result returned for a task-augmented request.
+ * Capabilities that a server may support. Known capabilities are defined here, in this schema, but this is not a closed set: any server can define its own, additional capabilities.
  */
-export interface CreateTaskResult extends Result {
-    /** Task data. */
-    task: Task,
+export interface McpServerCapabilities {
+    /** Present if the server supports argument autocompletion suggestions. */
+    completions?: McpJSONObject,
+    /** Experimental, non-standard capabilities that the server supports. */
+    experimental?: McpServerCapabilitiesExperimental,
+    /** Optional MCP extensions that the server supports. Keys are extension identifiers
+(e.g., "io.modelcontextprotocol/tasks"), and values are per-extension settings
+objects. An empty object indicates support with no settings.
+
+Keys MUST follow the {@link MetaObject`_meta` key naming rules}, with a
+mandatory prefix. */
+    extensions?: McpServerCapabilitiesExtensions,
+    /** Present if the server supports sending log messages to the client. */
+    logging?: McpJSONObject,
+    /** Present if the server offers any prompt templates. */
+    prompts?: McpServerCapabilitiesPrompts,
+    /** Present if the server offers any resources to read. */
+    resources?: McpServerCapabilitiesResources,
+    /** Present if the server offers any tools to call. */
+    tools?: McpServerCapabilitiesTools,
 }
 
 
 /**
- * The result returned for a tasks/result request.
+ * Experimental, non-standard capabilities that the server supports.
  */
-export interface GetTaskPayloadResult extends Result {
+export interface McpServerCapabilitiesExperimental {
 }
 
 
 /**
- * The result returned for a tasks/list request.
+ * Optional MCP extensions that the server supports. Keys are extension identifiers
+(e.g., "io.modelcontextprotocol/tasks"), and values are per-extension settings
+objects. An empty object indicates support with no settings.
+
+Keys MUST follow the {@link MetaObject`_meta` key naming rules}, with a
+mandatory prefix.
  */
-export interface ListTasksResult extends Result {
-    /** An opaque token representing the pagination position after the last returned result. If present, there may be more results available. */
-    nextCursor?: string,
-    /** The list of tasks. */
-    tasks: Task[],
+export interface McpServerCapabilitiesExtensions {
 }
 
 
 /**
- * The result returned for a tasks/cancel request.
+ * Present if the server offers any prompt templates.
  */
-export interface CancelTaskResult extends Result, HasMeta {
-    /** The task identifier. */
-    taskId: string,
-    /** Current task state. */
-    status: string,
-    /** ISO 8601 timestamp when the task was created. */
-    createdAt: string,
-    /** ISO 8601 timestamp when the task was last updated. */
-    lastUpdatedAt: string,
-    /** Actual retention duration from creation in milliseconds, null for unlimited. */
-    ttl: number,
-    /** Optional human-readable message describing the current task state. */
-    statusMessage?: string,
-    /** Suggested polling interval in milliseconds. */
-    pollInterval?: number,
+export interface McpServerCapabilitiesPrompts {
+    /** Whether this server supports notifications for changes to the prompt list. */
+    listChanged?: boolean,
 }
 
 
 /**
- * The result returned for a tasks/get request.
+ * Present if the server offers any resources to read.
  */
-export interface GetTaskResult extends Result, HasMeta {
-    /** The task identifier. */
-    taskId: string,
-    /** Current task state. */
-    status: string,
-    /** ISO 8601 timestamp when the task was created. */
-    createdAt: string,
-    /** ISO 8601 timestamp when the task was last updated. */
-    lastUpdatedAt: string,
-    /** Actual retention duration from creation in milliseconds, null for unlimited. */
-    ttl: number,
-    /** Optional human-readable message describing the current task state. */
-    statusMessage?: string,
-    /** Suggested polling interval in milliseconds. */
-    pollInterval?: number,
+export interface McpServerCapabilitiesResources {
+    /** Whether this server supports notifications for changes to the resource list. */
+    listChanged?: boolean,
+    /** Whether this server supports subscribing to resource updates. */
+    subscribe?: boolean,
 }
 
 
 /**
- * A successful response from the server for an initialize request.
+ * Present if the server offers any tools to call.
  */
-export interface InitializeResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result: InitializeResult,
+export interface McpServerCapabilitiesTools {
+    /** Whether this server supports notifications for changes to the tool list. */
+    listChanged?: boolean,
 }
 
 
 /**
- * A successful response from the server for a tools/call request.
+ * One of `CancelledNotification`, `ProgressNotification`, `ResourceListChangedNotification`, `SubscriptionsAcknowledgedNotification`, `ResourceUpdatedNotification`, `PromptListChangedNotification`, `ToolListChangedNotification`, `LoggingMessageNotification`.
  */
-export interface CallToolResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result: CallToolResult,
+export interface McpServerNotification {
 }
 
 
 /**
- * A successful response from the server for a completion/complete request.
+ * One of `Result`, `InputRequiredResult`, `DiscoverResult`, `ListResourcesResult`, `ListResourceTemplatesResult`, `ReadResourceResult`, `SubscriptionsListenResult`, `ListPromptsResult`, `GetPromptResult`, `ListToolsResult`, `CallToolResult`, `CompleteResult`.
  */
-export interface CompleteResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result: CompleteResult,
+export interface McpServerResult {
 }
 
 
 /**
- * A successful response from the server for a prompts/get request.
+ * One of `UntitledSingleSelectEnumSchema`, `TitledSingleSelectEnumSchema`.
  */
-export interface GetPromptResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result: GetPromptResult,
+export interface McpSingleSelectEnumSchema {
 }
 
 
 /**
- * A successful response from the server for a prompts/list request.
+ * MCP's `StringSchema`.
  */
-export interface ListPromptsResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result: ListPromptsResult,
+export interface McpStringSchema {
+    /** The value the field takes when the user gives none. */
+    default?: string,
+    /** A description of the field for the user. */
+    description?: string,
+    /** The format the string must have. */
+    format?: string,
+    /** The most characters the field accepts. */
+    maxLength?: number,
+    /** The fewest characters the field accepts. */
+    minLength?: number,
+    /** A title for the field. */
+    title?: string,
+    /** The kind of object, always `string`. */
+    type: string,
 }
 
 
 /**
- * A successful response from the server for a resources/list request.
+ * The set of notification types a client may opt in to on a
+{@link SubscriptionsListenRequestsubscriptions/listen} request.
+
+Each notification type is **opt-in**; the server **MUST NOT** send
+notification types the client has not explicitly requested here.
  */
-export interface ListResourcesResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result: ListResourcesResult,
+export interface McpSubscriptionFilter {
+    /** If true, receive {@link PromptListChangedNotificationnotifications/prompts/list_changed}. */
+    promptsListChanged?: boolean,
+    /** Subscribe to {@link ResourceUpdatedNotificationnotifications/resources/updated} for these resource URIs.
+Replaces the former `resources/subscribe` RPC. */
+    resourceSubscriptions?: string[],
+    /** If true, receive {@link ResourceListChangedNotificationnotifications/resources/list_changed}. */
+    resourcesListChanged?: boolean,
+    /** If true, receive {@link ToolListChangedNotificationnotifications/tools/list_changed}. */
+    toolsListChanged?: boolean,
 }
 
 
 /**
- * A successful response from the server for a resources/templates/list request.
+ * Sent by the server to acknowledge that a
+{@link SubscriptionsListenRequestsubscriptions/listen} subscription has been
+established and to report which notification types it agreed to honor.
+
+This notification MUST be the first message the server sends carrying the
+subscription's ID in `io.modelcontextprotocol/subscriptionId`. The server MUST
+NOT send any notification on the subscription before acknowledging it. On
+stdio, where every subscription shares one channel, this ordering is defined
+per subscription ID and not per channel: messages belonging to other
+subscriptions MAY be interleaved before it.
  */
-export interface ListResourceTemplatesResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result: ListResourceTemplatesResult,
+export interface McpSubscriptionsAcknowledgedNotification extends McpJSONRPCNotification {
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The method's name, always `notifications/subscriptions/acknowledged`. */
+    method: string,
+    /** Parameters for a {@link SubscriptionsAcknowledgedNotificationnotifications/subscriptions/acknowledged} notification. */
+    params: McpSubscriptionsAcknowledgedNotificationParams,
 }
 
 
 /**
- * A successful response from the server for a resources/read request.
+ * Parameters for a {@link SubscriptionsAcknowledgedNotificationnotifications/subscriptions/acknowledged} notification.
  */
-export interface ReadResourceResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result: ReadResourceResult,
+export interface McpSubscriptionsAcknowledgedNotificationParams extends McpNotificationParams {
+    /** Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta?: McpNotificationMetaObject,
+    /** The subset of requested notification types the server agreed to honor.
+Only includes notification types the server actually supports; if the
+client requested an unsupported type (e.g., `promptsListChanged` when
+the server has no prompts), it is omitted from this set. */
+    notifications: McpSubscriptionFilter,
 }
 
 
 /**
- * A successful response from the server for a tools/list request.
+ * Sent from the client to open a long-lived channel for receiving notifications
+outside the context of a specific request. Replaces the previous HTTP GET
+endpoint and ensures consistent behavior between HTTP and STDIO.
  */
-export interface ListToolsResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result: ListToolsResult,
+export interface McpSubscriptionsListenRequest extends McpJSONRPCRequest {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The method's name, always `subscriptions/listen`. */
+    method: string,
+    /** Parameters for a {@link SubscriptionsListenRequestsubscriptions/listen} request. */
+    params: McpSubscriptionsListenRequestParams,
 }
 
 
 /**
- * A successful response from the client for a roots/list request.
+ * Parameters for a {@link SubscriptionsListenRequestsubscriptions/listen} request.
  */
-export interface ListRootsResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result: ListRootsResult,
+export interface McpSubscriptionsListenRequestParams extends McpRequestParams {
+    /** Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply. */
+    _meta: McpRequestMetaObject,
+    /** The notifications the client opts in to on this stream. The server
+**MUST NOT** send notification types the client has not explicitly
+requested. */
+    notifications: McpSubscriptionFilter,
 }
 
 
 /**
- * A successful response from the client for a sampling/createMessage request.
+ * The response to a {@link SubscriptionsListenRequestsubscriptions/listen}
+request, signalling that the subscription has ended gracefully (for example,
+during server shutdown). Because the listen stream is long-lived, this result
+is sent only when the server tears the subscription down; an abrupt transport
+close carries no response. The result body is otherwise empty.
  */
-export interface CreateMessageResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result: CreateMessageResult,
+export interface McpSubscriptionsListenResult extends McpResult {
+    /** Extends {@link ResultMetaObject} with the subscription-stream identifier carried by a
+{@link SubscriptionsListenResult}. All key naming rules from `MetaObject` apply. */
+    _meta: McpSubscriptionsListenResultMetaObject,
+    /** Indicates the type of the result, which allows the client to determine
+how to parse the result object.
+
+Servers implementing this protocol version MUST include this field.
+For backward compatibility, when a client receives a result from a
+server implementing an earlier protocol version (which does not include
+`resultType`), the client MUST treat the absent field as `"complete"`. */
+    resultType: string,
 }
 
 
 /**
- * A successful response from the client for an elicitation/create request.
+ * Extends {@link ResultMetaObject} with the subscription-stream identifier carried by a
+{@link SubscriptionsListenResult}. All key naming rules from `MetaObject` apply.
  */
-export interface ElicitResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result: ElicitResult,
+export interface McpSubscriptionsListenResultMetaObject extends McpResultMetaObject {
+    /** Identifies the server software producing the response. Servers SHOULD
+include this field on every response unless specifically configured not
+to do so.
+
+The {@link Implementation} schema requires `name` and `version`; other
+fields are optional.
+
+The value is self-reported by the server and is not verified by the
+protocol. It is intended for display, logging, and debugging. Clients
+SHOULD NOT use it to change their behavior, and SHOULD NOT rely on it for
+security decisions. */
+    mcp_server_info?: McpImplementation,
+    /** Identifies the subscription stream this response closes, so the client can
+correlate it with the originating subscription — mirroring the same key on
+the stream's notifications. The value is the JSON-RPC ID of the
+`subscriptions/listen` request that opened the stream (and equals this
+response's `id`). */
+    mcp_subscription_id: string,
 }
 
 
 /**
- * A successful response from the server for a logging/setLevel request.
+ * A successful response from the server for a {@link SubscriptionsListenRequestsubscriptions/listen}
+request, sent when the server tears the subscription down gracefully.
  */
-export interface SetLevelResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result?: Result,
+export interface McpSubscriptionsListenResultResponse extends McpJSONRPCResultResponse {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The response to a {@link SubscriptionsListenRequestsubscriptions/listen}
+request, signalling that the subscription has ended gracefully (for example,
+during server shutdown). Because the listen stream is long-lived, this result
+is sent only when the server tears the subscription down; an abrupt transport
+close carries no response. The result body is otherwise empty. */
+    result: McpSubscriptionsListenResult,
 }
 
 
 /**
- * A successful response for a ping request.
+ * Text provided to or from an LLM.
  */
-export interface PingResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result?: Result,
+export interface McpTextContent {
+    /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
+
+Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
+
+Valid keys have two segments:
+
+**Prefix:**
+- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).
+- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).
+- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).
+- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.
+
+**Name:**
+- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
+- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`). */
+    _meta?: McpMetaObject,
+    /** Optional annotations for the client. */
+    annotations?: McpAnnotations,
+    /** The text content of the message. */
+    text: string,
+    /** The kind of object, always `text`. */
+    type: string,
 }
 
 
 /**
- * A successful response for a resources/subscribe request.
+ * MCP's `TextResourceContents`.
  */
-export interface SubscribeResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result?: Result,
+export interface McpTextResourceContents extends McpResourceContents {
+    /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
+
+Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
+
+Valid keys have two segments:
+
+**Prefix:**
+- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).
+- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).
+- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).
+- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.
+
+**Name:**
+- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
+- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`). */
+    _meta?: McpMetaObject,
+    /** The MIME type of this resource, if known. */
+    mimeType?: string,
+    /** The text of the item. This must only be set if the item can actually be represented as text (not binary data). */
+    text: string,
+    /** The URI of this resource. */
+    uri: string,
 }
 
 
 /**
- * A successful response for a resources/unsubscribe request.
+ * Schema for multiple-selection enumeration with display titles for each option.
  */
-export interface UnsubscribeResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result?: Result,
+export interface McpTitledMultiSelectEnumSchema {
+    /** Optional default value. */
+    default?: string[],
+    /** Optional description for the enum field. */
+    description?: string,
+    /** Schema for array items with enum options and display labels. */
+    items: McpTitledMultiSelectEnumSchemaItems,
+    /** Maximum number of items to select. */
+    maxItems?: number,
+    /** Minimum number of items to select. */
+    minItems?: number,
+    /** Optional title for the enum field. */
+    title?: string,
+    /** The kind of object, always `array`. */
+    type: string,
 }
 
 
 /**
- * A successful response for a task-augmented request.
+ * Schema for array items with enum options and display labels.
  */
-export interface CreateTaskResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result: CreateTaskResult,
+export interface McpTitledMultiSelectEnumSchemaItems {
+    /** Array of enum options with values and display labels. */
+    anyOf: McpTitledMultiSelectEnumSchemaItemsAnyOf[],
 }
 
 
 /**
- * A successful response for a tasks/get request.
+ * The object MCP's `TitledMultiSelectEnumSchema` holds under `anyOf`.
  */
-export interface GetTaskResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result: GetTaskResult,
+export interface McpTitledMultiSelectEnumSchemaItemsAnyOf {
+    /** The constant enum value. */
+    const: string,
+    /** Display title for this option. */
+    title: string,
 }
 
 
 /**
- * A successful response for a tasks/result request.
+ * Schema for single-selection enumeration with display titles for each option.
  */
-export interface GetTaskPayloadResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result: GetTaskPayloadResult,
+export interface McpTitledSingleSelectEnumSchema {
+    /** Optional default value. */
+    default?: string,
+    /** Optional description for the enum field. */
+    description?: string,
+    /** Array of enum options with values and display labels. */
+    oneOf: McpTitledSingleSelectEnumSchemaOneOf[],
+    /** Optional title for the enum field. */
+    title?: string,
+    /** The kind of object, always `string`. */
+    type: string,
 }
 
 
 /**
- * A successful response for a tasks/cancel request.
+ * The object MCP's `TitledSingleSelectEnumSchema` holds under `oneOf`.
  */
-export interface CancelTaskResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result: CancelTaskResult,
+export interface McpTitledSingleSelectEnumSchemaOneOf {
+    /** The enum value. */
+    const: string,
+    /** Display label for this option. */
+    title: string,
 }
 
 
 /**
- * A successful response for a tasks/list request.
+ * Definition for a tool the client can call.
  */
-export interface ListTasksResultResponse extends JSONRPCResultResponse {
-    /** JSON-RPC successful result payload. */
-    result: ListTasksResult,
+export interface McpTool extends McpBaseMetadata, McpIcons {
+    /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
+
+Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
+
+Valid keys have two segments:
+
+**Prefix:**
+- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).
+- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).
+- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).
+- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.
+
+**Name:**
+- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
+- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`). */
+    _meta?: McpMetaObject,
+    /** Optional additional tool information.
+
+Display name precedence order is: `title`, `annotations.title`, then `name`. */
+    annotations?: McpToolAnnotations,
+    /** A human-readable description of the tool.
+
+This can be used by clients to improve the LLM's understanding of available tools. It can be thought of like a "hint" to the model. */
+    description?: string,
+    /** Optional set of sized icons that the client can display in a user interface.
+
+Clients that support rendering icons MUST support at least the following MIME types:
+- `image/png` - PNG images (safe, universal compatibility)
+- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)
+
+Clients that support rendering icons SHOULD also support:
+- `image/svg+xml` - SVG images (scalable but requires security precautions)
+- `image/webp` - WebP images (modern, efficient format) */
+    icons?: McpIcon[],
+    /** A JSON Schema object defining the expected parameters for the tool.
+
+Tool arguments are always JSON objects, so `type: "object"` is required at the root.
+Beyond that, any JSON Schema 2020-12 keyword may appear alongside `type` — including
+composition keywords (`oneOf`, `anyOf`, `allOf`, `not`), conditional keywords
+(`if`/`then`/`else`), reference keywords (`$ref`, `$defs`, `$anchor`), and any other
+standard validation or annotation keywords.
+
+Property schemas may carry an `x-mcp-header` annotation to mirror the
+argument value into an HTTP header on the Streamable HTTP transport. See
+the Streamable HTTP transport specification for the validity and
+extraction rules.
+
+Defaults to JSON Schema 2020-12 when no explicit `$schema` is provided. */
+    inputSchema: McpToolInputSchema,
+    /** Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present). */
+    name: string,
+    /** An optional JSON Schema object defining the structure of the tool's output returned in
+the structuredContent field of a {@link CallToolResult}. This can be any valid JSON Schema 2020-12.
+
+Defaults to JSON Schema 2020-12 when no explicit `$schema` is provided. */
+    outputSchema?: McpToolOutputSchema,
+    /** Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
+even by those unfamiliar with domain-specific terminology.
+
+If not provided, the name should be used for display (except for {@link Tool},
+where `annotations.title` should be given precedence over using `name`,
+if present). */
+    title?: string,
 }
 
 
 /**
- * A union of all notifications that can be sent by a client.
+ * Additional properties describing a {@link Tool} to clients.
+
+NOTE: all properties in `ToolAnnotations` are **hints**.
+They are not guaranteed to provide a faithful description of
+tool behavior (including descriptive properties like `title`).
+
+Clients should never make tool use decisions based on `ToolAnnotations`
+received from untrusted servers.
  */
-export interface ClientNotification {
+export interface McpToolAnnotations {
+    /** If true, the tool may perform destructive updates to its environment.
+If false, the tool performs only additive updates.
+
+(This property is meaningful only when `readOnlyHint == false`)
+
+Default: true */
+    destructiveHint?: boolean,
+    /** If true, calling the tool repeatedly with the same arguments
+will have no additional effect on its environment.
+
+(This property is meaningful only when `readOnlyHint == false`)
+
+Default: false */
+    idempotentHint?: boolean,
+    /** If true, this tool may interact with an "open world" of external
+entities. If false, the tool's domain of interaction is closed.
+For example, the world of a web search tool is open, whereas that
+of a memory tool is not.
+
+Default: true */
+    openWorldHint?: boolean,
+    /** If true, the tool does not modify its environment.
+
+Default: false */
+    readOnlyHint?: boolean,
+    /** A human-readable title for the tool. */
+    title?: string,
 }
 
 
 /**
- * A union of all requests that can be sent by a client.
+ * Controls tool selection behavior for sampling requests.
  */
-export interface ClientRequest {
+export interface McpToolChoice {
+    /** Controls the tool use ability of the model:
+- `"auto"`: Model decides whether to use tools (default)
+- `"required"`: Model MUST use at least one tool before completing
+- `"none"`: Model MUST NOT use any tools */
+    mode?: string,
 }
 
 
 /**
- * A union of all result types that a client can return.
+ * A JSON Schema object defining the expected parameters for the tool.
+
+Tool arguments are always JSON objects, so `type: "object"` is required at the root.
+Beyond that, any JSON Schema 2020-12 keyword may appear alongside `type` — including
+composition keywords (`oneOf`, `anyOf`, `allOf`, `not`), conditional keywords
+(`if`/`then`/`else`), reference keywords (`$ref`, `$defs`, `$anchor`), and any other
+standard validation or annotation keywords.
+
+Property schemas may carry an `x-mcp-header` annotation to mirror the
+argument value into an HTTP header on the Streamable HTTP transport. See
+the Streamable HTTP transport specification for the validity and
+extraction rules.
+
+Defaults to JSON Schema 2020-12 when no explicit `$schema` is provided.
  */
-export interface ClientResult {
+export interface McpToolInputSchema {
+    /** The JSON Schema dialect the schema is written in. */
+    schema_dialect?: string,
+    /** The kind of object, always `object`. */
+    type: string,
 }
 
 
 /**
- * A union of all notifications that can be sent by a server.
+ * An optional notification from the server to the client, informing it that the list of tools it offers has changed. This is only delivered on a {@link SubscriptionsListenRequestsubscriptions/listen} stream when the client requested it via the `toolsListChanged` filter field.
  */
-export interface ServerNotification {
+export interface McpToolListChangedNotification extends McpJSONRPCNotification {
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
+    /** The method's name, always `notifications/tools/list_changed`. */
+    method: string,
+    /** Common params for any notification. */
+    params?: McpNotificationParams,
 }
 
 
 /**
- * A union of all requests that can be sent by a server.
+ * An optional JSON Schema object defining the structure of the tool's output returned in
+the structuredContent field of a {@link CallToolResult}. This can be any valid JSON Schema 2020-12.
+
+Defaults to JSON Schema 2020-12 when no explicit `$schema` is provided.
  */
-export interface ServerRequest {
+export interface McpToolOutputSchema {
+    /** The JSON Schema dialect the schema is written in. */
+    schema_dialect?: string,
 }
 
 
 /**
- * A union of all result types that a server can return.
+ * The result of a tool use, provided by the user back to the assistant.
  */
-export interface ServerResult {
+export interface McpToolResultContent {
+    /** Optional metadata about the tool result. Clients SHOULD preserve this field when
+including tool results in subsequent sampling requests to enable caching optimizations. */
+    _meta?: McpMetaObject,
+    /** The unstructured result content of the tool use.
+
+This has the same format as {@link CallToolResult.content} and can include text, images,
+audio, resource links, and embedded resources. */
+    content: McpContentBlock[],
+    /** Whether the tool use resulted in an error.
+
+If true, the content typically describes the error that occurred.
+Default: false */
+    isError?: boolean,
+    /** An optional structured result value.
+
+This can be any JSON value (object, array, string, number, boolean, or null).
+If the tool defined an {@link Tool.outputSchema}, this SHOULD conform to that schema. */
+    structuredContent?: McpJSONValue,
+    /** The ID of the tool use this result corresponds to.
+
+This MUST match the ID from a previous {@link ToolUseContent}. */
+    toolUseId: string,
+    /** The kind of object, always `tool_result`. */
+    type: string,
 }
 
 
 /**
- * A union of all JSON-RPC message types (requests, notifications, and responses).
+ * A request from the assistant to call a tool.
  */
-export interface JSONRPCMessage {
+export interface McpToolUseContent {
+    /** Optional metadata about the tool use. Clients SHOULD preserve this field when
+including tool uses in subsequent sampling requests to enable caching optimizations. */
+    _meta?: McpMetaObject,
+    /** A unique identifier for this tool use.
+
+This ID is used to match tool results to their corresponding tool uses. */
+    id: string,
+    /** The arguments to pass to the tool, conforming to the tool's input schema. */
+    input: McpJSONObject,
+    /** The name of the tool to call. */
+    name: string,
+    /** The kind of object, always `tool_use`. */
+    type: string,
 }
 
 
 /**
- * A union of all JSON-RPC response types.
+ * Returned when the request's protocol version is unknown to the server or
+unsupported (e.g., a known experimental or draft version the server has
+chosen not to implement). For HTTP, the response status code MUST be
+`400 Bad Request`.
  */
-export interface JSONRPCResponse {
+export interface McpUnsupportedProtocolVersionError extends McpJSONRPCErrorResponse {
+    /** The error the request ended with. */
+    error: McpUnsupportedProtocolVersionErrorError,
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id?: string,
+    /** The JSON-RPC version, always `2.0`. */
+    jsonrpc: string,
 }
 
 
 /**
- * A union of all elicitation request parameter types.
+ * MCP's `Error`, with the code and data this error carries.
  */
-export interface ElicitRequestParams {
+export interface McpUnsupportedProtocolVersionErrorError extends McpError {
+    /** The error code, always `-32022`. */
+    code: number,
+    /** Details of the error. */
+    data: McpUnsupportedProtocolVersionErrorErrorData,
 }
 
 
 /**
- * A union of all enum schema types.
+ * The object MCP's `UnsupportedProtocolVersionError` holds under `data`.
  */
-export interface EnumSchema {
+export interface McpUnsupportedProtocolVersionErrorErrorData {
+    /** The protocol version that was requested by the client. */
+    requested: string,
+    /** Protocol versions the server supports. The client should choose a
+mutually supported version from this list and retry. */
+    supported: string[],
 }
 
 
 /**
- * A union of single-select enum schema types.
+ * Schema for multiple-selection enumeration without display titles for options.
  */
-export interface SingleSelectEnumSchema {
+export interface McpUntitledMultiSelectEnumSchema {
+    /** Optional default value. */
+    default?: string[],
+    /** Optional description for the enum field. */
+    description?: string,
+    /** Schema for the array items. */
+    items: McpUntitledMultiSelectEnumSchemaItems,
+    /** Maximum number of items to select. */
+    maxItems?: number,
+    /** Minimum number of items to select. */
+    minItems?: number,
+    /** Optional title for the enum field. */
+    title?: string,
+    /** The kind of object, always `array`. */
+    type: string,
 }
 
 
 /**
- * A union of multi-select enum schema types.
+ * Schema for the array items.
  */
-export interface MultiSelectEnumSchema {
+export interface McpUntitledMultiSelectEnumSchemaItems {
+    /** Array of enum values to choose from. */
+    enum: string[],
+    /** The kind of object, always `string`. */
+    type: string,
 }
 
 
 /**
- * A union of all primitive schema definition types.
+ * Schema for single-selection enumeration without display titles for options.
  */
-export interface PrimitiveSchemaDefinition {
-}
-
-
-/**
- * A union of all content block types. Maps to the vendor schema ContentBlock anyOf definition.
- */
-export interface ContentBlockVariants {
-}
-
-
-/**
- * A union of content types valid in sampling messages.
- */
-export interface SamplingMessageContentBlock {
+export interface McpUntitledSingleSelectEnumSchema {
+    /** Optional default value. */
+    default?: string,
+    /** Optional description for the enum field. */
+    description?: string,
+    /** Array of enum values to choose from. */
+    enum: string[],
+    /** Optional title for the enum field. */
+    title?: string,
+    /** The kind of object, always `string`. */
+    type: string,
 }
 
 

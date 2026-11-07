@@ -2,6 +2,9 @@
 
 ## 2026-11-07
 
+* **Changed**: The converter reads schema.ts's `@internal` and `@deprecated` tags and the type a property names, from `scripts/mcp_to_linkml.py`.
+* **Changed**: The mcp LinkML schema carries MCP's deprecations, from `src/mcp/schema/mcp.yaml`.
+* **Changed**: The upstream watch reports a file added to MCP's version folder, from `scripts/check_upstream_release.py`.
 * **Changed**: How the tests hold the schema to MCP says the tests add the rule to a copy of MCP's file, and that tier 2 allows the differences `parity/probes.yaml` lists.
 * **Changed**: The mcp LinkML schema says the two format types map to no place in MCP's file, as `tests/test_build.py` holds.
 * **Changed**: The release says which merges release, as CONTRIBUTING.md does.

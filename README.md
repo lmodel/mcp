@@ -20,7 +20,7 @@ The schema renders the [Model Context Protocol](https://modelcontextprotocol.io/
 
 ## Mappings
 
-* **MCP's own definitions**: the `exact_mappings` of each class, enum and type name the place in MCP's `schema.json` it renders, such as `mcp_schema:Tool`. [tests/test_build.py](tests/test_build.py) resolves each one in the pinned copy.
+* **MCP's own definitions**: the `exact_mappings` of each class and enum, and of each type but the two format types, name the place in MCP's `schema.json` it renders, such as `mcp_schema:Tool`. [tests/test_build.py](tests/test_build.py) resolves each one in the pinned copy.
 
 ## Repository Structure
 

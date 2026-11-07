@@ -142,11 +142,11 @@ def snake(key: str) -> str:
 
 
 # Keys that LOKF also defines. Where MCP's meaning is LOKF's, the key is a slot of the
-# schema's own with the schema.org IRI LOKF gives it. Every class that has the key shares
-# the slot, as lmodel/calm's name and description are shared, and each class states its
-# own description of the key in slot_usage. Where the meaning differs, the attribute takes
-# a name of its own and lists MCP's key under aliases, so a composite with LOKF never
-# projects MCP's key under LOKF's IRI.
+# schema's own with the schema.org IRI LOKF gives it. Every class whose key has that
+# meaning shares the slot, as lmodel/calm's name and description are shared, and each
+# class states its own description of the key in slot_usage. Where the meaning differs,
+# the attribute takes a name of its own and lists MCP's key under aliases, so a
+# composite with LOKF never projects MCP's key under LOKF's IRI.
 SHARED_SLOTS = {
     "name": {
         "slot_uri": "schema:name",

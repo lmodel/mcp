@@ -11,7 +11,7 @@ authors = [
   {name = "Noel McLoughlin", email = "noel.mcloughlin@gmail.com"},
 ]
 license = "Apache-2.0"
-license-files = ["LICENSE"]
+license-files = ["LICENSE", "NOTICE"]
 readme = "README.md"
 requires-python = ">=3.10"
 dynamic = ["version"]
@@ -62,11 +62,21 @@ target-version = "py310"
 [tool.codespell]
 skip = [
   "LICENSE",
+  "NOTICE",
   "pyproject.toml",
   "uv.lock",
   "project/*",
   "src/mcp/datamodel/mcp_pydantic.py",
   "src/mcp/datamodel/mcp.py",
+  # The upstream's files, copied as published; what the converter and the writer
+  # give from them; the neighbours' adapt copies, copied as released; and files
+  # copied in by the KTL sidecar sync or written by npm, not by hand.
+  "upstream/*",
+  "meta/*",
+  "src/mcp/schema/mcp.yaml",
+  "tests/neighbours/*",
+  ".lokf/scripts/*",
+  "website/package-lock.json",
 ]
 
 # Reminder: words have to be lowercased for the ignore-words-list
@@ -80,9 +90,16 @@ linke = "linke"
 [tool.typos.files]
 extend-exclude = [
   "LICENSE",
+  "NOTICE",
   "uv.lock",
   "pyproject.toml",
   "project/*",
   "src/mcp/datamodel/mcp_pydantic.py",
   "src/mcp/datamodel/mcp.py",
+  "upstream/*",
+  "meta/*",
+  "src/mcp/schema/mcp.yaml",
+  "tests/neighbours/*",
+  ".lokf/scripts/*",
+  "website/package-lock.json",
 ]

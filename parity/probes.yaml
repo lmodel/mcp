@@ -1,0 +1,63 @@
+# Where the JSON Schema the model gives (meta/schema.json) may differ from MCP's
+# schema.json in what it holds or accepts, each with its reason. tests/test_parity.py
+# fails on any other difference, and on an entry here that no longer applies.
+
+# Definitions MCP publishes that the generated file leaves out.
+gaps:
+  JSONArray: >-
+    An array definition. LinkML has no element that is an array, and no definition or
+    property of MCP's refers to this one: JSONValue writes its array branch inline.
+
+# Values the generated file accepts where MCP's rejects them. A mutation that sets a
+# value to one of these may be judged differently, and only in that direction.
+wider:
+  values: [2.5, null]
+  reason: >-
+    The model's JSONValue is any JSON value, as schema.ts defines it (string, number,
+    boolean, null, object or array). MCP's schema.json writes it with integer in place of
+    number and leaves out null, so it rejects 2.5 or null inside a JSON object, such as an
+    extension's settings. LinkML states no recursive union of a value's kinds, and the
+    generated file follows schema.ts.
+
+# Documents written to test one claim, each with the verdict each file gives.
+documents:
+  - definition: ClientCapabilities
+    document: {extensions: {"com.example/x": {"ratio": 0.5}}}
+    published: false
+    generated: true
+    reason: A fraction inside a JSON object, which schema.ts allows and schema.json does not.
+  - definition: ClientCapabilities
+    document: {experimental: {"com.example/x": {"note": null}}}
+    published: false
+    generated: true
+    reason: A null inside a JSON object, which schema.ts allows and schema.json does not.
+  - definition: CallToolRequestParams
+    document:
+      name: get_weather
+      arguments: {city: null, days: 2.5}
+      _meta:
+        io.modelcontextprotocol/clientCapabilities: {}
+        io.modelcontextprotocol/protocolVersion: "2026-07-28"
+    published: true
+    generated: true
+    reason: A tool's arguments may hold any JSON value in both files.
+  - definition: JSONRPCRequest
+    document: {jsonrpc: "2.0", id: 1.5, method: ping}
+    published: false
+    generated: false
+    reason: A request's id is a string or an integer, never a fraction.
+  - definition: RequestParams
+    document: {_meta: {io.modelcontextprotocol/protocolVersion: "2026-07-28"}}
+    published: false
+    generated: false
+    reason: A request's _meta must declare the client's capabilities.
+  - definition: ContentBlock
+    document: {type: video, data: AA==}
+    published: false
+    generated: false
+    reason: No content kind is called video.
+  - definition: Annotations
+    document: {priority: 1.5}
+    published: false
+    generated: false
+    reason: A priority lies between 0 and 1.

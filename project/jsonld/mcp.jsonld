@@ -1377,7 +1377,7 @@
     },
     {
       "name": "mcpCallToolRequestParams__request_state",
-      "description": "State the server handed out with an input-required result, sent back unchanged when the request is retried.",
+      "description": "State the server returned with an input-required result, sent back unchanged when the request is retried.",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "slot_uri": "https://w3id.org/lmodel/mcp/requestState",
       "alias": "requestState",
@@ -3083,7 +3083,7 @@
     },
     {
       "name": "mcpGetPromptRequestParams__request_state",
-      "description": "State the server handed out with an input-required result, sent back unchanged when the request is retried.",
+      "description": "State the server returned with an input-required result, sent back unchanged when the request is retried.",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "slot_uri": "https://w3id.org/lmodel/mcp/requestState",
       "alias": "requestState",
@@ -3543,7 +3543,7 @@
     },
     {
       "name": "mcpInputResponseRequestParams__request_state",
-      "description": "State the server handed out with an input-required result, sent back unchanged when the request is retried.",
+      "description": "State the server returned with an input-required result, sent back unchanged when the request is retried.",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "slot_uri": "https://w3id.org/lmodel/mcp/requestState",
       "alias": "requestState",
@@ -5927,7 +5927,7 @@
     },
     {
       "name": "mcpReadResourceRequestParams__request_state",
-      "description": "State the server handed out with an input-required result, sent back unchanged when the request is retried.",
+      "description": "State the server returned with an input-required result, sent back unchanged when the request is retried.",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "slot_uri": "https://w3id.org/lmodel/mcp/requestState",
       "alias": "requestState",
@@ -9952,7 +9952,7 @@
         },
         {
           "name": "request_state",
-          "description": "State the server handed out with an input-required result, sent back unchanged when the request is retried.",
+          "description": "State the server returned with an input-required result, sent back unchanged when the request is retried.",
           "alias": "requestState",
           "@type": "SlotDefinition"
         }
@@ -11990,7 +11990,7 @@
         },
         {
           "name": "request_state",
-          "description": "State the server handed out with an input-required result, sent back unchanged when the request is retried.",
+          "description": "State the server returned with an input-required result, sent back unchanged when the request is retried.",
           "alias": "requestState",
           "@type": "SlotDefinition"
         }
@@ -12627,7 +12627,7 @@
         },
         {
           "name": "request_state",
-          "description": "State the server handed out with an input-required result, sent back unchanged when the request is retried.",
+          "description": "State the server returned with an input-required result, sent back unchanged when the request is retried.",
           "alias": "requestState",
           "@type": "SlotDefinition"
         }
@@ -15395,7 +15395,7 @@
         },
         {
           "name": "request_state",
-          "description": "State the server handed out with an input-required result, sent back unchanged when the request is retried.",
+          "description": "State the server returned with an input-required result, sent back unchanged when the request is retried.",
           "alias": "requestState",
           "@type": "SlotDefinition"
         },
@@ -18298,8 +18298,8 @@
   ],
   "metamodel_version": "1.12.0",
   "source_file": "mcp.yaml",
-  "source_file_date": "2026-11-07T03:26:53",
-  "source_file_size": 212676,
+  "source_file_date": "2026-11-07T03:43:32",
+  "source_file_size": 212668,
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/mcp.context.jsonld",

@@ -549,7 +549,7 @@ classes:
         alias: inputResponses
         range: McpInputResponses
       request_state:
-        description: State the server handed out with an input-required result, sent back unchanged when
+        description: State the server returned with an input-required result, sent back unchanged when
           the request is retried.
         alias: requestState
   McpCallToolResult:
@@ -1632,7 +1632,7 @@ classes:
         alias: inputResponses
         range: McpInputResponses
       request_state:
-        description: State the server handed out with an input-required result, sent back unchanged when
+        description: State the server returned with an input-required result, sent back unchanged when
           the request is retried.
         alias: requestState
   McpGetPromptRequestParamsArguments:
@@ -2028,7 +2028,7 @@ classes:
         alias: inputResponses
         range: McpInputResponses
       request_state:
-        description: State the server handed out with an input-required result, sent back unchanged when
+        description: State the server returned with an input-required result, sent back unchanged when
           the request is retried.
         alias: requestState
   McpInputResponses:
@@ -3638,7 +3638,7 @@ classes:
         alias: inputResponses
         range: McpInputResponses
       request_state:
-        description: State the server handed out with an input-required result, sent back unchanged when
+        description: State the server returned with an input-required result, sent back unchanged when
           the request is retried.
         alias: requestState
       uri:

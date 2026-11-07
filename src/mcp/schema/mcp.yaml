@@ -555,8 +555,8 @@ classes:
         alias: inputResponses
         range: McpInputResponses
       request_state:
-        description: State the server handed out with an input-required result, sent back
-          unchanged when the request is retried.
+        description: State the server returned with an input-required result, sent back unchanged
+          when the request is retried.
         alias: requestState
   McpCallToolResult:
     description: The result returned by the server for a {@link CallToolRequesttools/call}
@@ -1654,8 +1654,8 @@ classes:
         alias: inputResponses
         range: McpInputResponses
       request_state:
-        description: State the server handed out with an input-required result, sent back
-          unchanged when the request is retried.
+        description: State the server returned with an input-required result, sent back unchanged
+          when the request is retried.
         alias: requestState
   McpGetPromptRequestParamsArguments:
     description: Arguments to use for templating the prompt.
@@ -2049,8 +2049,8 @@ classes:
         alias: inputResponses
         range: McpInputResponses
       request_state:
-        description: State the server handed out with an input-required result, sent back
-          unchanged when the request is retried.
+        description: State the server returned with an input-required result, sent back unchanged
+          when the request is retried.
         alias: requestState
   McpInputResponses:
     description: |-
@@ -3659,8 +3659,8 @@ classes:
         alias: inputResponses
         range: McpInputResponses
       request_state:
-        description: State the server handed out with an input-required result, sent back
-          unchanged when the request is retried.
+        description: State the server returned with an input-required result, sent back unchanged
+          when the request is retried.
         alias: requestState
       uri:
         description: The URI of the resource. The URI can use any protocol; it is up to the

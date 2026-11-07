@@ -86,7 +86,7 @@ DESCRIPTIONS = {
     "result": "What the request returned.",
     "error": "The error the request ended with.",
     "requestState": (
-        "State the server handed out with an input-required result, sent back unchanged "
+        "State the server returned with an input-required result, sent back unchanged "
         "when the request is retried."
     ),
     "InputRequiredResult.requestState": (

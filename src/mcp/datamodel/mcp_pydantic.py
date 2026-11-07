@@ -6920,7 +6920,7 @@ values are the client's result for each request.""", json_schema_extra = { "link
                        'McpGetPromptRequestParams',
                        'McpInputResponseRequestParams',
                        'McpReadResourceRequestParams']} })
-    requestState: Optional[str] = Field(default=None, description="""State the server handed out with an input-required result, sent back unchanged when the request is retried.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequestParams',
+    requestState: Optional[str] = Field(default=None, description="""State the server returned with an input-required result, sent back unchanged when the request is retried.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequestParams',
                        'McpGetPromptRequestParams',
                        'McpInputRequiredResult',
                        'McpInputResponseRequestParams',
@@ -7012,7 +7012,7 @@ values are the client's result for each request.""", json_schema_extra = { "link
                        'McpGetPromptRequestParams',
                        'McpInputResponseRequestParams',
                        'McpReadResourceRequestParams']} })
-    requestState: Optional[str] = Field(default=None, description="""State the server handed out with an input-required result, sent back unchanged when the request is retried.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequestParams',
+    requestState: Optional[str] = Field(default=None, description="""State the server returned with an input-required result, sent back unchanged when the request is retried.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequestParams',
                        'McpGetPromptRequestParams',
                        'McpInputRequiredResult',
                        'McpInputResponseRequestParams',
@@ -7105,7 +7105,7 @@ values are the client's result for each request.""", json_schema_extra = { "link
                        'McpGetPromptRequestParams',
                        'McpInputResponseRequestParams',
                        'McpReadResourceRequestParams']} })
-    requestState: Optional[str] = Field(default=None, description="""State the server handed out with an input-required result, sent back unchanged when the request is retried.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequestParams',
+    requestState: Optional[str] = Field(default=None, description="""State the server returned with an input-required result, sent back unchanged when the request is retried.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequestParams',
                        'McpGetPromptRequestParams',
                        'McpInputRequiredResult',
                        'McpInputResponseRequestParams',
@@ -8027,7 +8027,7 @@ values are the client's result for each request.""", json_schema_extra = { "link
                        'McpGetPromptRequestParams',
                        'McpInputResponseRequestParams',
                        'McpReadResourceRequestParams']} })
-    requestState: Optional[str] = Field(default=None, description="""State the server handed out with an input-required result, sent back unchanged when the request is retried.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequestParams',
+    requestState: Optional[str] = Field(default=None, description="""State the server returned with an input-required result, sent back unchanged when the request is retried.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequestParams',
                        'McpGetPromptRequestParams',
                        'McpInputRequiredResult',
                        'McpInputResponseRequestParams',

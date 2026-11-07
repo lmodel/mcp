@@ -1185,7 +1185,7 @@ slots:
     inlined_as_list: true
   mcpCallToolRequestParams__request_state:
     name: mcpCallToolRequestParams__request_state
-    description: State the server handed out with an input-required result, sent back
+    description: State the server returned with an input-required result, sent back
       unchanged when the request is retried.
     from_schema: https://w3id.org/lmodel/mcp
     slot_uri: mcp:requestState
@@ -2682,7 +2682,7 @@ slots:
     inlined_as_list: true
   mcpGetPromptRequestParams__request_state:
     name: mcpGetPromptRequestParams__request_state
-    description: State the server handed out with an input-required result, sent back
+    description: State the server returned with an input-required result, sent back
       unchanged when the request is retried.
     from_schema: https://w3id.org/lmodel/mcp
     slot_uri: mcp:requestState
@@ -3150,7 +3150,7 @@ slots:
     inlined_as_list: true
   mcpInputResponseRequestParams__request_state:
     name: mcpInputResponseRequestParams__request_state
-    description: State the server handed out with an input-required result, sent back
+    description: State the server returned with an input-required result, sent back
       unchanged when the request is retried.
     from_schema: https://w3id.org/lmodel/mcp
     slot_uri: mcp:requestState
@@ -5210,7 +5210,7 @@ slots:
     inlined_as_list: true
   mcpReadResourceRequestParams__request_state:
     name: mcpReadResourceRequestParams__request_state
-    description: State the server handed out with an input-required result, sent back
+    description: State the server returned with an input-required result, sent back
       unchanged when the request is retried.
     from_schema: https://w3id.org/lmodel/mcp
     slot_uri: mcp:requestState
@@ -9003,7 +9003,7 @@ classes:
         range: McpInputResponses
       request_state:
         name: request_state
-        description: State the server handed out with an input-required result, sent
+        description: State the server returned with an input-required result, sent
           back unchanged when the request is retried.
         alias: requestState
     class_uri: mcp:McpCallToolRequestParams
@@ -10599,7 +10599,7 @@ classes:
         range: McpInputResponses
       request_state:
         name: request_state
-        description: State the server handed out with an input-required result, sent
+        description: State the server returned with an input-required result, sent
           back unchanged when the request is retried.
         alias: requestState
     class_uri: mcp:McpGetPromptRequestParams
@@ -11176,7 +11176,7 @@ classes:
         range: McpInputResponses
       request_state:
         name: request_state
-        description: State the server handed out with an input-required result, sent
+        description: State the server returned with an input-required result, sent
           back unchanged when the request is retried.
         alias: requestState
     class_uri: mcp:McpInputResponseRequestParams
@@ -13428,7 +13428,7 @@ classes:
         range: McpInputResponses
       request_state:
         name: request_state
-        description: State the server handed out with an input-required result, sent
+        description: State the server returned with an input-required result, sent
           back unchanged when the request is retried.
         alias: requestState
       uri:
@@ -16084,6 +16084,6 @@ classes:
       allowed: true
 metamodel_version: 1.12.0
 source_file: mcp.yaml
-source_file_date: '2026-11-07T03:26:53'
-source_file_size: 212676
+source_file_date: '2026-11-07T03:43:32'
+source_file_size: 212668
 

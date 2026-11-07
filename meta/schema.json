@@ -217,7 +217,7 @@
                     "type": "string"
                 },
                 "requestState": {
-                    "description": "State the server handed out with an input-required result, sent back unchanged when the request is retried.",
+                    "description": "State the server returned with an input-required result, sent back unchanged when the request is retried.",
                     "type": "string"
                 }
             },
@@ -1226,7 +1226,7 @@
                     "type": "string"
                 },
                 "requestState": {
-                    "description": "State the server handed out with an input-required result, sent back unchanged when the request is retried.",
+                    "description": "State the server returned with an input-required result, sent back unchanged when the request is retried.",
                     "type": "string"
                 }
             },
@@ -1559,7 +1559,7 @@
                     "description": "A map of client responses to server-initiated requests.\nKeys correspond to the keys in the {@link InputRequests} map;\nvalues are the client's result for each request."
                 },
                 "requestState": {
-                    "description": "State the server handed out with an input-required result, sent back unchanged when the request is retried.",
+                    "description": "State the server returned with an input-required result, sent back unchanged when the request is retried.",
                     "type": "string"
                 }
             },
@@ -2987,7 +2987,7 @@
                     "description": "A map of client responses to server-initiated requests.\nKeys correspond to the keys in the {@link InputRequests} map;\nvalues are the client's result for each request."
                 },
                 "requestState": {
-                    "description": "State the server handed out with an input-required result, sent back unchanged when the request is retried.",
+                    "description": "State the server returned with an input-required result, sent back unchanged when the request is retried.",
                     "type": "string"
                 },
                 "uri": {

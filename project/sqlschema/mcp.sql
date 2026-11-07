@@ -40,7 +40,7 @@
 -- # Class: McpCallToolRequestParams Description: Parameters for a `tools/call` request.
 --     * Slot: id
 --     * Slot: name Description: The name of the tool.
---     * Slot: requestState Description: State the server handed out with an input-required result, sent back unchanged when the request is retried.
+--     * Slot: requestState Description: State the server returned with an input-required result, sent back unchanged when the request is retried.
 --     * Slot: _meta_id Description: Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.
 --     * Slot: arguments_id Description: Arguments to use for the tool call.
 --     * Slot: inputResponses_id Description: A map of client responses to server-initiated requests.Keys correspond to the keys in the {@link InputRequests} map;values are the client's result for each request.
@@ -230,7 +230,7 @@
 -- # Class: McpGetPromptRequestParams Description: Parameters for a `prompts/get` request.
 --     * Slot: id
 --     * Slot: name Description: The name of the prompt or prompt template.
---     * Slot: requestState Description: State the server handed out with an input-required result, sent back unchanged when the request is retried.
+--     * Slot: requestState Description: State the server returned with an input-required result, sent back unchanged when the request is retried.
 --     * Slot: _meta_id Description: Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.
 --     * Slot: arguments_id Description: Arguments to use for templating the prompt.
 --     * Slot: inputResponses_id Description: A map of client responses to server-initiated requests.Keys correspond to the keys in the {@link InputRequests} map;values are the client's result for each request.
@@ -298,7 +298,7 @@
 --     * Slot: id
 -- # Class: McpInputResponseRequestParams Description: MCP's `InputResponseRequestParams`.
 --     * Slot: id
---     * Slot: requestState Description: State the server handed out with an input-required result, sent back unchanged when the request is retried.
+--     * Slot: requestState Description: State the server returned with an input-required result, sent back unchanged when the request is retried.
 --     * Slot: _meta_id Description: Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.
 --     * Slot: inputResponses_id Description: A map of client responses to server-initiated requests.Keys correspond to the keys in the {@link InputRequests} map;values are the client's result for each request.
 -- # Class: McpInputResponses Description: A map of client responses to server-initiated requests.Keys correspond to the keys in the {@link InputRequests} map;values are the client's result for each request.
@@ -565,7 +565,7 @@
 --     * Slot: params_id Description: Parameters for a `resources/read` request.
 -- # Class: McpReadResourceRequestParams Description: Parameters for a `resources/read` request.
 --     * Slot: id
---     * Slot: requestState Description: State the server handed out with an input-required result, sent back unchanged when the request is retried.
+--     * Slot: requestState Description: State the server returned with an input-required result, sent back unchanged when the request is retried.
 --     * Slot: uri Description: The URI of the resource. The URI can use any protocol; it is up to the server how to interpret it.
 --     * Slot: _meta_id Description: Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.
 --     * Slot: inputResponses_id Description: A map of client responses to server-initiated requests.Keys correspond to the keys in the {@link InputRequests} map;values are the client's result for each request.

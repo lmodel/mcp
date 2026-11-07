@@ -267,7 +267,7 @@ export interface McpCallToolRequestParams extends McpInputResponseRequestParams 
 Keys correspond to the keys in the {@link InputRequests} map;
 values are the client's result for each request. */
     inputResponses?: McpInputResponses,
-    /** State the server handed out with an input-required result, sent back unchanged when the request is retried. */
+    /** State the server returned with an input-required result, sent back unchanged when the request is retried. */
     requestState?: string,
 }
 
@@ -919,7 +919,7 @@ export interface McpGetPromptRequestParams extends McpInputResponseRequestParams
 Keys correspond to the keys in the {@link InputRequests} map;
 values are the client's result for each request. */
     inputResponses?: McpInputResponses,
-    /** State the server handed out with an input-required result, sent back unchanged when the request is retried. */
+    /** State the server returned with an input-required result, sent back unchanged when the request is retried. */
     requestState?: string,
 }
 
@@ -1164,7 +1164,7 @@ export interface McpInputResponseRequestParams extends McpRequestParams {
 Keys correspond to the keys in the {@link InputRequests} map;
 values are the client's result for each request. */
     inputResponses?: McpInputResponses,
-    /** State the server handed out with an input-required result, sent back unchanged when the request is retried. */
+    /** State the server returned with an input-required result, sent back unchanged when the request is retried. */
     requestState?: string,
 }
 
@@ -2116,7 +2116,7 @@ export interface McpReadResourceRequestParams extends McpResourceRequestParams, 
 Keys correspond to the keys in the {@link InputRequests} map;
 values are the client's result for each request. */
     inputResponses?: McpInputResponses,
-    /** State the server handed out with an input-required result, sent back unchanged when the request is retried. */
+    /** State the server returned with an input-required result, sent back unchanged when the request is retried. */
     requestState?: string,
     /** The URI of the resource. The URI can use any protocol; it is up to the server how to interpret it. */
     uri: string,

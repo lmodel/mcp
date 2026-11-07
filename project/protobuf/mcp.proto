@@ -153,7 +153,7 @@ message McpCallToolRequestParams {
   // Keys correspond to the keys in the {@link InputRequests} map;
   // values are the client's result for each request.
   McpInputResponses inputResponses = 4;
-  // State the server handed out with an input-required result, sent back unchanged when the request is retried.
+  // State the server returned with an input-required result, sent back unchanged when the request is retried.
   string requestState = 5;
 }
 // The result returned by the server for a {@link CallToolRequesttools/call} request.
@@ -657,7 +657,7 @@ message McpGetPromptRequestParams {
   // Keys correspond to the keys in the {@link InputRequests} map;
   // values are the client's result for each request.
   McpInputResponses inputResponses = 4;
-  // State the server handed out with an input-required result, sent back unchanged when the request is retried.
+  // State the server returned with an input-required result, sent back unchanged when the request is retried.
   string requestState = 5;
 }
 // Arguments to use for templating the prompt.
@@ -850,7 +850,7 @@ message McpInputResponseRequestParams {
   // Keys correspond to the keys in the {@link InputRequests} map;
   // values are the client's result for each request.
   McpInputResponses inputResponses = 2;
-  // State the server handed out with an input-required result, sent back unchanged when the request is retried.
+  // State the server returned with an input-required result, sent back unchanged when the request is retried.
   string requestState = 3;
 }
 // A map of client responses to server-initiated requests.
@@ -1580,7 +1580,7 @@ message McpReadResourceRequestParams {
   // Keys correspond to the keys in the {@link InputRequests} map;
   // values are the client's result for each request.
   McpInputResponses inputResponses = 2;
-  // State the server handed out with an input-required result, sent back unchanged when the request is retried.
+  // State the server returned with an input-required result, sent back unchanged when the request is retried.
   string requestState = 3;
   // The URI of the resource. The URI can use any protocol; it is up to the server how to interpret it.
   string uri = 4;

@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.*;
 
 /**
-  MCP's `Request`.
+  The method and the parameters a request carries.
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)

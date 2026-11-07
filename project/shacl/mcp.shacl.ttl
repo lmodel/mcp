@@ -6,7 +6,7 @@
 @prefix linkml: <https://w3id.org/linkml/> .
 @prefix schema1: <http://schema.org/> .
 linkml:Any a sh:NodeShape ;
-	rdfs:comment "One of `JSONObject`." ;
+	rdfs:comment "Any JSON value: a string, a number, a boolean, null, an object or an array." ;
 	sh:closed true ;
 	sh:ignoredProperties _:c14n281 ;
 	sh:targetClass linkml:Any .
@@ -29,13 +29,13 @@ mcp:McpBaseMetadata a sh:NodeShape ;
 	sh:property _:c14n192 , _:c14n6 ;
 	sh:targetClass mcp:McpBaseMetadata .
 mcp:McpBlobResourceContents a sh:NodeShape ;
-	rdfs:comment "MCP's `BlobResourceContents`." ;
+	rdfs:comment "A resource's contents as binary data, given as base64 text." ;
 	sh:closed true ;
 	sh:ignoredProperties _:c14n269 ;
 	sh:property _:c14n278 , _:c14n465 , _:c14n467 , _:c14n525 ;
 	sh:targetClass mcp:McpBlobResourceContents .
 mcp:McpBooleanSchema a sh:NodeShape ;
-	rdfs:comment "MCP's `BooleanSchema`." ;
+	rdfs:comment "A field of an elicitation form that takes true or false." ;
 	sh:closed true ;
 	sh:ignoredProperties _:c14n175 ;
 	sh:property _:c14n168 , _:c14n207 , _:c14n287 , _:c14n647 ;
@@ -283,7 +283,7 @@ mcp:McpEnumSchema a sh:NodeShape ;
 	sh:ignoredProperties _:c14n83 ;
 	sh:targetClass mcp:McpEnumSchema .
 mcp:McpError a sh:NodeShape ;
-	rdfs:comment "MCP's `Error`." ;
+	rdfs:comment "The error a JSON-RPC error response carries: a code, a message and any data." ;
 	sh:closed true ;
 	sh:ignoredProperties _:c14n687 ;
 	sh:property _:c14n161 , _:c14n241 , _:c14n594 ;
@@ -324,7 +324,7 @@ mcp:McpHeaderMismatchError a sh:NodeShape ;
 	sh:property _:c14n195 , _:c14n251 , _:c14n35 ;
 	sh:targetClass mcp:McpHeaderMismatchError .
 mcp:McpHeaderMismatchErrorError a sh:NodeShape ;
-	rdfs:comment "MCP's `Error`, with the code and data this error carries." ;
+	rdfs:comment "MCP's `Error`, with the code this error carries." ;
 	sh:closed true ;
 	sh:ignoredProperties _:c14n355 ;
 	sh:property _:c14n362 , _:c14n566 , _:c14n679 ;
@@ -375,7 +375,7 @@ mcp:McpInputResponse a sh:NodeShape ;
 	sh:ignoredProperties _:c14n343 ;
 	sh:targetClass mcp:McpInputResponse .
 mcp:McpInputResponseRequestParams a sh:NodeShape ;
-	rdfs:comment "MCP's `InputResponseRequestParams`." ;
+	rdfs:comment "The parameters of a request the client retries after an input-required result: its responses to the server's requests, and the state the server returned." ;
 	sh:closed true ;
 	sh:ignoredProperties _:c14n416 ;
 	sh:property _:c14n141 , _:c14n164 , _:c14n92 ;
@@ -597,7 +597,7 @@ mcp:McpMultiSelectEnumSchema a sh:NodeShape ;
 	sh:ignoredProperties _:c14n198 ;
 	sh:targetClass mcp:McpMultiSelectEnumSchema .
 mcp:McpNotification a sh:NodeShape ;
-	rdfs:comment "MCP's `Notification`." ;
+	rdfs:comment "The method and the parameters a notification carries." ;
 	sh:closed true ;
 	sh:ignoredProperties _:c14n706 ;
 	sh:property _:c14n363 , _:c14n500 ;
@@ -615,13 +615,13 @@ mcp:McpNotificationParams a sh:NodeShape ;
 	sh:property _:c14n666 ;
 	sh:targetClass mcp:McpNotificationParams .
 mcp:McpNumberSchema a sh:NodeShape ;
-	rdfs:comment "MCP's `NumberSchema`." ;
+	rdfs:comment "A field of an elicitation form that takes a number or an integer." ;
 	sh:closed true ;
 	sh:ignoredProperties _:c14n21 ;
 	sh:property _:c14n148 , _:c14n419 , _:c14n484 , _:c14n492 , _:c14n805 , _:c14n87 ;
 	sh:targetClass mcp:McpNumberSchema .
 mcp:McpPaginatedRequest a sh:NodeShape ;
-	rdfs:comment "MCP's `PaginatedRequest`." ;
+	rdfs:comment "A request for a list that the server returns a page at a time." ;
 	sh:closed true ;
 	sh:ignoredProperties _:c14n454 ;
 	sh:property _:c14n266 , _:c14n46 , _:c14n511 , _:c14n682 ;
@@ -633,7 +633,7 @@ mcp:McpPaginatedRequestParams a sh:NodeShape ;
 	sh:property _:c14n117 , _:c14n748 ;
 	sh:targetClass mcp:McpPaginatedRequestParams .
 mcp:McpPaginatedResult a sh:NodeShape ;
-	rdfs:comment "MCP's `PaginatedResult`." ;
+	rdfs:comment "A result that holds a page of a list, and the cursor of the next page." ;
 	sh:closed true ;
 	sh:ignoredProperties _:c14n430 ;
 	sh:property _:c14n288 , _:c14n476 , _:c14n774 ;
@@ -716,7 +716,7 @@ mcp:McpReadResourceResultResponse a sh:NodeShape ;
 	sh:property _:c14n472 , _:c14n778 , _:c14n797 ;
 	sh:targetClass mcp:McpReadResourceResultResponse .
 mcp:McpRequest a sh:NodeShape ;
-	rdfs:comment "MCP's `Request`." ;
+	rdfs:comment "The method and the parameters a request carries." ;
 	sh:closed true ;
 	sh:ignoredProperties _:c14n767 ;
 	sh:property _:c14n605 , _:c14n648 ;
@@ -866,7 +866,7 @@ mcp:McpSingleSelectEnumSchema a sh:NodeShape ;
 	sh:ignoredProperties _:c14n290 ;
 	sh:targetClass mcp:McpSingleSelectEnumSchema .
 mcp:McpStringSchema a sh:NodeShape ;
-	rdfs:comment "MCP's `StringSchema`." ;
+	rdfs:comment "A field of an elicitation form that takes text." ;
 	sh:closed true ;
 	sh:ignoredProperties _:c14n427 ;
 	sh:property _:c14n126 , _:c14n218 , _:c14n37 , _:c14n370 , _:c14n455 , _:c14n65 , _:c14n95 ;
@@ -926,7 +926,7 @@ mcp:McpTextContent a sh:NodeShape ;
 	sh:property _:c14n340 , _:c14n62 , _:c14n795 , _:c14n89 ;
 	sh:targetClass mcp:McpTextContent .
 mcp:McpTextResourceContents a sh:NodeShape ;
-	rdfs:comment "MCP's `TextResourceContents`." ;
+	rdfs:comment "A resource's contents as text." ;
 	sh:closed true ;
 	sh:ignoredProperties _:c14n676 ;
 	sh:property _:c14n120 , _:c14n513 , _:c14n707 , _:c14n766 ;

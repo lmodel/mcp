@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.*;
 
 /**
-  MCP's `BlobResourceContents`.
+  A resource's contents as binary data, given as base64 text.
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)

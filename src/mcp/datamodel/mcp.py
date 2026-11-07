@@ -230,7 +230,7 @@ class McpBaseMetadata(YAMLRoot):
 @dataclass(repr=False)
 class McpBooleanSchema(YAMLRoot):
     """
-    MCP's `BooleanSchema`.
+    A field of an elicitation form that takes true or false.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -867,7 +867,7 @@ class McpEnumSchema(YAMLRoot):
 @dataclass(repr=False)
 class McpError(YAMLRoot):
     """
-    MCP's `Error`.
+    The error a JSON-RPC error response carries: a code, a message and any data.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -909,7 +909,7 @@ class McpGetPromptRequestParamsArguments(YAMLRoot):
 @dataclass(repr=False)
 class McpHeaderMismatchErrorError(McpError):
     """
-    MCP's `Error`, with the code and data this error carries.
+    MCP's `Error`, with the code this error carries.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -2126,7 +2126,7 @@ class McpMultiSelectEnumSchema(YAMLRoot):
 @dataclass(repr=False)
 class McpNotification(YAMLRoot):
     """
-    MCP's `Notification`.
+    The method and the parameters a notification carries.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -2432,7 +2432,7 @@ class McpLoggingMessageNotificationParams(McpNotificationParams):
 @dataclass(repr=False)
 class McpNumberSchema(YAMLRoot):
     """
-    MCP's `NumberSchema`.
+    A field of an elicitation form that takes a number or an integer.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -2830,7 +2830,7 @@ class McpReadResourceResultResponse(McpJSONRPCResultResponse):
 @dataclass(repr=False)
 class McpRequest(YAMLRoot):
     """
-    MCP's `Request`.
+    The method and the parameters a request carries.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -3103,7 +3103,7 @@ class McpGetPromptRequest(McpJSONRPCRequest):
 @dataclass(repr=False)
 class McpPaginatedRequest(McpJSONRPCRequest):
     """
-    MCP's `PaginatedRequest`.
+    A request for a list that the server returns a page at a time.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -3516,7 +3516,8 @@ class McpCompleteRequestParams(McpRequestParams):
 @dataclass(repr=False)
 class McpInputResponseRequestParams(McpRequestParams):
     """
-    MCP's `InputResponseRequestParams`.
+    The parameters of a request the client retries after an input-required result: its responses to the server's
+    requests, and the state the server returned.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -3743,7 +3744,7 @@ class McpResourceContents(YAMLRoot):
 @dataclass(repr=False)
 class McpBlobResourceContents(McpResourceContents):
     """
-    MCP's `BlobResourceContents`.
+    A resource's contents as binary data, given as base64 text.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -4387,7 +4388,7 @@ class McpInputRequiredResult(McpResult):
 @dataclass(repr=False)
 class McpPaginatedResult(McpResult):
     """
-    MCP's `PaginatedResult`.
+    A result that holds a page of a list, and the cursor of the next page.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -4996,7 +4997,7 @@ class McpSingleSelectEnumSchema(YAMLRoot):
 @dataclass(repr=False)
 class McpStringSchema(YAMLRoot):
     """
-    MCP's `StringSchema`.
+    A field of an elicitation form that takes text.
     """
     _inherited_slots: ClassVar[list[str]] = []
 
@@ -5383,7 +5384,7 @@ class McpTextContent(YAMLRoot):
 @dataclass(repr=False)
 class McpTextResourceContents(McpResourceContents):
     """
-    MCP's `TextResourceContents`.
+    A resource's contents as text.
     """
     _inherited_slots: ClassVar[list[str]] = []
 

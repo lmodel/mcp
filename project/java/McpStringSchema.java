@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.*;
 
 /**
-  MCP's `StringSchema`.
+  A field of an elicitation form that takes text.
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)

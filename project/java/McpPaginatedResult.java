@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.*;
 
 /**
-  MCP's `PaginatedResult`.
+  A result that holds a page of a list, and the cursor of the next page.
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)

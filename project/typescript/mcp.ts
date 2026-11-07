@@ -158,7 +158,7 @@ if present). */
 
 
 /**
- * MCP's `BlobResourceContents`.
+ * A resource's contents as binary data, given as base64 text.
  */
 export interface McpBlobResourceContents extends McpResourceContents {
     /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
@@ -187,7 +187,7 @@ Valid keys have two segments:
 
 
 /**
- * MCP's `BooleanSchema`.
+ * A field of an elicitation form that takes true or false.
  */
 export interface McpBooleanSchema {
     /** A description of the field for the user. */
@@ -878,7 +878,7 @@ export interface McpEnumSchema {
 
 
 /**
- * MCP's `Error`.
+ * The error a JSON-RPC error response carries: a code, a message and any data.
  */
 export interface McpError {
     /** The error type that occurred. */
@@ -985,7 +985,7 @@ export interface McpHeaderMismatchError extends McpJSONRPCErrorResponse {
 
 
 /**
- * MCP's `Error`, with the code and data this error carries.
+ * MCP's `Error`, with the code this error carries.
  */
 export interface McpHeaderMismatchErrorError extends McpError {
     /** The error code, always `-32020`. */
@@ -1155,7 +1155,7 @@ export interface McpInputResponse {
 
 
 /**
- * MCP's `InputResponseRequestParams`.
+ * The parameters of a request the client retries after an input-required result: its responses to the server's requests, and the state the server returned.
  */
 export interface McpInputResponseRequestParams extends McpRequestParams {
     /** Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply. */
@@ -1302,7 +1302,7 @@ export interface McpJSONRPCResultResponse {
 
 
 /**
- * One of `JSONObject`.
+ * Any JSON value: a string, a number, a boolean, null, an object or an array.
  */
 export interface McpJSONValue {
 }
@@ -1826,7 +1826,7 @@ export interface McpMultiSelectEnumSchema {
 
 
 /**
- * MCP's `Notification`.
+ * The method and the parameters a notification carries.
  */
 export interface McpNotification {
     /** The name of the method. */
@@ -1864,7 +1864,7 @@ export interface McpNotificationParams {
 
 
 /**
- * MCP's `NumberSchema`.
+ * A field of an elicitation form that takes a number or an integer.
  */
 export interface McpNumberSchema {
     /** A description of the field for the user. */
@@ -1883,7 +1883,7 @@ export interface McpNumberSchema {
 
 
 /**
- * MCP's `PaginatedRequest`.
+ * A request for a list that the server returns a page at a time.
  */
 export interface McpPaginatedRequest extends McpJSONRPCRequest {
     /** A uniquely identifying ID for a request in JSON-RPC. */
@@ -1910,7 +1910,7 @@ If provided, the server should return results starting after this cursor. */
 
 
 /**
- * MCP's `PaginatedResult`.
+ * A result that holds a page of a list, and the cursor of the next page.
  */
 export interface McpPaginatedResult extends McpResult {
     /** Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply. */
@@ -2176,7 +2176,7 @@ export interface McpReadResourceResultResponse extends McpJSONRPCResultResponse 
 
 
 /**
- * MCP's `Request`.
+ * The method and the parameters a request carries.
  */
 export interface McpRequest {
     /** The name of the method. */
@@ -2686,7 +2686,7 @@ export interface McpSingleSelectEnumSchema {
 
 
 /**
- * MCP's `StringSchema`.
+ * A field of an elicitation form that takes text.
  */
 export interface McpStringSchema {
     /** A description of the field for the user. */
@@ -2888,7 +2888,7 @@ Valid keys have two segments:
 
 
 /**
- * MCP's `TextResourceContents`.
+ * A resource's contents as text.
  */
 export interface McpTextResourceContents extends McpResourceContents {
     /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.

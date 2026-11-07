@@ -644,7 +644,7 @@ if present).""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBaseMet
 
 class McpBooleanSchema(ConfiguredBaseModel):
     """
-    MCP's `BooleanSchema`.
+    A field of an elicitation form that takes true or false.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:BooleanSchema'],
          'extra_slots': {'allowed': True},
@@ -1403,7 +1403,7 @@ class McpEnumSchema(ConfiguredBaseModel):
 
 class McpError(ConfiguredBaseModel):
     """
-    MCP's `Error`.
+    The error a JSON-RPC error response carries: a code, a message and any data.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:Error'],
          'extra_slots': {'allowed': True},
@@ -1455,7 +1455,7 @@ class McpGetPromptRequestParamsArguments(ConfiguredBaseModel):
 
 class McpHeaderMismatchErrorError(McpError):
     """
-    MCP's `Error`, with the code and data this error carries.
+    MCP's `Error`, with the code this error carries.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:HeaderMismatchError/properties/error/allOf/1'],
          'extra_slots': {'allowed': True},
@@ -3602,7 +3602,7 @@ class McpMultiSelectEnumSchema(ConfiguredBaseModel):
 
 class McpNotification(ConfiguredBaseModel):
     """
-    MCP's `Notification`.
+    The method and the parameters a notification carries.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:Notification'],
          'extra_slots': {'allowed': True},
@@ -4316,7 +4316,7 @@ class McpLoggingMessageNotificationParams(McpNotificationParams):
 
 class McpNumberSchema(ConfiguredBaseModel):
     """
-    MCP's `NumberSchema`.
+    A field of an elicitation form that takes a number or an integer.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:NumberSchema'],
          'extra_slots': {'allowed': True},
@@ -5219,7 +5219,7 @@ class McpReadResourceResultResponse(McpJSONRPCResultResponse):
 
 class McpRequest(ConfiguredBaseModel):
     """
-    MCP's `Request`.
+    The method and the parameters a request carries.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:Request'],
          'extra_slots': {'allowed': True},
@@ -5956,7 +5956,7 @@ class McpGetPromptRequest(McpJSONRPCRequest):
 
 class McpPaginatedRequest(McpJSONRPCRequest):
     """
-    MCP's `PaginatedRequest`.
+    A request for a list that the server returns a page at a time.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:PaginatedRequest'],
          'extra_slots': {'allowed': True},
@@ -6928,7 +6928,7 @@ class McpCompleteRequestParams(McpRequestParams):
 
 class McpInputResponseRequestParams(McpRequestParams):
     """
-    MCP's `InputResponseRequestParams`.
+    The parameters of a request the client retries after an input-required result: its responses to the server's requests, and the state the server returned.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:InputResponseRequestParams'],
          'extra_slots': {'allowed': True},
@@ -7540,7 +7540,7 @@ Valid keys have two segments:
 
 class McpBlobResourceContents(McpResourceContents):
     """
-    MCP's `BlobResourceContents`.
+    A resource's contents as binary data, given as base64 text.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:BlobResourceContents'],
          'extra_slots': {'allowed': True},
@@ -9361,7 +9361,7 @@ server implementing an earlier protocol version (which does not include
 
 class McpPaginatedResult(McpResult):
     """
-    MCP's `PaginatedResult`.
+    A result that holds a page of a list, and the cursor of the next page.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:PaginatedResult'],
          'extra_slots': {'allowed': True},
@@ -10534,7 +10534,7 @@ class McpSingleSelectEnumSchema(ConfiguredBaseModel):
 
 class McpStringSchema(ConfiguredBaseModel):
     """
-    MCP's `StringSchema`.
+    A field of an elicitation form that takes text.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:StringSchema'],
          'extra_slots': {'allowed': True},
@@ -11328,7 +11328,7 @@ Valid keys have two segments:
 
 class McpTextResourceContents(McpResourceContents):
     """
-    MCP's `TextResourceContents`.
+    A resource's contents as text.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:TextResourceContents'],
          'extra_slots': {'allowed': True},

@@ -8799,7 +8799,7 @@ classes:
   McpBlobResourceContents:
     name: McpBlobResourceContents
     definition_uri: https://w3id.org/lmodel/mcp/McpBlobResourceContents
-    description: MCP's `BlobResourceContents`.
+    description: A resource's contents as binary data, given as base64 text.
     in_subset:
     - content
     from_schema: https://w3id.org/lmodel/mcp
@@ -8854,7 +8854,7 @@ classes:
   McpBooleanSchema:
     name: McpBooleanSchema
     definition_uri: https://w3id.org/lmodel/mcp/McpBooleanSchema
-    description: MCP's `BooleanSchema`.
+    description: A field of an elicitation form that takes true or false.
     in_subset:
     - elicitation_create
     from_schema: https://w3id.org/lmodel/mcp
@@ -10548,7 +10548,8 @@ classes:
   McpError:
     name: McpError
     definition_uri: https://w3id.org/lmodel/mcp/McpError
-    description: MCP's `Error`.
+    description: 'The error a JSON-RPC error response carries: a code, a message and
+      any data.'
     in_subset:
     - errors
     from_schema: https://w3id.org/lmodel/mcp
@@ -10831,7 +10832,7 @@ classes:
   McpHeaderMismatchErrorError:
     name: McpHeaderMismatchErrorError
     definition_uri: https://w3id.org/lmodel/mcp/McpHeaderMismatchErrorError
-    description: MCP's `Error`, with the code and data this error carries.
+    description: MCP's `Error`, with the code this error carries.
     in_subset:
     - errors
     from_schema: https://w3id.org/lmodel/mcp
@@ -11222,7 +11223,8 @@ classes:
   McpInputResponseRequestParams:
     name: McpInputResponseRequestParams
     definition_uri: https://w3id.org/lmodel/mcp/McpInputResponseRequestParams
-    description: MCP's `InputResponseRequestParams`.
+    description: 'The parameters of a request the client retries after an input-required
+      result: its responses to the server''s requests, and the state the server returned.'
     from_schema: https://w3id.org/lmodel/mcp
     exact_mappings:
     - mcp_schema:InputResponseRequestParams
@@ -11594,7 +11596,8 @@ classes:
   McpJSONValue:
     name: McpJSONValue
     definition_uri: https://w3id.org/lmodel/mcp/McpJSONValue
-    description: One of `JSONObject`.
+    description: 'Any JSON value: a string, a number, a boolean, null, an object or
+      an array.'
     comments:
     - Any JSON value. MCP's schema.json leaves out null and numbers with a fraction,
       which schema.ts allows; this class takes any JSON.
@@ -12825,7 +12828,7 @@ classes:
   McpNotification:
     name: McpNotification
     definition_uri: https://w3id.org/lmodel/mcp/McpNotification
-    description: MCP's `Notification`.
+    description: The method and the parameters a notification carries.
     in_subset:
     - internal
     from_schema: https://w3id.org/lmodel/mcp
@@ -12913,7 +12916,7 @@ classes:
   McpNumberSchema:
     name: McpNumberSchema
     definition_uri: https://w3id.org/lmodel/mcp/McpNumberSchema
-    description: MCP's `NumberSchema`.
+    description: A field of an elicitation form that takes a number or an integer.
     in_subset:
     - elicitation_create
     from_schema: https://w3id.org/lmodel/mcp
@@ -12959,7 +12962,7 @@ classes:
   McpPaginatedRequest:
     name: McpPaginatedRequest
     definition_uri: https://w3id.org/lmodel/mcp/McpPaginatedRequest
-    description: MCP's `PaginatedRequest`.
+    description: A request for a list that the server returns a page at a time.
     in_subset:
     - internal
     from_schema: https://w3id.org/lmodel/mcp
@@ -13031,7 +13034,8 @@ classes:
   McpPaginatedResult:
     name: McpPaginatedResult
     definition_uri: https://w3id.org/lmodel/mcp/McpPaginatedResult
-    description: MCP's `PaginatedResult`.
+    description: A result that holds a page of a list, and the cursor of the next
+      page.
     in_subset:
     - internal
     from_schema: https://w3id.org/lmodel/mcp
@@ -13670,7 +13674,7 @@ classes:
   McpRequest:
     name: McpRequest
     definition_uri: https://w3id.org/lmodel/mcp/McpRequest
-    description: MCP's `Request`.
+    description: The method and the parameters a request carries.
     in_subset:
     - internal
     from_schema: https://w3id.org/lmodel/mcp
@@ -14820,7 +14824,7 @@ classes:
   McpStringSchema:
     name: McpStringSchema
     definition_uri: https://w3id.org/lmodel/mcp/McpStringSchema
-    description: MCP's `StringSchema`.
+    description: A field of an elicitation form that takes text.
     in_subset:
     - elicitation_create
     from_schema: https://w3id.org/lmodel/mcp
@@ -15304,7 +15308,7 @@ classes:
   McpTextResourceContents:
     name: McpTextResourceContents
     definition_uri: https://w3id.org/lmodel/mcp/McpTextResourceContents
-    description: MCP's `TextResourceContents`.
+    description: A resource's contents as text.
     in_subset:
     - content
     from_schema: https://w3id.org/lmodel/mcp
@@ -16225,6 +16229,6 @@ classes:
       allowed: true
 metamodel_version: 1.12.0
 source_file: mcp.yaml
-source_file_date: '2026-11-07T10:15:54'
-source_file_size: 218690
+source_file_date: '2026-11-07T10:17:38'
+source_file_size: 219211
 

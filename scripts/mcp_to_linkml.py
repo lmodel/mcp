@@ -130,6 +130,26 @@ DESCRIPTIONS = {
     "url": "Settings for elicitation by URL.",
     "data": "Details of the error.",
 }
+# This project's words for a definition MCP leaves undescribed and that is no union of
+# others, which takes the names of its members.
+CLASS_DESCRIPTIONS = {
+    "BlobResourceContents": "A resource's contents as binary data, given as base64 text.",
+    "BooleanSchema": "A field of an elicitation form that takes true or false.",
+    "Error": "The error a JSON-RPC error response carries: a code, a message and any data.",
+    "InputResponseRequestParams": (
+        "The parameters of a request the client retries after an input-required result: "
+        "its responses to the server's requests, and the state the server returned."
+    ),
+    "JSONObject": "A JSON object, whose values are JSON values.",
+    "JSONValue": "Any JSON value: a string, a number, a boolean, null, an object or an array.",
+    "Notification": "The method and the parameters a notification carries.",
+    "NumberSchema": "A field of an elicitation form that takes a number or an integer.",
+    "PaginatedRequest": "A request for a list that the server returns a page at a time.",
+    "PaginatedResult": "A result that holds a page of a list, and the cursor of the next page.",
+    "Request": "The method and the parameters a request carries.",
+    "StringSchema": "A field of an elicitation form that takes text.",
+    "TextResourceContents": "A resource's contents as text.",
+}
 CONST_DESCRIPTIONS = {
     "method": "The method's name, always `{}`.",
     "type": "The kind of object, always `{}`.",
@@ -580,15 +600,15 @@ class Converter:
         self.classes[cls_name] = self.order(element)
 
     def class_text(self, name: str) -> str:
+        """This project's words for a definition MCP leaves undescribed: CLASS_DESCRIPTIONS,
+        or for a union of definitions, the names of its members."""
         node = self.defs[name]
-        if "anyOf" in node:
-            members = ", ".join(
-                f"`{self.ref(b)}`" for b in node["anyOf"] if self.ref(b)
-            )
-            return f"One of {members}."
-        if name == "JSONObject":
-            return "A JSON object, whose values are JSON values."
-        return f"MCP's `{name}`."
+        if name in CLASS_DESCRIPTIONS:
+            return CLASS_DESCRIPTIONS[name]
+        members = [f"`{self.ref(b)}`" for b in node.get("anyOf", [])]
+        if members and all(m != "`None`" for m in members):
+            return f"One of {', '.join(members)}."
+        raise ValueError(f"MCP gives {name} no description: add one to CLASS_DESCRIPTIONS")
 
     def order(self, element: dict) -> dict:
         keys = (
@@ -750,9 +770,8 @@ class Converter:
             return {"any_of": [self.branch(b) for b in branches]}
         if "allOf" in node:
             base, part = node["allOf"]
-            text = (
-                f"MCP's `{self.ref(base)}`, with the code and data this error carries."
-            )
+            held = " and ".join(k for k in ("code", "data") if k in part["properties"])
+            text = f"MCP's `{self.ref(base)}`, with the {held} this error carries."
             return {
                 "range": self.inline_class(
                     cls_name,

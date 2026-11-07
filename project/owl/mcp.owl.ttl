@@ -38,13 +38,13 @@ mcp:McpBaseMetadata a owl:Class ;
 mcp:McpBlobResourceContents a owl:Class ;
 	rdfs:label "McpBlobResourceContents" ;
 	rdfs:subClassOf mcp:McpResourceContents , _:c14n1048 , _:c14n1049 , _:c14n1052 , _:c14n1337 , _:c14n1400 , _:c14n1402 , _:c14n217 , _:c14n639 , _:c14n78 , _:c14n80 , _:c14n825 , _:c14n88 ;
-	skos:definition "MCP's `BlobResourceContents`." ;
+	skos:definition "A resource's contents as binary data, given as base64 text." ;
 	skos:exactMatch <https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/2026-07-28/schema/2026-07-28/schema.json#/$defs/BlobResourceContents> ;
 	skos:inScheme <https://w3id.org/lmodel/mcp> .
 mcp:McpBooleanSchema a owl:Class ;
 	rdfs:label "McpBooleanSchema" ;
 	rdfs:subClassOf _:c14n102 , _:c14n1141 , _:c14n1240 , _:c14n1296 , _:c14n1346 , _:c14n1499 , _:c14n343 , _:c14n488 , _:c14n491 , _:c14n596 , _:c14n818 , _:c14n836 ;
-	skos:definition "MCP's `BooleanSchema`." ;
+	skos:definition "A field of an elicitation form that takes true or false." ;
 	skos:exactMatch <https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/2026-07-28/schema/2026-07-28/schema.json#/$defs/BooleanSchema> ;
 	skos:inScheme <https://w3id.org/lmodel/mcp> .
 mcp:McpCacheScope\#private a owl:Class ;
@@ -339,7 +339,7 @@ mcp:McpEnumSchema a owl:Class ;
 mcp:McpError a owl:Class ;
 	rdfs:label "McpError" ;
 	rdfs:subClassOf _:c14n1224 , _:c14n1261 , _:c14n1565 , _:c14n187 , _:c14n191 , _:c14n406 , _:c14n443 , _:c14n74 , _:c14n95 ;
-	skos:definition "MCP's `Error`." ;
+	skos:definition "The error a JSON-RPC error response carries: a code, a message and any data." ;
 	skos:exactMatch <https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/2026-07-28/schema/2026-07-28/schema.json#/$defs/Error> ;
 	skos:inScheme <https://w3id.org/lmodel/mcp> .
 mcp:McpGetPromptRequest a owl:Class ;
@@ -380,7 +380,7 @@ mcp:McpHeaderMismatchError a owl:Class ;
 mcp:McpHeaderMismatchErrorError a owl:Class ;
 	rdfs:label "McpHeaderMismatchErrorError" ;
 	rdfs:subClassOf mcp:McpError , _:c14n1101 , _:c14n1490 , _:c14n655 ;
-	skos:definition "MCP's `Error`, with the code and data this error carries." ;
+	skos:definition "MCP's `Error`, with the code this error carries." ;
 	skos:exactMatch <https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/2026-07-28/schema/2026-07-28/schema.json#/$defs/HeaderMismatchError/properties/error/allOf/1> ;
 	skos:inScheme <https://w3id.org/lmodel/mcp> .
 mcp:McpIcon a owl:Class ;
@@ -445,7 +445,7 @@ mcp:McpInputResponse a owl:Class ;
 mcp:McpInputResponseRequestParams a owl:Class ;
 	rdfs:label "McpInputResponseRequestParams" ;
 	rdfs:subClassOf mcp:McpRequestParams , _:c14n1009 , _:c14n1089 , _:c14n1266 , _:c14n1527 , _:c14n309 , _:c14n422 , _:c14n725 , _:c14n726 , _:c14n870 ;
-	skos:definition "MCP's `InputResponseRequestParams`." ;
+	skos:definition "The parameters of a request the client retries after an input-required result: its responses to the server's requests, and the state the server returned." ;
 	skos:exactMatch <https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/2026-07-28/schema/2026-07-28/schema.json#/$defs/InputResponseRequestParams> ;
 	skos:inScheme <https://w3id.org/lmodel/mcp> .
 mcp:McpInputResponses a owl:Class ;
@@ -512,7 +512,7 @@ mcp:McpJSONRPCResultResponse a owl:Class ;
 	skos:inScheme <https://w3id.org/lmodel/mcp> .
 mcp:McpJSONValue a owl:Class ;
 	rdfs:label "McpJSONValue" ;
-	skos:definition "One of `JSONObject`." ;
+	skos:definition "Any JSON value: a string, a number, a boolean, null, an object or an array." ;
 	skos:exactMatch <https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/2026-07-28/schema/2026-07-28/schema.json#/$defs/JSONValue> , linkml:Any ;
 	skos:inScheme <https://w3id.org/lmodel/mcp> ;
 	skos:note "Any JSON value. MCP's schema.json leaves out null and numbers with a fraction, which schema.ts allows; this class takes any JSON." .
@@ -704,7 +704,7 @@ mcp:McpMultiSelectEnumSchema a owl:Class ;
 mcp:McpNotification a owl:Class ;
 	rdfs:label "McpNotification" ;
 	rdfs:subClassOf _:c14n1274 , _:c14n138 , _:c14n1498 , _:c14n223 , _:c14n793 , _:c14n975 ;
-	skos:definition "MCP's `Notification`." ;
+	skos:definition "The method and the parameters a notification carries." ;
 	skos:exactMatch <https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/2026-07-28/schema/2026-07-28/schema.json#/$defs/Notification> ;
 	skos:inScheme <https://w3id.org/lmodel/mcp> .
 mcp:McpNotificationMetaObject a owl:Class ;
@@ -722,7 +722,7 @@ mcp:McpNotificationParams a owl:Class ;
 mcp:McpNumberSchema a owl:Class ;
 	rdfs:label "McpNumberSchema" ;
 	rdfs:subClassOf _:c14n1032 , _:c14n1069 , _:c14n1120 , _:c14n1260 , _:c14n1457 , _:c14n192 , _:c14n2 , _:c14n229 , _:c14n361 , _:c14n412 , _:c14n46 , _:c14n499 , _:c14n553 , _:c14n602 , _:c14n674 , _:c14n743 , _:c14n808 , _:c14n973 ;
-	skos:definition "MCP's `NumberSchema`." ;
+	skos:definition "A field of an elicitation form that takes a number or an integer." ;
 	skos:exactMatch <https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/2026-07-28/schema/2026-07-28/schema.json#/$defs/NumberSchema> ;
 	skos:inScheme <https://w3id.org/lmodel/mcp> .
 mcp:McpNumberSchemaType\#integer a owl:Class ;
@@ -741,7 +741,7 @@ mcp:McpNumberSchemaType a owl:Class ;
 mcp:McpPaginatedRequest a owl:Class ;
 	rdfs:label "McpPaginatedRequest" ;
 	rdfs:subClassOf mcp:McpJSONRPCRequest , _:c14n1087 , _:c14n1136 , _:c14n1304 , _:c14n1344 , _:c14n1353 , _:c14n1491 , _:c14n1545 , _:c14n175 , _:c14n259 , _:c14n47 , _:c14n773 , _:c14n965 ;
-	skos:definition "MCP's `PaginatedRequest`." ;
+	skos:definition "A request for a list that the server returns a page at a time." ;
 	skos:exactMatch <https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/2026-07-28/schema/2026-07-28/schema.json#/$defs/PaginatedRequest> ;
 	skos:inScheme <https://w3id.org/lmodel/mcp> .
 mcp:McpPaginatedRequestParams a owl:Class ;
@@ -753,7 +753,7 @@ mcp:McpPaginatedRequestParams a owl:Class ;
 mcp:McpPaginatedResult a owl:Class ;
 	rdfs:label "McpPaginatedResult" ;
 	rdfs:subClassOf mcp:McpResult , _:c14n1023 , _:c14n1054 , _:c14n1094 , _:c14n1211 , _:c14n1602 , _:c14n17 , _:c14n203 , _:c14n507 , _:c14n960 ;
-	skos:definition "MCP's `PaginatedResult`." ;
+	skos:definition "A result that holds a page of a list, and the cursor of the next page." ;
 	skos:exactMatch <https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/2026-07-28/schema/2026-07-28/schema.json#/$defs/PaginatedResult> ;
 	skos:inScheme <https://w3id.org/lmodel/mcp> .
 mcp:McpParseError a owl:Class ;
@@ -838,7 +838,7 @@ mcp:McpReadResourceResultResponse a owl:Class ;
 mcp:McpRequest a owl:Class ;
 	rdfs:label "McpRequest" ;
 	rdfs:subClassOf _:c14n1376 , _:c14n1601 , _:c14n40 , _:c14n413 , _:c14n628 , _:c14n932 ;
-	skos:definition "MCP's `Request`." ;
+	skos:definition "The method and the parameters a request carries." ;
 	skos:exactMatch <https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/2026-07-28/schema/2026-07-28/schema.json#/$defs/Request> ;
 	skos:inScheme <https://w3id.org/lmodel/mcp> .
 mcp:McpRequestId a rdfs:Datatype ;
@@ -1005,7 +1005,7 @@ mcp:McpSingleSelectEnumSchema a owl:Class ;
 mcp:McpStringSchema a owl:Class ;
 	rdfs:label "McpStringSchema" ;
 	rdfs:subClassOf _:c14n1002 , _:c14n1019 , _:c14n1057 , _:c14n1095 , _:c14n1140 , _:c14n1238 , _:c14n1375 , _:c14n152 , _:c14n244 , _:c14n511 , _:c14n546 , _:c14n574 , _:c14n64 , _:c14n67 , _:c14n682 , _:c14n723 , _:c14n741 , _:c14n835 , _:c14n866 , _:c14n901 , _:c14n935 ;
-	skos:definition "MCP's `StringSchema`." ;
+	skos:definition "A field of an elicitation form that takes text." ;
 	skos:exactMatch <https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/2026-07-28/schema/2026-07-28/schema.json#/$defs/StringSchema> ;
 	skos:inScheme <https://w3id.org/lmodel/mcp> .
 mcp:McpStringSchemaFormat\#date-time a owl:Class ;
@@ -1084,7 +1084,7 @@ mcp:McpTextContent a owl:Class ;
 mcp:McpTextResourceContents a owl:Class ;
 	rdfs:label "McpTextResourceContents" ;
 	rdfs:subClassOf mcp:McpResourceContents , _:c14n1038 , _:c14n1170 , _:c14n1307 , _:c14n1372 , _:c14n1425 , _:c14n258 , _:c14n318 , _:c14n592 , _:c14n665 , _:c14n71 , _:c14n735 , _:c14n794 ;
-	skos:definition "MCP's `TextResourceContents`." ;
+	skos:definition "A resource's contents as text." ;
 	skos:exactMatch <https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/2026-07-28/schema/2026-07-28/schema.json#/$defs/TextResourceContents> ;
 	skos:inScheme <https://w3id.org/lmodel/mcp> .
 mcp:McpTitledMultiSelectEnumSchema a owl:Class ;

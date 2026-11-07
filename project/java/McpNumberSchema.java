@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.*;
 
 /**
-  MCP's `NumberSchema`.
+  A field of an elicitation form that takes a number or an integer.
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)

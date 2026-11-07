@@ -389,7 +389,7 @@ classes:
           if present).
         range: string
   McpBlobResourceContents:
-    description: MCP's `BlobResourceContents`.
+    description: A resource's contents as binary data, given as base64 text.
     is_a: McpResourceContents
     in_subset:
     - content
@@ -429,7 +429,7 @@ classes:
         range: uri
         required: true
   McpBooleanSchema:
-    description: MCP's `BooleanSchema`.
+    description: A field of an elicitation form that takes true or false.
     in_subset:
     - elicitation_create
     exact_mappings:
@@ -1599,7 +1599,7 @@ classes:
     extra_slots:
       allowed: true
   McpError:
-    description: MCP's `Error`.
+    description: 'The error a JSON-RPC error response carries: a code, a message and any data.'
     in_subset:
     - errors
     exact_mappings:
@@ -1795,7 +1795,7 @@ classes:
         equals_string: '2.0'
         required: true
   McpHeaderMismatchErrorError:
-    description: MCP's `Error`, with the code and data this error carries.
+    description: MCP's `Error`, with the code this error carries.
     is_a: McpError
     in_subset:
     - errors
@@ -2065,7 +2065,8 @@ classes:
     extra_slots:
       allowed: true
   McpInputResponseRequestParams:
-    description: MCP's `InputResponseRequestParams`.
+    description: 'The parameters of a request the client retries after an input-required result: its responses
+      to the server''s requests, and the state the server returned.'
     is_a: McpRequestParams
     exact_mappings:
     - mcp_schema:InputResponseRequestParams
@@ -2317,7 +2318,7 @@ classes:
         range: McpResult
         required: true
   McpJSONValue:
-    description: One of `JSONObject`.
+    description: 'Any JSON value: a string, a number, a boolean, null, an object or an array.'
     comments:
     - Any JSON value. MCP's schema.json leaves out null and numbers with a fraction, which schema.ts allows;
       this class takes any JSON.
@@ -3219,7 +3220,7 @@ classes:
     extra_slots:
       allowed: true
   McpNotification:
-    description: MCP's `Notification`.
+    description: The method and the parameters a notification carries.
     in_subset:
     - internal
     exact_mappings:
@@ -3276,7 +3277,7 @@ classes:
         alias: _meta
         range: McpNotificationMetaObject
   McpNumberSchema:
-    description: MCP's `NumberSchema`.
+    description: A field of an elicitation form that takes a number or an integer.
     in_subset:
     - elicitation_create
     exact_mappings:
@@ -3310,7 +3311,7 @@ classes:
         range: McpNumberSchemaType
         required: true
   McpPaginatedRequest:
-    description: MCP's `PaginatedRequest`.
+    description: A request for a list that the server returns a page at a time.
     is_a: McpJSONRPCRequest
     in_subset:
     - internal
@@ -3360,7 +3361,7 @@ classes:
           If provided, the server should return results starting after this cursor.
         range: McpCursor
   McpPaginatedResult:
-    description: MCP's `PaginatedResult`.
+    description: A result that holds a page of a list, and the cursor of the next page.
     is_a: McpResult
     in_subset:
     - internal
@@ -3832,7 +3833,7 @@ classes:
         - range: McpReadResourceResult
         required: true
   McpRequest:
-    description: MCP's `Request`.
+    description: The method and the parameters a request carries.
     in_subset:
     - internal
     exact_mappings:
@@ -4650,7 +4651,7 @@ classes:
     extra_slots:
       allowed: true
   McpStringSchema:
-    description: MCP's `StringSchema`.
+    description: A field of an elicitation form that takes text.
     in_subset:
     - elicitation_create
     exact_mappings:
@@ -4981,7 +4982,7 @@ classes:
         equals_string: text
         required: true
   McpTextResourceContents:
-    description: MCP's `TextResourceContents`.
+    description: A resource's contents as text.
     is_a: McpResourceContents
     in_subset:
     - content

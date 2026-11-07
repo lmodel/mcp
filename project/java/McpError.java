@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.*;
 
 /**
-  MCP's `Error`.
+  The error a JSON-RPC error response carries: a code, a message and any data.
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)

@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.*;
 
 /**
-  MCP's `TextResourceContents`.
+  A resource's contents as text.
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)

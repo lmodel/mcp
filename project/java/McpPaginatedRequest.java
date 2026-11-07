@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.*;
 
 /**
-  MCP's `PaginatedRequest`.
+  A request for a list that the server returns a page at a time.
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)

@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.*;
 
 /**
-  MCP's `Notification`.
+  The method and the parameters a notification carries.
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)

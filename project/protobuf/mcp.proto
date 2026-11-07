@@ -61,7 +61,7 @@ message McpBaseMetadata {
   // if present).
   string title = 2;
 }
-// MCP's `BlobResourceContents`.
+// A resource's contents as binary data, given as base64 text.
 message McpBlobResourceContents {
   // Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
   // 
@@ -86,7 +86,7 @@ message McpBlobResourceContents {
   // The URI of this resource.
   string uri = 4;
 }
-// MCP's `BooleanSchema`.
+// A field of an elicitation form that takes true or false.
 message McpBooleanSchema {
   // A description of the field for the user.
   string description = 1;
@@ -625,7 +625,7 @@ message McpEmptyResult {
 // One of `UntitledSingleSelectEnumSchema`, `TitledSingleSelectEnumSchema`, `UntitledMultiSelectEnumSchema`, `TitledMultiSelectEnumSchema`, `LegacyTitledEnumSchema`.
 message McpEnumSchema {
 }
-// MCP's `Error`.
+// The error a JSON-RPC error response carries: a code, a message and any data.
 message McpError {
   // The error type that occurred.
   int32 code = 1;
@@ -704,7 +704,7 @@ message McpHeaderMismatchError {
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 3;
 }
-// MCP's `Error`, with the code and data this error carries.
+// MCP's `Error`, with the code this error carries.
 message McpHeaderMismatchErrorError {
   // Additional information about the error. The value of this member is defined by the sender (e.g. detailed error information, nested errors etc.).
   McpJSONValue data = 1;
@@ -842,7 +842,7 @@ message McpInputRequiredResult {
 // One of `CreateMessageResult`, `ListRootsResult`, `ElicitResult`.
 message McpInputResponse {
 }
-// MCP's `InputResponseRequestParams`.
+// The parameters of a request the client retries after an input-required result: its responses to the server's requests, and the state the server returned.
 message McpInputResponseRequestParams {
   // Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.
   McpRequestMetaObject meta = 1;
@@ -941,7 +941,7 @@ message McpJSONRPCResultResponse {
   // Common result fields.
   McpResult result = 3;
 }
-// One of `JSONObject`.
+// Any JSON value: a string, a number, a boolean, null, an object or an array.
 message McpJSONValue {
 }
 // Use {@link TitledSingleSelectEnumSchema} instead.
@@ -1359,7 +1359,7 @@ message McpModelPreferences {
 // One of `UntitledMultiSelectEnumSchema`, `TitledMultiSelectEnumSchema`.
 message McpMultiSelectEnumSchema {
 }
-// MCP's `Notification`.
+// The method and the parameters a notification carries.
 message McpNotification {
   // The name of the method.
   string method = 1;
@@ -1385,7 +1385,7 @@ message McpNotificationParams {
   // Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply.
   McpNotificationMetaObject meta = 1;
 }
-// MCP's `NumberSchema`.
+// A field of an elicitation form that takes a number or an integer.
 message McpNumberSchema {
   // A description of the field for the user.
   string description = 1;
@@ -1400,7 +1400,7 @@ message McpNumberSchema {
   // The kind of value the field takes.
   McpNumberSchemaType kind = 6;
 }
-// MCP's `PaginatedRequest`.
+// A request for a list that the server returns a page at a time.
 message McpPaginatedRequest {
   // A uniquely identifying ID for a request in JSON-RPC.
   string identifier = 1;
@@ -1419,7 +1419,7 @@ message McpPaginatedRequestParams {
   // If provided, the server should return results starting after this cursor.
   string cursor = 2;
 }
-// MCP's `PaginatedResult`.
+// A result that holds a page of a list, and the cursor of the next page.
 message McpPaginatedResult {
   // Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
   McpResultMetaObject meta = 1;
@@ -1629,7 +1629,7 @@ message McpReadResourceResultResponse {
   // What the request returned.
   string result = 3;
 }
-// MCP's `Request`.
+// The method and the parameters a request carries.
 message McpRequest {
   // The name of the method.
   string method = 1;
@@ -2035,7 +2035,7 @@ message McpServerResult {
 // One of `UntitledSingleSelectEnumSchema`, `TitledSingleSelectEnumSchema`.
 message McpSingleSelectEnumSchema {
 }
-// MCP's `StringSchema`.
+// A field of an elicitation form that takes text.
 message McpStringSchema {
   // A description of the field for the user.
   string description = 1;
@@ -2197,7 +2197,7 @@ message McpTextContent {
   // The kind of object, always `text`.
   string kind = 4;
 }
-// MCP's `TextResourceContents`.
+// A resource's contents as text.
 message McpTextResourceContents {
   // Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
   // 

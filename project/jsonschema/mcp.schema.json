@@ -106,7 +106,7 @@
         },
         "McpBlobResourceContents": {
             "additionalProperties": true,
-            "description": "MCP's `BlobResourceContents`.",
+            "description": "A resource's contents as binary data, given as base64 text.",
             "properties": {
                 "_meta": {
                     "anyOf": [
@@ -145,7 +145,7 @@
         },
         "McpBooleanSchema": {
             "additionalProperties": true,
-            "description": "MCP's `BooleanSchema`.",
+            "description": "A field of an elicitation form that takes true or false.",
             "properties": {
                 "default": {
                     "description": "The value the field takes when the user gives none.",
@@ -1762,7 +1762,7 @@
         },
         "McpError": {
             "additionalProperties": true,
-            "description": "MCP's `Error`.",
+            "description": "The error a JSON-RPC error response carries: a code, a message and any data.",
             "properties": {
                 "code": {
                     "description": "The error type that occurred.",
@@ -2008,7 +2008,7 @@
         },
         "McpHeaderMismatchErrorError": {
             "additionalProperties": true,
-            "description": "MCP's `Error`, with the code and data this error carries.",
+            "description": "MCP's `Error`, with the code this error carries.",
             "properties": {
                 "code": {
                     "const": -32020,
@@ -2364,7 +2364,7 @@
         },
         "McpInputResponseRequestParams": {
             "additionalProperties": true,
-            "description": "MCP's `InputResponseRequestParams`.",
+            "description": "The parameters of a request the client retries after an input-required result: its responses to the server's requests, and the state the server returned.",
             "properties": {
                 "_meta": {
                     "$ref": "#/$defs/McpRequestMetaObject",
@@ -2743,7 +2743,7 @@
         },
         "McpJSONValue": {
             "additionalProperties": true,
-            "description": "One of `JSONObject`.",
+            "description": "Any JSON value: a string, a number, a boolean, null, an object or an array.",
             "title": "McpJSONValue",
             "type": [
                 "null",
@@ -3652,7 +3652,7 @@
         },
         "McpNotification": {
             "additionalProperties": true,
-            "description": "MCP's `Notification`.",
+            "description": "The method and the parameters a notification carries.",
             "properties": {
                 "method": {
                     "description": "The name of the method.",
@@ -3719,7 +3719,7 @@
         },
         "McpNumberSchema": {
             "additionalProperties": true,
-            "description": "MCP's `NumberSchema`.",
+            "description": "A field of an elicitation form that takes a number or an integer.",
             "properties": {
                 "default": {
                     "description": "The value the field takes when the user gives none.",
@@ -3778,7 +3778,7 @@
         },
         "McpPaginatedRequest": {
             "additionalProperties": true,
-            "description": "MCP's `PaginatedRequest`.",
+            "description": "A request for a list that the server returns a page at a time.",
             "properties": {
                 "identifier": {
                     "anyOf": [
@@ -3838,7 +3838,7 @@
         },
         "McpPaginatedResult": {
             "additionalProperties": true,
-            "description": "MCP's `PaginatedResult`.",
+            "description": "A result that holds a page of a list, and the cursor of the next page.",
             "properties": {
                 "_meta": {
                     "anyOf": [
@@ -4417,7 +4417,7 @@
         },
         "McpRequest": {
             "additionalProperties": true,
-            "description": "MCP's `Request`.",
+            "description": "The method and the parameters a request carries.",
             "properties": {
                 "method": {
                     "description": "The name of the method.",
@@ -5528,7 +5528,7 @@
         },
         "McpStringSchema": {
             "additionalProperties": true,
-            "description": "MCP's `StringSchema`.",
+            "description": "A field of an elicitation form that takes text.",
             "properties": {
                 "default": {
                     "description": "The value the field takes when the user gives none.",
@@ -5881,7 +5881,7 @@
         },
         "McpTextResourceContents": {
             "additionalProperties": true,
-            "description": "MCP's `TextResourceContents`.",
+            "description": "A resource's contents as text.",
             "properties": {
                 "_meta": {
                     "anyOf": [

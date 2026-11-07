@@ -13,13 +13,13 @@
 --     * Slot: id
 --     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
 --     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood,even by those unfamiliar with domain-specific terminology.If not provided, the name should be used for display (except for {@link Tool},where `annotations.title` should be given precedence over using `name`,if present).
--- # Class: McpBlobResourceContents Description: MCP's `BlobResourceContents`.
+-- # Class: McpBlobResourceContents Description: A resource's contents as binary data, given as base64 text.
 --     * Slot: id
 --     * Slot: blob Description: A base64-encoded string representing the binary data of the item.
 --     * Slot: mimeType Description: The MIME type of this resource, if known.
 --     * Slot: uri Description: The URI of this resource.
 --     * Slot: _meta_id Description: Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.Valid keys have two segments:**Prefix:**- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.**Name:**- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
--- # Class: McpBooleanSchema Description: MCP's `BooleanSchema`.
+-- # Class: McpBooleanSchema Description: A field of an elicitation form that takes true or false.
 --     * Slot: id
 --     * Slot: description Description: A description of the field for the user.
 --     * Slot: title Description: A title for the field.
@@ -216,7 +216,7 @@
 --     * Slot: _meta_id Description: Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
 -- # Class: McpEnumSchema Description: One of `UntitledSingleSelectEnumSchema`, `TitledSingleSelectEnumSchema`, `UntitledMultiSelectEnumSchema`, `TitledMultiSelectEnumSchema`, `LegacyTitledEnumSchema`.
 --     * Slot: id
--- # Class: McpError Description: MCP's `Error`.
+-- # Class: McpError Description: The error a JSON-RPC error response carries: a code, a message and any data.
 --     * Slot: id
 --     * Slot: code Description: The error type that occurred.
 --     * Slot: message Description: A short description of the error. The message SHOULD be limited to a concise single sentence.
@@ -251,7 +251,7 @@
 --     * Slot: identifier Description: A uniquely identifying ID for a request in JSON-RPC.
 --     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
 --     * Slot: error_id Description: The error the request ended with.
--- # Class: McpHeaderMismatchErrorError Description: MCP's `Error`, with the code and data this error carries.
+-- # Class: McpHeaderMismatchErrorError Description: MCP's `Error`, with the code this error carries.
 --     * Slot: id
 --     * Slot: code Description: The error code, always `-32020`.
 --     * Slot: message Description: A short description of the error. The message SHOULD be limited to a concise single sentence.
@@ -296,7 +296,7 @@
 --     * Slot: inputRequests_id Description: A map of server-initiated requests that the client must fulfill.Keys are server-assigned identifiers; values are the request objects.
 -- # Class: McpInputResponse Description: One of `CreateMessageResult`, `ListRootsResult`, `ElicitResult`.
 --     * Slot: id
--- # Class: McpInputResponseRequestParams Description: MCP's `InputResponseRequestParams`.
+-- # Class: McpInputResponseRequestParams Description: The parameters of a request the client retries after an input-required result: its responses to the server's requests, and the state the server returned.
 --     * Slot: id
 --     * Slot: requestState Description: State the server returned with an input-required result, sent back unchanged when the request is retried.
 --     * Slot: _meta_id Description: Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.
@@ -345,7 +345,7 @@
 --     * Slot: identifier Description: A uniquely identifying ID for a request in JSON-RPC.
 --     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
 --     * Slot: result_id Description: Common result fields.
--- # Class: McpJSONValue Description: One of `JSONObject`.
+-- # Class: McpJSONValue Description: Any JSON value: a string, a number, a boolean, null, an object or an array.
 --     * Slot: id
 -- # Class: McpLegacyTitledEnumSchema Description: Use {@link TitledSingleSelectEnumSchema} instead.This interface will be removed in a future version.
 --     * Slot: id
@@ -476,7 +476,7 @@
 --     * Slot: speedPriority Description: How much to prioritize sampling speed (latency) when selecting a model. Avalue of 0 means speed is not important, while a value of 1 means speed isthe most important factor.
 -- # Class: McpMultiSelectEnumSchema Description: One of `UntitledMultiSelectEnumSchema`, `TitledMultiSelectEnumSchema`.
 --     * Slot: id
--- # Class: McpNotification Description: MCP's `Notification`.
+-- # Class: McpNotification Description: The method and the parameters a notification carries.
 --     * Slot: id
 --     * Slot: method Description: The name of the method.
 --     * Slot: params_id Description: The parameters the message carries.
@@ -486,7 +486,7 @@
 -- # Class: McpNotificationParams Description: Common params for any notification.
 --     * Slot: id
 --     * Slot: _meta_id Description: Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply.
--- # Class: McpNumberSchema Description: MCP's `NumberSchema`.
+-- # Class: McpNumberSchema Description: A field of an elicitation form that takes a number or an integer.
 --     * Slot: id
 --     * Slot: description Description: A description of the field for the user.
 --     * Slot: title Description: A title for the field.
@@ -494,7 +494,7 @@
 --     * Slot: maximum Description: The largest value the field accepts.
 --     * Slot: minimum Description: The smallest value the field accepts.
 --     * Slot: kind Description: The kind of value the field takes.
--- # Class: McpPaginatedRequest Description: MCP's `PaginatedRequest`.
+-- # Class: McpPaginatedRequest Description: A request for a list that the server returns a page at a time.
 --     * Slot: id
 --     * Slot: identifier Description: A uniquely identifying ID for a request in JSON-RPC.
 --     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
@@ -504,7 +504,7 @@
 --     * Slot: id
 --     * Slot: cursor Description: An opaque token representing the current pagination position.If provided, the server should return results starting after this cursor.
 --     * Slot: _meta_id Description: Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.
--- # Class: McpPaginatedResult Description: MCP's `PaginatedResult`.
+-- # Class: McpPaginatedResult Description: A result that holds a page of a list, and the cursor of the next page.
 --     * Slot: id
 --     * Slot: nextCursor Description: An opaque token representing the pagination position after the last returned result.If present, there may be more results available.
 --     * Slot: resultType Description: Indicates the type of the result, which allows the client to determinehow to parse the result object.Servers implementing this protocol version MUST include this field.For backward compatibility, when a client receives a result from aserver implementing an earlier protocol version (which does not include`resultType`), the client MUST treat the absent field as `"complete"`.
@@ -580,7 +580,7 @@
 --     * Slot: identifier Description: A uniquely identifying ID for a request in JSON-RPC.
 --     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
 --     * Slot: result Description: What the request returned.
--- # Class: McpRequest Description: MCP's `Request`.
+-- # Class: McpRequest Description: The method and the parameters a request carries.
 --     * Slot: id
 --     * Slot: method Description: The name of the method.
 --     * Slot: params_id Description: The parameters the message carries.
@@ -703,7 +703,7 @@
 --     * Slot: id
 -- # Class: McpSingleSelectEnumSchema Description: One of `UntitledSingleSelectEnumSchema`, `TitledSingleSelectEnumSchema`.
 --     * Slot: id
--- # Class: McpStringSchema Description: MCP's `StringSchema`.
+-- # Class: McpStringSchema Description: A field of an elicitation form that takes text.
 --     * Slot: id
 --     * Slot: description Description: A description of the field for the user.
 --     * Slot: title Description: A title for the field.
@@ -755,7 +755,7 @@
 --     * Slot: kind Description: The kind of object, always `text`.
 --     * Slot: _meta_id Description: Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.Valid keys have two segments:**Prefix:**- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.**Name:**- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
 --     * Slot: annotations_id Description: Optional annotations for the client.
--- # Class: McpTextResourceContents Description: MCP's `TextResourceContents`.
+-- # Class: McpTextResourceContents Description: A resource's contents as text.
 --     * Slot: id
 --     * Slot: mimeType Description: The MIME type of this resource, if known.
 --     * Slot: text Description: The text of the item. This must only be set if the item can actually be represented as text (not binary data).
@@ -2798,3 +2798,4 @@ CREATE TABLE "McpIcon_sizes" (
 );
 CREATE INDEX "ix_McpIcon_sizes_sizes" ON "McpIcon_sizes" (sizes);
 CREATE INDEX "ix_McpIcon_sizes_McpIcon_id" ON "McpIcon_sizes" ("McpIcon_id");
+

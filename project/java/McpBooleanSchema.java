@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.*;
 
 /**
-  MCP's `BooleanSchema`.
+  A field of an elicitation form that takes true or false.
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)

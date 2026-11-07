@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.*;
 
 /**
-  MCP's `Error`, with the code and data this error carries.
+  MCP's `Error`, with the code this error carries.
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)

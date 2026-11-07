@@ -10,7 +10,7 @@ import java.util.List;
 import lombok.*;
 
 /**
-  MCP's `InputResponseRequestParams`.
+  The parameters of a request the client retries after an input-required result: its responses to the server's requests, and the state the server returned.
 **/
 @Data
 @EqualsAndHashCode(callSuper=false)

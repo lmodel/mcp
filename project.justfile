@@ -16,6 +16,11 @@ check-mcp:
   uv run python scripts/mcp_to_linkml.py --check
   uv run python scripts/mcp_meta.py --check
 
+# Write the schema's pages into docs/elements for the website, and leave docs/schema as it is
+[group('model development')]
+gen-doc-pages:
+  uv run gen-doc {{gen_doc_args}} -d {{docdir}} {{source_schema_path}}
+
 # ============ Knowledge bundle: the adapted domain schema ============
 
 # `.lokf/schema/mcp.yaml` is the copy `lokf adapt` writes from the schema so that it can sit beside

@@ -375,7 +375,7 @@ mcp:McpInputResponse a sh:NodeShape ;
 	sh:ignoredProperties _:c14n340 ;
 	sh:targetClass mcp:McpInputResponse .
 mcp:McpInputResponseRequestParams a sh:NodeShape ;
-	rdfs:comment "The parameters of a request the client retries after an input-required result: its responses to the server's requests, and the state the server returned." ;
+	rdfs:comment "Parameters a client request may carry: its responses to an input-required result's requests, and the state the server returned." ;
 	sh:closed true ;
 	sh:ignoredProperties _:c14n416 ;
 	sh:property _:c14n131 , _:c14n157 , _:c14n87 ;

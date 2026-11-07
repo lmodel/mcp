@@ -445,7 +445,7 @@ mcp:McpInputResponse a owl:Class ;
 mcp:McpInputResponseRequestParams a owl:Class ;
 	rdfs:label "McpInputResponseRequestParams" ;
 	rdfs:subClassOf mcp:McpRequestParams , _:c14n1002 , _:c14n1080 , _:c14n1265 , _:c14n1523 , _:c14n307 , _:c14n422 , _:c14n718 , _:c14n719 , _:c14n866 ;
-	skos:definition "The parameters of a request the client retries after an input-required result: its responses to the server's requests, and the state the server returned." ;
+	skos:definition "Parameters a client request may carry: its responses to an input-required result's requests, and the state the server returned." ;
 	skos:exactMatch <https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/2026-07-28/schema/2026-07-28/schema.json#/$defs/InputResponseRequestParams> ;
 	skos:inScheme <https://w3id.org/lmodel/mcp> .
 mcp:McpInputResponses a owl:Class ;

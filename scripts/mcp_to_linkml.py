@@ -144,8 +144,8 @@ CLASS_DESCRIPTIONS = {
     "BooleanSchema": "A field of an elicitation form that takes true or false.",
     "Error": "The error a JSON-RPC error response carries: a code, a message and any data.",
     "InputResponseRequestParams": (
-        "The parameters of a request the client retries after an input-required result: "
-        "its responses to the server's requests, and the state the server returned."
+        "Parameters a client request may carry: its responses to an input-required "
+        "result's requests, and the state the server returned."
     ),
     "JSONObject": "A JSON object, whose values are JSON values.",
     "JSONValue": "Any JSON value: a string, a number, a boolean, null, an object or an array.",

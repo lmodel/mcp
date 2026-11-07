@@ -296,7 +296,7 @@
 --     * Slot: inputRequests_id Description: A map of server-initiated requests that the client must fulfill.Keys are server-assigned identifiers; values are the request objects.
 -- # Class: McpInputResponse Description: One of `CreateMessageResult`, `ListRootsResult`, `ElicitResult`.
 --     * Slot: id
--- # Class: McpInputResponseRequestParams Description: The parameters of a request the client retries after an input-required result: its responses to the server's requests, and the state the server returned.
+-- # Class: McpInputResponseRequestParams Description: Parameters a client request may carry: its responses to an input-required result's requests, and the state the server returned.
 --     * Slot: id
 --     * Slot: requestState Description: State the server returned with an input-required result, sent back unchanged when the request is retried.
 --     * Slot: _meta_id Description: Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.

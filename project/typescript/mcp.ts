@@ -1155,7 +1155,7 @@ export interface McpInputResponse {
 
 
 /**
- * The parameters of a request the client retries after an input-required result: its responses to the server's requests, and the state the server returned.
+ * Parameters a client request may carry: its responses to an input-required result's requests, and the state the server returned.
  */
 export interface McpInputResponseRequestParams extends McpRequestParams {
     /** Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply. */

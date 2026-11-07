@@ -3516,8 +3516,8 @@ class McpCompleteRequestParams(McpRequestParams):
 @dataclass(repr=False)
 class McpInputResponseRequestParams(McpRequestParams):
     """
-    The parameters of a request the client retries after an input-required result: its responses to the server's
-    requests, and the state the server returned.
+    Parameters a client request may carry: its responses to an input-required result's requests, and the state the
+    server returned.
     """
     _inherited_slots: ClassVar[list[str]] = []
 

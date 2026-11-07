@@ -7113,7 +7113,7 @@ class McpCompleteRequestParams(McpRequestParams):
 
 class McpInputResponseRequestParams(McpRequestParams):
     """
-    The parameters of a request the client retries after an input-required result: its responses to the server's requests, and the state the server returned.
+    Parameters a client request may carry: its responses to an input-required result's requests, and the state the server returned.
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:InputResponseRequestParams'],
          'extra_slots': {'allowed': True},

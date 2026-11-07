@@ -6,6 +6,8 @@ The `v0.0.0` tag is a baseline, not a release: it marks where versioning starts 
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-11-07
+
 ### Added
 
 - **`upstream/`**, holding MCP 2026-07-28's `schema.json`, `schema.ts`, examples and licence at the tag `2026-07-28`, pinned by git object hash, with a weekly watch.

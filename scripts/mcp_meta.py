@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Write MCP's schema.json from the LinkML model.
 
-gen-json-schema writes one document whose definitions carry the model's names. MCP
-publishes one document whose definitions carry MCP's names. This script runs the generator
-once and shapes its output into MCP's form, in meta/schema.json:
+gen-json-schema writes definitions under the model's names, and MCP's file carries MCP's.
+This script runs the generator once and shapes its output into MCP's form, in
+meta/schema.json:
 
 - A class, enum or type whose exact mapping names a definition of MCP's takes that name
   (``McpCallToolRequest`` maps to ``mcp_schema:CallToolRequest``). One whose mapping names a

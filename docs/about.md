@@ -1,12 +1,10 @@
 # About mcp
 
-This page says how the schema reads MCP, what it adds, and what it leaves out.
-
 ## One version
 
 The schema models MCP 2026-07-28, the `schema/2026-07-28/` folder at the tag `2026-07-28` of [modelcontextprotocol](https://github.com/modelcontextprotocol/modelcontextprotocol). `upstream/` holds that folder's `schema.json`, `schema.ts` and 129 examples, and the repository's licence, pinned by git object hash. The upstream watch reports a new tag or version folder, and any further edit to the pinned files on MCP's default branch. By 2026-11-07 that branch had already edited three of them: a description in `schema.json`, `schema.ts` and one example. The watch knows those edits.
 
-The schema was hand-written against MCP's draft before this release. MCP 2026-07-28 drops initialization, tasks and several requests the draft had, and adds discovery, subscriptions and input-required results, so the schema is now written by a script: the next version is one run of the converter.
+The schema was hand-written against an MCP draft before. MCP 2026-07-28 drops initialization, tasks and several requests that draft had, and adds discovery, subscriptions and input-required results. A script now writes the schema, so the next version is one run of the converter.
 
 ## How the converter reads MCP
 
@@ -19,7 +17,7 @@ The schema was hand-written against MCP's draft before this release. MCP 2026-07
 - Each interface's `extends` in `schema.ts` gives `is_a` and `mixins`, and each `@category` a subset.
 - Each class, enum and type maps exactly to the place in `schema.json` it renders, such as `mcp_schema:Tool`.
 
-Each class states every key its definition has, inherited or not, as `schema.json` does. Where MCP gives a description, the schema carries it word for word. Where MCP gives none, the converter's `DESCRIPTIONS` holds this project's words.
+Each class states every key of its definition, inherited or not, as `schema.json` does. The schema carries MCP's descriptions word for word, and the converter's `DESCRIPTIONS` holds this project's words where MCP gives none.
 
 ## Keys
 
@@ -44,7 +42,7 @@ MCP's description of `InputRequiredResult` says "At least one of `inputRequests`
 2. **Verdicts.** MCP's 129 examples, the examples under `tests/data/problem/`, a smallest instance of each definition and about 11,000 mutations of them get the same verdict from both files, with the rule above added to MCP's.
 3. **Shapes.** Nine definitions differ once both sides are normalised, each listed in `parity/structural.yaml` with its reason.
 
-`parity/probes.yaml` lists each difference in what the two files accept.
+`parity/probes.yaml` lists each difference in what they accept.
 
 ## What LinkML cannot state
 

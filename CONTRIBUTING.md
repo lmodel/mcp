@@ -4,7 +4,7 @@
 
 ## What this project is
 
-A LinkML schema of the Model Context Protocol (MCP), version 2026-07-28: its JSON-RPC messages, and the tools, resources, prompts, content and capabilities they carry. A script writes it from MCP's own schema files.
+A LinkML schema of the Model Context Protocol (MCP), version 2026-07-28: its JSON-RPC messages and what they carry. A script writes it from MCP's own schema files.
 
 | Path | Holds |
 | --- | --- |

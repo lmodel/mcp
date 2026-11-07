@@ -10,7 +10,7 @@ Before this release, the schema was written by hand against an MCP draft. MCP 20
 
 ## How the converter reads MCP
 
-`scripts/mcp_to_linkml.py` reads `schema.json` for structure and descriptions, and `schema.ts` for what JSON Schema cannot carry.
+`scripts/mcp_to_linkml.py` reads `schema.json` for structure and descriptions, and `schema.ts` for what `schema.json` leaves out.
 
 - An object definition is a class with the `Mcp` prefix, such as `McpTool`. Every object MCP publishes is open, so every class allows extra slots.
 - A union of definitions, such as `ContentBlock`, is a class whose `any_of` names each member through `is_a`.
@@ -21,7 +21,7 @@ Before this release, the schema was written by hand against an MCP draft. MCP 20
 - Where `schema.ts` names a type MCP defines and `schema.json` writes it out, as for `resultType: ResultType`, the attribute's range is that type.
 - Each class and enum, and each type but the format types `McpBase64` and `McpUriTemplate`, maps exactly to the place in `schema.json` it renders, such as `mcp_schema:Tool`.
 
-Each class states every key of its definition, inherited or not, as `schema.json` does. The schema carries MCP's descriptions word for word. Where MCP gives a property none, the converter takes `CONST_DESCRIPTIONS` for a constant, then the description of the definition the property refers to, then `DESCRIPTIONS`. A definition MCP does not describe takes `CLASS_DESCRIPTIONS`, or for a union, the names of its members. An inline object MCP does not describe gets a sentence that names where MCP holds it.
+Each class states every key of its definition, inherited or not, as `schema.json` does. The schema carries MCP's descriptions word for word. Where MCP gives a property none, the converter takes `CONST_DESCRIPTIONS` for a constant, then the description of the definition the property refers to, then `DESCRIPTIONS`. A definition MCP does not describe takes `CLASS_DESCRIPTIONS`, or for a union, the names of its members. An inline object MCP does not describe gets a sentence that names where MCP holds it, an inline error part one that names the code and data the error carries, and an inline value list one that names its key.
 
 ## Keys
 
@@ -31,7 +31,7 @@ A slot's alias is MCP's key, such as `input_schema` for `inputSchema`. Some keys
 - `$schema` and the reserved `io.modelcontextprotocol/...` keys are not valid Python names, so they are listed under `aliases`: `schema_dialect`, and `mcp_client_capabilities` and its siblings.
 - `name`, `title`, `description`, `url` and `version` mean what LOKF means by them, so they are slots with LOKF's schema.org IRIs.
 - Six keys LOKF defines with another meaning are slots under MCP's key, with an IRI in this schema's namespace: `type`, `id`, `audience`, `context`, `reason` and `resource`. The adapt copy renames them, such as `mcp_type` for `type`, and keeps the IRIs.
-- MCP gives two keys two meanings each. For one meaning of each, the schema uses a name of its own, with MCP's key under `aliases`: a capability's `url` is `url_settings`, and a list of required names is `required_names`.
+- MCP gives two keys two meanings each, one of them LOKF's. For the other meaning of each, the schema uses a name of its own, with MCP's key under `aliases`: a capability's `url` is `url_settings`, and a list of required names is `required_names`.
 
 For each key listed under `aliases`, `scripts/mcp_meta.py` writes that key in place of the slot's name in `meta/schema.json`.
 
@@ -44,7 +44,7 @@ MCP's description of `InputRequiredResult` says "At least one of `inputRequests`
 `tests/test_parity.py` compares `meta/schema.json` with MCP's `schema.json` in three tiers:
 
 1. **Addresses.** `meta/schema.json` holds every definition MCP publishes except `JSONArray`, which no definition uses and LinkML cannot state.
-2. **Verdicts.** Both files give the same verdict on MCP's 129 examples, the examples under `tests/data/problem/`, a smallest instance of each definition and about 11,000 mutations of them, except the differences `parity/probes.yaml` lists. For this tier, the tests compare the generated file with a copy of MCP's file that has the rule above added.
+2. **Verdicts.** Both files give the same verdict on MCP's 129 examples, the examples under `tests/data/problem/`, a smallest instance of each definition and about 12,000 mutations of them, except the differences `parity/probes.yaml` lists. For this tier, the tests compare the generated file with a copy of MCP's file that has the rule above added.
 3. **Shapes.** After both files are normalised, nine definitions differ. `parity/structural.yaml` lists each with its reason.
 
 `parity/probes.yaml` lists each difference in what the two files accept.

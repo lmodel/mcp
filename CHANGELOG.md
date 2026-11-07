@@ -9,7 +9,7 @@ The `v0.0.0` tag is a baseline, not a release: it marks where versioning starts 
 ### Added
 
 - **`upstream/`**, holding MCP 2026-07-28's `schema.json`, `schema.ts`, examples and licence at the tag `2026-07-28`, pinned by git object hash, with a weekly watch.
-- **`scripts/mcp_to_linkml.py`**, which writes the schema from MCP's files: a class per object, a union class per union, enums and types, `is_a` and subsets from `schema.ts`, and an exact mapping from each element to the place it renders.
+- **`scripts/mcp_to_linkml.py`**, which writes the schema from MCP's files: a class per object, a union class per union, enums and types, `is_a` and subsets from `schema.ts`, and an exact mapping from each class, enum and type but the two format types to the place it renders.
 - **MCP's deprecations.** `schema.json` drops the 21 `@deprecated` tags of `schema.ts`. The schema marks what each one tags, so sampling, roots and logging read as deprecated in 2026-07-28.
 - **`meta/schema.json`**, MCP's `schema.json` written again from the schema, and tests that hold it to MCP's in three tiers over MCP's examples and their mutations.
 - **The rule MCP's description gives `InputRequiredResult`**: at least one of `inputRequests` or `requestState`.
@@ -21,7 +21,7 @@ The `v0.0.0` tag is a baseline, not a release: it marks where versioning starts 
 
 - **The schema models MCP 2026-07-28.** Before, it was written by hand against an earlier draft, which had initialization, tasks and the requests that 2026-07-28 drops.
 - **Every class, enum and type takes the `Mcp` prefix** and MCP's definition name, such as `McpCallToolRequest`.
-- **Keys LOKF defines with another meaning keep MCP's key** as slots of the schema's own, which the adapt copy renames, such as `mcp_type` for `type`. Where MCP gives a key two meanings, one takes a name of its own, such as `url_settings`.
+- **Keys LOKF defines with another meaning keep MCP's key** as slots of the schema's own, which the adapt copy renames, such as `mcp_type` for `type`. Where MCP gives a key two meanings and LOKF shares one, the other takes a name of its own, such as `url_settings`.
 - **The template settings** turn PyPI publishing and the docs preview off, linkml and linkml-runtime are locked at 1.12.1, and the Python project is named `mcp-linkml`.
 
 ### Removed

@@ -2,6 +2,9 @@
 
 ## 2026-11-07
 
+* **Changed**: How the schema names MCP's keys says LOKF shares one meaning of `url` and of `required`, and the other takes a name of its own.
+* **Changed**: The converter names all four kinds of sentence it writes where MCP gives no description.
+* **Changed**: How the tests hold the schema to MCP counts about 12,000 mutations; tier 2 builds 12,011.
 * **Prose**: reworded 5 concept bodies in plain English. No fact, link, number or frontmatter changed.
 * **Changed**: How the schema names MCP's keys says six keys LOKF defines are slots under MCP's key, which the adapt copy renames, from `scripts/mcp_to_linkml.py`.
 * **Changed**: The adapt copy renames the six slots LOKF defines with another meaning, from `.lokf/schema/mcp.yaml`.

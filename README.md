@@ -49,13 +49,13 @@ In the copy, the classes a person documents about an MCP server descend from `Co
 McpImplementation, McpPrompt, McpResource, McpResourceLink, McpResourceTemplate, McpTool
 ```
 
-MCP's `description`, `title` and `version` fold into LOKF's, which mean the same. The copy renames `name` and `url` to `mcp_name` and `mcp_url`, and six keys LOKF defines with another meaning the same way, such as `type` to `mcp_type`. [docs/about.md](docs/about.md#keys) lists them. `tests/test_schema_rules.py` checks the copy's keys against those of LOKF and of the released copies in `tests/neighbours/`.
+MCP's `description`, `title` and `version` fold into LOKF's, which mean the same. The copy renames `name` and `url` to `mcp_name` and `mcp_url`, and six keys LOKF defines with another meaning the same way, such as `type` to `mcp_type`. [docs/about.md](docs/about.md#keys) lists them. `tests/test_schema_rules.py` checks that a key the copy shares with LOKF has LOKF's IRI, and that the copy shares only the listed keys with the released copies in `tests/neighbours/`.
 
 ## License
 
 The schema and the code are under the Apache License 2.0 ([LICENSE](LICENSE)), and the knowledge bundle in [.lokf/knowledge/](.lokf/knowledge) is under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 
-MCP's files in `upstream/`, and MCP's descriptions the schema carries, keep MCP's licence, the Apache License 2.0 or the MIT License. [NOTICE](NOTICE) states the position, and this project is not endorsed by the MCP project or LF Projects, LLC.
+MCP's files in `upstream/`, and MCP's descriptions and deprecation texts that the schema carries, keep MCP's licence, the Apache License 2.0 or the MIT License. [NOTICE](NOTICE) states the position, and this project is not endorsed by the MCP project or LF Projects, LLC.
 
 ## Contributing and security
 

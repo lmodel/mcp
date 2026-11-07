@@ -9,7 +9,7 @@ dependsOn:
   - https://w3id.org/lmodel/mcp/knowledge/datasets/upstream-copy
 generated:
   by: process:ktl-librarian
-  at: "2026-11-07T10:22:05Z"
+  at: "2026-11-07T11:33:51Z"
 status: draft
 ---
 
@@ -19,4 +19,4 @@ status: draft
 
 An object definition becomes a class with the `Mcp` prefix, open to extra keys. A union of definitions becomes a class whose `any_of` names each member. A list of strings becomes an enum, and a string or a string-or-integer becomes a type. An inline object becomes a class named after its owner and key.
 
-Where MCP gives no description, the project's words come from the converter's tables: `CLASS_DESCRIPTIONS` for a definition, `CONST_DESCRIPTIONS` for a constant and `DESCRIPTIONS` for a property. Other descriptions are sentences that name a union's members, or say where MCP holds an inline object.
+Where MCP gives no description, the project's words come from the converter's tables: `CLASS_DESCRIPTIONS` for a definition, `CONST_DESCRIPTIONS` for a constant and `DESCRIPTIONS` for a property. Other sentences name a union's members, where MCP holds an inline object, the key of an inline value list, or the code and data an error carries.

@@ -302,6 +302,12 @@ def test_copy_roots_the_concept_classes():
     assert concrete == KNOWN_TYPES
 
 
+def test_the_readme_lists_the_known_types():
+    """README.md lists the classes for the plugins' setting."""
+    text = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert ", ".join(sorted(KNOWN_TYPES)) in text
+
+
 def test_mappings_use_a_bound_prefix():
     """Every mapping in the copy is a CURIE whose prefix the copy binds. A full
     address that no prefix covers makes every `lokf convert --schema` over the

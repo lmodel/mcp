@@ -19,6 +19,26 @@ wider:
     extension's settings. LinkML states no recursive union of a value's kinds, and the
     generated file follows schema.ts.
 
+# Rules MCP's own words state and its schema.json does not, which the model states, so
+# the generated file is narrower here. Tier 2 compares the generated file with MCP's
+# file plus these rules, each written as the anyOf the definition gains.
+narrower:
+  - definition: InputRequiredResult
+    anyOf:
+      - required: [inputRequests]
+      - required: [requestState]
+    reason: >-
+      MCP's description of InputRequiredResult says "At least one of `inputRequests` or
+      `requestState` MUST be present."
+
+# MCP's examples that MCP's own words reject. Each is valid against schema.json only
+# because a result may be an InputRequiredResult, which requires nothing but resultType;
+# with the rule above, nothing in the file matches it. issues/107 reports each.
+examples_mcp_rejects:
+  examples/ReadResourceResultResponse/read-resource-result-response.json: >-
+    A read-resource result without cacheScope and ttlMs, which ReadResourceResult
+    requires.
+
 # Documents written to test one claim, each with the verdict each file gives.
 documents:
   - definition: ClientCapabilities
@@ -61,3 +81,8 @@ documents:
     published: false
     generated: false
     reason: A priority lies between 0 and 1.
+  - definition: InputRequiredResult
+    document: {resultType: input_required}
+    published: true
+    generated: false
+    reason: An input-required result with neither inputRequests nor requestState.

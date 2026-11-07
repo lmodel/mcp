@@ -32,10 +32,26 @@ def test_every_published_definition_is_there():
 
 
 def test_corpus_is_valid_against_both():
-    """Tier 2: each example and each smallest instance is valid against both files."""
+    """Tier 2: each example and each smallest instance is valid against both files, and
+    against MCP's with the stated rules, but the examples MCP's own words reject, which
+    are valid against MCP's file alone."""
+    rejected = parity.probes()["examples_mcp_rejects"]
     for label, name, doc in parity.corpus():
         assert parity.verdict("published", name, doc), label
-        assert parity.verdict("generated", name, doc), label
+        expected = label not in rejected
+        assert parity.verdict("stated", name, doc) is expected, label
+        assert parity.verdict("generated", name, doc) is expected, label
+    assert set(rejected) <= {label for label, _, _ in parity.corpus()}
+
+
+def test_each_stated_rule_rejects_what_mcps_file_accepts():
+    """Each narrower rule in probes.yaml names a definition and changes a verdict there."""
+    for rule in parity.probes()["narrower"]:
+        name = rule["definition"]
+        bare = {k: v for k, v in parity.smallest(name).items() if k in ("resultType",)}
+        assert parity.verdict("published", name, bare), name
+        assert not parity.verdict("stated", name, bare), name
+        assert not parity.verdict("generated", name, bare), name
 
 
 def test_mutations_get_the_same_verdicts():

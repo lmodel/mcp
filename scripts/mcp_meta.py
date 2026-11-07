@@ -17,11 +17,12 @@ once and shapes its output into MCP's form, in meta/schema.json:
   references and nothing else.
 - ``$schema`` is draft 2020-12.
 
-linkml 1.12.1's generator needs two repairs here, each a fault of the generator: an
+linkml 1.12.1's generator needs three repairs here, each a fault of the generator: an
 ``any_of`` of classes and an ``extra_slots`` range still admit ``null`` despite
-``include_null=False``, and ``linkml:Any`` leaves out arrays. MCP's files never allow
-``null``, so every ``null`` the generator writes goes, and the any-value class becomes
-``{}``. Usage::
+``include_null=False``; ``linkml:Any`` leaves out arrays; and a class's ``any_of``
+conditions name slots, not the keys their aliases give. MCP's files never allow ``null``,
+so every ``null`` the generator writes goes, the any-value class becomes ``{}``, and each
+condition names the key. Usage::
 
     python scripts/mcp_meta.py [--output FILE] [--check]
 """
@@ -121,6 +122,14 @@ def build() -> dict:
             if slot.range in FORMATS:
                 formats[(name, slot.alias or slot.name)] = FORMATS[slot.range]
 
+    # Each class's key for each of its slots, for the conditions of its any_of.
+    class_keys: dict[str, dict[str, str]] = {}
+    for name in view.all_classes():
+        class_keys[name] = {}
+        for slot in view.class_induced_slots(name):
+            key = slot.alias or (slot.aliases[0] if slot.aliases else slot.name)
+            class_keys[name][slot.name] = key
+
     names: dict[str, str | None] = {}
     for element in list(view.all_classes().values()) + list(view.all_enums().values()):
         names[element.name] = published_name(element)
@@ -146,6 +155,15 @@ def build() -> dict:
                 props[key] = props.pop(slot)
             if slot in body.get("required", []):
                 body["required"] = [key if r == slot else r for r in body["required"]]
+        for keyword in ("anyOf", "oneOf", "allOf"):
+            for branch in body.get(keyword) or []:
+                if "required" in branch and name in class_keys:
+                    rename = class_keys[name]
+                    branch["required"] = [rename.get(r, r) for r in branch["required"]]
+                    branch["properties"] = {
+                        rename.get(k, k): v
+                        for k, v in branch.get("properties", {}).items()
+                    }
         if "properties" in body:
             body["properties"] = dict(sorted(body["properties"].items()))
         if "required" in body:

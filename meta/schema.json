@@ -1491,6 +1491,24 @@
             "type": "object"
         },
         "InputRequiredResult": {
+            "anyOf": [
+                {
+                    "properties": {
+                        "inputRequests": {}
+                    },
+                    "required": [
+                        "inputRequests"
+                    ]
+                },
+                {
+                    "properties": {
+                        "requestState": {}
+                    },
+                    "required": [
+                        "requestState"
+                    ]
+                }
+            ],
             "description": "An InputRequiredResult sent by the server to indicate that additional input is needed\nbefore the request can be completed.\n\nAt least one of `inputRequests` or `requestState` MUST be present.",
             "properties": {
                 "_meta": {

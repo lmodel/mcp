@@ -19,3 +19,6 @@ JSONRPCRequest: >-
   params refers to JSONObject where MCP writes an object of any values inline.
 JSONRPCNotification: >-
   params refers to JSONObject where MCP writes an object of any values inline.
+InputRequiredResult: >-
+  The model states the rule MCP's description gives, that at least one of inputRequests
+  or requestState is present (probes.yaml, narrower).

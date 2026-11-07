@@ -39,6 +39,15 @@ OTHER_KINDS = ("text", 7, 2.5, True, None, [], {})
 
 @lru_cache(maxsize=None)
 def load(which: str) -> dict:
+    """MCP's file ("published"), the file the model gives ("generated"), or MCP's file with
+    the rules MCP's words state and its file does not, which probes.yaml lists as
+    narrower ("stated"). Tier 2 compares "stated" with "generated"."""
+    if which == "stated":
+        doc = copy.deepcopy(load("published"))
+        for rule in probes()["narrower"]:
+            target = doc["$defs"][rule["definition"]]
+            target["anyOf"] = target.get("anyOf", []) + rule["anyOf"]
+        return doc
     path = PUBLISHED if which == "published" else GENERATED
     return json.loads(path.read_text(encoding="utf-8"))
 
@@ -102,9 +111,10 @@ def missing_definitions() -> set[str]:
 
 
 def smallest(name: str, depth: int = 0):
-    """The smallest instance of a published definition: its required keys only, each with
-    its const, its first enum value, or the least value of its type."""
-    defs = load("published")["$defs"]
+    """The smallest instance of a definition, with the stated rules: its required keys
+    only, and those of the first branch of a rule, each with its const, its first enum
+    value, or the least value of its type."""
+    defs = load("stated")["$defs"]
     return _smallest(defs[name], defs, depth)
 
 
@@ -123,15 +133,17 @@ def _smallest(node: dict, defs: dict, depth: int):
             value = _smallest(part, defs, depth + 1)
             merged = merged | value if isinstance(value, dict) else value
         return merged
-    if "anyOf" in node:
+    if "anyOf" in node and "properties" not in node:
         return _smallest(node["anyOf"][0], defs, depth + 1)
     kind = node.get("type")
     if isinstance(kind, list):
         kind = kind[0]
     if kind == "object" or "properties" in node:
+        keys = list(node.get("required", []))
+        if node.get("anyOf"):
+            keys += node["anyOf"][0].get("required", [])
         return {
-            key: _smallest(node["properties"][key], defs, depth + 1)
-            for key in node.get("required", [])
+            key: _smallest(node["properties"][key], defs, depth + 1) for key in keys
         }
     if kind == "array":
         return [
@@ -209,17 +221,15 @@ def counter_examples():
 
 def differences():
     """Each document and mutation the two files judge differently, as (label, definition,
-    published verdict, generated verdict)."""
+    verdict of MCP's file with the stated rules, generated verdict)."""
     found = []
     for label, name, doc in corpus():
         cases = [(label, doc)] + [
             (f"{label} {change}", value) for change, value in mutations(doc)
         ]
         for case, value in cases:
-            published, generated = (
-                verdict("published", name, value),
-                verdict("generated", name, value),
-            )
+            published = verdict("stated", name, value)
+            generated = verdict("generated", name, value)
             if published != generated:
                 found.append((case, name, published, generated))
     return found

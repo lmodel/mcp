@@ -12488,6 +12488,9 @@
       "name": "McpInputRequiredResult",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpInputRequiredResult",
       "description": "An InputRequiredResult sent by the server to indicate that additional input is needed\nbefore the request can be completed.\n\nAt least one of `inputRequests` or `requestState` MUST be present.",
+      "comments": [
+        "MCP's description states this rule, which its schema.json does not: At least one of `inputRequests` or `requestState` MUST be present."
+      ],
       "in_subset": [
         "multi_round_trip"
       ],
@@ -12537,6 +12540,28 @@
         "allowed": true,
         "@type": "ExtraSlotsExpression"
       },
+      "any_of": [
+        {
+          "slot_conditions": [
+            {
+              "name": "input_requests",
+              "value_presence": "PRESENT",
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        },
+        {
+          "slot_conditions": [
+            {
+              "name": "request_state",
+              "value_presence": "PRESENT",
+              "@type": "SlotDefinition"
+            }
+          ],
+          "@type": "AnonymousClassExpression"
+        }
+      ],
       "@type": "ClassDefinition"
     },
     {
@@ -18273,8 +18298,8 @@
   ],
   "metamodel_version": "1.12.0",
   "source_file": "mcp.yaml",
-  "source_file_date": "2026-11-07T03:20:14",
-  "source_file_size": 212323,
+  "source_file_date": "2026-11-07T03:26:53",
+  "source_file_size": 212676,
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/mcp.context.jsonld",

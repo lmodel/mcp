@@ -1974,11 +1974,21 @@ classes:
       before the request can be completed.
 
       At least one of `inputRequests` or `requestState` MUST be present.
+    comments:
+      - 'MCP''s description states this rule, which its schema.json does not: At least one
+        of `inputRequests` or `requestState` MUST be present.'
     is_a: McpResult
     in_subset:
       - multi_round_trip
     exact_mappings:
       - mcp_schema:InputRequiredResult
+    any_of:
+      - slot_conditions:
+          input_requests:
+            value_presence: PRESENT
+      - slot_conditions:
+          request_state:
+            value_presence: PRESENT
     extra_slots:
       allowed: true
     attributes:

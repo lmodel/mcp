@@ -11069,6 +11069,9 @@ classes:
 
 
       At least one of `inputRequests` or `requestState` MUST be present.'
+    comments:
+    - 'MCP''s description states this rule, which its schema.json does not: At least
+      one of `inputRequests` or `requestState` MUST be present.'
     in_subset:
     - multi_round_trip
     from_schema: https://w3id.org/lmodel/mcp
@@ -11119,6 +11122,15 @@ classes:
     class_uri: mcp:McpInputRequiredResult
     extra_slots:
       allowed: true
+    any_of:
+    - slot_conditions:
+        input_requests:
+          name: input_requests
+          value_presence: PRESENT
+    - slot_conditions:
+        request_state:
+          name: request_state
+          value_presence: PRESENT
   McpInputResponse:
     name: McpInputResponse
     definition_uri: https://w3id.org/lmodel/mcp/McpInputResponse
@@ -16072,6 +16084,6 @@ classes:
       allowed: true
 metamodel_version: 1.12.0
 source_file: mcp.yaml
-source_file_date: '2026-11-07T03:20:14'
-source_file_size: 212323
+source_file_date: '2026-11-07T03:26:53'
+source_file_size: 212676
 

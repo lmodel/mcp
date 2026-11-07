@@ -59,6 +59,16 @@ ANY_VALUE = "JSONValue"
 # An array definition: LinkML has no element for it, and no MCP definition names it.
 SKIPPED = {"JSONArray"}
 
+# Rules MCP's own words state and its schema.json does not: by definition, the keys of
+# which at least one must be present, and the sentence that says so. Each becomes the
+# class's any_of, and parity/probes.yaml lists it as narrower than MCP's file.
+RULES = {
+    "InputRequiredResult": (
+        ("inputRequests", "requestState"),
+        "At least one of `inputRequests` or `requestState` MUST be present.",
+    ),
+}
+
 # String formats MCP uses, and the type that carries each.
 FORMAT_TYPES = {
     "uri": "uri",
@@ -391,6 +401,15 @@ class Converter:
                 "fraction, which schema.ts allows; this class takes any JSON."
             ]
         self.fill(cls_name, element, node, name, name)
+        if name in RULES:
+            keys, sentence = RULES[name]
+            element["any_of"] = [
+                {"slot_conditions": {snake(key): {"value_presence": "PRESENT"}}}
+                for key in keys
+            ]
+            element.setdefault("comments", []).append(
+                f"MCP's description states this rule, which its schema.json does not: {sentence}"
+            )
         element["exact_mappings"] = [f"{MAPPING_PREFIX}:{name}"]
         self.classes[cls_name] = self.order(element)
 
@@ -470,7 +489,11 @@ class Converter:
         if iri:
             slot["slot_uri"] = iri
         if name != key:
-            if key.isidentifier() and key not in OWN_NAMES and key not in ("url", "required"):
+            if (
+                key.isidentifier()
+                and key not in OWN_NAMES
+                and key not in ("url", "required")
+            ):
                 slot["alias"] = key
             else:
                 slot["aliases"] = [key]
@@ -690,7 +713,12 @@ def render() -> str:
     schema["subsets"] = dict(sorted(converter.subsets.items()))
     schema["types"] = dict(sorted(converter.types.items()))
     schema["slots"] = {
-        key: {k: v for k, v in sorted(SHARED_SLOTS[key].items(), key=lambda kv: kv[0] != "description")}
+        key: {
+            k: v
+            for k, v in sorted(
+                SHARED_SLOTS[key].items(), key=lambda kv: kv[0] != "description"
+            )
+        }
         for key in sorted(SHARED_SLOTS)
     }
     schema["enums"] = dict(sorted(converter.enums.items()))

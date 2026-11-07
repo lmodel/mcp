@@ -2264,6 +2264,24 @@
         },
         "McpInputRequiredResult": {
             "additionalProperties": true,
+            "anyOf": [
+                {
+                    "properties": {
+                        "input_requests": {}
+                    },
+                    "required": [
+                        "input_requests"
+                    ]
+                },
+                {
+                    "properties": {
+                        "request_state": {}
+                    },
+                    "required": [
+                        "request_state"
+                    ]
+                }
+            ],
             "description": "An InputRequiredResult sent by the server to indicate that additional input is needed\nbefore the request can be completed.\n\nAt least one of `inputRequests` or `requestState` MUST be present.",
             "properties": {
                 "_meta": {

@@ -9200,7 +9200,14 @@ class McpInputRequiredResult(McpResult):
 
     At least one of `inputRequests` or `requestState` MUST be present.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:InputRequiredResult'],
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'any_of': [{'slot_conditions': {'input_requests': {'name': 'input_requests',
+                                                            'value_presence': 'PRESENT'}}},
+                    {'slot_conditions': {'request_state': {'name': 'request_state',
+                                                           'value_presence': 'PRESENT'}}}],
+         'comments': ["MCP's description states this rule, which its schema.json does "
+                      'not: At least one of `inputRequests` or `requestState` MUST be '
+                      'present.'],
+         'exact_mappings': ['mcp_schema:InputRequiredResult'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
          'in_subset': ['multi_round_trip']})

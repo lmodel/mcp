@@ -1852,8 +1852,8 @@ CREATE TABLE "McpAnnotations_intended_audience" (
 	PRIMARY KEY ("McpAnnotations_id", intended_audience),
 	FOREIGN KEY("McpAnnotations_id") REFERENCES "McpAnnotations" (id)
 );
-CREATE INDEX "ix_McpAnnotations_intended_audience_intended_audience" ON "McpAnnotations_intended_audience" (intended_audience);
 CREATE INDEX "ix_McpAnnotations_intended_audience_McpAnnotations_id" ON "McpAnnotations_intended_audience" ("McpAnnotations_id");
+CREATE INDEX "ix_McpAnnotations_intended_audience_intended_audience" ON "McpAnnotations_intended_audience" (intended_audience);
 
 CREATE TABLE "McpCompleteResultCompletion_values" (
 	"McpCompleteResultCompletion_id" INTEGER,
@@ -2491,8 +2491,8 @@ CREATE TABLE "McpDiscoverResult_supportedVersions" (
 	PRIMARY KEY ("McpDiscoverResult_id", "supportedVersions"),
 	FOREIGN KEY("McpDiscoverResult_id") REFERENCES "McpDiscoverResult" (id)
 );
-CREATE INDEX "ix_McpDiscoverResult_supportedVersions_supportedVersions" ON "McpDiscoverResult_supportedVersions" ("supportedVersions");
 CREATE INDEX "ix_McpDiscoverResult_supportedVersions_McpDiscoverResult_id" ON "McpDiscoverResult_supportedVersions" ("McpDiscoverResult_id");
+CREATE INDEX "ix_McpDiscoverResult_supportedVersions_supportedVersions" ON "McpDiscoverResult_supportedVersions" ("supportedVersions");
 
 CREATE TABLE "McpReadResourceResult_contents" (
 	"McpReadResourceResult_id" INTEGER,

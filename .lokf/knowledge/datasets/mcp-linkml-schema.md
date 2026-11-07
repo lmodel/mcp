@@ -21,4 +21,4 @@ The schema is one file, `src/mcp/schema/mcp.yaml`, written by the converter and 
 
 Each class and enum, and each type but the format types `McpBase64` and `McpUriTemplate`, maps exactly to the place in MCP's `schema.json` it renders, such as `mcp_schema:Tool`. Where MCP describes an element, the schema carries MCP's words unchanged.
 
-Each element or attribute that a `@deprecated` tag in `schema.ts` tags carries `deprecated`, with the tag's text. `schema.json` drops the tags, and MCP 2026-07-28 deprecates sampling, roots and logging.
+Each element or attribute that `schema.ts` marks with a `@deprecated` tag carries `deprecated`, with the tag's text. `schema.json` drops the tags. MCP 2026-07-28 deprecates sampling, roots and logging.

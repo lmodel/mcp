@@ -3,4 +3,4 @@ jsonrpc: "2.0"
 id: 42
 error:
   code: -32602
-  message: Unknown tool get_forcast
+  message: Unknown tool get_tides

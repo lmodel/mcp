@@ -1,34 +1,32 @@
 #!/usr/bin/env python3
 """Write the LinkML schema of MCP from the version's schema.json and schema.ts.
 
-MCP publishes each version's schema as TypeScript (schema.ts), which is the source, and as
-JSON Schema 2020-12 (schema.json), which is generated from it. This script reads the pinned
-copy of both under upstream/ and writes src/mcp/schema/mcp.yaml:
+MCP publishes each version's schema as TypeScript (schema.ts), the source, and as JSON
+Schema 2020-12 (schema.json), generated from it. This script reads the pinned copies under
+upstream/ and writes src/mcp/schema/mcp.yaml:
 
-- Each definition in schema.json becomes the element that states it. An object becomes
-  a class, a union of objects a class whose ``any_of`` names each member through ``is_a``,
-  a string list an enum, and a string or a string-or-integer a type. Every object MCP
-  publishes is open, so every class allows extra slots.
-- Each property becomes an attribute of its class, with MCP's description, so a class
-  states every key the definition has, inherited or not, as schema.json does. An
-  inline object becomes a class of its own, named after its owner and key.
-- schema.ts gives the rest: each interface's ``extends`` becomes ``is_a`` and
-  ``mixins``, each ``@category`` a subset, ``@internal`` the subset internal, and each
-  ``@deprecated`` tag the ``deprecated`` of what it tags. Where schema.ts gives a
-  property a type MCP defines and schema.json writes the type out, the type is the range.
-- Each class and enum, and each type but the two format types, maps exactly to the
-  definition or the inline schema it renders, by a JSON pointer into the published file.
+- Each definition of schema.json becomes one element: an object a class, a union of
+  objects a class whose ``any_of`` names each member through ``is_a``, a string list an
+  enum, and a string or a string-or-integer a type. MCP's objects are all open, so every
+  class allows extra slots.
+- Each property becomes an attribute with MCP's description, so a class states every key
+  of its definition, inherited or not, as schema.json does. An inline object becomes a
+  class named after its owner and key.
+- From schema.ts, ``extends`` gives ``is_a`` and ``mixins``, each ``@category`` a subset,
+  ``@internal`` the subset internal, and each ``@deprecated`` tag the ``deprecated`` of
+  what it tags. Where schema.ts gives a property a type MCP defines and schema.json writes
+  that type out in place, the type is the range.
+- Each class and enum, and each type but the two format types, maps exactly to what it
+  renders, by a JSON pointer into the published file.
 
-A key that is no Python name, such as ``$schema`` or ``io.modelcontextprotocol/clientInfo``,
-goes under the attribute's ``aliases``, because gen-python writes an ``alias`` as an
-attribute name. A key LOKF defines with another meaning, such as ``type`` or ``id``, is a
-slot under MCP's key, which lokf adapt renames in the copy (KEY_SLOTS below); where MCP
-gives such a key two meanings, one takes a name of its own, with MCP's key under
-``aliases`` (lokf_naming below). scripts/mcp_meta.py writes each key under ``aliases`` in
-place of the attribute's name when it writes MCP's form.
-Where MCP gives no description, the words are this project's: CLASS_DESCRIPTIONS,
-CONST_DESCRIPTIONS and DESCRIPTIONS below, and the sentences that name a union's members
-or where MCP holds an inline object.
+A key that is no Python name, such as ``$schema``, goes under the attribute's ``aliases``,
+since gen-python writes an ``alias`` as an attribute name; scripts/mcp_meta.py writes the
+key in the attribute's place in MCP's form. A key LOKF defines with another meaning is a
+slot under MCP's key, which lokf adapt renames in the copy (KEY_SLOTS); of a key MCP uses
+in two meanings, one takes a name of its own, with MCP's key under ``aliases``
+(lokf_naming). Where MCP gives no description, the words are this project's:
+CLASS_DESCRIPTIONS, CONST_DESCRIPTIONS, DESCRIPTIONS, and the sentences that name a
+union's members or where MCP holds an inline object.
 
 Usage::
 
@@ -212,12 +210,12 @@ SHARED_SLOTS = {
         "description": "A version string.",
     },
 }
-# Keys that LOKF defines with another meaning. Each is a slot of the schema's own under
-# MCP's key, with an IRI in the schema's namespace, and every class that has the key uses
-# it through slots and slot_usage, as lmodel/in-toto's predicate and lmodel/opa's keys do.
-# lokf adapt renames each in the copy, as mcp_type for type, and keeps its IRI, so a
-# composite with LOKF never reads MCP's key as LOKF's. A key that MCP gives two meanings,
-# url and required, cannot be one slot: lokf_naming names the one LOKF does not share.
+# Keys LOKF defines with another meaning. Each is a slot under MCP's key with an IRI in the
+# schema's namespace, which every class with the key uses through slots and slot_usage, as
+# in lmodel/in-toto and lmodel/opa. lokf adapt renames each in the copy, as mcp_type, and
+# keeps its IRI, so no composite with LOKF reads MCP's key as LOKF's. url and required,
+# which MCP uses in two meanings, cannot be one slot: lokf_naming names the meaning LOKF
+# does not share.
 KEY_SLOTS = {
     "type": "The kind of an object or a value, as a constant or a value from a list.",
     "id": "An identifier: of a JSON-RPC request, or of a tool use.",

@@ -81,12 +81,11 @@ def test_shapes_differ_only_as_listed():
 
 
 def test_mutations_break_each_required_key_and_value():
-    """Tier 2 reaches each constraint a smallest instance meets. Every key it holds is
-    required, so removing one, at any depth, makes MCP's file with the stated rules reject
-    the instance, and so does misspelling a constant or a listed value at its top. The test
-    above then holds the generated file to the same verdicts. A union is left out: without
-    a key, its instance may be another member's, as a request without an id is a
-    notification."""
+    """Tier 2 reaches each constraint a smallest instance meets: removing any of its keys,
+    all required, at any depth, or misspelling a constant or a listed value at its top,
+    makes MCP's file with the stated rules reject it, and the test above holds the
+    generated file to the same verdict. Unions are left out, since an instance without a
+    key may be another member's, as a request without an id is a notification."""
     defs = parity.load("stated")["$defs"]
     for name, node in defs.items():
         if name in parity.missing_definitions() or "properties" not in node:

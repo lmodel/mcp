@@ -2,7 +2,9 @@
 
 ## One version
 
-The schema models MCP 2026-07-28, the `schema/2026-07-28/` folder at the tag `2026-07-28` of [modelcontextprotocol](https://github.com/modelcontextprotocol/modelcontextprotocol). `upstream/` holds that folder's `schema.json`, `schema.ts` and 129 examples, and the repository's licence, pinned by git object hash. It leaves out the folder's `schema.mdx`, the outline of MCP's reference page. The upstream watch reports a new tag or version folder, a file added to the pinned folder or a change to `schema.mdx`, and any further edit to the pinned files on MCP's default branch. By 2026-11-07 that branch had already edited three of them: `schema.json` (a description), `schema.ts` and one example. The watch knows those edits.
+The schema models MCP 2026-07-28, the `schema/2026-07-28/` folder at the tag `2026-07-28` of [modelcontextprotocol](https://github.com/modelcontextprotocol/modelcontextprotocol). `upstream/` holds that folder's `schema.json`, `schema.ts` and 129 examples, and the repository's licence, pinned by git object hash. It leaves out the folder's `schema.mdx`, the outline of MCP's reference page.
+
+The upstream watch reports a new tag or version folder, a file added to the pinned folder, a change to `schema.mdx`, and an edit to a pinned file on MCP's default branch beyond the three edits it knows: by 2026-11-07, the branch had edited `schema.json` (a description), `schema.ts` and one example.
 
 Before this release, the schema was written by hand against an MCP draft. MCP 2026-07-28 drops initialization, tasks and several requests that draft had, and adds discovery, subscriptions and input-required results, so a script now writes the schema: moving to the next version takes one run of the converter.
 

@@ -20,11 +20,10 @@ def test_dataclasses_and_pydantic_models_import():
 
 def test_pydantic_reads_an_mcp_key():
     """gen-pydantic names a field by its alias where the alias is a Python name, so a model
-    reads MCP's key, such as inputSchema, and a slot named by MCP's key, such as type, reads
-    it as it is. A key under aliases, such as $schema, reads by the schema's name for it,
-    schema_dialect. linkml 1.12.1's gen-pydantic ignores extra_slots, so its models refuse
-    a key the schema does not name, where MCP's objects are open; linkml #3630 asks for
-    it."""
+    reads MCP's key, such as inputSchema, as it reads a slot named by MCP's key, such as
+    type. A key under aliases, such as $schema, reads by the schema's name, schema_dialect.
+    linkml 1.12.1's gen-pydantic ignores extra_slots, so a model refuses a key the schema
+    does not name, where MCP's objects are open (linkml #3630 asks for it)."""
     models = importlib.import_module("mcp.datamodel.mcp_pydantic")
     tool = models.McpTool.model_validate(
         {"name": "t", "inputSchema": {"type": "object"}, "_meta": {}}

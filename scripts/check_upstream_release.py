@@ -6,22 +6,21 @@
 """Check the Model Context Protocol's repository against the version the schema models.
 
 The schema models MCP 2026-07-28, the schema folder of that name at the tag 2026-07-28.
-upstream/ holds that folder's schema.json, schema.ts and examples, and the repository's
-LICENSE, unchanged. These things can change without any change in this repository:
+upstream/ holds the folder's schema.json, schema.ts and examples, and the repository's
+LICENSE, unchanged; the folder's schema.mdx is known by its hash. Any of these, which no
+change here can cause, makes the script exit 1:
 
-- a new tag appears, or a new version folder under schema/;
-- the pinned tag moves, or a pinned file changes or is deleted, or a file is added to the
-  version folder, at the tag or on the default branch, beyond the edits the default branch
-  already held when the pins were read;
-- the licence file on the default branch changes.
+- a new tag, or a new version folder under schema/;
+- the pinned tag moving, or a file of the folder changed, deleted or added, at the tag or
+  on the default branch, beyond the edits the branch held when the pins were read;
+- a change to the licence on the default branch.
 
-The script lists the repository's trees through GitHub's API and compares git object hashes,
-so it downloads no file. scripts/upstream_pins.tsv holds each file's hash. The script prints
-a Markdown report and exits 1 on any of the above, or when a check could not finish.
-
-Text a server chose is quoted as code on one line in the report, so the issue the workflow
-opens from it cannot mention anyone. A redirect is followed only to an https address on
-api.github.com. Set ``GITHUB_TOKEN`` to raise the API's rate limit. Usage::
+It also exits 1 when a check cannot finish. It lists the repository's trees through
+GitHub's API and compares git object hashes with scripts/upstream_pins.tsv, so it
+downloads no file, and prints a Markdown report. Text a server chose is quoted as code on
+one line, so the issue the workflow opens from the report cannot mention anyone. A
+redirect is followed only to an https address on api.github.com. Set ``GITHUB_TOKEN`` to
+raise the API's rate limit. Usage::
 
     python scripts/check_upstream_release.py [--report FILE]
 """

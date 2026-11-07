@@ -43,7 +43,7 @@ npx skills add noelmcloughlin/knowledge-trust-ladder --skill ktl-curator --yes  
 
 - **Change the converter, never its output.** Edit `scripts/mcp_to_linkml.py`, then run `just gen-mcp`, `just gen-project`, `just gen-doc` and `just lokf-adapt`, and commit the output. `src/mcp/schema/mcp.yaml`, `meta/`, `project/`, `src/mcp/datamodel/`, `docs/schema/` and `.lokf/schema/mcp.yaml` are generated.
 - **The schema says what MCP's files say.** `tests/test_parity.py` checks `meta/schema.json` against MCP's `schema.json` over MCP's examples, a smallest instance of each definition and their mutations. A difference goes in `parity/probes.yaml` or `parity/structural.yaml`, with its reason.
-- **MCP's words stay MCP's.** `tests/test_build.py` checks that each description MCP gives is carried unchanged. Text for what MCP leaves undescribed goes in the converter's `DESCRIPTIONS`.
+- **MCP's words stay MCP's.** `tests/test_build.py` checks that each description MCP gives is carried unchanged. Text for what MCP leaves undescribed goes in the converter's `DESCRIPTIONS`, or `CLASS_DESCRIPTIONS` for a definition.
 - **Model the pinned version.** `tests/test_upstream.py` checks that the schema header, `scripts/check_upstream_release.py` and `upstream/` agree.
 - **Keep names apart.** A host imports this adapt copy beside the Linked Open Knowledge Format (LOKF) schema and the released copies in `tests/neighbours/`. `tests/test_schema_rules.py` checks this.
 - **Run the tests**: `just test` (schema generation, `pytest` and the example runner). Examples are MCP messages with MCP's keys, so they go in `tests/data/problem/valid/` and `tests/data/problem/invalid/`, named `ClassName-suffix.yaml`, and `tests/test_data.py` checks them against both files.

@@ -81,14 +81,23 @@ def test_shapes_differ_only_as_listed():
 
 
 def test_mutations_break_each_required_key_and_value():
-    """Every required key, const and value list in MCP's file is broken by some mutation of
-    a smallest instance, so tier 2 tests each constraint the file states."""
-    for name in parity.load("published")["$defs"]:
-        if name in parity.missing_definitions():
+    """Tier 2 reaches each constraint a smallest instance meets. Every key it holds is
+    required, so removing one, at any depth, makes MCP's file with the stated rules reject
+    the instance, and so does misspelling a constant or a listed value at its top. The test
+    above then holds the generated file to the same verdicts. A union is left out: without
+    a key, its instance may be another member's, as a request without an id is a
+    notification."""
+    defs = parity.load("stated")["$defs"]
+    for name, node in defs.items():
+        if name in parity.missing_definitions() or "properties" not in node:
             continue
         instance = parity.smallest(name)
-        if not isinstance(instance, dict):
-            continue
-        labels = {label for label, _ in parity.mutations(instance)}
-        for key in instance:
-            assert f"/{key} removed" in labels, (name, key)
+        for label, value in parity.mutations(instance):
+            if label.endswith(" removed"):
+                assert not parity.verdict("stated", name, value), (name, label)
+        for key, value in instance.items():
+            schema = node["properties"][key]
+            schema = defs.get((schema.get("$ref") or "/").rsplit("/", 1)[-1], schema)
+            if isinstance(value, str) and ("const" in schema or "enum" in schema):
+                misspelt = instance | {key: value + "-x"}
+                assert not parity.verdict("stated", name, misspelt), (name, key)

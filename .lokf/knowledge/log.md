@@ -2,6 +2,8 @@
 
 ## 2026-11-07
 
+* **Changed**: How the schema names MCP's keys says six keys LOKF defines are slots under MCP's key, which the adapt copy renames, from `scripts/mcp_to_linkml.py`.
+* **Changed**: The adapt copy renames the six slots LOKF defines with another meaning, from `.lokf/schema/mcp.yaml`.
 * **Changed**: The converter reads schema.ts's `@internal` and `@deprecated` tags and the type a property names, from `scripts/mcp_to_linkml.py`.
 * **Changed**: The mcp LinkML schema carries MCP's deprecations, from `src/mcp/schema/mcp.yaml`.
 * **Changed**: The upstream watch reports a file added to MCP's version folder, from `scripts/check_upstream_release.py`.

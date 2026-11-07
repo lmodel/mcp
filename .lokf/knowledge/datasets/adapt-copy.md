@@ -9,12 +9,12 @@ derivedFrom:
   - https://w3id.org/lmodel/mcp/knowledge/datasets/mcp-linkml-schema
 generated:
   by: process:ktl-librarian
-  at: "2026-11-07T03:33:30Z"
+  at: "2026-11-07T10:28:20Z"
 status: draft
 ---
 
 # The adapt copy
 
-`just lokf-adapt` writes the copy from the schema, and `just lokf-adapt-check` fails when it is stale. The copy folds MCP's `description`, `title` and `version` into LOKF's, and keeps `name` and `url` as `mcp_name` and `mcp_url`.
+`just lokf-adapt` writes the copy from the schema, and `just lokf-adapt-check` fails when it is stale. The copy folds MCP's `description`, `title` and `version` into LOKF's, and keeps `name` and `url` as `mcp_name` and `mcp_url`. It renames the six slots LOKF defines with another meaning the same way, such as `mcp_type` for `type`, and keeps their IRIs.
 
 A concept may name `McpImplementation`, `McpPrompt`, `McpResource`, `McpResourceLink`, `McpResourceTemplate` or `McpTool` as its type.

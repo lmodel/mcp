@@ -13,16 +13,20 @@ copy of both under upstream/ and writes src/mcp/schema/mcp.yaml:
   states every key the definition has, inherited or not, as schema.json does. An
   inline object becomes a class of its own, named after its owner and key.
 - schema.ts gives the rest: each interface's ``extends`` becomes ``is_a`` and
-  ``mixins``, and its ``@category`` becomes a subset.
-- Each class, enum and type maps exactly to the definition or the inline schema it
-  renders, by a JSON pointer into the published file.
+  ``mixins``, each ``@category`` a subset, ``@internal`` the subset internal, and each
+  ``@deprecated`` tag the ``deprecated`` of what it tags. Where schema.ts gives a
+  property a type MCP defines and schema.json writes the type out, the type is the range.
+- Each class and enum, and each type but the two format types, maps exactly to the
+  definition or the inline schema it renders, by a JSON pointer into the published file.
 
 A key that is no Python name, such as ``$schema`` or ``io.modelcontextprotocol/clientInfo``,
 goes under the attribute's ``aliases``, because gen-python writes an ``alias`` as an
 attribute name. So does a key LOKF defines with another meaning, such as ``type`` or
 ``id`` (OWN_NAMES and lokf_naming below). scripts/mcp_meta.py writes each such key in
 place of the attribute's name when it writes MCP's form.
-Description text MCP leaves out is this project's, from DESCRIPTIONS below.
+Where MCP gives no description, the words are this project's: CLASS_DESCRIPTIONS,
+CONST_DESCRIPTIONS and DESCRIPTIONS below, and the sentences that name a union's members
+or where MCP holds an inline object.
 
 Usage::
 
@@ -889,8 +893,8 @@ def header() -> dict:
 
 
 class _Dumper(yaml.SafeDumper):
-    """Indent lists under their key, as the family's YAML lint asks, and write long text
-    as a folded block."""
+    """Indent lists under their key, as the family's YAML lint asks, and write text that
+    spans lines as a literal block, so MCP's line breaks stay where MCP put them."""
 
     def increase_indent(self, flow=False, indentless=False):
         return super().increase_indent(flow, False)

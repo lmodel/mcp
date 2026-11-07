@@ -2,7 +2,7 @@
 
 ## One version
 
-The schema models MCP 2026-07-28, the `schema/2026-07-28/` folder at the tag `2026-07-28` of [modelcontextprotocol](https://github.com/modelcontextprotocol/modelcontextprotocol). `upstream/` holds that folder's `schema.json`, `schema.ts` and 129 examples, and the repository's licence, pinned by git object hash. The upstream watch reports a new tag or version folder, and any further edit to the pinned files on MCP's default branch. By 2026-11-07 that branch had already edited three of them: `schema.json` (a description), `schema.ts` and one example. The watch knows those edits.
+The schema models MCP 2026-07-28, the `schema/2026-07-28/` folder at the tag `2026-07-28` of [modelcontextprotocol](https://github.com/modelcontextprotocol/modelcontextprotocol). `upstream/` holds that folder's `schema.json`, `schema.ts` and 129 examples, and the repository's licence, pinned by git object hash. It leaves out the folder's `schema.mdx`, the outline of MCP's reference page. The upstream watch reports a new tag or version folder, a file added to the pinned folder or a change to `schema.mdx`, and any further edit to the pinned files on MCP's default branch. By 2026-11-07 that branch had already edited three of them: `schema.json` (a description), `schema.ts` and one example. The watch knows those edits.
 
 Before this release, the schema was written by hand against an MCP draft. MCP 2026-07-28 drops initialization, tasks and several requests that draft had, and adds discovery, subscriptions and input-required results, so a script now writes the schema: moving to the next version takes one run of the converter.
 
@@ -14,10 +14,12 @@ Before this release, the schema was written by hand against an MCP draft. MCP 20
 - A union of definitions, such as `ContentBlock`, is a class whose `any_of` names each member through `is_a`.
 - A list of strings is an enum, and a string or a string-or-integer is a type.
 - An inline object, such as a tool's `inputSchema`, is a class named after its owner and key, such as `McpToolInputSchema`.
-- Each interface's `extends` in `schema.ts` gives `is_a` and `mixins`, and each `@category` a subset.
+- Each interface's `extends` in `schema.ts` gives `is_a` and `mixins`. Each `@category` gives a subset, and `@internal` the subset `internal`.
+- Each `@deprecated` tag in `schema.ts` gives the element or attribute it tags a `deprecated` with the tag's text. `schema.json` drops all 21: MCP 2026-07-28 deprecates sampling, roots and logging. Two deprecations MCP states in words are in the converter's tables: `LegacyTitledEnumSchema`, with `TitledSingleSelectEnumSchema` as its possible replacement, and the `includeContext` values `thisServer` and `allServers`.
+- Where `schema.ts` names a type MCP defines and `schema.json` writes it out, as for `resultType: ResultType`, the attribute's range is that type.
 - Each class and enum, and each type but the format types `McpBase64` and `McpUriTemplate`, maps exactly to the place in `schema.json` it renders, such as `mcp_schema:Tool`.
 
-Each class states every key of its definition, inherited or not, as `schema.json` does. The schema carries MCP's descriptions word for word. Where MCP gives a property none, the converter takes `CONST_DESCRIPTIONS` for a constant, then the description of the definition the property refers to, then `DESCRIPTIONS`. An inline object MCP does not describe gets a sentence that names where MCP holds it.
+Each class states every key of its definition, inherited or not, as `schema.json` does. The schema carries MCP's descriptions word for word. Where MCP gives a property none, the converter takes `CONST_DESCRIPTIONS` for a constant, then the description of the definition the property refers to, then `DESCRIPTIONS`. A definition MCP does not describe takes `CLASS_DESCRIPTIONS`, or for a union, the names of its members. An inline object MCP does not describe gets a sentence that names where MCP holds it.
 
 ## Keys
 

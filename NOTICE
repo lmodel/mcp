@@ -39,11 +39,12 @@ matched by git object hash in scripts/upstream_pins.tsv:
   publishes it.
 
 The schema keeps MCP's own descriptions, word for word, where schema.json
-gives one, and so do the files generated from it. Those descriptions are
-MCP's work under the terms above, not this project's. Where MCP gives no
-description, the words are this project's (scripts/mcp_to_linkml.py lists
-them). The structure, names and constraints follow schema.json, and
-meta/schema.json is MCP's schema regenerated from that rendering.
+gives one, and the text of each @deprecated tag in schema.ts, and so do the
+files generated from it. Those texts are MCP's work under the terms above,
+not this project's. Where MCP gives no description, the words are this
+project's (scripts/mcp_to_linkml.py lists them). The structure, names and
+constraints follow schema.json and schema.ts, and meta/schema.json is MCP's
+schema regenerated from that rendering.
 
 linkml-project-copier
 ---------------------

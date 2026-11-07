@@ -9,7 +9,8 @@ The `v0.0.0` tag is a baseline, not a release: it marks where versioning starts 
 ### Added
 
 - **`upstream/`**, holding MCP 2026-07-28's `schema.json`, `schema.ts`, examples and licence at the tag `2026-07-28`, pinned by git object hash, with a weekly watch.
-- **`scripts/mcp_to_linkml.py`**, which writes the schema from MCP's files: a class per object, a union class per union, enums and types, `is_a` from `schema.ts`, a subset per category, and an exact mapping from each element to the place it renders.
+- **`scripts/mcp_to_linkml.py`**, which writes the schema from MCP's files: a class per object, a union class per union, enums and types, `is_a` and subsets from `schema.ts`, and an exact mapping from each element to the place it renders.
+- **MCP's deprecations.** `schema.json` drops the 21 `@deprecated` tags of `schema.ts`. The schema marks what each one tags, so sampling, roots and logging read as deprecated in 2026-07-28.
 - **`meta/schema.json`**, MCP's `schema.json` written again from the schema, and tests that hold it to MCP's in three tiers over MCP's examples and their mutations.
 - **The rule MCP's description gives `InputRequiredResult`**: at least one of `inputRequests` or `requestState`.
 - **`.lokf/schema/mcp.yaml`, the schema's `lokf adapt` copy**, rooted on the implementation, tools, resources, resource templates and prompts. The knowledge release attaches it as `schema-<tag>-mcp.yaml`.

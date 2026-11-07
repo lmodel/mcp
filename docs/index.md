@@ -19,7 +19,7 @@ validator = Draft202012Validator({**schema, "$ref": "#/$defs/CallToolRequest"})
 validator.validate(json.load(open("my-request.json")))
 ```
 
-`project/jsonschema/mcp.schema.json` and the Python models in `src/mcp/datamodel/` use the schema's own names, so a key such as `type` reads `kind` there ([About](about.md#keys)).
+`project/jsonschema/mcp.schema.json` and the Python models in `src/mcp/datamodel/` use the schema's own names, so a key such as `$schema` reads `schema_dialect` there ([About](about.md#keys)).
 
 ## A message
 

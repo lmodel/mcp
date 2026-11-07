@@ -28,7 +28,8 @@ A slot's alias is MCP's key, such as `input_schema` for `inputSchema`. Some keys
 - `_meta` is `meta`, with `_meta` as its alias.
 - `$schema` and the reserved `io.modelcontextprotocol/...` keys are no Python names, so they are listed under `aliases`: `schema_dialect`, and `mcp_client_capabilities` and its siblings.
 - `name`, `title`, `description`, `url` and `version` mean what LOKF means by them, so they are slots with LOKF's schema.org IRIs.
-- Eight keys LOKF defines with another meaning take a name of their own, with MCP's key under `aliases`. `type` is `kind`, `id` is `identifier`, `audience` is `intended_audience`, `context` is `context_info`, `reason` is `reason_text`, `resource` is `resource_contents`, a capability's `url` is `url_settings`, and a list of required names is `required_names`.
+- Six keys LOKF defines with another meaning, `type`, `id`, `audience`, `context`, `reason` and `resource`, are slots under MCP's key with an IRI in this schema's namespace. The adapt copy renames them, such as `mcp_type` for `type`, and keeps the IRIs.
+- Two keys MCP gives two meanings, and one of each takes a name of its own, with MCP's key under `aliases`: a capability's `url` is `url_settings`, and a list of required names is `required_names`.
 
 For each key listed under `aliases`, `scripts/mcp_meta.py` writes that key in place of the slot's name in `meta/schema.json`.
 

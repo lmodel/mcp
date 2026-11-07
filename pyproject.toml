@@ -3,8 +3,10 @@ requires = ["hatchling", "uv-dynamic-versioning"]
 build-backend = "hatchling.build"
 
 [project]
-name = "mcp"
-description = "Model Context Protocol LinkML Schema"
+# Named like lmodel/slsa's slsa-linkml, so the PyPI name says what it holds and
+# stays clear of the MCP SDK's "mcp". PyPI publishing is off.
+name = "mcp-linkml"
+description = "Model Context Protocol (MCP) 2026-07-28 (LinkML)"
 authors = [
   {name = "Noel McLoughlin", email = "noel.mcloughlin@gmail.com"},
 ]
@@ -15,18 +17,22 @@ requires-python = ">=3.10"
 dynamic = ["version"]
 
 dependencies = [
-  "linkml-runtime >=1.9.4",
+  "linkml-runtime >=1.12.1",
 ]
 
 [dependency-groups]
 dev = [
-    "linkml>=1.9.3",
+    "jsonschema>=4.26.0",
+    "linkml>=1.12.1",
     "mkdocs-material>=8.2.8",
     "mkdocs-mermaid2-plugin>=1.1.1",
     "mkdocs-pymdownx-material-extras>=2.5.6",
     "jupyter>=1.0.0",
     "mknotebooks>= 0.8.0",
 ]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcp"]
 
 # See https://hatch.pypa.io/latest/config/build/#file-selection for how to
 # explicitly include files other than default into the build distributions.

@@ -1,6 +1,6 @@
 """mcp.
 
-Model Context Protocol LinkML Schema
+Model Context Protocol (MCP) 2026-07-28 (LinkML)
 """
 
 try:

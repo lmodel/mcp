@@ -10,7 +10,7 @@ gh_action_docs_preview: false
 gh_action_pypi: false
 github_org: lmodel
 license: Apache-2.0
-project_description: Model Context Protocol LinkML Schema
+project_description: Model Context Protocol (MCP) 2026-07-28 (LinkML)
 project_name: mcp
 project_slug: mcp
 

@@ -8,7 +8,7 @@
 # - just works fine with quoted variables of dot-env files like this one
 LINKML_SCHEMA_NAME="mcp"
 LINKML_SCHEMA_AUTHOR="Noel McLoughlin <noel.mcloughlin@gmail.com>"
-LINKML_SCHEMA_DESCRIPTION="Model Context Protocol LinkML Schema"
+LINKML_SCHEMA_DESCRIPTION="Model Context Protocol (MCP) 2026-07-28 (LinkML)"
 LINKML_SCHEMA_SOURCE_DIR="src/mcp/schema"
 
 ###### linkml generator variables, used by justfile

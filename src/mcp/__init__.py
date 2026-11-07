@@ -1,3 +1,8 @@
+"""mcp.
+
+Model Context Protocol LinkML Schema
+"""
+
 try:
     from mcp._version import __version__, __version_tuple__
 except ImportError:  # pragma: no cover

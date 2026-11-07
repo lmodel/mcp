@@ -4,9 +4,9 @@
 
 The schema models MCP 2026-07-28, the `schema/2026-07-28/` folder at the tag `2026-07-28` of [modelcontextprotocol](https://github.com/modelcontextprotocol/modelcontextprotocol). `upstream/` holds that folder's `schema.json`, `schema.ts` and 129 examples, and the repository's licence, pinned by git object hash. It leaves out the folder's `schema.mdx`, the outline of MCP's reference page.
 
-The upstream watch reports a new tag or version folder, a file added to the pinned folder, a change to `schema.mdx`, and an edit to a pinned file on MCP's default branch beyond the three edits it knows: by 2026-11-07, the branch had edited `schema.json` (a description), `schema.ts` and one example.
+The upstream watch reports a new tag or version folder, a file added to the pinned folder, a change to `schema.mdx`, and an edit to a pinned file on MCP's default branch beyond the three edits it knows. By 2026-11-07, the branch had edited `schema.json` (a description), `schema.ts` and one example.
 
-Before this release, the schema was written by hand against an MCP draft. MCP 2026-07-28 drops initialization, tasks and several requests that draft had, and adds discovery, subscriptions and input-required results, so a script now writes the schema: moving to the next version takes one run of the converter.
+Before this release, the schema was written by hand against an MCP draft. MCP 2026-07-28 drops initialization, tasks and several requests that draft had, and adds discovery, subscriptions and input-required results. So a script now writes the schema: moving to the next version takes one run of the converter.
 
 ## How the converter reads MCP
 
@@ -28,10 +28,10 @@ Each class states every key of its definition, inherited or not, as `schema.json
 A slot's alias is MCP's key, such as `input_schema` for `inputSchema`. Some keys need more:
 
 - `_meta` is `meta`, with `_meta` as its alias.
-- `$schema` and the reserved `io.modelcontextprotocol/...` keys are no Python names, so they are listed under `aliases`: `schema_dialect`, and `mcp_client_capabilities` and its siblings.
+- `$schema` and the reserved `io.modelcontextprotocol/...` keys are not valid Python names, so they are listed under `aliases`: `schema_dialect`, and `mcp_client_capabilities` and its siblings.
 - `name`, `title`, `description`, `url` and `version` mean what LOKF means by them, so they are slots with LOKF's schema.org IRIs.
-- Six keys LOKF defines with another meaning, `type`, `id`, `audience`, `context`, `reason` and `resource`, are slots under MCP's key with an IRI in this schema's namespace. The adapt copy renames them, such as `mcp_type` for `type`, and keeps the IRIs.
-- Two keys MCP gives two meanings, and one of each takes a name of its own, with MCP's key under `aliases`: a capability's `url` is `url_settings`, and a list of required names is `required_names`.
+- Six keys LOKF defines with another meaning are slots under MCP's key, with an IRI in this schema's namespace: `type`, `id`, `audience`, `context`, `reason` and `resource`. The adapt copy renames them, such as `mcp_type` for `type`, and keeps the IRIs.
+- MCP gives two keys two meanings each. For one meaning of each, the schema uses a name of its own, with MCP's key under `aliases`: a capability's `url` is `url_settings`, and a list of required names is `required_names`.
 
 For each key listed under `aliases`, `scripts/mcp_meta.py` writes that key in place of the slot's name in `meta/schema.json`.
 

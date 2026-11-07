@@ -49,7 +49,7 @@ In the copy, the classes a person documents about an MCP server descend from `Co
 McpImplementation, McpPrompt, McpResource, McpResourceLink, McpResourceTemplate, McpTool
 ```
 
-MCP's `description`, `title` and `version` fold into LOKF's, which mean the same. The copy renames `name` and `url` to `mcp_name` and `mcp_url`, and six keys LOKF defines with another meaning the same way, such as `type` to `mcp_type`. [docs/about.md](docs/about.md#keys) lists them. `tests/test_schema_rules.py` keeps the copy's keys apart from LOKF and the released copies in `tests/neighbours/`.
+MCP's `description`, `title` and `version` fold into LOKF's, which mean the same. The copy renames `name` and `url` to `mcp_name` and `mcp_url`, and six keys LOKF defines with another meaning the same way, such as `type` to `mcp_type`. [docs/about.md](docs/about.md#keys) lists them. `tests/test_schema_rules.py` checks the copy's keys against those of LOKF and of the released copies in `tests/neighbours/`.
 
 ## License
 

@@ -16,7 +16,7 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpClientCapabilitiesSampling  {
 
-  private McpJSONObject contextInfo;
+  private McpJSONObject context;
   private McpJSONObject tools;
 
 

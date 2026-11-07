@@ -18,9 +18,9 @@ public class McpUntitledSingleSelectEnumSchema  {
 
   private String description;
   private String title;
+  private String type;
   private String default_;
   private List<String> enum_;
-  private String kind;
 
 
 }

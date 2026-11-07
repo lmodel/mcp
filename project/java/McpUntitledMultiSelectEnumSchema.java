@@ -18,11 +18,11 @@ public class McpUntitledMultiSelectEnumSchema  {
 
   private String description;
   private String title;
+  private String type;
   private List<String> default_;
   private McpUntitledMultiSelectEnumSchemaItems items;
   private Integer maxItems;
   private Integer minItems;
-  private String kind;
 
 
 }

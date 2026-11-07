@@ -17,10 +17,10 @@ Only top-level properties are allowed, without nesting.
 @EqualsAndHashCode(callSuper=false)
 public class McpElicitRequestFormParamsRequestedSchema  {
 
+  private String type;
   private String schemaDialect;
   private McpElicitRequestFormParamsRequestedSchemaProperties properties;
   private List<String> requiredNames;
-  private String kind;
 
 
 }

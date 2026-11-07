@@ -19,10 +19,10 @@ of the LLM and/or the user.
 @EqualsAndHashCode(callSuper=false)
 public class McpEmbeddedResource  {
 
+  private String resource;
+  private String type;
   private McpMetaObject meta;
   private McpAnnotations annotations;
-  private String resourceContents;
-  private String kind;
 
 
 }

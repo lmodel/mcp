@@ -18,9 +18,9 @@ public class McpTitledSingleSelectEnumSchema  {
 
   private String description;
   private String title;
+  private String type;
   private String default_;
   private List<McpTitledSingleSelectEnumSchemaOneOf> oneOf;
-  private String kind;
 
 
 }

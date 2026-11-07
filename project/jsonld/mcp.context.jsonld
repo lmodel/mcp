@@ -7,16 +7,17 @@
       "schema": "http://schema.org/",
       "skos": "http://www.w3.org/2004/02/skos/core#",
       "@vocab": "https://w3id.org/lmodel/mcp/",
+      "audience": {
+         "@id": "audience"
+      },
+      "context": {
+         "@id": "context"
+      },
       "description": {
          "@id": "schema:description"
       },
-      "intended_audience": {
-         "@context": {
-            "text": "skos:notation",
-            "description": "skos:prefLabel",
-            "meaning": "@id"
-         },
-         "@id": "intended_audience"
+      "id": {
+         "@id": "id"
       },
       "lastModified": {
          "@id": "lastModified"
@@ -32,9 +33,6 @@
       "data": {
          "@type": "@id",
          "@id": "data"
-      },
-      "kind": {
-         "@id": "kind"
       },
       "_meta": {
          "@type": "@id",
@@ -68,9 +66,6 @@
       "ttlMs": {
          "@type": "xsd:integer",
          "@id": "ttlMs"
-      },
-      "identifier": {
-         "@id": "identifier"
       },
       "jsonrpc": {
          "@id": "jsonrpc"
@@ -109,9 +104,6 @@
          "@type": "@id",
          "@id": "result"
       },
-      "reason_text": {
-         "@id": "reason_text"
-      },
       "requestId": {
          "@id": "requestId"
       },
@@ -142,10 +134,6 @@
       "url_settings": {
          "@type": "@id",
          "@id": "url_settings"
-      },
-      "context_info": {
-         "@type": "@id",
-         "@id": "context_info"
       },
       "tools": {
          "@type": "@id",
@@ -271,10 +259,6 @@
             "meaning": "@id"
          },
          "@id": "action"
-      },
-      "resource_contents": {
-         "@type": "@id",
-         "@id": "resource_contents"
       },
       "code": {
          "@type": "xsd:integer",
@@ -539,8 +523,17 @@
       "name": {
          "@id": "schema:name"
       },
+      "reason": {
+         "@id": "reason"
+      },
+      "resource": {
+         "@id": "resource"
+      },
       "title": {
          "@id": "schema:name"
+      },
+      "type": {
+         "@id": "type"
       },
       "url": {
          "@type": "xsd:anyURI",
@@ -601,7 +594,13 @@
          "@id": "McpClientCapabilitiesRoots"
       },
       "McpClientCapabilitiesSampling": {
-         "@id": "McpClientCapabilitiesSampling"
+         "@id": "McpClientCapabilitiesSampling",
+         "@context": {
+            "context": {
+               "@id": "context",
+               "@type": "@id"
+            }
+         }
       },
       "McpClientNotification": {
          "@id": "McpClientNotification"
@@ -616,7 +615,13 @@
          "@id": "McpCompleteRequest"
       },
       "McpCompleteRequestParams": {
-         "@id": "McpCompleteRequestParams"
+         "@id": "McpCompleteRequestParams",
+         "@context": {
+            "context": {
+               "@id": "context",
+               "@type": "@id"
+            }
+         }
       },
       "McpCompleteRequestParamsArgument": {
          "@id": "McpCompleteRequestParamsArgument"

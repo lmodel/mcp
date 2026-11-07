@@ -21,8 +21,10 @@ copy of both under upstream/ and writes src/mcp/schema/mcp.yaml:
 
 A key that is no Python name, such as ``$schema`` or ``io.modelcontextprotocol/clientInfo``,
 goes under the attribute's ``aliases``, because gen-python writes an ``alias`` as an
-attribute name. So does a key LOKF defines with another meaning, such as ``type`` or
-``id`` (OWN_NAMES and lokf_naming below). scripts/mcp_meta.py writes each such key in
+attribute name. A key LOKF defines with another meaning, such as ``type`` or ``id``, is a
+slot under MCP's key, which lokf adapt renames in the copy (KEY_SLOTS below); where MCP
+gives such a key two meanings, one takes a name of its own, with MCP's key under
+``aliases`` (lokf_naming below). scripts/mcp_meta.py writes each key under ``aliases`` in
 place of the attribute's name when it writes MCP's form.
 Where MCP gives no description, the words are this project's: CLASS_DESCRIPTIONS,
 CONST_DESCRIPTIONS and DESCRIPTIONS below, and the sentences that name a union's members
@@ -186,9 +188,7 @@ def snake(key: str) -> str:
 # Keys that LOKF also defines. Where MCP's meaning is LOKF's, the key is a slot of the
 # schema's own with the schema.org IRI LOKF gives it. Every class whose key has that
 # meaning shares the slot, as lmodel/calm's name and description are shared, and each
-# class states its own description of the key in slot_usage. Where the meaning differs,
-# the attribute takes a name of its own and lists MCP's key under aliases, so a
-# composite with LOKF never projects MCP's key under LOKF's IRI.
+# class states its own description of the key in slot_usage.
 SHARED_SLOTS = {
     "name": {
         "slot_uri": "schema:name",
@@ -212,13 +212,20 @@ SHARED_SLOTS = {
         "description": "A version string.",
     },
 }
-OWN_NAMES = {
-    "type": "kind",
-    "id": "identifier",
-    "audience": "intended_audience",
-    "context": "context_info",
-    "reason": "reason_text",
-    "resource": "resource_contents",
+# Keys that LOKF defines with another meaning. Each is a slot of the schema's own under
+# MCP's key, with an IRI in the schema's namespace, and every class that has the key uses
+# it through slots and slot_usage, as lmodel/in-toto's predicate and lmodel/opa's keys do.
+# lokf adapt renames each in the copy, as mcp_type for type, and keeps its IRI, so a
+# composite with LOKF never reads MCP's key as LOKF's. A key that MCP gives two meanings,
+# url and required, cannot be one slot: lokf_naming names the one LOKF does not share.
+KEY_SLOTS = {
+    "type": "The kind of an object or a value, as a constant or a value from a list.",
+    "id": "An identifier: of a JSON-RPC request, or of a tool use.",
+    "audience": "Who an object or its data is for.",
+    "context": "Context: for a completion, the arguments resolved so far; for sampling, support "
+    "for including it.",
+    "reason": "Why something happened, such as a request's cancellation, for people to read.",
+    "resource": "The contents of a resource embedded in a message.",
 }
 
 
@@ -236,8 +243,6 @@ def lokf_naming(key: str, prop: dict) -> tuple[str, str | None]:
     else (snake(key), None). A url that holds a capability's settings is not LOKF's url;
     a required flag is schema:valueRequired, as LOKF's is, and a list of required names
     is not LOKF's required."""
-    if key in OWN_NAMES:
-        return OWN_NAMES[key], None
     if key == "url":
         return "url_settings", None
     if key == "required":
@@ -662,12 +667,16 @@ class Converter:
         required = set(node.get("required") or [])
         attributes = {}
         for key, prop in (node.get("properties") or {}).items():
-            if shared_slot(key, prop):
+            if shared_slot(key, prop) or key in KEY_SLOTS:
                 element.setdefault("slots", []).append(key)
                 usage = {"description": self.prop_text(key, prop, owner)}
                 if pointer == owner:
                     self.deprecate(
                         usage, self.ts.of_key(self.ts.deprecated_keys, owner, key)
+                    )
+                if key in KEY_SLOTS:
+                    usage |= self.expression(
+                        prop, cls_name, key, f"{pointer}/properties/{key}"
                     )
                 if key in required:
                     usage["required"] = True
@@ -695,11 +704,7 @@ class Converter:
         if iri:
             slot["slot_uri"] = iri
         if name != key:
-            if (
-                key.isidentifier()
-                and key not in OWN_NAMES
-                and key not in ("url", "required")
-            ):
+            if key.isidentifier() and key not in ("url", "required"):
                 slot["alias"] = key
             else:
                 slot["aliases"] = [key]
@@ -924,14 +929,18 @@ def render() -> str:
     schema = header()
     schema["subsets"] = dict(sorted(converter.subsets.items()))
     schema["types"] = dict(sorted(converter.types.items()))
+    slots = SHARED_SLOTS | {
+        key: {"description": text, "slot_uri": f"mcp:{key}"}
+        for key, text in KEY_SLOTS.items()
+    }
     schema["slots"] = {
         key: {
             k: v
             for k, v in sorted(
-                SHARED_SLOTS[key].items(), key=lambda kv: kv[0] != "description"
+                slots[key].items(), key=lambda kv: kv[0] != "description"
             )
         }
-        for key in sorted(SHARED_SLOTS)
+        for key in sorted(slots)
     }
     schema["enums"] = dict(sorted(converter.enums.items()))
     schema["classes"] = dict(sorted(converter.classes.items()))

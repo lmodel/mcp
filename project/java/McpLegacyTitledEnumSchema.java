@@ -19,10 +19,10 @@ public class McpLegacyTitledEnumSchema  {
 
   private String description;
   private String title;
+  private String type;
   private String default_;
   private List<String> enum_;
   private List<String> enumNames;
-  private String kind;
 
 
 }

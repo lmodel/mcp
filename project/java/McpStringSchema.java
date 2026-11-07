@@ -18,11 +18,11 @@ public class McpStringSchema  {
 
   private String description;
   private String title;
+  private String type;
   private String default_;
   private String format;
   private Integer maxLength;
   private Integer minLength;
-  private String kind;
 
 
 }

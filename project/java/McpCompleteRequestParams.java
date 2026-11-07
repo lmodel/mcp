@@ -16,8 +16,8 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpCompleteRequestParams extends McpRequestParams {
 
+  private McpCompleteRequestParamsContext context;
   private McpCompleteRequestParamsArgument argument;
-  private McpCompleteRequestParamsContext contextInfo;
   private String ref;
 
 

@@ -93,7 +93,7 @@ export interface McpAnnotations {
     /** Describes who the intended audience of this object or data is.
 
 It can include multiple entries to indicate content useful for multiple audiences (e.g., `["user", "assistant"]`). */
-    intended_audience?: string,
+    audience?: string,
     /** The moment the resource was last modified, as an ISO 8601 formatted string.
 
 Should be an ISO 8601 formatted string (e.g., "2025-01-12T15:00:58Z").
@@ -114,6 +114,8 @@ the data is entirely optional. */
  * Audio provided to or from an LLM.
  */
 export interface McpAudioContent {
+    /** The kind of object, always `audio`. */
+    type: string,
     /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
 
 Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
@@ -136,8 +138,6 @@ Valid keys have two segments:
     data: string,
     /** The MIME type of the audio. Different providers may support different audio types. */
     mimeType: string,
-    /** The kind of object, always `audio`. */
-    kind: string,
 }
 
 
@@ -194,10 +194,10 @@ export interface McpBooleanSchema {
     description?: string,
     /** A title for the field. */
     title?: string,
+    /** The kind of object, always `boolean`. */
+    type: string,
     /** The value the field takes when the user gives none. */
     default?: boolean,
-    /** The kind of object, always `boolean`. */
-    kind: string,
 }
 
 
@@ -243,7 +243,7 @@ analogous to HTTP Cache-Control max-age.
  */
 export interface McpCallToolRequest extends McpJSONRPCRequest {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** The method's name, always `tools/call`. */
@@ -314,7 +314,7 @@ that conforms to the tool's outputSchema if one is defined. */
  */
 export interface McpCallToolResultResponse extends McpJSONRPCResultResponse {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** What the request returned. */
@@ -345,10 +345,10 @@ export interface McpCancelledNotification extends McpJSONRPCNotification {
  * Parameters for a `notifications/cancelled` notification.
  */
 export interface McpCancelledNotificationParams extends McpNotificationParams {
+    /** An optional string describing the reason for the cancellation. This MAY be logged or presented to the user. */
+    reason?: string,
     /** Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply. */
     _meta?: McpNotificationMetaObject,
-    /** An optional string describing the reason for the cancellation. This MAY be logged or presented to the user. */
-    reason_text?: string,
     /** The ID of the request to cancel.
 
 This MUST correspond to the ID of a request the client previously issued. */
@@ -421,7 +421,7 @@ export interface McpClientCapabilitiesRoots {
 export interface McpClientCapabilitiesSampling {
     /** Whether the client supports context inclusion via `includeContext` parameter.
 If not declared, servers SHOULD only use `includeContext: "none"` (or omit it). */
-    context_info?: McpJSONObject,
+    context?: McpJSONObject,
     /** Whether the client supports tool use via `tools` and `toolChoice` parameters. */
     tools?: McpJSONObject,
 }
@@ -465,7 +465,7 @@ export interface McpClientResult extends McpEmptyResult {
  */
 export interface McpCompleteRequest extends McpJSONRPCRequest {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** The method's name, always `completion/complete`. */
@@ -479,12 +479,12 @@ export interface McpCompleteRequest extends McpJSONRPCRequest {
  * Parameters for a `completion/complete` request.
  */
 export interface McpCompleteRequestParams extends McpRequestParams {
+    /** Additional, optional context for completions */
+    context?: McpCompleteRequestParamsContext,
     /** Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply. */
     _meta: McpRequestMetaObject,
     /** The argument's information */
     argument: McpCompleteRequestParamsArgument,
-    /** Additional, optional context for completions */
-    context_info?: McpCompleteRequestParamsContext,
     /** What the completion is for: a prompt or a resource template. */
     ref: string,
 }
@@ -554,7 +554,7 @@ export interface McpCompleteResultCompletion {
  */
 export interface McpCompleteResultResponse extends McpJSONRPCResultResponse {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** The result returned by the server for a {@link CompleteRequestcompletion/complete} request. */
@@ -666,7 +666,7 @@ to — version negotiation can also happen inline via per-request `_meta`.
  */
 export interface McpDiscoverRequest extends McpJSONRPCRequest {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** The method's name, always `server/discover`. */
@@ -730,7 +730,7 @@ analogous to HTTP Cache-Control max-age.
  */
 export interface McpDiscoverResultResponse extends McpJSONRPCResultResponse {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** The result returned by the server for a {@link DiscoverRequestserver/discover} request. */
@@ -768,14 +768,14 @@ Only top-level properties are allowed, without nesting. */
 Only top-level properties are allowed, without nesting.
  */
 export interface McpElicitRequestFormParamsRequestedSchema {
+    /** The kind of object, always `object`. */
+    type: string,
     /** The JSON Schema dialect the schema is written in. */
     schema_dialect?: string,
     /** The fields of the form, by name. */
     properties: McpElicitRequestFormParamsRequestedSchemaProperties,
     /** The names of the fields the user must fill in. */
     required_names?: string[],
-    /** The kind of object, always `object`. */
-    kind: string,
 }
 
 
@@ -838,6 +838,10 @@ It is up to the client how best to render embedded resources for the benefit
 of the LLM and/or the user.
  */
 export interface McpEmbeddedResource {
+    /** The resource's contents, as text or as binary data. */
+    resource: string,
+    /** The kind of object, always `resource`. */
+    type: string,
     /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
 
 Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
@@ -856,10 +860,6 @@ Valid keys have two segments:
     _meta?: McpMetaObject,
     /** Optional annotations for the client. */
     annotations?: McpAnnotations,
-    /** The resource's contents, as text or as binary data. */
-    resource_contents: string,
-    /** The kind of object, always `resource`. */
-    kind: string,
 }
 
 
@@ -895,7 +895,7 @@ export interface McpError {
  */
 export interface McpGetPromptRequest extends McpJSONRPCRequest {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** The method's name, always `prompts/get`. */
@@ -960,7 +960,7 @@ server implementing an earlier protocol version (which does not include
  */
 export interface McpGetPromptResultResponse extends McpJSONRPCResultResponse {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** What the request returned. */
@@ -975,10 +975,10 @@ because required headers are missing or malformed. For HTTP, the response
 status code MUST be `400 Bad Request`.
  */
 export interface McpHeaderMismatchError extends McpJSONRPCErrorResponse {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id?: string,
     /** The error the request ended with. */
     error: McpHeaderMismatchErrorError,
-    /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier?: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
 }
@@ -1044,6 +1044,8 @@ Clients that support rendering icons SHOULD also support:
  * An image provided to or from an LLM.
  */
 export interface McpImageContent {
+    /** The kind of object, always `image`. */
+    type: string,
     /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
 
 Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
@@ -1066,8 +1068,6 @@ Valid keys have two segments:
     data: string,
     /** The MIME type of the image. Different providers may support different image types. */
     mimeType: string,
-    /** The kind of object, always `image`. */
-    kind: string,
 }
 
 
@@ -1237,10 +1237,10 @@ export interface McpJSONObject {
  * A response to a request that indicates an error occurred.
  */
 export interface McpJSONRPCErrorResponse {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id?: string,
     /** The error the request ended with. */
     error: McpError,
-    /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier?: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
 }
@@ -1271,7 +1271,7 @@ export interface McpJSONRPCNotification extends McpNotification {
  */
 export interface McpJSONRPCRequest extends McpRequest {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** The name of the method. */
@@ -1293,7 +1293,7 @@ export interface McpJSONRPCResponse {
  */
 export interface McpJSONRPCResultResponse {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** Common result fields. */
@@ -1317,6 +1317,8 @@ export interface McpLegacyTitledEnumSchema {
     description?: string,
     /** A title for the field. */
     title?: string,
+    /** The kind of object, always `string`. */
+    type: string,
     /** The value the field takes when the user gives none. */
     default?: string,
     /** The values the field offers. */
@@ -1324,8 +1326,6 @@ export interface McpLegacyTitledEnumSchema {
     /** (Legacy) Display names for enum values.
 Non-standard according to JSON schema 2020-12. */
     enumNames?: string[],
-    /** The kind of object, always `string`. */
-    kind: string,
 }
 
 
@@ -1334,7 +1334,7 @@ Non-standard according to JSON schema 2020-12. */
  */
 export interface McpListPromptsRequest extends McpPaginatedRequest {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** The method's name, always `prompts/list`. */
@@ -1391,7 +1391,7 @@ analogous to HTTP Cache-Control max-age.
  */
 export interface McpListPromptsResultResponse extends McpJSONRPCResultResponse {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** The result returned by the server for a {@link ListPromptsRequestprompts/list} request. */
@@ -1404,7 +1404,7 @@ export interface McpListPromptsResultResponse extends McpJSONRPCResultResponse {
  */
 export interface McpListResourceTemplatesRequest extends McpPaginatedRequest {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** The method's name, always `resources/templates/list`. */
@@ -1461,7 +1461,7 @@ analogous to HTTP Cache-Control max-age.
  */
 export interface McpListResourceTemplatesResultResponse extends McpJSONRPCResultResponse {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** The result returned by the server for a {@link ListResourceTemplatesRequestresources/templates/list} request. */
@@ -1474,7 +1474,7 @@ export interface McpListResourceTemplatesResultResponse extends McpJSONRPCResult
  */
 export interface McpListResourcesRequest extends McpPaginatedRequest {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** The method's name, always `resources/list`. */
@@ -1531,7 +1531,7 @@ analogous to HTTP Cache-Control max-age.
  */
 export interface McpListResourcesResultResponse extends McpJSONRPCResultResponse {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** The result returned by the server for a {@link ListResourcesRequestresources/list} request. */
@@ -1595,7 +1595,7 @@ export interface McpListRootsResult {
  */
 export interface McpListToolsRequest extends McpPaginatedRequest {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** The method's name, always `tools/list`. */
@@ -1652,7 +1652,7 @@ analogous to HTTP Cache-Control max-age.
  */
 export interface McpListToolsResultResponse extends McpJSONRPCResultResponse {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** The result returned by the server for a {@link ListToolsRequesttools/list} request. */
@@ -1732,10 +1732,10 @@ declare in `clientCapabilities`. For HTTP, the response status code MUST be
 `400 Bad Request`.
  */
 export interface McpMissingRequiredClientCapabilityError extends McpJSONRPCErrorResponse {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id?: string,
     /** The error the request ended with. */
     error: McpMissingRequiredClientCapabilityErrorError,
-    /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier?: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
 }
@@ -1871,14 +1871,14 @@ export interface McpNumberSchema {
     description?: string,
     /** A title for the field. */
     title?: string,
+    /** The kind of value the field takes. */
+    type: string,
     /** The value the field takes when the user gives none. */
     default?: number,
     /** The largest value the field accepts. */
     maximum?: number,
     /** The smallest value the field accepts. */
     minimum?: number,
-    /** The kind of value the field takes. */
-    kind: string,
 }
 
 
@@ -1887,7 +1887,7 @@ export interface McpNumberSchema {
  */
 export interface McpPaginatedRequest extends McpJSONRPCRequest {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** The name of the method. */
@@ -2087,7 +2087,7 @@ where `annotations.title` should be given precedence over using `name`,
 if present). */
     title?: string,
     /** The kind of object, always `ref/prompt`. */
-    kind: string,
+    type: string,
 }
 
 
@@ -2096,7 +2096,7 @@ if present). */
  */
 export interface McpReadResourceRequest extends McpJSONRPCRequest {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** The method's name, always `resources/read`. */
@@ -2167,7 +2167,7 @@ analogous to HTTP Cache-Control max-age.
  */
 export interface McpReadResourceResultResponse extends McpJSONRPCResultResponse {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** What the request returned. */
@@ -2337,6 +2337,8 @@ If not provided, the name should be used for display (except for {@link Tool},
 where `annotations.title` should be given precedence over using `name`,
 if present). */
     title?: string,
+    /** The kind of object, always `resource_link`. */
+    type: string,
     /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
 
 Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
@@ -2371,8 +2373,6 @@ Clients that support rendering icons SHOULD also support:
 
 This can be used by Hosts to display file sizes and estimate context window usage. */
     size?: number,
-    /** The kind of object, always `resource_link`. */
-    kind: string,
     /** The URI of this resource. */
     uri: string,
 }
@@ -2459,7 +2459,7 @@ Clients that support rendering icons SHOULD also support:
  */
 export interface McpResourceTemplateReference {
     /** The kind of object, always `ref/resource`. */
-    kind: string,
+    type: string,
     /** The URI or URI template of the resource. */
     uri: string,
 }
@@ -2693,6 +2693,8 @@ export interface McpStringSchema {
     description?: string,
     /** A title for the field. */
     title?: string,
+    /** The kind of object, always `string`. */
+    type: string,
     /** The value the field takes when the user gives none. */
     default?: string,
     /** The format the string must have. */
@@ -2701,8 +2703,6 @@ export interface McpStringSchema {
     maxLength?: number,
     /** The fewest characters the field accepts. */
     minLength?: number,
-    /** The kind of object, always `string`. */
-    kind: string,
 }
 
 
@@ -2769,7 +2769,7 @@ endpoint and ensures consistent behavior between HTTP and STDIO.
  */
 export interface McpSubscriptionsListenRequest extends McpJSONRPCRequest {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** The method's name, always `subscriptions/listen`. */
@@ -2846,7 +2846,7 @@ request, sent when the server tears the subscription down gracefully.
  */
 export interface McpSubscriptionsListenResultResponse extends McpJSONRPCResultResponse {
     /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier: string,
+    id: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
     /** The response to a {@link SubscriptionsListenRequestsubscriptions/listen}
@@ -2862,6 +2862,8 @@ close carries no response. The result body is otherwise empty. */
  * Text provided to or from an LLM.
  */
 export interface McpTextContent {
+    /** The kind of object, always `text`. */
+    type: string,
     /** Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
 
 Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
@@ -2882,8 +2884,6 @@ Valid keys have two segments:
     annotations?: McpAnnotations,
     /** The text content of the message. */
     text: string,
-    /** The kind of object, always `text`. */
-    kind: string,
 }
 
 
@@ -2924,6 +2924,8 @@ export interface McpTitledMultiSelectEnumSchema {
     description?: string,
     /** Optional title for the enum field. */
     title?: string,
+    /** The kind of object, always `array`. */
+    type: string,
     /** Optional default value. */
     default?: string[],
     /** Schema for array items with enum options and display labels. */
@@ -2932,8 +2934,6 @@ export interface McpTitledMultiSelectEnumSchema {
     maxItems?: number,
     /** Minimum number of items to select. */
     minItems?: number,
-    /** The kind of object, always `array`. */
-    kind: string,
 }
 
 
@@ -2965,12 +2965,12 @@ export interface McpTitledSingleSelectEnumSchema {
     description?: string,
     /** Optional title for the enum field. */
     title?: string,
+    /** The kind of object, always `string`. */
+    type: string,
     /** Optional default value. */
     default?: string,
     /** Array of enum options with values and display labels. */
     oneOf: McpTitledSingleSelectEnumSchemaOneOf[],
-    /** The kind of object, always `string`. */
-    kind: string,
 }
 
 
@@ -3125,10 +3125,10 @@ extraction rules.
 Defaults to JSON Schema 2020-12 when no explicit `$schema` is provided.
  */
 export interface McpToolInputSchema {
+    /** The kind of object, always `object`. */
+    type: string,
     /** The JSON Schema dialect the schema is written in. */
     schema_dialect?: string,
-    /** The kind of object, always `object`. */
-    kind: string,
 }
 
 
@@ -3161,6 +3161,8 @@ export interface McpToolOutputSchema {
  * The result of a tool use, provided by the user back to the assistant.
  */
 export interface McpToolResultContent {
+    /** The kind of object, always `tool_result`. */
+    type: string,
     /** Optional metadata about the tool result. Clients SHOULD preserve this field when
 including tool results in subsequent sampling requests to enable caching optimizations. */
     _meta?: McpMetaObject,
@@ -3183,8 +3185,6 @@ If the tool defined an {@link Tool.outputSchema}, this SHOULD conform to that sc
 
 This MUST match the ID from a previous {@link ToolUseContent}. */
     toolUseId: string,
-    /** The kind of object, always `tool_result`. */
-    kind: string,
 }
 
 
@@ -3192,19 +3192,19 @@ This MUST match the ID from a previous {@link ToolUseContent}. */
  * A request from the assistant to call a tool.
  */
 export interface McpToolUseContent {
-    /** The name of the tool to call. */
-    name: string,
-    /** Optional metadata about the tool use. Clients SHOULD preserve this field when
-including tool uses in subsequent sampling requests to enable caching optimizations. */
-    _meta?: McpMetaObject,
     /** A unique identifier for this tool use.
 
 This ID is used to match tool results to their corresponding tool uses. */
-    identifier: string,
+    id: string,
+    /** The name of the tool to call. */
+    name: string,
+    /** The kind of object, always `tool_use`. */
+    type: string,
+    /** Optional metadata about the tool use. Clients SHOULD preserve this field when
+including tool uses in subsequent sampling requests to enable caching optimizations. */
+    _meta?: McpMetaObject,
     /** The arguments to pass to the tool, conforming to the tool's input schema. */
     input: McpJSONObject,
-    /** The kind of object, always `tool_use`. */
-    kind: string,
 }
 
 
@@ -3215,10 +3215,10 @@ chosen not to implement). For HTTP, the response status code MUST be
 `400 Bad Request`.
  */
 export interface McpUnsupportedProtocolVersionError extends McpJSONRPCErrorResponse {
+    /** A uniquely identifying ID for a request in JSON-RPC. */
+    id?: string,
     /** The error the request ended with. */
     error: McpUnsupportedProtocolVersionErrorError,
-    /** A uniquely identifying ID for a request in JSON-RPC. */
-    identifier?: string,
     /** The JSON-RPC version, always `2.0`. */
     jsonrpc: string,
 }
@@ -3255,6 +3255,8 @@ export interface McpUntitledMultiSelectEnumSchema {
     description?: string,
     /** Optional title for the enum field. */
     title?: string,
+    /** The kind of object, always `array`. */
+    type: string,
     /** Optional default value. */
     default?: string[],
     /** Schema for the array items. */
@@ -3263,8 +3265,6 @@ export interface McpUntitledMultiSelectEnumSchema {
     maxItems?: number,
     /** Minimum number of items to select. */
     minItems?: number,
-    /** The kind of object, always `array`. */
-    kind: string,
 }
 
 
@@ -3272,10 +3272,10 @@ export interface McpUntitledMultiSelectEnumSchema {
  * Schema for the array items.
  */
 export interface McpUntitledMultiSelectEnumSchemaItems {
+    /** The kind of object, always `string`. */
+    type: string,
     /** Array of enum values to choose from. */
     enum: string[],
-    /** The kind of object, always `string`. */
-    kind: string,
 }
 
 
@@ -3287,12 +3287,12 @@ export interface McpUntitledSingleSelectEnumSchema {
     description?: string,
     /** Optional title for the enum field. */
     title?: string,
+    /** The kind of object, always `string`. */
+    type: string,
     /** Optional default value. */
     default?: string,
     /** Array of enum values to choose from. */
     enum: string[],
-    /** The kind of object, always `string`. */
-    kind: string,
 }
 
 

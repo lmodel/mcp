@@ -16,10 +16,10 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpTextContent  {
 
+  private String type;
   private McpMetaObject meta;
   private McpAnnotations annotations;
   private String text;
-  private String kind;
 
 
 }

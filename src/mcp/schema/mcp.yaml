@@ -165,15 +165,34 @@ types:
     comments:
       - MCP gives such a string the format uri-template.
 slots:
+  audience:
+    description: Who an object or its data is for.
+    slot_uri: mcp:audience
+  context:
+    description: 'Context: for a completion, the arguments resolved so far; for sampling,
+      support for including it.'
+    slot_uri: mcp:context
   description:
     description: A description for people to read.
     slot_uri: schema:description
+  id:
+    description: 'An identifier: of a JSON-RPC request, or of a tool use.'
+    slot_uri: mcp:id
   name:
     description: The name a program uses to refer to the thing.
     slot_uri: schema:name
+  reason:
+    description: Why something happened, such as a request's cancellation, for people to read.
+    slot_uri: mcp:reason
+  resource:
+    description: The contents of a resource embedded in a message.
+    slot_uri: mcp:resource
   title:
     description: A name for people to read.
     slot_uri: schema:name
+  type:
+    description: The kind of an object or a value, as a constant or a value from a list.
+    slot_uri: mcp:type
   url:
     description: A URL.
     slot_uri: schema:url
@@ -296,16 +315,17 @@ classes:
       - mcp_schema:Annotations
     extra_slots:
       allowed: true
-    attributes:
-      intended_audience:
+    slots:
+      - audience
+    slot_usage:
+      audience:
         description: |-
           Describes who the intended audience of this object or data is.
 
           It can include multiple entries to indicate content useful for multiple audiences (e.g., `["user", "assistant"]`).
-        aliases:
-          - audience
         multivalued: true
         range: McpRole
+    attributes:
       last_modified:
         description: |-
           The moment the resource was last modified, as an ISO 8601 formatted string.
@@ -333,6 +353,13 @@ classes:
       - mcp_schema:AudioContent
     extra_slots:
       allowed: true
+    slots:
+      - type
+    slot_usage:
+      type:
+        description: The kind of object, always `audio`.
+        equals_string: audio
+        required: true
     attributes:
       meta:
         description: |-
@@ -364,12 +391,6 @@ classes:
         description: The MIME type of the audio. Different providers may support different
           audio types.
         alias: mimeType
-        required: true
-      kind:
-        description: The kind of object, always `audio`.
-        aliases:
-          - type
-        equals_string: audio
         required: true
   McpBaseMetadata:
     description: Base interface for metadata with name (identifier) and title (display name)
@@ -447,21 +468,20 @@ classes:
     slots:
       - description
       - title
+      - type
     slot_usage:
       description:
         description: A description of the field for the user.
       title:
         description: A title for the field.
+      type:
+        description: The kind of object, always `boolean`.
+        equals_string: boolean
+        required: true
     attributes:
       default:
         description: The value the field takes when the user gives none.
         range: boolean
-      kind:
-        description: The kind of object, always `boolean`.
-        aliases:
-          - type
-        equals_string: boolean
-        required: true
   McpCacheableResult:
     description: A result that supports a time-to-live (TTL) hint for client-side caching.
     is_a: McpResult
@@ -527,15 +547,16 @@ classes:
       - mcp_schema:CallToolRequest
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -653,15 +674,16 @@ classes:
       - mcp_schema:CallToolResultResponse
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -710,17 +732,18 @@ classes:
       - mcp_schema:CancelledNotificationParams
     extra_slots:
       allowed: true
+    slots:
+      - reason
+    slot_usage:
+      reason:
+        description: An optional string describing the reason for the cancellation. This MAY
+          be logged or presented to the user.
     attributes:
       meta:
         description: Extends {@link MetaObject} with additional notification-specific fields.
           All key naming rules from `MetaObject` apply.
         alias: _meta
         range: McpNotificationMetaObject
-      reason_text:
-        description: An optional string describing the reason for the cancellation. This MAY
-          be logged or presented to the user.
-        aliases:
-          - reason
       request_id:
         description: |-
           The ID of the request to cancel.
@@ -824,14 +847,15 @@ classes:
       - mcp_schema:ClientCapabilities/properties/sampling
     extra_slots:
       allowed: true
-    attributes:
-      context_info:
+    slots:
+      - context
+    slot_usage:
+      context:
         description: |-
           Whether the client supports context inclusion via `includeContext` parameter.
           If not declared, servers SHOULD only use `includeContext: "none"` (or omit it).
-        aliases:
-          - context
         range: McpJSONObject
+    attributes:
       tools:
         description: Whether the client supports tool use via `tools` and `toolChoice` parameters.
         range: McpJSONObject
@@ -903,15 +927,16 @@ classes:
       - mcp_schema:CompleteRequest
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -933,6 +958,12 @@ classes:
       - mcp_schema:CompleteRequestParams
     extra_slots:
       allowed: true
+    slots:
+      - context
+    slot_usage:
+      context:
+        description: Additional, optional context for completions
+        range: McpCompleteRequestParamsContext
     attributes:
       meta:
         description: Extends {@link MetaObject} with additional request-specific fields. All
@@ -944,11 +975,6 @@ classes:
         description: The argument's information
         range: McpCompleteRequestParamsArgument
         required: true
-      context_info:
-        description: Additional, optional context for completions
-        aliases:
-          - context
-        range: McpCompleteRequestParamsContext
       ref:
         description: 'What the completion is for: a prompt or a resource template.'
         any_of:
@@ -1059,15 +1085,16 @@ classes:
       - mcp_schema:CompleteResultResponse
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -1263,15 +1290,16 @@ classes:
       - mcp_schema:DiscoverRequest
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -1370,15 +1398,16 @@ classes:
       - mcp_schema:DiscoverResultResponse
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -1441,6 +1470,13 @@ classes:
       - mcp_schema:ElicitRequestFormParams/properties/requestedSchema
     extra_slots:
       allowed: true
+    slots:
+      - type
+    slot_usage:
+      type:
+        description: The kind of object, always `object`.
+        equals_string: object
+        required: true
     attributes:
       schema_dialect:
         description: The JSON Schema dialect the schema is written in.
@@ -1455,12 +1491,6 @@ classes:
         aliases:
           - required
         multivalued: true
-      kind:
-        description: The kind of object, always `object`.
-        aliases:
-          - type
-        equals_string: object
-        required: true
   McpElicitRequestFormParamsRequestedSchemaProperties:
     description: The object MCP's `ElicitRequestFormParams` holds under `properties`.
     in_subset:
@@ -1559,6 +1589,20 @@ classes:
       - mcp_schema:EmbeddedResource
     extra_slots:
       allowed: true
+    slots:
+      - resource
+      - type
+    slot_usage:
+      resource:
+        description: The resource's contents, as text or as binary data.
+        any_of:
+          - range: McpTextResourceContents
+          - range: McpBlobResourceContents
+        required: true
+      type:
+        description: The kind of object, always `resource`.
+        equals_string: resource
+        required: true
     attributes:
       meta:
         description: |-
@@ -1582,20 +1626,6 @@ classes:
       annotations:
         description: Optional annotations for the client.
         range: McpAnnotations
-      resource_contents:
-        description: The resource's contents, as text or as binary data.
-        aliases:
-          - resource
-        any_of:
-          - range: McpTextResourceContents
-          - range: McpBlobResourceContents
-        required: true
-      kind:
-        description: The kind of object, always `resource`.
-        aliases:
-          - type
-        equals_string: resource
-        required: true
   McpEmptyResult:
     description: Common result fields.
     is_a: McpResult
@@ -1650,15 +1680,16 @@ classes:
       - mcp_schema:GetPromptRequest
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -1769,15 +1800,16 @@ classes:
       - mcp_schema:GetPromptResultResponse
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -1801,18 +1833,19 @@ classes:
       - mcp_schema:HeaderMismatchError
     extra_slots:
       allowed: true
+    slots:
+      - id
+    slot_usage:
+      id:
+        description: A uniquely identifying ID for a request in JSON-RPC.
+        any_of:
+          - range: string
+          - range: integer
     attributes:
       error:
         description: The error the request ended with.
         range: McpHeaderMismatchErrorError
         required: true
-      identifier:
-        description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
-        any_of:
-          - range: string
-          - range: integer
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -1904,6 +1937,13 @@ classes:
       - mcp_schema:ImageContent
     extra_slots:
       allowed: true
+    slots:
+      - type
+    slot_usage:
+      type:
+        description: The kind of object, always `image`.
+        equals_string: image
+        required: true
     attributes:
       meta:
         description: |-
@@ -1935,12 +1975,6 @@ classes:
         description: The MIME type of the image. Different providers may support different
           image types.
         alias: mimeType
-        required: true
-      kind:
-        description: The kind of object, always `image`.
-        aliases:
-          - type
-        equals_string: image
         required: true
   McpImplementation:
     description: Describes the MCP implementation.
@@ -2224,18 +2258,19 @@ classes:
       - mcp_schema:JSONRPCErrorResponse
     extra_slots:
       allowed: true
+    slots:
+      - id
+    slot_usage:
+      id:
+        description: A uniquely identifying ID for a request in JSON-RPC.
+        any_of:
+          - range: string
+          - range: integer
     attributes:
       error:
         description: The error the request ended with.
         range: McpError
         required: true
-      identifier:
-        description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
-        any_of:
-          - range: string
-          - range: integer
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -2283,15 +2318,16 @@ classes:
       - mcp_schema:JSONRPCRequest
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -2321,15 +2357,16 @@ classes:
       - mcp_schema:JSONRPCResultResponse
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -2366,11 +2403,16 @@ classes:
     slots:
       - description
       - title
+      - type
     slot_usage:
       description:
         description: A description of the field for the user.
       title:
         description: A title for the field.
+      type:
+        description: The kind of object, always `string`.
+        equals_string: string
+        required: true
     attributes:
       default:
         description: The value the field takes when the user gives none.
@@ -2384,12 +2426,6 @@ classes:
           Non-standard according to JSON schema 2020-12.
         alias: enumNames
         multivalued: true
-      kind:
-        description: The kind of object, always `string`.
-        aliases:
-          - type
-        equals_string: string
-        required: true
   McpListPromptsRequest:
     description: Sent from the client to request a list of prompts and prompt templates the
       server has.
@@ -2400,15 +2436,16 @@ classes:
       - mcp_schema:ListPromptsRequest
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -2502,15 +2539,16 @@ classes:
       - mcp_schema:ListPromptsResultResponse
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -2529,15 +2567,16 @@ classes:
       - mcp_schema:ListResourceTemplatesRequest
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -2632,15 +2671,16 @@ classes:
       - mcp_schema:ListResourceTemplatesResultResponse
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -2659,15 +2699,16 @@ classes:
       - mcp_schema:ListResourcesRequest
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -2761,15 +2802,16 @@ classes:
       - mcp_schema:ListResourcesResultResponse
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -2861,15 +2903,16 @@ classes:
       - mcp_schema:ListToolsRequest
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -2963,15 +3006,16 @@ classes:
       - mcp_schema:ListToolsResultResponse
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -3097,18 +3141,19 @@ classes:
       - mcp_schema:MissingRequiredClientCapabilityError
     extra_slots:
       allowed: true
+    slots:
+      - id
+    slot_usage:
+      id:
+        description: A uniquely identifying ID for a request in JSON-RPC.
+        any_of:
+          - range: string
+          - range: integer
     attributes:
       error:
         description: The error the request ended with.
         range: McpMissingRequiredClientCapabilityErrorError
         required: true
-      identifier:
-        description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
-        any_of:
-          - range: string
-          - range: integer
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -3315,11 +3360,16 @@ classes:
     slots:
       - description
       - title
+      - type
     slot_usage:
       description:
         description: A description of the field for the user.
       title:
         description: A title for the field.
+      type:
+        description: The kind of value the field takes.
+        range: McpNumberSchemaType
+        required: true
     attributes:
       default:
         description: The value the field takes when the user gives none.
@@ -3330,12 +3380,6 @@ classes:
       minimum:
         description: The smallest value the field accepts.
         range: float
-      kind:
-        description: The kind of value the field takes.
-        aliases:
-          - type
-        range: McpNumberSchemaType
-        required: true
   McpPaginatedRequest:
     description: A request for a list that the server returns a page at a time.
     is_a: McpJSONRPCRequest
@@ -3345,15 +3389,16 @@ classes:
       - mcp_schema:PaginatedRequest
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -3676,6 +3721,7 @@ classes:
     slots:
       - name
       - title
+      - type
     slot_usage:
       name:
         description: Intended for programmatic or logical use, but used as a display name
@@ -3689,11 +3735,8 @@ classes:
           If not provided, the name should be used for display (except for {@link Tool},
           where `annotations.title` should be given precedence over using `name`,
           if present).
-    attributes:
-      kind:
+      type:
         description: The kind of object, always `ref/prompt`.
-        aliases:
-          - type
         equals_string: ref/prompt
         required: true
   McpReadResourceRequest:
@@ -3705,15 +3748,16 @@ classes:
       - mcp_schema:ReadResourceRequest
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -3835,15 +3879,16 @@ classes:
       - mcp_schema:ReadResourceResultResponse
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -4088,6 +4133,7 @@ classes:
       - description
       - name
       - title
+      - type
     slot_usage:
       description:
         description: |-
@@ -4106,6 +4152,10 @@ classes:
           If not provided, the name should be used for display (except for {@link Tool},
           where `annotations.title` should be given precedence over using `name`,
           if present).
+      type:
+        description: The kind of object, always `resource_link`.
+        equals_string: resource_link
+        required: true
     attributes:
       meta:
         description: |-
@@ -4152,12 +4202,6 @@ classes:
 
           This can be used by Hosts to display file sizes and estimate context window usage.
         range: integer
-      kind:
-        description: The kind of object, always `resource_link`.
-        aliases:
-          - type
-        equals_string: resource_link
-        required: true
       uri:
         description: The URI of this resource.
         range: uri
@@ -4295,13 +4339,14 @@ classes:
       - mcp_schema:ResourceTemplateReference
     extra_slots:
       allowed: true
-    attributes:
-      kind:
+    slots:
+      - type
+    slot_usage:
+      type:
         description: The kind of object, always `ref/resource`.
-        aliases:
-          - type
         equals_string: ref/resource
         required: true
+    attributes:
       uri:
         description: The URI or URI template of the resource.
         range: McpUriTemplate
@@ -4683,11 +4728,16 @@ classes:
     slots:
       - description
       - title
+      - type
     slot_usage:
       description:
         description: A description of the field for the user.
       title:
         description: A title for the field.
+      type:
+        description: The kind of object, always `string`.
+        equals_string: string
+        required: true
     attributes:
       default:
         description: The value the field takes when the user gives none.
@@ -4702,12 +4752,6 @@ classes:
         description: The fewest characters the field accepts.
         alias: minLength
         range: integer
-      kind:
-        description: The kind of object, always `string`.
-        aliases:
-          - type
-        equals_string: string
-        required: true
   McpSubscriptionFilter:
     description: |-
       The set of notification types a client may opt in to on a
@@ -4809,15 +4853,16 @@ classes:
       - mcp_schema:SubscriptionsListenRequest
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -4940,15 +4985,16 @@ classes:
       - mcp_schema:SubscriptionsListenResultResponse
     extra_slots:
       allowed: true
-    attributes:
-      identifier:
+    slots:
+      - id
+    slot_usage:
+      id:
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
         any_of:
           - range: string
           - range: integer
         required: true
+    attributes:
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -4970,6 +5016,13 @@ classes:
       - mcp_schema:TextContent
     extra_slots:
       allowed: true
+    slots:
+      - type
+    slot_usage:
+      type:
+        description: The kind of object, always `text`.
+        equals_string: text
+        required: true
     attributes:
       meta:
         description: |-
@@ -4995,12 +5048,6 @@ classes:
         range: McpAnnotations
       text:
         description: The text content of the message.
-        required: true
-      kind:
-        description: The kind of object, always `text`.
-        aliases:
-          - type
-        equals_string: text
         required: true
   McpTextResourceContents:
     description: A resource's contents as text.
@@ -5053,11 +5100,16 @@ classes:
     slots:
       - description
       - title
+      - type
     slot_usage:
       description:
         description: Optional description for the enum field.
       title:
         description: Optional title for the enum field.
+      type:
+        description: The kind of object, always `array`.
+        equals_string: array
+        required: true
     attributes:
       default:
         description: Optional default value.
@@ -5074,12 +5126,6 @@ classes:
         description: Minimum number of items to select.
         alias: minItems
         range: integer
-      kind:
-        description: The kind of object, always `array`.
-        aliases:
-          - type
-        equals_string: array
-        required: true
   McpTitledMultiSelectEnumSchemaItems:
     description: Schema for array items with enum options and display labels.
     in_subset:
@@ -5125,11 +5171,16 @@ classes:
     slots:
       - description
       - title
+      - type
     slot_usage:
       description:
         description: Optional description for the enum field.
       title:
         description: Optional title for the enum field.
+      type:
+        description: The kind of object, always `string`.
+        equals_string: string
+        required: true
     attributes:
       default:
         description: Optional default value.
@@ -5139,12 +5190,6 @@ classes:
         multivalued: true
         range: McpTitledSingleSelectEnumSchemaOneOf
         inlined_as_list: true
-        required: true
-      kind:
-        description: The kind of object, always `string`.
-        aliases:
-          - type
-        equals_string: string
         required: true
   McpTitledSingleSelectEnumSchemaOneOf:
     description: The object MCP's `TitledSingleSelectEnumSchema` holds under `oneOf`.
@@ -5363,17 +5408,18 @@ classes:
       - mcp_schema:Tool/properties/inputSchema
     extra_slots:
       allowed: true
+    slots:
+      - type
+    slot_usage:
+      type:
+        description: The kind of object, always `object`.
+        equals_string: object
+        required: true
     attributes:
       schema_dialect:
         description: The JSON Schema dialect the schema is written in.
         aliases:
           - $schema
-      kind:
-        description: The kind of object, always `object`.
-        aliases:
-          - type
-        equals_string: object
-        required: true
   McpToolListChangedNotification:
     description: An optional notification from the server to the client, informing it that
       the list of tools it offers has changed. This is only delivered on a {@link SubscriptionsListenRequestsubscriptions/listen}
@@ -5424,6 +5470,13 @@ classes:
       - mcp_schema:ToolResultContent
     extra_slots:
       allowed: true
+    slots:
+      - type
+    slot_usage:
+      type:
+        description: The kind of object, always `tool_result`.
+        equals_string: tool_result
+        required: true
     attributes:
       meta:
         description: |-
@@ -5464,12 +5517,6 @@ classes:
           This MUST match the ID from a previous {@link ToolUseContent}.
         alias: toolUseId
         required: true
-      kind:
-        description: The kind of object, always `tool_result`.
-        aliases:
-          - type
-        equals_string: tool_result
-        required: true
   McpToolUseContent:
     description: A request from the assistant to call a tool.
     deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
@@ -5481,10 +5528,22 @@ classes:
     extra_slots:
       allowed: true
     slots:
+      - id
       - name
+      - type
     slot_usage:
+      id:
+        description: |-
+          A unique identifier for this tool use.
+
+          This ID is used to match tool results to their corresponding tool uses.
+        required: true
       name:
         description: The name of the tool to call.
+        required: true
+      type:
+        description: The kind of object, always `tool_use`.
+        equals_string: tool_use
         required: true
     attributes:
       meta:
@@ -5493,23 +5552,9 @@ classes:
           including tool uses in subsequent sampling requests to enable caching optimizations.
         alias: _meta
         range: McpMetaObject
-      identifier:
-        description: |-
-          A unique identifier for this tool use.
-
-          This ID is used to match tool results to their corresponding tool uses.
-        aliases:
-          - id
-        required: true
       input:
         description: The arguments to pass to the tool, conforming to the tool's input schema.
         range: McpJSONObject
-        required: true
-      kind:
-        description: The kind of object, always `tool_use`.
-        aliases:
-          - type
-        equals_string: tool_use
         required: true
   McpUnsupportedProtocolVersionError:
     description: |-
@@ -5524,18 +5569,19 @@ classes:
       - mcp_schema:UnsupportedProtocolVersionError
     extra_slots:
       allowed: true
+    slots:
+      - id
+    slot_usage:
+      id:
+        description: A uniquely identifying ID for a request in JSON-RPC.
+        any_of:
+          - range: string
+          - range: integer
     attributes:
       error:
         description: The error the request ended with.
         range: McpUnsupportedProtocolVersionErrorError
         required: true
-      identifier:
-        description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-          - id
-        any_of:
-          - range: string
-          - range: integer
       jsonrpc:
         description: The JSON-RPC version, always `2.0`.
         equals_string: '2.0'
@@ -5588,11 +5634,16 @@ classes:
     slots:
       - description
       - title
+      - type
     slot_usage:
       description:
         description: Optional description for the enum field.
       title:
         description: Optional title for the enum field.
+      type:
+        description: The kind of object, always `array`.
+        equals_string: array
+        required: true
     attributes:
       default:
         description: Optional default value.
@@ -5609,12 +5660,6 @@ classes:
         description: Minimum number of items to select.
         alias: minItems
         range: integer
-      kind:
-        description: The kind of object, always `array`.
-        aliases:
-          - type
-        equals_string: array
-        required: true
   McpUntitledMultiSelectEnumSchemaItems:
     description: Schema for the array items.
     in_subset:
@@ -5623,16 +5668,17 @@ classes:
       - mcp_schema:UntitledMultiSelectEnumSchema/properties/items
     extra_slots:
       allowed: true
+    slots:
+      - type
+    slot_usage:
+      type:
+        description: The kind of object, always `string`.
+        equals_string: string
+        required: true
     attributes:
       enum:
         description: Array of enum values to choose from.
         multivalued: true
-        required: true
-      kind:
-        description: The kind of object, always `string`.
-        aliases:
-          - type
-        equals_string: string
         required: true
   McpUntitledSingleSelectEnumSchema:
     description: Schema for single-selection enumeration without display titles for options.
@@ -5645,21 +5691,20 @@ classes:
     slots:
       - description
       - title
+      - type
     slot_usage:
       description:
         description: Optional description for the enum field.
       title:
         description: Optional title for the enum field.
+      type:
+        description: The kind of object, always `string`.
+        equals_string: string
+        required: true
     attributes:
       default:
         description: Optional default value.
       enum:
         description: Array of enum values to choose from.
         multivalued: true
-        required: true
-      kind:
-        description: The kind of object, always `string`.
-        aliases:
-          - type
-        equals_string: string
         required: true

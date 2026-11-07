@@ -718,6 +718,32 @@ enums:
       required:
         text: required
 slots:
+  audience:
+    name: audience
+    definition_uri: https://w3id.org/lmodel/mcp/audience
+    description: Who an object or its data is for.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:audience
+    slot_uri: mcp:audience
+    owner: McpAnnotations
+    domain_of:
+    - McpAnnotations
+    range: string
+  context:
+    name: context
+    definition_uri: https://w3id.org/lmodel/mcp/context
+    description: 'Context: for a completion, the arguments resolved so far; for sampling,
+      support for including it.'
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:context
+    slot_uri: mcp:context
+    owner: McpCompleteRequestParams
+    domain_of:
+    - McpClientCapabilitiesSampling
+    - McpCompleteRequestParams
+    range: string
   description:
     name: description
     definition_uri: https://w3id.org/lmodel/mcp/description
@@ -745,6 +771,45 @@ slots:
     - McpUntitledMultiSelectEnumSchema
     - McpUntitledSingleSelectEnumSchema
     range: string
+  id:
+    name: id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: 'An identifier: of a JSON-RPC request, or of a tool use.'
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    slot_uri: mcp:id
+    owner: McpUnsupportedProtocolVersionError
+    domain_of:
+    - McpCallToolRequest
+    - McpCallToolResultResponse
+    - McpCompleteRequest
+    - McpCompleteResultResponse
+    - McpDiscoverRequest
+    - McpDiscoverResultResponse
+    - McpGetPromptRequest
+    - McpGetPromptResultResponse
+    - McpHeaderMismatchError
+    - McpJSONRPCErrorResponse
+    - McpJSONRPCRequest
+    - McpJSONRPCResultResponse
+    - McpListPromptsRequest
+    - McpListPromptsResultResponse
+    - McpListResourceTemplatesRequest
+    - McpListResourceTemplatesResultResponse
+    - McpListResourcesRequest
+    - McpListResourcesResultResponse
+    - McpListToolsRequest
+    - McpListToolsResultResponse
+    - McpMissingRequiredClientCapabilityError
+    - McpPaginatedRequest
+    - McpReadResourceRequest
+    - McpReadResourceResultResponse
+    - McpSubscriptionsListenRequest
+    - McpSubscriptionsListenResultResponse
+    - McpToolUseContent
+    - McpUnsupportedProtocolVersionError
+    range: string
   name:
     name: name
     definition_uri: https://w3id.org/lmodel/mcp/name
@@ -770,6 +835,31 @@ slots:
     - McpRoot
     - McpTool
     - McpToolUseContent
+    range: string
+  reason:
+    name: reason
+    definition_uri: https://w3id.org/lmodel/mcp/reason
+    description: Why something happened, such as a request's cancellation, for people
+      to read.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:reason
+    slot_uri: mcp:reason
+    owner: McpCancelledNotificationParams
+    domain_of:
+    - McpCancelledNotificationParams
+    range: string
+  resource:
+    name: resource
+    definition_uri: https://w3id.org/lmodel/mcp/resource
+    description: The contents of a resource embedded in a message.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:resource
+    slot_uri: mcp:resource
+    owner: McpEmbeddedResource
+    domain_of:
+    - McpEmbeddedResource
     range: string
   title:
     name: title
@@ -802,6 +892,38 @@ slots:
     - McpUntitledMultiSelectEnumSchema
     - McpUntitledSingleSelectEnumSchema
     range: string
+  type:
+    name: type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of an object or a value, as a constant or a value from a
+      list.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    slot_uri: mcp:type
+    owner: McpUntitledSingleSelectEnumSchema
+    domain_of:
+    - McpAudioContent
+    - McpBooleanSchema
+    - McpElicitRequestFormParamsRequestedSchema
+    - McpEmbeddedResource
+    - McpImageContent
+    - McpLegacyTitledEnumSchema
+    - McpNumberSchema
+    - McpPromptReference
+    - McpResourceLink
+    - McpResourceTemplateReference
+    - McpStringSchema
+    - McpTextContent
+    - McpTitledMultiSelectEnumSchema
+    - McpTitledSingleSelectEnumSchema
+    - McpToolInputSchema
+    - McpToolResultContent
+    - McpToolUseContent
+    - McpUntitledMultiSelectEnumSchema
+    - McpUntitledMultiSelectEnumSchemaItems
+    - McpUntitledSingleSelectEnumSchema
+    range: string
   url:
     name: url
     definition_uri: https://w3id.org/lmodel/mcp/url
@@ -826,23 +948,6 @@ slots:
     domain_of:
     - McpImplementation
     range: string
-  mcpAnnotations__intended_audience:
-    name: mcpAnnotations__intended_audience
-    description: 'Describes who the intended audience of this object or data is.
-
-
-      It can include multiple entries to indicate content useful for multiple audiences
-      (e.g., `["user", "assistant"]`).'
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - audience
-    slot_uri: mcp:intended_audience
-    alias: intended_audience
-    owner: McpAnnotations
-    domain_of:
-    - McpAnnotations
-    range: McpRole
-    multivalued: true
   mcpAnnotations__last_modified:
     name: mcpAnnotations__last_modified
     description: 'The moment the resource was last modified, as an ISO 8601 formatted
@@ -944,20 +1049,6 @@ slots:
     - McpAudioContent
     range: string
     required: true
-  mcpAudioContent__kind:
-    name: mcpAudioContent__kind
-    description: The kind of object, always `audio`.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - type
-    slot_uri: mcp:kind
-    alias: kind
-    owner: McpAudioContent
-    domain_of:
-    - McpAudioContent
-    range: string
-    required: true
-    equals_string: audio
   mcpBlobResourceContents__meta:
     name: mcpBlobResourceContents__meta
     description: "Represents the contents of a `_meta` field, which clients and servers\
@@ -1028,20 +1119,6 @@ slots:
     domain_of:
     - McpBooleanSchema
     range: boolean
-  mcpBooleanSchema__kind:
-    name: mcpBooleanSchema__kind
-    description: The kind of object, always `boolean`.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - type
-    slot_uri: mcp:kind
-    alias: kind
-    owner: McpBooleanSchema
-    domain_of:
-    - McpBooleanSchema
-    range: string
-    required: true
-    equals_string: boolean
   mcpCacheableResult__meta:
     name: mcpCacheableResult__meta
     description: Extends {@link MetaObject} with additional result-specific fields.
@@ -1112,22 +1189,6 @@ slots:
     range: integer
     required: true
     minimum_value: 0
-  mcpCallToolRequest__identifier:
-    name: mcpCallToolRequest__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpCallToolRequest
-    domain_of:
-    - McpCallToolRequest
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpCallToolRequest__jsonrpc:
     name: mcpCallToolRequest__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -1315,22 +1376,6 @@ slots:
     range: McpJSONValue
     inlined: true
     inlined_as_list: true
-  mcpCallToolResultResponse__identifier:
-    name: mcpCallToolResultResponse__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpCallToolResultResponse
-    domain_of:
-    - McpCallToolResultResponse
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpCallToolResultResponse__jsonrpc:
     name: mcpCallToolResultResponse__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -1407,19 +1452,6 @@ slots:
     range: McpNotificationMetaObject
     inlined: true
     inlined_as_list: true
-  mcpCancelledNotificationParams__reason_text:
-    name: mcpCancelledNotificationParams__reason_text
-    description: An optional string describing the reason for the cancellation. This
-      MAY be logged or presented to the user.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - reason
-    slot_uri: mcp:reason_text
-    alias: reason_text
-    owner: McpCancelledNotificationParams
-    domain_of:
-    - McpCancelledNotificationParams
-    range: string
   mcpCancelledNotificationParams__request_id:
     name: mcpCancelledNotificationParams__request_id
     description: 'The ID of the request to cancel.
@@ -1537,23 +1569,6 @@ slots:
     range: McpJSONObject
     inlined: true
     inlined_as_list: true
-  mcpClientCapabilitiesSampling__context_info:
-    name: mcpClientCapabilitiesSampling__context_info
-    description: 'Whether the client supports context inclusion via `includeContext`
-      parameter.
-
-      If not declared, servers SHOULD only use `includeContext: "none"` (or omit it).'
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - context
-    slot_uri: mcp:context_info
-    alias: context_info
-    owner: McpClientCapabilitiesSampling
-    domain_of:
-    - McpClientCapabilitiesSampling
-    range: McpJSONObject
-    inlined: true
-    inlined_as_list: true
   mcpClientCapabilitiesSampling__tools:
     name: mcpClientCapabilitiesSampling__tools
     description: Whether the client supports tool use via `tools` and `toolChoice`
@@ -1604,22 +1619,6 @@ slots:
     required: true
     inlined: true
     inlined_as_list: true
-  mcpCompleteRequest__identifier:
-    name: mcpCompleteRequest__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpCompleteRequest
-    domain_of:
-    - McpCompleteRequest
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpCompleteRequest__jsonrpc:
     name: mcpCompleteRequest__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -1682,20 +1681,6 @@ slots:
     - McpCompleteRequestParams
     range: McpCompleteRequestParamsArgument
     required: true
-    inlined: true
-    inlined_as_list: true
-  mcpCompleteRequestParams__context_info:
-    name: mcpCompleteRequestParams__context_info
-    description: Additional, optional context for completions
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - context
-    slot_uri: mcp:context_info
-    alias: context_info
-    owner: McpCompleteRequestParams
-    domain_of:
-    - McpCompleteRequestParams
-    range: McpCompleteRequestParamsContext
     inlined: true
     inlined_as_list: true
   mcpCompleteRequestParams__ref:
@@ -1818,22 +1803,6 @@ slots:
     required: true
     multivalued: true
     maximum_cardinality: 100
-  mcpCompleteResultResponse__identifier:
-    name: mcpCompleteResultResponse__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpCompleteResultResponse
-    domain_of:
-    - McpCompleteResultResponse
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpCompleteResultResponse__jsonrpc:
     name: mcpCompleteResultResponse__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -2124,22 +2093,6 @@ slots:
     domain_of:
     - McpCreateMessageResult
     range: string
-  mcpDiscoverRequest__identifier:
-    name: mcpDiscoverRequest__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpDiscoverRequest
-    domain_of:
-    - McpDiscoverRequest
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpDiscoverRequest__jsonrpc:
     name: mcpDiscoverRequest__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -2294,22 +2247,6 @@ slots:
     range: integer
     required: true
     minimum_value: 0
-  mcpDiscoverResultResponse__identifier:
-    name: mcpDiscoverResultResponse__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpDiscoverResultResponse
-    domain_of:
-    - McpDiscoverResultResponse
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpDiscoverResultResponse__jsonrpc:
     name: mcpDiscoverResultResponse__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -2438,20 +2375,6 @@ slots:
     - McpElicitRequestFormParamsRequestedSchema
     range: string
     multivalued: true
-  mcpElicitRequestFormParamsRequestedSchema__kind:
-    name: mcpElicitRequestFormParamsRequestedSchema__kind
-    description: The kind of object, always `object`.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - type
-    slot_uri: mcp:kind
-    alias: kind
-    owner: McpElicitRequestFormParamsRequestedSchema
-    domain_of:
-    - McpElicitRequestFormParamsRequestedSchema
-    range: string
-    required: true
-    equals_string: object
   mcpElicitRequestURLParams__message:
     name: mcpElicitRequestURLParams__message
     description: The message to present to the user explaining why the interaction
@@ -2550,36 +2473,6 @@ slots:
     range: McpAnnotations
     inlined: true
     inlined_as_list: true
-  mcpEmbeddedResource__resource_contents:
-    name: mcpEmbeddedResource__resource_contents
-    description: The resource's contents, as text or as binary data.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - resource
-    slot_uri: mcp:resource_contents
-    alias: resource_contents
-    owner: McpEmbeddedResource
-    domain_of:
-    - McpEmbeddedResource
-    range: string
-    required: true
-    any_of:
-    - range: McpTextResourceContents
-    - range: McpBlobResourceContents
-  mcpEmbeddedResource__kind:
-    name: mcpEmbeddedResource__kind
-    description: The kind of object, always `resource`.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - type
-    slot_uri: mcp:kind
-    alias: kind
-    owner: McpEmbeddedResource
-    domain_of:
-    - McpEmbeddedResource
-    range: string
-    required: true
-    equals_string: resource
   mcpError__code:
     name: mcpError__code
     description: The error type that occurred.
@@ -2616,22 +2509,6 @@ slots:
     - McpError
     range: string
     required: true
-  mcpGetPromptRequest__identifier:
-    name: mcpGetPromptRequest__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpGetPromptRequest
-    domain_of:
-    - McpGetPromptRequest
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpGetPromptRequest__jsonrpc:
     name: mcpGetPromptRequest__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -2777,22 +2654,6 @@ slots:
     - McpGetPromptResult
     range: McpResultType
     required: true
-  mcpGetPromptResultResponse__identifier:
-    name: mcpGetPromptResultResponse__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpGetPromptResultResponse
-    domain_of:
-    - McpGetPromptResultResponse
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpGetPromptResultResponse__jsonrpc:
     name: mcpGetPromptResultResponse__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -2832,21 +2693,6 @@ slots:
     required: true
     inlined: true
     inlined_as_list: true
-  mcpHeaderMismatchError__identifier:
-    name: mcpHeaderMismatchError__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpHeaderMismatchError
-    domain_of:
-    - McpHeaderMismatchError
-    range: string
-    any_of:
-    - range: string
-    - range: integer
   mcpHeaderMismatchError__jsonrpc:
     name: mcpHeaderMismatchError__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -3037,20 +2883,6 @@ slots:
     - McpImageContent
     range: string
     required: true
-  mcpImageContent__kind:
-    name: mcpImageContent__kind
-    description: The kind of object, always `image`.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - type
-    slot_uri: mcp:kind
-    alias: kind
-    owner: McpImageContent
-    domain_of:
-    - McpImageContent
-    range: string
-    required: true
-    equals_string: image
   mcpImplementation__icons:
     name: mcpImplementation__icons
     description: 'Optional set of sized icons that the client can display in a user
@@ -3314,21 +3146,6 @@ slots:
     required: true
     inlined: true
     inlined_as_list: true
-  mcpJSONRPCErrorResponse__identifier:
-    name: mcpJSONRPCErrorResponse__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpJSONRPCErrorResponse
-    domain_of:
-    - McpJSONRPCErrorResponse
-    range: string
-    any_of:
-    - range: string
-    - range: integer
   mcpJSONRPCErrorResponse__jsonrpc:
     name: mcpJSONRPCErrorResponse__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -3376,22 +3193,6 @@ slots:
     range: McpJSONObject
     inlined: true
     inlined_as_list: true
-  mcpJSONRPCRequest__identifier:
-    name: mcpJSONRPCRequest__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpJSONRPCRequest
-    domain_of:
-    - McpJSONRPCRequest
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpJSONRPCRequest__jsonrpc:
     name: mcpJSONRPCRequest__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -3427,22 +3228,6 @@ slots:
     range: McpJSONObject
     inlined: true
     inlined_as_list: true
-  mcpJSONRPCResultResponse__identifier:
-    name: mcpJSONRPCResultResponse__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpJSONRPCResultResponse
-    domain_of:
-    - McpJSONRPCResultResponse
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpJSONRPCResultResponse__jsonrpc:
     name: mcpJSONRPCResultResponse__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -3503,36 +3288,6 @@ slots:
     - McpLegacyTitledEnumSchema
     range: string
     multivalued: true
-  mcpLegacyTitledEnumSchema__kind:
-    name: mcpLegacyTitledEnumSchema__kind
-    description: The kind of object, always `string`.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - type
-    slot_uri: mcp:kind
-    alias: kind
-    owner: McpLegacyTitledEnumSchema
-    domain_of:
-    - McpLegacyTitledEnumSchema
-    range: string
-    required: true
-    equals_string: string
-  mcpListPromptsRequest__identifier:
-    name: mcpListPromptsRequest__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpListPromptsRequest
-    domain_of:
-    - McpListPromptsRequest
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpListPromptsRequest__jsonrpc:
     name: mcpListPromptsRequest__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -3667,22 +3422,6 @@ slots:
     range: integer
     required: true
     minimum_value: 0
-  mcpListPromptsResultResponse__identifier:
-    name: mcpListPromptsResultResponse__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpListPromptsResultResponse
-    domain_of:
-    - McpListPromptsResultResponse
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpListPromptsResultResponse__jsonrpc:
     name: mcpListPromptsResultResponse__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -3709,22 +3448,6 @@ slots:
     required: true
     inlined: true
     inlined_as_list: true
-  mcpListResourceTemplatesRequest__identifier:
-    name: mcpListResourceTemplatesRequest__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpListResourceTemplatesRequest
-    domain_of:
-    - McpListResourceTemplatesRequest
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpListResourceTemplatesRequest__jsonrpc:
     name: mcpListResourceTemplatesRequest__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -3859,22 +3582,6 @@ slots:
     range: integer
     required: true
     minimum_value: 0
-  mcpListResourceTemplatesResultResponse__identifier:
-    name: mcpListResourceTemplatesResultResponse__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpListResourceTemplatesResultResponse
-    domain_of:
-    - McpListResourceTemplatesResultResponse
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpListResourceTemplatesResultResponse__jsonrpc:
     name: mcpListResourceTemplatesResultResponse__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -3901,22 +3608,6 @@ slots:
     required: true
     inlined: true
     inlined_as_list: true
-  mcpListResourcesRequest__identifier:
-    name: mcpListResourcesRequest__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpListResourcesRequest
-    domain_of:
-    - McpListResourcesRequest
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpListResourcesRequest__jsonrpc:
     name: mcpListResourcesRequest__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -4051,22 +3742,6 @@ slots:
     range: integer
     required: true
     minimum_value: 0
-  mcpListResourcesResultResponse__identifier:
-    name: mcpListResourcesResultResponse__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpListResourcesResultResponse
-    domain_of:
-    - McpListResourcesResultResponse
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpListResourcesResultResponse__jsonrpc:
     name: mcpListResourcesResultResponse__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -4159,22 +3834,6 @@ slots:
     multivalued: true
     inlined: true
     inlined_as_list: true
-  mcpListToolsRequest__identifier:
-    name: mcpListToolsRequest__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpListToolsRequest
-    domain_of:
-    - McpListToolsRequest
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpListToolsRequest__jsonrpc:
     name: mcpListToolsRequest__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -4309,22 +3968,6 @@ slots:
     range: integer
     required: true
     minimum_value: 0
-  mcpListToolsResultResponse__identifier:
-    name: mcpListToolsResultResponse__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpListToolsResultResponse
-    domain_of:
-    - McpListToolsResultResponse
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpListToolsResultResponse__jsonrpc:
     name: mcpListToolsResultResponse__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -4486,21 +4129,6 @@ slots:
     required: true
     inlined: true
     inlined_as_list: true
-  mcpMissingRequiredClientCapabilityError__identifier:
-    name: mcpMissingRequiredClientCapabilityError__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpMissingRequiredClientCapabilityError
-    domain_of:
-    - McpMissingRequiredClientCapabilityError
-    range: string
-    any_of:
-    - range: string
-    - range: integer
   mcpMissingRequiredClientCapabilityError__jsonrpc:
     name: mcpMissingRequiredClientCapabilityError__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -4725,35 +4353,6 @@ slots:
     domain_of:
     - McpNumberSchema
     range: float
-  mcpNumberSchema__kind:
-    name: mcpNumberSchema__kind
-    description: The kind of value the field takes.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - type
-    slot_uri: mcp:kind
-    alias: kind
-    owner: McpNumberSchema
-    domain_of:
-    - McpNumberSchema
-    range: McpNumberSchemaType
-    required: true
-  mcpPaginatedRequest__identifier:
-    name: mcpPaginatedRequest__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpPaginatedRequest
-    domain_of:
-    - McpPaginatedRequest
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpPaginatedRequest__jsonrpc:
     name: mcpPaginatedRequest__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -5142,36 +4741,6 @@ slots:
     - McpPromptMessage
     range: McpRole
     required: true
-  mcpPromptReference__kind:
-    name: mcpPromptReference__kind
-    description: The kind of object, always `ref/prompt`.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - type
-    slot_uri: mcp:kind
-    alias: kind
-    owner: McpPromptReference
-    domain_of:
-    - McpPromptReference
-    range: string
-    required: true
-    equals_string: ref/prompt
-  mcpReadResourceRequest__identifier:
-    name: mcpReadResourceRequest__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpReadResourceRequest
-    domain_of:
-    - McpReadResourceRequest
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpReadResourceRequest__jsonrpc:
     name: mcpReadResourceRequest__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -5348,22 +4917,6 @@ slots:
     range: integer
     required: true
     minimum_value: 0
-  mcpReadResourceResultResponse__identifier:
-    name: mcpReadResourceResultResponse__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpReadResourceResultResponse
-    domain_of:
-    - McpReadResourceResultResponse
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpReadResourceResultResponse__jsonrpc:
     name: mcpReadResourceResultResponse__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -5788,20 +5341,6 @@ slots:
     domain_of:
     - McpResourceLink
     range: integer
-  mcpResourceLink__kind:
-    name: mcpResourceLink__kind
-    description: The kind of object, always `resource_link`.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - type
-    slot_uri: mcp:kind
-    alias: kind
-    owner: McpResourceLink
-    domain_of:
-    - McpResourceLink
-    range: string
-    required: true
-    equals_string: resource_link
   mcpResourceLink__uri:
     name: mcpResourceLink__uri
     description: The URI of this resource.
@@ -5967,20 +5506,6 @@ slots:
     - McpResourceTemplate
     range: McpUriTemplate
     required: true
-  mcpResourceTemplateReference__kind:
-    name: mcpResourceTemplateReference__kind
-    description: The kind of object, always `ref/resource`.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - type
-    slot_uri: mcp:kind
-    alias: kind
-    owner: McpResourceTemplateReference
-    domain_of:
-    - McpResourceTemplateReference
-    range: string
-    required: true
-    equals_string: ref/resource
   mcpResourceTemplateReference__uri:
     name: mcpResourceTemplateReference__uri
     description: The URI or URI template of the resource.
@@ -6403,20 +5928,6 @@ slots:
     domain_of:
     - McpStringSchema
     range: integer
-  mcpStringSchema__kind:
-    name: mcpStringSchema__kind
-    description: The kind of object, always `string`.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - type
-    slot_uri: mcp:kind
-    alias: kind
-    owner: McpStringSchema
-    domain_of:
-    - McpStringSchema
-    range: string
-    required: true
-    equals_string: string
   mcpSubscriptionFilter__prompts_list_changed:
     name: mcpSubscriptionFilter__prompts_list_changed
     description: If true, receive {@link PromptListChangedNotificationnotifications/prompts/list_changed}.
@@ -6532,22 +6043,6 @@ slots:
     required: true
     inlined: true
     inlined_as_list: true
-  mcpSubscriptionsListenRequest__identifier:
-    name: mcpSubscriptionsListenRequest__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpSubscriptionsListenRequest
-    domain_of:
-    - McpSubscriptionsListenRequest
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpSubscriptionsListenRequest__jsonrpc:
     name: mcpSubscriptionsListenRequest__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -6707,22 +6202,6 @@ slots:
     any_of:
     - range: string
     - range: integer
-  mcpSubscriptionsListenResultResponse__identifier:
-    name: mcpSubscriptionsListenResultResponse__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpSubscriptionsListenResultResponse
-    domain_of:
-    - McpSubscriptionsListenResultResponse
-    range: string
-    required: true
-    any_of:
-    - range: string
-    - range: integer
   mcpSubscriptionsListenResultResponse__jsonrpc:
     name: mcpSubscriptionsListenResultResponse__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -6807,20 +6286,6 @@ slots:
     - McpTextContent
     range: string
     required: true
-  mcpTextContent__kind:
-    name: mcpTextContent__kind
-    description: The kind of object, always `text`.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - type
-    slot_uri: mcp:kind
-    alias: kind
-    owner: McpTextContent
-    domain_of:
-    - McpTextContent
-    range: string
-    required: true
-    equals_string: text
   mcpTextResourceContents__meta:
     name: mcpTextResourceContents__meta
     description: "Represents the contents of a `_meta` field, which clients and servers\
@@ -6926,20 +6391,6 @@ slots:
     domain_of:
     - McpTitledMultiSelectEnumSchema
     range: integer
-  mcpTitledMultiSelectEnumSchema__kind:
-    name: mcpTitledMultiSelectEnumSchema__kind
-    description: The kind of object, always `array`.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - type
-    slot_uri: mcp:kind
-    alias: kind
-    owner: McpTitledMultiSelectEnumSchema
-    domain_of:
-    - McpTitledMultiSelectEnumSchema
-    range: string
-    required: true
-    equals_string: array
   mcpTitledMultiSelectEnumSchemaItems__any_of:
     name: mcpTitledMultiSelectEnumSchemaItems__any_of
     description: Array of enum options with values and display labels.
@@ -6989,20 +6440,6 @@ slots:
     multivalued: true
     inlined: true
     inlined_as_list: true
-  mcpTitledSingleSelectEnumSchema__kind:
-    name: mcpTitledSingleSelectEnumSchema__kind
-    description: The kind of object, always `string`.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - type
-    slot_uri: mcp:kind
-    alias: kind
-    owner: McpTitledSingleSelectEnumSchema
-    domain_of:
-    - McpTitledSingleSelectEnumSchema
-    range: string
-    required: true
-    equals_string: string
   mcpTitledSingleSelectEnumSchemaOneOf__const:
     name: mcpTitledSingleSelectEnumSchemaOneOf__const
     description: The enum value.
@@ -7223,20 +6660,6 @@ slots:
     domain_of:
     - McpToolInputSchema
     range: string
-  mcpToolInputSchema__kind:
-    name: mcpToolInputSchema__kind
-    description: The kind of object, always `object`.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - type
-    slot_uri: mcp:kind
-    alias: kind
-    owner: McpToolInputSchema
-    domain_of:
-    - McpToolInputSchema
-    range: string
-    required: true
-    equals_string: object
   mcpToolListChangedNotification__jsonrpc:
     name: mcpToolListChangedNotification__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -7367,20 +6790,6 @@ slots:
     - McpToolResultContent
     range: string
     required: true
-  mcpToolResultContent__kind:
-    name: mcpToolResultContent__kind
-    description: The kind of object, always `tool_result`.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - type
-    slot_uri: mcp:kind
-    alias: kind
-    owner: McpToolResultContent
-    domain_of:
-    - McpToolResultContent
-    range: string
-    required: true
-    equals_string: tool_result
   mcpToolUseContent__meta:
     name: mcpToolUseContent__meta
     description: 'Optional metadata about the tool use. Clients SHOULD preserve this
@@ -7396,22 +6805,6 @@ slots:
     range: McpMetaObject
     inlined: true
     inlined_as_list: true
-  mcpToolUseContent__identifier:
-    name: mcpToolUseContent__identifier
-    description: 'A unique identifier for this tool use.
-
-
-      This ID is used to match tool results to their corresponding tool uses.'
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpToolUseContent
-    domain_of:
-    - McpToolUseContent
-    range: string
-    required: true
   mcpToolUseContent__input:
     name: mcpToolUseContent__input
     description: The arguments to pass to the tool, conforming to the tool's input
@@ -7426,20 +6819,6 @@ slots:
     required: true
     inlined: true
     inlined_as_list: true
-  mcpToolUseContent__kind:
-    name: mcpToolUseContent__kind
-    description: The kind of object, always `tool_use`.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - type
-    slot_uri: mcp:kind
-    alias: kind
-    owner: McpToolUseContent
-    domain_of:
-    - McpToolUseContent
-    range: string
-    required: true
-    equals_string: tool_use
   mcpUnsupportedProtocolVersionError__error:
     name: mcpUnsupportedProtocolVersionError__error
     description: The error the request ended with.
@@ -7453,21 +6832,6 @@ slots:
     required: true
     inlined: true
     inlined_as_list: true
-  mcpUnsupportedProtocolVersionError__identifier:
-    name: mcpUnsupportedProtocolVersionError__identifier
-    description: A uniquely identifying ID for a request in JSON-RPC.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - id
-    slot_uri: mcp:identifier
-    alias: identifier
-    owner: McpUnsupportedProtocolVersionError
-    domain_of:
-    - McpUnsupportedProtocolVersionError
-    range: string
-    any_of:
-    - range: string
-    - range: integer
   mcpUnsupportedProtocolVersionError__jsonrpc:
     name: mcpUnsupportedProtocolVersionError__jsonrpc
     description: The JSON-RPC version, always `2.0`.
@@ -7575,20 +6939,6 @@ slots:
     domain_of:
     - McpUntitledMultiSelectEnumSchema
     range: integer
-  mcpUntitledMultiSelectEnumSchema__kind:
-    name: mcpUntitledMultiSelectEnumSchema__kind
-    description: The kind of object, always `array`.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - type
-    slot_uri: mcp:kind
-    alias: kind
-    owner: McpUntitledMultiSelectEnumSchema
-    domain_of:
-    - McpUntitledMultiSelectEnumSchema
-    range: string
-    required: true
-    equals_string: array
   mcpUntitledMultiSelectEnumSchemaItems__enum:
     name: mcpUntitledMultiSelectEnumSchemaItems__enum
     description: Array of enum values to choose from.
@@ -7601,20 +6951,6 @@ slots:
     range: string
     required: true
     multivalued: true
-  mcpUntitledMultiSelectEnumSchemaItems__kind:
-    name: mcpUntitledMultiSelectEnumSchemaItems__kind
-    description: The kind of object, always `string`.
-    from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - type
-    slot_uri: mcp:kind
-    alias: kind
-    owner: McpUntitledMultiSelectEnumSchemaItems
-    domain_of:
-    - McpUntitledMultiSelectEnumSchemaItems
-    range: string
-    required: true
-    equals_string: string
   mcpUntitledSingleSelectEnumSchema__default:
     name: mcpUntitledSingleSelectEnumSchema__default
     description: Optional default value.
@@ -7637,20 +6973,47 @@ slots:
     range: string
     required: true
     multivalued: true
-  mcpUntitledSingleSelectEnumSchema__kind:
-    name: mcpUntitledSingleSelectEnumSchema__kind
-    description: The kind of object, always `string`.
+  McpAnnotations_audience:
+    name: McpAnnotations_audience
+    definition_uri: https://w3id.org/lmodel/mcp/audience
+    description: 'Describes who the intended audience of this object or data is.
+
+
+      It can include multiple entries to indicate content useful for multiple audiences
+      (e.g., `["user", "assistant"]`).'
     from_schema: https://w3id.org/lmodel/mcp
-    aliases:
-    - type
-    slot_uri: mcp:kind
-    alias: kind
-    owner: McpUntitledSingleSelectEnumSchema
+    mappings:
+    - mcp:audience
+    is_a: audience
+    domain: McpAnnotations
+    slot_uri: mcp:audience
+    alias: audience
+    owner: McpAnnotations
     domain_of:
-    - McpUntitledSingleSelectEnumSchema
+    - McpAnnotations
+    is_usage_slot: true
+    usage_slot_name: audience
+    range: McpRole
+    multivalued: true
+  McpAudioContent_type:
+    name: McpAudioContent_type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of object, always `audio`.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    is_a: type
+    domain: McpAudioContent
+    slot_uri: mcp:type
+    alias: type
+    owner: McpAudioContent
+    domain_of:
+    - McpAudioContent
+    is_usage_slot: true
+    usage_slot_name: type
     range: string
     required: true
-    equals_string: string
+    equals_string: audio
   McpBaseMetadata_name:
     name: McpBaseMetadata_name
     definition_uri: https://w3id.org/lmodel/mcp/name
@@ -7725,6 +7088,46 @@ slots:
     is_usage_slot: true
     usage_slot_name: title
     range: string
+  McpBooleanSchema_type:
+    name: McpBooleanSchema_type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of object, always `boolean`.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    is_a: type
+    domain: McpBooleanSchema
+    slot_uri: mcp:type
+    alias: type
+    owner: McpBooleanSchema
+    domain_of:
+    - McpBooleanSchema
+    is_usage_slot: true
+    usage_slot_name: type
+    range: string
+    required: true
+    equals_string: boolean
+  McpCallToolRequest_id:
+    name: McpCallToolRequest_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: id
+    domain: McpCallToolRequest
+    slot_uri: mcp:id
+    alias: id
+    owner: McpCallToolRequest
+    domain_of:
+    - McpCallToolRequest
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
   McpCallToolRequestParams_name:
     name: McpCallToolRequestParams_name
     definition_uri: https://w3id.org/lmodel/mcp/name
@@ -7743,6 +7146,107 @@ slots:
     usage_slot_name: name
     range: string
     required: true
+  McpCallToolResultResponse_id:
+    name: McpCallToolResultResponse_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: id
+    domain: McpCallToolResultResponse
+    slot_uri: mcp:id
+    alias: id
+    owner: McpCallToolResultResponse
+    domain_of:
+    - McpCallToolResultResponse
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
+  McpCancelledNotificationParams_reason:
+    name: McpCancelledNotificationParams_reason
+    definition_uri: https://w3id.org/lmodel/mcp/reason
+    description: An optional string describing the reason for the cancellation. This
+      MAY be logged or presented to the user.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:reason
+    is_a: reason
+    domain: McpCancelledNotificationParams
+    slot_uri: mcp:reason
+    alias: reason
+    owner: McpCancelledNotificationParams
+    domain_of:
+    - McpCancelledNotificationParams
+    is_usage_slot: true
+    usage_slot_name: reason
+    range: string
+  McpClientCapabilitiesSampling_context:
+    name: McpClientCapabilitiesSampling_context
+    definition_uri: https://w3id.org/lmodel/mcp/context
+    description: 'Whether the client supports context inclusion via `includeContext`
+      parameter.
+
+      If not declared, servers SHOULD only use `includeContext: "none"` (or omit it).'
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:context
+    is_a: context
+    domain: McpClientCapabilitiesSampling
+    slot_uri: mcp:context
+    alias: context
+    owner: McpClientCapabilitiesSampling
+    domain_of:
+    - McpClientCapabilitiesSampling
+    is_usage_slot: true
+    usage_slot_name: context
+    range: McpJSONObject
+    inlined: true
+    inlined_as_list: true
+  McpCompleteRequest_id:
+    name: McpCompleteRequest_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: id
+    domain: McpCompleteRequest
+    slot_uri: mcp:id
+    alias: id
+    owner: McpCompleteRequest
+    domain_of:
+    - McpCompleteRequest
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
+  McpCompleteRequestParams_context:
+    name: McpCompleteRequestParams_context
+    definition_uri: https://w3id.org/lmodel/mcp/context
+    description: Additional, optional context for completions
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:context
+    is_a: context
+    domain: McpCompleteRequestParams
+    slot_uri: mcp:context
+    alias: context
+    owner: McpCompleteRequestParams
+    domain_of:
+    - McpCompleteRequestParams
+    is_usage_slot: true
+    usage_slot_name: context
+    range: McpCompleteRequestParamsContext
+    inlined: true
+    inlined_as_list: true
   McpCompleteRequestParamsArgument_name:
     name: McpCompleteRequestParamsArgument_name
     definition_uri: https://w3id.org/lmodel/mcp/name
@@ -7761,6 +7265,88 @@ slots:
     usage_slot_name: name
     range: string
     required: true
+  McpCompleteResultResponse_id:
+    name: McpCompleteResultResponse_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: id
+    domain: McpCompleteResultResponse
+    slot_uri: mcp:id
+    alias: id
+    owner: McpCompleteResultResponse
+    domain_of:
+    - McpCompleteResultResponse
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
+  McpDiscoverRequest_id:
+    name: McpDiscoverRequest_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: id
+    domain: McpDiscoverRequest
+    slot_uri: mcp:id
+    alias: id
+    owner: McpDiscoverRequest
+    domain_of:
+    - McpDiscoverRequest
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
+  McpDiscoverResultResponse_id:
+    name: McpDiscoverResultResponse_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: id
+    domain: McpDiscoverResultResponse
+    slot_uri: mcp:id
+    alias: id
+    owner: McpDiscoverResultResponse
+    domain_of:
+    - McpDiscoverResultResponse
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
+  McpElicitRequestFormParamsRequestedSchema_type:
+    name: McpElicitRequestFormParamsRequestedSchema_type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of object, always `object`.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    is_a: type
+    domain: McpElicitRequestFormParamsRequestedSchema
+    slot_uri: mcp:type
+    alias: type
+    owner: McpElicitRequestFormParamsRequestedSchema
+    domain_of:
+    - McpElicitRequestFormParamsRequestedSchema
+    is_usage_slot: true
+    usage_slot_name: type
+    range: string
+    required: true
+    equals_string: object
   McpElicitRequestURLParams_url:
     name: McpElicitRequestURLParams_url
     definition_uri: https://w3id.org/lmodel/mcp/url
@@ -7779,6 +7365,67 @@ slots:
     usage_slot_name: url
     range: uri
     required: true
+  McpEmbeddedResource_resource:
+    name: McpEmbeddedResource_resource
+    definition_uri: https://w3id.org/lmodel/mcp/resource
+    description: The resource's contents, as text or as binary data.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:resource
+    is_a: resource
+    domain: McpEmbeddedResource
+    slot_uri: mcp:resource
+    alias: resource
+    owner: McpEmbeddedResource
+    domain_of:
+    - McpEmbeddedResource
+    is_usage_slot: true
+    usage_slot_name: resource
+    range: string
+    required: true
+    any_of:
+    - range: McpTextResourceContents
+    - range: McpBlobResourceContents
+  McpEmbeddedResource_type:
+    name: McpEmbeddedResource_type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of object, always `resource`.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    is_a: type
+    domain: McpEmbeddedResource
+    slot_uri: mcp:type
+    alias: type
+    owner: McpEmbeddedResource
+    domain_of:
+    - McpEmbeddedResource
+    is_usage_slot: true
+    usage_slot_name: type
+    range: string
+    required: true
+    equals_string: resource
+  McpGetPromptRequest_id:
+    name: McpGetPromptRequest_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: id
+    domain: McpGetPromptRequest
+    slot_uri: mcp:id
+    alias: id
+    owner: McpGetPromptRequest
+    domain_of:
+    - McpGetPromptRequest
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
   McpGetPromptRequestParams_name:
     name: McpGetPromptRequestParams_name
     definition_uri: https://w3id.org/lmodel/mcp/name
@@ -7814,6 +7461,66 @@ slots:
     is_usage_slot: true
     usage_slot_name: description
     range: string
+  McpGetPromptResultResponse_id:
+    name: McpGetPromptResultResponse_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: id
+    domain: McpGetPromptResultResponse
+    slot_uri: mcp:id
+    alias: id
+    owner: McpGetPromptResultResponse
+    domain_of:
+    - McpGetPromptResultResponse
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
+  McpHeaderMismatchError_id:
+    name: McpHeaderMismatchError_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: id
+    domain: McpHeaderMismatchError
+    slot_uri: mcp:id
+    alias: id
+    owner: McpHeaderMismatchError
+    domain_of:
+    - McpHeaderMismatchError
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    any_of:
+    - range: string
+    - range: integer
+  McpImageContent_type:
+    name: McpImageContent_type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of object, always `image`.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    is_a: type
+    domain: McpImageContent
+    slot_uri: mcp:type
+    alias: type
+    owner: McpImageContent
+    domain_of:
+    - McpImageContent
+    is_usage_slot: true
+    usage_slot_name: type
+    range: string
+    required: true
+    equals_string: image
   McpImplementation_description:
     name: McpImplementation_description
     definition_uri: https://w3id.org/lmodel/mcp/description
@@ -7897,6 +7604,68 @@ slots:
     usage_slot_name: version
     range: string
     required: true
+  McpJSONRPCErrorResponse_id:
+    name: McpJSONRPCErrorResponse_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: id
+    domain: McpJSONRPCErrorResponse
+    slot_uri: mcp:id
+    alias: id
+    owner: McpJSONRPCErrorResponse
+    domain_of:
+    - McpJSONRPCErrorResponse
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    any_of:
+    - range: string
+    - range: integer
+  McpJSONRPCRequest_id:
+    name: McpJSONRPCRequest_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: id
+    domain: McpJSONRPCRequest
+    slot_uri: mcp:id
+    alias: id
+    owner: McpJSONRPCRequest
+    domain_of:
+    - McpJSONRPCRequest
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
+  McpJSONRPCResultResponse_id:
+    name: McpJSONRPCResultResponse_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: id
+    domain: McpJSONRPCResultResponse
+    slot_uri: mcp:id
+    alias: id
+    owner: McpJSONRPCResultResponse
+    domain_of:
+    - McpJSONRPCResultResponse
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
   McpLegacyTitledEnumSchema_description:
     name: McpLegacyTitledEnumSchema_description
     definition_uri: https://w3id.org/lmodel/mcp/description
@@ -7931,6 +7700,213 @@ slots:
     is_usage_slot: true
     usage_slot_name: title
     range: string
+  McpLegacyTitledEnumSchema_type:
+    name: McpLegacyTitledEnumSchema_type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of object, always `string`.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    is_a: type
+    domain: McpLegacyTitledEnumSchema
+    slot_uri: mcp:type
+    alias: type
+    owner: McpLegacyTitledEnumSchema
+    domain_of:
+    - McpLegacyTitledEnumSchema
+    is_usage_slot: true
+    usage_slot_name: type
+    range: string
+    required: true
+    equals_string: string
+  McpListPromptsRequest_id:
+    name: McpListPromptsRequest_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: id
+    domain: McpListPromptsRequest
+    slot_uri: mcp:id
+    alias: id
+    owner: McpListPromptsRequest
+    domain_of:
+    - McpListPromptsRequest
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
+  McpListPromptsResultResponse_id:
+    name: McpListPromptsResultResponse_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: McpJSONRPCResultResponse_id
+    domain: McpListPromptsResultResponse
+    slot_uri: mcp:id
+    alias: id
+    owner: McpListPromptsResultResponse
+    domain_of:
+    - McpListPromptsResultResponse
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
+  McpListResourceTemplatesRequest_id:
+    name: McpListResourceTemplatesRequest_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: id
+    domain: McpListResourceTemplatesRequest
+    slot_uri: mcp:id
+    alias: id
+    owner: McpListResourceTemplatesRequest
+    domain_of:
+    - McpListResourceTemplatesRequest
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
+  McpListResourceTemplatesResultResponse_id:
+    name: McpListResourceTemplatesResultResponse_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: McpJSONRPCResultResponse_id
+    domain: McpListResourceTemplatesResultResponse
+    slot_uri: mcp:id
+    alias: id
+    owner: McpListResourceTemplatesResultResponse
+    domain_of:
+    - McpListResourceTemplatesResultResponse
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
+  McpListResourcesRequest_id:
+    name: McpListResourcesRequest_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: id
+    domain: McpListResourcesRequest
+    slot_uri: mcp:id
+    alias: id
+    owner: McpListResourcesRequest
+    domain_of:
+    - McpListResourcesRequest
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
+  McpListResourcesResultResponse_id:
+    name: McpListResourcesResultResponse_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: McpJSONRPCResultResponse_id
+    domain: McpListResourcesResultResponse
+    slot_uri: mcp:id
+    alias: id
+    owner: McpListResourcesResultResponse
+    domain_of:
+    - McpListResourcesResultResponse
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
+  McpListToolsRequest_id:
+    name: McpListToolsRequest_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: id
+    domain: McpListToolsRequest
+    slot_uri: mcp:id
+    alias: id
+    owner: McpListToolsRequest
+    domain_of:
+    - McpListToolsRequest
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
+  McpListToolsResultResponse_id:
+    name: McpListToolsResultResponse_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: McpJSONRPCResultResponse_id
+    domain: McpListToolsResultResponse
+    slot_uri: mcp:id
+    alias: id
+    owner: McpListToolsResultResponse
+    domain_of:
+    - McpListToolsResultResponse
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
+  McpMissingRequiredClientCapabilityError_id:
+    name: McpMissingRequiredClientCapabilityError_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: McpJSONRPCErrorResponse_id
+    domain: McpMissingRequiredClientCapabilityError
+    slot_uri: mcp:id
+    alias: id
+    owner: McpMissingRequiredClientCapabilityError
+    domain_of:
+    - McpMissingRequiredClientCapabilityError
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    any_of:
+    - range: string
+    - range: integer
   McpModelHint_name:
     name: McpModelHint_name
     definition_uri: https://w3id.org/lmodel/mcp/name
@@ -7988,6 +7964,45 @@ slots:
     is_usage_slot: true
     usage_slot_name: title
     range: string
+  McpNumberSchema_type:
+    name: McpNumberSchema_type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of value the field takes.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    is_a: type
+    domain: McpNumberSchema
+    slot_uri: mcp:type
+    alias: type
+    owner: McpNumberSchema
+    domain_of:
+    - McpNumberSchema
+    is_usage_slot: true
+    usage_slot_name: type
+    range: McpNumberSchemaType
+    required: true
+  McpPaginatedRequest_id:
+    name: McpPaginatedRequest_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: McpJSONRPCRequest_id
+    domain: McpPaginatedRequest
+    slot_uri: mcp:id
+    alias: id
+    owner: McpPaginatedRequest
+    domain_of:
+    - McpPaginatedRequest
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
   McpPrompt_description:
     name: McpPrompt_description
     definition_uri: https://w3id.org/lmodel/mcp/description
@@ -8142,6 +8157,67 @@ slots:
     is_usage_slot: true
     usage_slot_name: title
     range: string
+  McpPromptReference_type:
+    name: McpPromptReference_type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of object, always `ref/prompt`.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    is_a: type
+    domain: McpPromptReference
+    slot_uri: mcp:type
+    alias: type
+    owner: McpPromptReference
+    domain_of:
+    - McpPromptReference
+    is_usage_slot: true
+    usage_slot_name: type
+    range: string
+    required: true
+    equals_string: ref/prompt
+  McpReadResourceRequest_id:
+    name: McpReadResourceRequest_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: McpJSONRPCRequest_id
+    domain: McpReadResourceRequest
+    slot_uri: mcp:id
+    alias: id
+    owner: McpReadResourceRequest
+    domain_of:
+    - McpReadResourceRequest
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
+  McpReadResourceResultResponse_id:
+    name: McpReadResourceResultResponse_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: McpJSONRPCResultResponse_id
+    domain: McpReadResourceResultResponse
+    slot_uri: mcp:id
+    alias: id
+    owner: McpReadResourceResultResponse
+    domain_of:
+    - McpReadResourceResultResponse
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
   McpResource_description:
     name: McpResource_description
     definition_uri: https://w3id.org/lmodel/mcp/description
@@ -8264,6 +8340,25 @@ slots:
     is_usage_slot: true
     usage_slot_name: title
     range: string
+  McpResourceLink_type:
+    name: McpResourceLink_type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of object, always `resource_link`.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    is_a: type
+    domain: McpResourceLink
+    slot_uri: mcp:type
+    alias: type
+    owner: McpResourceLink
+    domain_of:
+    - McpResourceLink
+    is_usage_slot: true
+    usage_slot_name: type
+    range: string
+    required: true
+    equals_string: resource_link
   McpResourceTemplate_description:
     name: McpResourceTemplate_description
     definition_uri: https://w3id.org/lmodel/mcp/description
@@ -8325,6 +8420,25 @@ slots:
     is_usage_slot: true
     usage_slot_name: title
     range: string
+  McpResourceTemplateReference_type:
+    name: McpResourceTemplateReference_type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of object, always `ref/resource`.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    is_a: type
+    domain: McpResourceTemplateReference
+    slot_uri: mcp:type
+    alias: type
+    owner: McpResourceTemplateReference
+    domain_of:
+    - McpResourceTemplateReference
+    is_usage_slot: true
+    usage_slot_name: type
+    range: string
+    required: true
+    equals_string: ref/resource
   McpRoot_name:
     name: McpRoot_name
     definition_uri: https://w3id.org/lmodel/mcp/name
@@ -8380,6 +8494,86 @@ slots:
     is_usage_slot: true
     usage_slot_name: title
     range: string
+  McpStringSchema_type:
+    name: McpStringSchema_type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of object, always `string`.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    is_a: type
+    domain: McpStringSchema
+    slot_uri: mcp:type
+    alias: type
+    owner: McpStringSchema
+    domain_of:
+    - McpStringSchema
+    is_usage_slot: true
+    usage_slot_name: type
+    range: string
+    required: true
+    equals_string: string
+  McpSubscriptionsListenRequest_id:
+    name: McpSubscriptionsListenRequest_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: McpJSONRPCRequest_id
+    domain: McpSubscriptionsListenRequest
+    slot_uri: mcp:id
+    alias: id
+    owner: McpSubscriptionsListenRequest
+    domain_of:
+    - McpSubscriptionsListenRequest
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
+  McpSubscriptionsListenResultResponse_id:
+    name: McpSubscriptionsListenResultResponse_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: McpJSONRPCResultResponse_id
+    domain: McpSubscriptionsListenResultResponse
+    slot_uri: mcp:id
+    alias: id
+    owner: McpSubscriptionsListenResultResponse
+    domain_of:
+    - McpSubscriptionsListenResultResponse
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
+    any_of:
+    - range: string
+    - range: integer
+  McpTextContent_type:
+    name: McpTextContent_type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of object, always `text`.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    is_a: type
+    domain: McpTextContent
+    slot_uri: mcp:type
+    alias: type
+    owner: McpTextContent
+    domain_of:
+    - McpTextContent
+    is_usage_slot: true
+    usage_slot_name: type
+    range: string
+    required: true
+    equals_string: text
   McpTitledMultiSelectEnumSchema_description:
     name: McpTitledMultiSelectEnumSchema_description
     definition_uri: https://w3id.org/lmodel/mcp/description
@@ -8414,6 +8608,25 @@ slots:
     is_usage_slot: true
     usage_slot_name: title
     range: string
+  McpTitledMultiSelectEnumSchema_type:
+    name: McpTitledMultiSelectEnumSchema_type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of object, always `array`.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    is_a: type
+    domain: McpTitledMultiSelectEnumSchema
+    slot_uri: mcp:type
+    alias: type
+    owner: McpTitledMultiSelectEnumSchema
+    domain_of:
+    - McpTitledMultiSelectEnumSchema
+    is_usage_slot: true
+    usage_slot_name: type
+    range: string
+    required: true
+    equals_string: array
   McpTitledMultiSelectEnumSchemaItemsAnyOf_title:
     name: McpTitledMultiSelectEnumSchemaItemsAnyOf_title
     definition_uri: https://w3id.org/lmodel/mcp/title
@@ -8466,6 +8679,25 @@ slots:
     is_usage_slot: true
     usage_slot_name: title
     range: string
+  McpTitledSingleSelectEnumSchema_type:
+    name: McpTitledSingleSelectEnumSchema_type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of object, always `string`.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    is_a: type
+    domain: McpTitledSingleSelectEnumSchema
+    slot_uri: mcp:type
+    alias: type
+    owner: McpTitledSingleSelectEnumSchema
+    domain_of:
+    - McpTitledSingleSelectEnumSchema
+    is_usage_slot: true
+    usage_slot_name: type
+    range: string
+    required: true
+    equals_string: string
   McpTitledSingleSelectEnumSchemaOneOf_title:
     name: McpTitledSingleSelectEnumSchemaOneOf_title
     definition_uri: https://w3id.org/lmodel/mcp/title
@@ -8562,6 +8794,65 @@ slots:
     is_usage_slot: true
     usage_slot_name: title
     range: string
+  McpToolInputSchema_type:
+    name: McpToolInputSchema_type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of object, always `object`.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    is_a: type
+    domain: McpToolInputSchema
+    slot_uri: mcp:type
+    alias: type
+    owner: McpToolInputSchema
+    domain_of:
+    - McpToolInputSchema
+    is_usage_slot: true
+    usage_slot_name: type
+    range: string
+    required: true
+    equals_string: object
+  McpToolResultContent_type:
+    name: McpToolResultContent_type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of object, always `tool_result`.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    is_a: type
+    domain: McpToolResultContent
+    slot_uri: mcp:type
+    alias: type
+    owner: McpToolResultContent
+    domain_of:
+    - McpToolResultContent
+    is_usage_slot: true
+    usage_slot_name: type
+    range: string
+    required: true
+    equals_string: tool_result
+  McpToolUseContent_id:
+    name: McpToolUseContent_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: 'A unique identifier for this tool use.
+
+
+      This ID is used to match tool results to their corresponding tool uses.'
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: id
+    domain: McpToolUseContent
+    slot_uri: mcp:id
+    alias: id
+    owner: McpToolUseContent
+    domain_of:
+    - McpToolUseContent
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    required: true
   McpToolUseContent_name:
     name: McpToolUseContent_name
     definition_uri: https://w3id.org/lmodel/mcp/name
@@ -8580,6 +8871,45 @@ slots:
     usage_slot_name: name
     range: string
     required: true
+  McpToolUseContent_type:
+    name: McpToolUseContent_type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of object, always `tool_use`.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    is_a: type
+    domain: McpToolUseContent
+    slot_uri: mcp:type
+    alias: type
+    owner: McpToolUseContent
+    domain_of:
+    - McpToolUseContent
+    is_usage_slot: true
+    usage_slot_name: type
+    range: string
+    required: true
+    equals_string: tool_use
+  McpUnsupportedProtocolVersionError_id:
+    name: McpUnsupportedProtocolVersionError_id
+    definition_uri: https://w3id.org/lmodel/mcp/id
+    description: A uniquely identifying ID for a request in JSON-RPC.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:id
+    is_a: McpJSONRPCErrorResponse_id
+    domain: McpUnsupportedProtocolVersionError
+    slot_uri: mcp:id
+    alias: id
+    owner: McpUnsupportedProtocolVersionError
+    domain_of:
+    - McpUnsupportedProtocolVersionError
+    is_usage_slot: true
+    usage_slot_name: id
+    range: string
+    any_of:
+    - range: string
+    - range: integer
   McpUntitledMultiSelectEnumSchema_description:
     name: McpUntitledMultiSelectEnumSchema_description
     definition_uri: https://w3id.org/lmodel/mcp/description
@@ -8614,6 +8944,44 @@ slots:
     is_usage_slot: true
     usage_slot_name: title
     range: string
+  McpUntitledMultiSelectEnumSchema_type:
+    name: McpUntitledMultiSelectEnumSchema_type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of object, always `array`.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    is_a: type
+    domain: McpUntitledMultiSelectEnumSchema
+    slot_uri: mcp:type
+    alias: type
+    owner: McpUntitledMultiSelectEnumSchema
+    domain_of:
+    - McpUntitledMultiSelectEnumSchema
+    is_usage_slot: true
+    usage_slot_name: type
+    range: string
+    required: true
+    equals_string: array
+  McpUntitledMultiSelectEnumSchemaItems_type:
+    name: McpUntitledMultiSelectEnumSchemaItems_type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of object, always `string`.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    is_a: type
+    domain: McpUntitledMultiSelectEnumSchemaItems
+    slot_uri: mcp:type
+    alias: type
+    owner: McpUntitledMultiSelectEnumSchemaItems
+    domain_of:
+    - McpUntitledMultiSelectEnumSchemaItems
+    is_usage_slot: true
+    usage_slot_name: type
+    range: string
+    required: true
+    equals_string: string
   McpUntitledSingleSelectEnumSchema_description:
     name: McpUntitledSingleSelectEnumSchema_description
     definition_uri: https://w3id.org/lmodel/mcp/description
@@ -8648,6 +9016,25 @@ slots:
     is_usage_slot: true
     usage_slot_name: title
     range: string
+  McpUntitledSingleSelectEnumSchema_type:
+    name: McpUntitledSingleSelectEnumSchema_type
+    definition_uri: https://w3id.org/lmodel/mcp/type
+    description: The kind of object, always `string`.
+    from_schema: https://w3id.org/lmodel/mcp
+    mappings:
+    - mcp:type
+    is_a: type
+    domain: McpUntitledSingleSelectEnumSchema
+    slot_uri: mcp:type
+    alias: type
+    owner: McpUntitledSingleSelectEnumSchema
+    domain_of:
+    - McpUntitledSingleSelectEnumSchema
+    is_usage_slot: true
+    usage_slot_name: type
+    range: string
+    required: true
+    equals_string: string
 classes:
   McpAnnotations:
     name: McpAnnotations
@@ -8660,21 +9047,20 @@ classes:
     exact_mappings:
     - mcp_schema:Annotations
     slots:
-    - mcpAnnotations__intended_audience
+    - McpAnnotations_audience
     - mcpAnnotations__last_modified
     - mcpAnnotations__priority
-    attributes:
-      intended_audience:
-        name: intended_audience
+    slot_usage:
+      audience:
+        name: audience
         description: 'Describes who the intended audience of this object or data is.
 
 
           It can include multiple entries to indicate content useful for multiple
           audiences (e.g., `["user", "assistant"]`).'
-        aliases:
-        - audience
         range: McpRole
         multivalued: true
+    attributes:
       last_modified:
         name: last_modified
         description: 'The moment the resource was last modified, as an ISO 8601 formatted
@@ -8714,11 +9100,17 @@ classes:
     exact_mappings:
     - mcp_schema:AudioContent
     slots:
+    - McpAudioContent_type
     - mcpAudioContent__meta
     - mcpAudioContent__annotations
     - mcpAudioContent__data
     - mcpAudioContent__mime_type
-    - mcpAudioContent__kind
+    slot_usage:
+      type:
+        name: type
+        description: The kind of object, always `audio`.
+        required: true
+        equals_string: audio
     attributes:
       meta:
         name: meta
@@ -8757,13 +9149,6 @@ classes:
           audio types.
         alias: mimeType
         required: true
-      kind:
-        name: kind
-        description: The kind of object, always `audio`.
-        aliases:
-        - type
-        required: true
-        equals_string: audio
     class_uri: mcp:McpAudioContent
     extra_slots:
       allowed: true
@@ -8863,8 +9248,8 @@ classes:
     slots:
     - McpBooleanSchema_description
     - McpBooleanSchema_title
+    - McpBooleanSchema_type
     - mcpBooleanSchema__default
-    - mcpBooleanSchema__kind
     slot_usage:
       description:
         name: description
@@ -8872,18 +9257,16 @@ classes:
       title:
         name: title
         description: A title for the field.
+      type:
+        name: type
+        description: The kind of object, always `boolean`.
+        required: true
+        equals_string: boolean
     attributes:
       default:
         name: default
         description: The value the field takes when the user gives none.
         range: boolean
-      kind:
-        name: kind
-        description: The kind of object, always `boolean`.
-        aliases:
-        - type
-        required: true
-        equals_string: boolean
     class_uri: mcp:McpBooleanSchema
     extra_slots:
       allowed: true
@@ -8967,20 +9350,19 @@ classes:
     - mcp_schema:CallToolRequest
     is_a: McpJSONRPCRequest
     slots:
-    - mcpCallToolRequest__identifier
+    - McpCallToolRequest_id
     - mcpCallToolRequest__jsonrpc
     - mcpCallToolRequest__method
     - mcpCallToolRequest__params
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -9149,19 +9531,18 @@ classes:
     - mcp_schema:CallToolResultResponse
     is_a: McpJSONRPCResultResponse
     slots:
-    - mcpCallToolResultResponse__identifier
+    - McpCallToolResultResponse_id
     - mcpCallToolResultResponse__jsonrpc
     - mcpCallToolResultResponse__result
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -9237,9 +9618,14 @@ classes:
     - mcp_schema:CancelledNotificationParams
     is_a: McpNotificationParams
     slots:
+    - McpCancelledNotificationParams_reason
     - mcpCancelledNotificationParams__meta
-    - mcpCancelledNotificationParams__reason_text
     - mcpCancelledNotificationParams__request_id
+    slot_usage:
+      reason:
+        name: reason
+        description: An optional string describing the reason for the cancellation.
+          This MAY be logged or presented to the user.
     attributes:
       meta:
         name: meta
@@ -9247,12 +9633,6 @@ classes:
           fields. All key naming rules from `MetaObject` apply.
         alias: _meta
         range: McpNotificationMetaObject
-      reason_text:
-        name: reason_text
-        description: An optional string describing the reason for the cancellation.
-          This MAY be logged or presented to the user.
-        aliases:
-        - reason
       request_id:
         name: request_id
         description: 'The ID of the request to cancel.
@@ -9409,19 +9789,18 @@ classes:
     exact_mappings:
     - mcp_schema:ClientCapabilities/properties/sampling
     slots:
-    - mcpClientCapabilitiesSampling__context_info
+    - McpClientCapabilitiesSampling_context
     - mcpClientCapabilitiesSampling__tools
-    attributes:
-      context_info:
-        name: context_info
+    slot_usage:
+      context:
+        name: context
         description: 'Whether the client supports context inclusion via `includeContext`
           parameter.
 
           If not declared, servers SHOULD only use `includeContext: "none"` (or omit
           it).'
-        aliases:
-        - context
         range: McpJSONObject
+    attributes:
       tools:
         name: tools
         description: Whether the client supports tool use via `tools` and `toolChoice`
@@ -9531,20 +9910,19 @@ classes:
     - mcp_schema:CompleteRequest
     is_a: McpJSONRPCRequest
     slots:
-    - mcpCompleteRequest__identifier
+    - McpCompleteRequest_id
     - mcpCompleteRequest__jsonrpc
     - mcpCompleteRequest__method
     - mcpCompleteRequest__params
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -9574,10 +9952,15 @@ classes:
     - mcp_schema:CompleteRequestParams
     is_a: McpRequestParams
     slots:
+    - McpCompleteRequestParams_context
     - mcpCompleteRequestParams__meta
     - mcpCompleteRequestParams__argument
-    - mcpCompleteRequestParams__context_info
     - mcpCompleteRequestParams__ref
+    slot_usage:
+      context:
+        name: context
+        description: Additional, optional context for completions
+        range: McpCompleteRequestParamsContext
     attributes:
       meta:
         name: meta
@@ -9591,12 +9974,6 @@ classes:
         description: The argument's information
         range: McpCompleteRequestParamsArgument
         required: true
-      context_info:
-        name: context_info
-        description: Additional, optional context for completions
-        aliases:
-        - context
-        range: McpCompleteRequestParamsContext
       ref:
         name: ref
         description: 'What the completion is for: a prompt or a resource template.'
@@ -9758,19 +10135,18 @@ classes:
     - mcp_schema:CompleteResultResponse
     is_a: McpJSONRPCResultResponse
     slots:
-    - mcpCompleteResultResponse__identifier
+    - McpCompleteResultResponse_id
     - mcpCompleteResultResponse__jsonrpc
     - mcpCompleteResultResponse__result
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -10047,20 +10423,19 @@ classes:
     - mcp_schema:DiscoverRequest
     is_a: McpJSONRPCRequest
     slots:
-    - mcpDiscoverRequest__identifier
+    - McpDiscoverRequest_id
     - mcpDiscoverRequest__jsonrpc
     - mcpDiscoverRequest__method
     - mcpDiscoverRequest__params
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -10189,19 +10564,18 @@ classes:
     - mcp_schema:DiscoverResultResponse
     is_a: McpJSONRPCResultResponse
     slots:
-    - mcpDiscoverResultResponse__identifier
+    - McpDiscoverResultResponse_id
     - mcpDiscoverResultResponse__jsonrpc
     - mcpDiscoverResultResponse__result
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -10291,10 +10665,16 @@ classes:
     exact_mappings:
     - mcp_schema:ElicitRequestFormParams/properties/requestedSchema
     slots:
+    - McpElicitRequestFormParamsRequestedSchema_type
     - mcpElicitRequestFormParamsRequestedSchema__schema_dialect
     - mcpElicitRequestFormParamsRequestedSchema__properties
     - mcpElicitRequestFormParamsRequestedSchema__required_names
-    - mcpElicitRequestFormParamsRequestedSchema__kind
+    slot_usage:
+      type:
+        name: type
+        description: The kind of object, always `object`.
+        required: true
+        equals_string: object
     attributes:
       schema_dialect:
         name: schema_dialect
@@ -10312,13 +10692,6 @@ classes:
         aliases:
         - required
         multivalued: true
-      kind:
-        name: kind
-        description: The kind of object, always `object`.
-        aliases:
-        - type
-        required: true
-        equals_string: object
     class_uri: mcp:McpElicitRequestFormParamsRequestedSchema
     extra_slots:
       allowed: true
@@ -10460,10 +10833,23 @@ classes:
     exact_mappings:
     - mcp_schema:EmbeddedResource
     slots:
+    - McpEmbeddedResource_resource
+    - McpEmbeddedResource_type
     - mcpEmbeddedResource__meta
     - mcpEmbeddedResource__annotations
-    - mcpEmbeddedResource__resource_contents
-    - mcpEmbeddedResource__kind
+    slot_usage:
+      resource:
+        name: resource
+        description: The resource's contents, as text or as binary data.
+        required: true
+        any_of:
+        - range: McpTextResourceContents
+        - range: McpBlobResourceContents
+      type:
+        name: type
+        description: The kind of object, always `resource`.
+        required: true
+        equals_string: resource
     attributes:
       meta:
         name: meta
@@ -10491,22 +10877,6 @@ classes:
         name: annotations
         description: Optional annotations for the client.
         range: McpAnnotations
-      resource_contents:
-        name: resource_contents
-        description: The resource's contents, as text or as binary data.
-        aliases:
-        - resource
-        required: true
-        any_of:
-        - range: McpTextResourceContents
-        - range: McpBlobResourceContents
-      kind:
-        name: kind
-        description: The kind of object, always `resource`.
-        aliases:
-        - type
-        required: true
-        equals_string: resource
     class_uri: mcp:McpEmbeddedResource
     extra_slots:
       allowed: true
@@ -10590,20 +10960,19 @@ classes:
     - mcp_schema:GetPromptRequest
     is_a: McpJSONRPCRequest
     slots:
-    - mcpGetPromptRequest__identifier
+    - McpGetPromptRequest_id
     - mcpGetPromptRequest__jsonrpc
     - mcpGetPromptRequest__method
     - mcpGetPromptRequest__params
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -10758,19 +11127,18 @@ classes:
     - mcp_schema:GetPromptResultResponse
     is_a: McpJSONRPCResultResponse
     slots:
-    - mcpGetPromptResultResponse__identifier
+    - McpGetPromptResultResponse_id
     - mcpGetPromptResultResponse__jsonrpc
     - mcpGetPromptResultResponse__result
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -10804,23 +11172,22 @@ classes:
     - mcp_schema:HeaderMismatchError
     is_a: McpJSONRPCErrorResponse
     slots:
+    - McpHeaderMismatchError_id
     - mcpHeaderMismatchError__error
-    - mcpHeaderMismatchError__identifier
     - mcpHeaderMismatchError__jsonrpc
+    slot_usage:
+      id:
+        name: id
+        description: A uniquely identifying ID for a request in JSON-RPC.
+        any_of:
+        - range: string
+        - range: integer
     attributes:
       error:
         name: error
         description: The error the request ended with.
         range: McpHeaderMismatchErrorError
         required: true
-      identifier:
-        name: identifier
-        description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
-        any_of:
-        - range: string
-        - range: integer
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -10969,11 +11336,17 @@ classes:
     exact_mappings:
     - mcp_schema:ImageContent
     slots:
+    - McpImageContent_type
     - mcpImageContent__meta
     - mcpImageContent__annotations
     - mcpImageContent__data
     - mcpImageContent__mime_type
-    - mcpImageContent__kind
+    slot_usage:
+      type:
+        name: type
+        description: The kind of object, always `image`.
+        required: true
+        equals_string: image
     attributes:
       meta:
         name: meta
@@ -11012,13 +11385,6 @@ classes:
           image types.
         alias: mimeType
         required: true
-      kind:
-        name: kind
-        description: The kind of object, always `image`.
-        aliases:
-        - type
-        required: true
-        equals_string: image
     class_uri: mcp:McpImageContent
     extra_slots:
       allowed: true
@@ -11427,23 +11793,22 @@ classes:
     exact_mappings:
     - mcp_schema:JSONRPCErrorResponse
     slots:
+    - McpJSONRPCErrorResponse_id
     - mcpJSONRPCErrorResponse__error
-    - mcpJSONRPCErrorResponse__identifier
     - mcpJSONRPCErrorResponse__jsonrpc
+    slot_usage:
+      id:
+        name: id
+        description: A uniquely identifying ID for a request in JSON-RPC.
+        any_of:
+        - range: string
+        - range: integer
     attributes:
       error:
         name: error
         description: The error the request ended with.
         range: McpError
         required: true
-      identifier:
-        name: identifier
-        description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
-        any_of:
-        - range: string
-        - range: integer
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -11512,20 +11877,19 @@ classes:
     - mcp_schema:JSONRPCRequest
     is_a: McpRequest
     slots:
-    - mcpJSONRPCRequest__identifier
+    - McpJSONRPCRequest_id
     - mcpJSONRPCRequest__jsonrpc
     - mcpJSONRPCRequest__method
     - mcpJSONRPCRequest__params
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -11567,19 +11931,18 @@ classes:
     exact_mappings:
     - mcp_schema:JSONRPCResultResponse
     slots:
-    - mcpJSONRPCResultResponse__identifier
+    - McpJSONRPCResultResponse_id
     - mcpJSONRPCResultResponse__jsonrpc
     - mcpJSONRPCResultResponse__result
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -11627,10 +11990,10 @@ classes:
     slots:
     - McpLegacyTitledEnumSchema_description
     - McpLegacyTitledEnumSchema_title
+    - McpLegacyTitledEnumSchema_type
     - mcpLegacyTitledEnumSchema__default
     - mcpLegacyTitledEnumSchema__enum
     - mcpLegacyTitledEnumSchema__enum_names
-    - mcpLegacyTitledEnumSchema__kind
     slot_usage:
       description:
         name: description
@@ -11638,6 +12001,11 @@ classes:
       title:
         name: title
         description: A title for the field.
+      type:
+        name: type
+        description: The kind of object, always `string`.
+        required: true
+        equals_string: string
     attributes:
       default:
         name: default
@@ -11654,13 +12022,6 @@ classes:
           Non-standard according to JSON schema 2020-12.'
         alias: enumNames
         multivalued: true
-      kind:
-        name: kind
-        description: The kind of object, always `string`.
-        aliases:
-        - type
-        required: true
-        equals_string: string
     class_uri: mcp:McpLegacyTitledEnumSchema
     extra_slots:
       allowed: true
@@ -11676,20 +12037,19 @@ classes:
     - mcp_schema:ListPromptsRequest
     is_a: McpPaginatedRequest
     slots:
-    - mcpListPromptsRequest__identifier
+    - McpListPromptsRequest_id
     - mcpListPromptsRequest__jsonrpc
     - mcpListPromptsRequest__method
     - mcpListPromptsRequest__params
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -11808,19 +12168,18 @@ classes:
     - mcp_schema:ListPromptsResultResponse
     is_a: McpJSONRPCResultResponse
     slots:
-    - mcpListPromptsResultResponse__identifier
+    - McpListPromptsResultResponse_id
     - mcpListPromptsResultResponse__jsonrpc
     - mcpListPromptsResultResponse__result
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -11847,20 +12206,19 @@ classes:
     - mcp_schema:ListResourceTemplatesRequest
     is_a: McpPaginatedRequest
     slots:
-    - mcpListResourceTemplatesRequest__identifier
+    - McpListResourceTemplatesRequest_id
     - mcpListResourceTemplatesRequest__jsonrpc
     - mcpListResourceTemplatesRequest__method
     - mcpListResourceTemplatesRequest__params
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -11980,19 +12338,18 @@ classes:
     - mcp_schema:ListResourceTemplatesResultResponse
     is_a: McpJSONRPCResultResponse
     slots:
-    - mcpListResourceTemplatesResultResponse__identifier
+    - McpListResourceTemplatesResultResponse_id
     - mcpListResourceTemplatesResultResponse__jsonrpc
     - mcpListResourceTemplatesResultResponse__result
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -12018,20 +12375,19 @@ classes:
     - mcp_schema:ListResourcesRequest
     is_a: McpPaginatedRequest
     slots:
-    - mcpListResourcesRequest__identifier
+    - McpListResourcesRequest_id
     - mcpListResourcesRequest__jsonrpc
     - mcpListResourcesRequest__method
     - mcpListResourcesRequest__params
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -12150,19 +12506,18 @@ classes:
     - mcp_schema:ListResourcesResultResponse
     is_a: McpJSONRPCResultResponse
     slots:
-    - mcpListResourcesResultResponse__identifier
+    - McpListResourcesResultResponse_id
     - mcpListResourcesResultResponse__jsonrpc
     - mcpListResourcesResultResponse__result
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -12298,20 +12653,19 @@ classes:
     - mcp_schema:ListToolsRequest
     is_a: McpPaginatedRequest
     slots:
-    - mcpListToolsRequest__identifier
+    - McpListToolsRequest_id
     - mcpListToolsRequest__jsonrpc
     - mcpListToolsRequest__method
     - mcpListToolsRequest__params
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -12430,19 +12784,18 @@ classes:
     - mcp_schema:ListToolsResultResponse
     is_a: McpJSONRPCResultResponse
     slots:
-    - mcpListToolsResultResponse__identifier
+    - McpListToolsResultResponse_id
     - mcpListToolsResultResponse__jsonrpc
     - mcpListToolsResultResponse__result
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -12620,23 +12973,22 @@ classes:
     - mcp_schema:MissingRequiredClientCapabilityError
     is_a: McpJSONRPCErrorResponse
     slots:
+    - McpMissingRequiredClientCapabilityError_id
     - mcpMissingRequiredClientCapabilityError__error
-    - mcpMissingRequiredClientCapabilityError__identifier
     - mcpMissingRequiredClientCapabilityError__jsonrpc
+    slot_usage:
+      id:
+        name: id
+        description: A uniquely identifying ID for a request in JSON-RPC.
+        any_of:
+        - range: string
+        - range: integer
     attributes:
       error:
         name: error
         description: The error the request ended with.
         range: McpMissingRequiredClientCapabilityErrorError
         required: true
-      identifier:
-        name: identifier
-        description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
-        any_of:
-        - range: string
-        - range: integer
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -12925,10 +13277,10 @@ classes:
     slots:
     - McpNumberSchema_description
     - McpNumberSchema_title
+    - McpNumberSchema_type
     - mcpNumberSchema__default
     - mcpNumberSchema__maximum
     - mcpNumberSchema__minimum
-    - mcpNumberSchema__kind
     slot_usage:
       description:
         name: description
@@ -12936,6 +13288,11 @@ classes:
       title:
         name: title
         description: A title for the field.
+      type:
+        name: type
+        description: The kind of value the field takes.
+        range: McpNumberSchemaType
+        required: true
     attributes:
       default:
         name: default
@@ -12949,13 +13306,6 @@ classes:
         name: minimum
         description: The smallest value the field accepts.
         range: float
-      kind:
-        name: kind
-        description: The kind of value the field takes.
-        aliases:
-        - type
-        range: McpNumberSchemaType
-        required: true
     class_uri: mcp:McpNumberSchema
     extra_slots:
       allowed: true
@@ -12970,20 +13320,19 @@ classes:
     - mcp_schema:PaginatedRequest
     is_a: McpJSONRPCRequest
     slots:
-    - mcpPaginatedRequest__identifier
+    - McpPaginatedRequest_id
     - mcpPaginatedRequest__jsonrpc
     - mcpPaginatedRequest__method
     - mcpPaginatedRequest__params
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -13436,7 +13785,7 @@ classes:
     slots:
     - McpPromptReference_name
     - McpPromptReference_title
-    - mcpPromptReference__kind
+    - McpPromptReference_type
     slot_usage:
       name:
         name: name
@@ -13450,12 +13799,9 @@ classes:
           \ terminology.\n\nIf not provided, the name should be used for display (except\
           \ for {@link Tool},\nwhere `annotations.title` should be given precedence\
           \ over using `name`,\nif present)."
-    attributes:
-      kind:
-        name: kind
+      type:
+        name: type
         description: The kind of object, always `ref/prompt`.
-        aliases:
-        - type
         required: true
         equals_string: ref/prompt
     class_uri: mcp:McpPromptReference
@@ -13472,20 +13818,19 @@ classes:
     - mcp_schema:ReadResourceRequest
     is_a: McpJSONRPCRequest
     slots:
-    - mcpReadResourceRequest__identifier
+    - McpReadResourceRequest_id
     - mcpReadResourceRequest__jsonrpc
     - mcpReadResourceRequest__method
     - mcpReadResourceRequest__params
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -13643,19 +13988,18 @@ classes:
     - mcp_schema:ReadResourceResultResponse
     is_a: McpJSONRPCResultResponse
     slots:
-    - mcpReadResourceResultResponse__identifier
+    - McpReadResourceResultResponse_id
     - mcpReadResourceResultResponse__jsonrpc
     - mcpReadResourceResultResponse__result
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -13997,12 +14341,12 @@ classes:
     - McpResourceLink_description
     - McpResourceLink_name
     - McpResourceLink_title
+    - McpResourceLink_type
     - mcpResourceLink__meta
     - mcpResourceLink__annotations
     - mcpResourceLink__icons
     - mcpResourceLink__mime_type
     - mcpResourceLink__size
-    - mcpResourceLink__kind
     - mcpResourceLink__uri
     slot_usage:
       description:
@@ -14024,6 +14368,11 @@ classes:
           \ terminology.\n\nIf not provided, the name should be used for display (except\
           \ for {@link Tool},\nwhere `annotations.title` should be given precedence\
           \ over using `name`,\nif present)."
+      type:
+        name: type
+        description: The kind of object, always `resource_link`.
+        required: true
+        equals_string: resource_link
     attributes:
       meta:
         name: meta
@@ -14086,13 +14435,6 @@ classes:
           This can be used by Hosts to display file sizes and estimate context window
           usage.'
         range: integer
-      kind:
-        name: kind
-        description: The kind of object, always `resource_link`.
-        aliases:
-        - type
-        required: true
-        equals_string: resource_link
       uri:
         name: uri
         description: The URI of this resource.
@@ -14282,16 +14624,15 @@ classes:
     exact_mappings:
     - mcp_schema:ResourceTemplateReference
     slots:
-    - mcpResourceTemplateReference__kind
+    - McpResourceTemplateReference_type
     - mcpResourceTemplateReference__uri
-    attributes:
-      kind:
-        name: kind
+    slot_usage:
+      type:
+        name: type
         description: The kind of object, always `ref/resource`.
-        aliases:
-        - type
         required: true
         equals_string: ref/resource
+    attributes:
       uri:
         name: uri
         description: The URI or URI template of the resource.
@@ -14833,11 +15174,11 @@ classes:
     slots:
     - McpStringSchema_description
     - McpStringSchema_title
+    - McpStringSchema_type
     - mcpStringSchema__default
     - mcpStringSchema__format
     - mcpStringSchema__max_length
     - mcpStringSchema__min_length
-    - mcpStringSchema__kind
     slot_usage:
       description:
         name: description
@@ -14845,6 +15186,11 @@ classes:
       title:
         name: title
         description: A title for the field.
+      type:
+        name: type
+        description: The kind of object, always `string`.
+        required: true
+        equals_string: string
     attributes:
       default:
         name: default
@@ -14863,13 +15209,6 @@ classes:
         description: The fewest characters the field accepts.
         alias: minLength
         range: integer
-      kind:
-        name: kind
-        description: The kind of object, always `string`.
-        aliases:
-        - type
-        required: true
-        equals_string: string
     class_uri: mcp:McpStringSchema
     extra_slots:
       allowed: true
@@ -15024,20 +15363,19 @@ classes:
     - mcp_schema:SubscriptionsListenRequest
     is_a: McpJSONRPCRequest
     slots:
-    - mcpSubscriptionsListenRequest__identifier
+    - McpSubscriptionsListenRequest_id
     - mcpSubscriptionsListenRequest__jsonrpc
     - mcpSubscriptionsListenRequest__method
     - mcpSubscriptionsListenRequest__params
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -15216,19 +15554,18 @@ classes:
     - mcp_schema:SubscriptionsListenResultResponse
     is_a: McpJSONRPCResultResponse
     slots:
-    - mcpSubscriptionsListenResultResponse__identifier
+    - McpSubscriptionsListenResultResponse_id
     - mcpSubscriptionsListenResultResponse__jsonrpc
     - mcpSubscriptionsListenResultResponse__result
-    attributes:
-      identifier:
-        name: identifier
+    slot_usage:
+      id:
+        name: id
         description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
         required: true
         any_of:
         - range: string
         - range: integer
+    attributes:
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -15260,10 +15597,16 @@ classes:
     exact_mappings:
     - mcp_schema:TextContent
     slots:
+    - McpTextContent_type
     - mcpTextContent__meta
     - mcpTextContent__annotations
     - mcpTextContent__text
-    - mcpTextContent__kind
+    slot_usage:
+      type:
+        name: type
+        description: The kind of object, always `text`.
+        required: true
+        equals_string: text
     attributes:
       meta:
         name: meta
@@ -15295,13 +15638,6 @@ classes:
         name: text
         description: The text content of the message.
         required: true
-      kind:
-        name: kind
-        description: The kind of object, always `text`.
-        aliases:
-        - type
-        required: true
-        equals_string: text
     class_uri: mcp:McpTextContent
     extra_slots:
       allowed: true
@@ -15373,11 +15709,11 @@ classes:
     slots:
     - McpTitledMultiSelectEnumSchema_description
     - McpTitledMultiSelectEnumSchema_title
+    - McpTitledMultiSelectEnumSchema_type
     - mcpTitledMultiSelectEnumSchema__default
     - mcpTitledMultiSelectEnumSchema__items
     - mcpTitledMultiSelectEnumSchema__max_items
     - mcpTitledMultiSelectEnumSchema__min_items
-    - mcpTitledMultiSelectEnumSchema__kind
     slot_usage:
       description:
         name: description
@@ -15385,6 +15721,11 @@ classes:
       title:
         name: title
         description: Optional title for the enum field.
+      type:
+        name: type
+        description: The kind of object, always `array`.
+        required: true
+        equals_string: array
     attributes:
       default:
         name: default
@@ -15405,13 +15746,6 @@ classes:
         description: Minimum number of items to select.
         alias: minItems
         range: integer
-      kind:
-        name: kind
-        description: The kind of object, always `array`.
-        aliases:
-        - type
-        required: true
-        equals_string: array
     class_uri: mcp:McpTitledMultiSelectEnumSchema
     extra_slots:
       allowed: true
@@ -15476,9 +15810,9 @@ classes:
     slots:
     - McpTitledSingleSelectEnumSchema_description
     - McpTitledSingleSelectEnumSchema_title
+    - McpTitledSingleSelectEnumSchema_type
     - mcpTitledSingleSelectEnumSchema__default
     - mcpTitledSingleSelectEnumSchema__one_of
-    - mcpTitledSingleSelectEnumSchema__kind
     slot_usage:
       description:
         name: description
@@ -15486,6 +15820,11 @@ classes:
       title:
         name: title
         description: Optional title for the enum field.
+      type:
+        name: type
+        description: The kind of object, always `string`.
+        required: true
+        equals_string: string
     attributes:
       default:
         name: default
@@ -15498,13 +15837,6 @@ classes:
         required: true
         multivalued: true
         inlined_as_list: true
-      kind:
-        name: kind
-        description: The kind of object, always `string`.
-        aliases:
-        - type
-        required: true
-        equals_string: string
     class_uri: mcp:McpTitledSingleSelectEnumSchema
     extra_slots:
       allowed: true
@@ -15786,21 +16118,20 @@ classes:
     exact_mappings:
     - mcp_schema:Tool/properties/inputSchema
     slots:
+    - McpToolInputSchema_type
     - mcpToolInputSchema__schema_dialect
-    - mcpToolInputSchema__kind
+    slot_usage:
+      type:
+        name: type
+        description: The kind of object, always `object`.
+        required: true
+        equals_string: object
     attributes:
       schema_dialect:
         name: schema_dialect
         description: The JSON Schema dialect the schema is written in.
         aliases:
         - $schema
-      kind:
-        name: kind
-        description: The kind of object, always `object`.
-        aliases:
-        - type
-        required: true
-        equals_string: object
     class_uri: mcp:McpToolInputSchema
     extra_slots:
       allowed: true
@@ -15878,12 +16209,18 @@ classes:
     exact_mappings:
     - mcp_schema:ToolResultContent
     slots:
+    - McpToolResultContent_type
     - mcpToolResultContent__meta
     - mcpToolResultContent__content
     - mcpToolResultContent__is_error
     - mcpToolResultContent__structured_content
     - mcpToolResultContent__tool_use_id
-    - mcpToolResultContent__kind
+    slot_usage:
+      type:
+        name: type
+        description: The kind of object, always `tool_result`.
+        required: true
+        equals_string: tool_result
     attributes:
       meta:
         name: meta
@@ -15936,13 +16273,6 @@ classes:
           This MUST match the ID from a previous {@link ToolUseContent}.'
         alias: toolUseId
         required: true
-      kind:
-        name: kind
-        description: The kind of object, always `tool_result`.
-        aliases:
-        - type
-        required: true
-        equals_string: tool_result
     class_uri: mcp:McpToolResultContent
     extra_slots:
       allowed: true
@@ -15958,16 +16288,28 @@ classes:
     exact_mappings:
     - mcp_schema:ToolUseContent
     slots:
+    - McpToolUseContent_id
     - McpToolUseContent_name
+    - McpToolUseContent_type
     - mcpToolUseContent__meta
-    - mcpToolUseContent__identifier
     - mcpToolUseContent__input
-    - mcpToolUseContent__kind
     slot_usage:
+      id:
+        name: id
+        description: 'A unique identifier for this tool use.
+
+
+          This ID is used to match tool results to their corresponding tool uses.'
+        required: true
       name:
         name: name
         description: The name of the tool to call.
         required: true
+      type:
+        name: type
+        description: The kind of object, always `tool_use`.
+        required: true
+        equals_string: tool_use
     attributes:
       meta:
         name: meta
@@ -15977,28 +16319,12 @@ classes:
           including tool uses in subsequent sampling requests to enable caching optimizations.'
         alias: _meta
         range: McpMetaObject
-      identifier:
-        name: identifier
-        description: 'A unique identifier for this tool use.
-
-
-          This ID is used to match tool results to their corresponding tool uses.'
-        aliases:
-        - id
-        required: true
       input:
         name: input
         description: The arguments to pass to the tool, conforming to the tool's input
           schema.
         range: McpJSONObject
         required: true
-      kind:
-        name: kind
-        description: The kind of object, always `tool_use`.
-        aliases:
-        - type
-        required: true
-        equals_string: tool_use
     class_uri: mcp:McpToolUseContent
     extra_slots:
       allowed: true
@@ -16020,23 +16346,22 @@ classes:
     - mcp_schema:UnsupportedProtocolVersionError
     is_a: McpJSONRPCErrorResponse
     slots:
+    - McpUnsupportedProtocolVersionError_id
     - mcpUnsupportedProtocolVersionError__error
-    - mcpUnsupportedProtocolVersionError__identifier
     - mcpUnsupportedProtocolVersionError__jsonrpc
+    slot_usage:
+      id:
+        name: id
+        description: A uniquely identifying ID for a request in JSON-RPC.
+        any_of:
+        - range: string
+        - range: integer
     attributes:
       error:
         name: error
         description: The error the request ended with.
         range: McpUnsupportedProtocolVersionErrorError
         required: true
-      identifier:
-        name: identifier
-        description: A uniquely identifying ID for a request in JSON-RPC.
-        aliases:
-        - id
-        any_of:
-        - range: string
-        - range: integer
       jsonrpc:
         name: jsonrpc
         description: The JSON-RPC version, always `2.0`.
@@ -16115,11 +16440,11 @@ classes:
     slots:
     - McpUntitledMultiSelectEnumSchema_description
     - McpUntitledMultiSelectEnumSchema_title
+    - McpUntitledMultiSelectEnumSchema_type
     - mcpUntitledMultiSelectEnumSchema__default
     - mcpUntitledMultiSelectEnumSchema__items
     - mcpUntitledMultiSelectEnumSchema__max_items
     - mcpUntitledMultiSelectEnumSchema__min_items
-    - mcpUntitledMultiSelectEnumSchema__kind
     slot_usage:
       description:
         name: description
@@ -16127,6 +16452,11 @@ classes:
       title:
         name: title
         description: Optional title for the enum field.
+      type:
+        name: type
+        description: The kind of object, always `array`.
+        required: true
+        equals_string: array
     attributes:
       default:
         name: default
@@ -16147,13 +16477,6 @@ classes:
         description: Minimum number of items to select.
         alias: minItems
         range: integer
-      kind:
-        name: kind
-        description: The kind of object, always `array`.
-        aliases:
-        - type
-        required: true
-        equals_string: array
     class_uri: mcp:McpUntitledMultiSelectEnumSchema
     extra_slots:
       allowed: true
@@ -16167,21 +16490,20 @@ classes:
     exact_mappings:
     - mcp_schema:UntitledMultiSelectEnumSchema/properties/items
     slots:
+    - McpUntitledMultiSelectEnumSchemaItems_type
     - mcpUntitledMultiSelectEnumSchemaItems__enum
-    - mcpUntitledMultiSelectEnumSchemaItems__kind
+    slot_usage:
+      type:
+        name: type
+        description: The kind of object, always `string`.
+        required: true
+        equals_string: string
     attributes:
       enum:
         name: enum
         description: Array of enum values to choose from.
         required: true
         multivalued: true
-      kind:
-        name: kind
-        description: The kind of object, always `string`.
-        aliases:
-        - type
-        required: true
-        equals_string: string
     class_uri: mcp:McpUntitledMultiSelectEnumSchemaItems
     extra_slots:
       allowed: true
@@ -16198,9 +16520,9 @@ classes:
     slots:
     - McpUntitledSingleSelectEnumSchema_description
     - McpUntitledSingleSelectEnumSchema_title
+    - McpUntitledSingleSelectEnumSchema_type
     - mcpUntitledSingleSelectEnumSchema__default
     - mcpUntitledSingleSelectEnumSchema__enum
-    - mcpUntitledSingleSelectEnumSchema__kind
     slot_usage:
       description:
         name: description
@@ -16208,6 +16530,11 @@ classes:
       title:
         name: title
         description: Optional title for the enum field.
+      type:
+        name: type
+        description: The kind of object, always `string`.
+        required: true
+        equals_string: string
     attributes:
       default:
         name: default
@@ -16217,18 +16544,11 @@ classes:
         description: Array of enum values to choose from.
         required: true
         multivalued: true
-      kind:
-        name: kind
-        description: The kind of object, always `string`.
-        aliases:
-        - type
-        required: true
-        equals_string: string
     class_uri: mcp:McpUntitledSingleSelectEnumSchema
     extra_slots:
       allowed: true
 metamodel_version: 1.12.0
 source_file: mcp.yaml
-source_file_date: '2026-11-07T10:17:38'
-source_file_size: 219211
+source_file_date: '2026-11-07T10:26:05'
+source_file_size: 219613
 

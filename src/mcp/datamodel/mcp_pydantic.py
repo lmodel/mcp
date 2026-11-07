@@ -429,11 +429,22 @@ class McpAnnotations(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:Annotations'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['common_types']})
+         'in_subset': ['common_types'],
+         'slot_usage': {'audience': {'description': 'Describes who the intended '
+                                                    'audience of this object or data '
+                                                    'is.\n'
+                                                    '\n'
+                                                    'It can include multiple entries '
+                                                    'to indicate content useful for '
+                                                    'multiple audiences (e.g., '
+                                                    '`["user", "assistant"]`).',
+                                     'multivalued': True,
+                                     'name': 'audience',
+                                     'range': 'McpRole'}}})
 
-    intended_audience: Optional[list[McpRole]] = Field(default=None, description="""Describes who the intended audience of this object or data is.
+    audience: Optional[list[McpRole]] = Field(default=None, description="""Describes who the intended audience of this object or data is.
 
-It can include multiple entries to indicate content useful for multiple audiences (e.g., `[\"user\", \"assistant\"]`).""", json_schema_extra = { "linkml_meta": {'aliases': ['audience'], 'domain_of': ['McpAnnotations']} })
+It can include multiple entries to indicate content useful for multiple audiences (e.g., `[\"user\", \"assistant\"]`).""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAnnotations'], 'slot_uri': 'mcp:audience'} })
     lastModified: Optional[str] = Field(default=None, description="""The moment the resource was last modified, as an ISO 8601 formatted string.
 
 Should be an ISO 8601 formatted string (e.g., \"2025-01-12T15:00:58Z\").
@@ -454,8 +465,34 @@ class McpAudioContent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:AudioContent'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['content']})
+         'in_subset': ['content'],
+         'slot_usage': {'type': {'description': 'The kind of object, always `audio`.',
+                                 'equals_string': 'audio',
+                                 'name': 'type',
+                                 'required': True}}})
 
+    type: Literal["audio"] = Field(default=..., description="""The kind of object, always `audio`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
+                       'McpBooleanSchema',
+                       'McpElicitRequestFormParamsRequestedSchema',
+                       'McpEmbeddedResource',
+                       'McpImageContent',
+                       'McpLegacyTitledEnumSchema',
+                       'McpNumberSchema',
+                       'McpPromptReference',
+                       'McpResourceLink',
+                       'McpResourceTemplateReference',
+                       'McpStringSchema',
+                       'McpTextContent',
+                       'McpTitledMultiSelectEnumSchema',
+                       'McpTitledSingleSelectEnumSchema',
+                       'McpToolInputSchema',
+                       'McpToolResultContent',
+                       'McpToolUseContent',
+                       'McpUntitledMultiSelectEnumSchema',
+                       'McpUntitledMultiSelectEnumSchemaItems',
+                       'McpUntitledSingleSelectEnumSchema'],
+         'equals_string': 'audio',
+         'slot_uri': 'mcp:type'} })
     meta: Optional[McpMetaObject] = Field(default=None, alias="_meta", description="""Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
 
 Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
@@ -545,28 +582,6 @@ Valid keys have two segments:
                        'McpResourceLink',
                        'McpResourceTemplate',
                        'McpTextResourceContents']} })
-    kind: Literal["audio"] = Field(default=..., description="""The kind of object, always `audio`.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
-         'domain_of': ['McpAudioContent',
-                       'McpBooleanSchema',
-                       'McpElicitRequestFormParamsRequestedSchema',
-                       'McpEmbeddedResource',
-                       'McpImageContent',
-                       'McpLegacyTitledEnumSchema',
-                       'McpNumberSchema',
-                       'McpPromptReference',
-                       'McpResourceLink',
-                       'McpResourceTemplateReference',
-                       'McpStringSchema',
-                       'McpTextContent',
-                       'McpTitledMultiSelectEnumSchema',
-                       'McpTitledSingleSelectEnumSchema',
-                       'McpToolInputSchema',
-                       'McpToolResultContent',
-                       'McpToolUseContent',
-                       'McpUntitledMultiSelectEnumSchema',
-                       'McpUntitledMultiSelectEnumSchemaItems',
-                       'McpUntitledSingleSelectEnumSchema'],
-         'equals_string': 'audio'} })
 
 
 class McpBaseMetadata(ConfiguredBaseModel):
@@ -654,7 +669,11 @@ class McpBooleanSchema(ConfiguredBaseModel):
                                                        'the user.',
                                         'name': 'description'},
                         'title': {'description': 'A title for the field.',
-                                  'name': 'title'}}})
+                                  'name': 'title'},
+                        'type': {'description': 'The kind of object, always `boolean`.',
+                                 'equals_string': 'boolean',
+                                 'name': 'type',
+                                 'required': True}}})
 
     description: Optional[str] = Field(default=None, description="""A description of the field for the user.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
                        'McpGetPromptResult',
@@ -694,16 +713,7 @@ class McpBooleanSchema(ConfiguredBaseModel):
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledSingleSelectEnumSchema'],
          'slot_uri': 'schema:name'} })
-    default: Optional[bool] = Field(default=None, description="""The value the field takes when the user gives none.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
-                       'McpLegacyTitledEnumSchema',
-                       'McpNumberSchema',
-                       'McpStringSchema',
-                       'McpTitledMultiSelectEnumSchema',
-                       'McpTitledSingleSelectEnumSchema',
-                       'McpUntitledMultiSelectEnumSchema',
-                       'McpUntitledSingleSelectEnumSchema']} })
-    kind: Literal["boolean"] = Field(default=..., description="""The kind of object, always `boolean`.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
-         'domain_of': ['McpAudioContent',
+    type: Literal["boolean"] = Field(default=..., description="""The kind of object, always `boolean`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBooleanSchema',
                        'McpElicitRequestFormParamsRequestedSchema',
                        'McpEmbeddedResource',
@@ -723,7 +733,16 @@ class McpBooleanSchema(ConfiguredBaseModel):
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledMultiSelectEnumSchemaItems',
                        'McpUntitledSingleSelectEnumSchema'],
-         'equals_string': 'boolean'} })
+         'equals_string': 'boolean',
+         'slot_uri': 'mcp:type'} })
+    default: Optional[bool] = Field(default=None, description="""The value the field takes when the user gives none.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
+                       'McpLegacyTitledEnumSchema',
+                       'McpNumberSchema',
+                       'McpStringSchema',
+                       'McpTitledMultiSelectEnumSchema',
+                       'McpTitledSingleSelectEnumSchema',
+                       'McpUntitledMultiSelectEnumSchema',
+                       'McpUntitledSingleSelectEnumSchema']} })
 
 
 class McpClientCapabilities(ConfiguredBaseModel):
@@ -814,11 +833,19 @@ class McpClientCapabilitiesSampling(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ClientCapabilities/properties/sampling'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['server_discover']})
+         'in_subset': ['server_discover'],
+         'slot_usage': {'context': {'description': 'Whether the client supports '
+                                                   'context inclusion via '
+                                                   '`includeContext` parameter.\n'
+                                                   'If not declared, servers SHOULD '
+                                                   'only use `includeContext: "none"` '
+                                                   '(or omit it).',
+                                    'name': 'context',
+                                    'range': 'McpJSONObject'}}})
 
-    context_info: Optional[McpJSONObject] = Field(default=None, description="""Whether the client supports context inclusion via `includeContext` parameter.
-If not declared, servers SHOULD only use `includeContext: \"none\"` (or omit it).""", json_schema_extra = { "linkml_meta": {'aliases': ['context'],
-         'domain_of': ['McpClientCapabilitiesSampling', 'McpCompleteRequestParams']} })
+    context: Optional[McpJSONObject] = Field(default=None, description="""Whether the client supports context inclusion via `includeContext` parameter.
+If not declared, servers SHOULD only use `includeContext: \"none\"` (or omit it).""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpClientCapabilitiesSampling', 'McpCompleteRequestParams'],
+         'slot_uri': 'mcp:context'} })
     tools: Optional[McpJSONObject] = Field(default=None, description="""Whether the client supports tool use via `tools` and `toolChoice` parameters.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpClientCapabilitiesSampling',
                        'McpCreateMessageRequestParams',
                        'McpListToolsResult',
@@ -1146,17 +1173,13 @@ class McpElicitRequestFormParamsRequestedSchema(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ElicitRequestFormParams/properties/requestedSchema'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['elicitation_create']})
+         'in_subset': ['elicitation_create'],
+         'slot_usage': {'type': {'description': 'The kind of object, always `object`.',
+                                 'equals_string': 'object',
+                                 'name': 'type',
+                                 'required': True}}})
 
-    schema_dialect: Optional[str] = Field(default=None, description="""The JSON Schema dialect the schema is written in.""", json_schema_extra = { "linkml_meta": {'aliases': ['$schema'],
-         'domain_of': ['McpElicitRequestFormParamsRequestedSchema',
-                       'McpToolInputSchema',
-                       'McpToolOutputSchema']} })
-    properties: McpElicitRequestFormParamsRequestedSchemaProperties = Field(default=..., description="""The fields of the form, by name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpElicitRequestFormParamsRequestedSchema']} })
-    required_names: Optional[list[str]] = Field(default=None, description="""The names of the fields the user must fill in.""", json_schema_extra = { "linkml_meta": {'aliases': ['required'],
-         'domain_of': ['McpElicitRequestFormParamsRequestedSchema']} })
-    kind: Literal["object"] = Field(default=..., description="""The kind of object, always `object`.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
-         'domain_of': ['McpAudioContent',
+    type: Literal["object"] = Field(default=..., description="""The kind of object, always `object`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBooleanSchema',
                        'McpElicitRequestFormParamsRequestedSchema',
                        'McpEmbeddedResource',
@@ -1176,7 +1199,15 @@ class McpElicitRequestFormParamsRequestedSchema(ConfiguredBaseModel):
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledMultiSelectEnumSchemaItems',
                        'McpUntitledSingleSelectEnumSchema'],
-         'equals_string': 'object'} })
+         'equals_string': 'object',
+         'slot_uri': 'mcp:type'} })
+    schema_dialect: Optional[str] = Field(default=None, description="""The JSON Schema dialect the schema is written in.""", json_schema_extra = { "linkml_meta": {'aliases': ['$schema'],
+         'domain_of': ['McpElicitRequestFormParamsRequestedSchema',
+                       'McpToolInputSchema',
+                       'McpToolOutputSchema']} })
+    properties: McpElicitRequestFormParamsRequestedSchemaProperties = Field(default=..., description="""The fields of the form, by name.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpElicitRequestFormParamsRequestedSchema']} })
+    required_names: Optional[list[str]] = Field(default=None, description="""The names of the fields the user must fill in.""", json_schema_extra = { "linkml_meta": {'aliases': ['required'],
+         'domain_of': ['McpElicitRequestFormParamsRequestedSchema']} })
 
 
 class McpElicitRequestFormParamsRequestedSchemaProperties(ConfiguredBaseModel):
@@ -1285,8 +1316,45 @@ class McpEmbeddedResource(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:EmbeddedResource'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['content']})
+         'in_subset': ['content'],
+         'slot_usage': {'resource': {'any_of': [{'range': 'McpTextResourceContents'},
+                                                {'range': 'McpBlobResourceContents'}],
+                                     'description': "The resource's contents, as text "
+                                                    'or as binary data.',
+                                     'name': 'resource',
+                                     'required': True},
+                        'type': {'description': 'The kind of object, always '
+                                                '`resource`.',
+                                 'equals_string': 'resource',
+                                 'name': 'type',
+                                 'required': True}}})
 
+    resource: Union[McpBlobResourceContents, McpTextResourceContents] = Field(default=..., description="""The resource's contents, as text or as binary data.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'McpTextResourceContents'},
+                    {'range': 'McpBlobResourceContents'}],
+         'domain_of': ['McpEmbeddedResource'],
+         'slot_uri': 'mcp:resource'} })
+    type: Literal["resource"] = Field(default=..., description="""The kind of object, always `resource`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
+                       'McpBooleanSchema',
+                       'McpElicitRequestFormParamsRequestedSchema',
+                       'McpEmbeddedResource',
+                       'McpImageContent',
+                       'McpLegacyTitledEnumSchema',
+                       'McpNumberSchema',
+                       'McpPromptReference',
+                       'McpResourceLink',
+                       'McpResourceTemplateReference',
+                       'McpStringSchema',
+                       'McpTextContent',
+                       'McpTitledMultiSelectEnumSchema',
+                       'McpTitledSingleSelectEnumSchema',
+                       'McpToolInputSchema',
+                       'McpToolResultContent',
+                       'McpToolUseContent',
+                       'McpUntitledMultiSelectEnumSchema',
+                       'McpUntitledMultiSelectEnumSchemaItems',
+                       'McpUntitledSingleSelectEnumSchema'],
+         'equals_string': 'resource',
+         'slot_uri': 'mcp:type'} })
     meta: Optional[McpMetaObject] = Field(default=None, alias="_meta", description="""Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
 
 Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
@@ -1356,32 +1424,6 @@ Valid keys have two segments:
                        'McpResourceTemplate',
                        'McpTextContent',
                        'McpTool']} })
-    resource_contents: Union[McpBlobResourceContents, McpTextResourceContents] = Field(default=..., description="""The resource's contents, as text or as binary data.""", json_schema_extra = { "linkml_meta": {'aliases': ['resource'],
-         'any_of': [{'range': 'McpTextResourceContents'},
-                    {'range': 'McpBlobResourceContents'}],
-         'domain_of': ['McpEmbeddedResource']} })
-    kind: Literal["resource"] = Field(default=..., description="""The kind of object, always `resource`.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
-         'domain_of': ['McpAudioContent',
-                       'McpBooleanSchema',
-                       'McpElicitRequestFormParamsRequestedSchema',
-                       'McpEmbeddedResource',
-                       'McpImageContent',
-                       'McpLegacyTitledEnumSchema',
-                       'McpNumberSchema',
-                       'McpPromptReference',
-                       'McpResourceLink',
-                       'McpResourceTemplateReference',
-                       'McpStringSchema',
-                       'McpTextContent',
-                       'McpTitledMultiSelectEnumSchema',
-                       'McpTitledSingleSelectEnumSchema',
-                       'McpToolInputSchema',
-                       'McpToolResultContent',
-                       'McpToolUseContent',
-                       'McpUntitledMultiSelectEnumSchema',
-                       'McpUntitledMultiSelectEnumSchemaItems',
-                       'McpUntitledSingleSelectEnumSchema'],
-         'equals_string': 'resource'} })
 
 
 class McpEnumSchema(ConfiguredBaseModel):
@@ -1564,8 +1606,34 @@ class McpImageContent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ImageContent'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['content']})
+         'in_subset': ['content'],
+         'slot_usage': {'type': {'description': 'The kind of object, always `image`.',
+                                 'equals_string': 'image',
+                                 'name': 'type',
+                                 'required': True}}})
 
+    type: Literal["image"] = Field(default=..., description="""The kind of object, always `image`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
+                       'McpBooleanSchema',
+                       'McpElicitRequestFormParamsRequestedSchema',
+                       'McpEmbeddedResource',
+                       'McpImageContent',
+                       'McpLegacyTitledEnumSchema',
+                       'McpNumberSchema',
+                       'McpPromptReference',
+                       'McpResourceLink',
+                       'McpResourceTemplateReference',
+                       'McpStringSchema',
+                       'McpTextContent',
+                       'McpTitledMultiSelectEnumSchema',
+                       'McpTitledSingleSelectEnumSchema',
+                       'McpToolInputSchema',
+                       'McpToolResultContent',
+                       'McpToolUseContent',
+                       'McpUntitledMultiSelectEnumSchema',
+                       'McpUntitledMultiSelectEnumSchemaItems',
+                       'McpUntitledSingleSelectEnumSchema'],
+         'equals_string': 'image',
+         'slot_uri': 'mcp:type'} })
     meta: Optional[McpMetaObject] = Field(default=None, alias="_meta", description="""Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
 
 Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
@@ -1655,28 +1723,6 @@ Valid keys have two segments:
                        'McpResourceLink',
                        'McpResourceTemplate',
                        'McpTextResourceContents']} })
-    kind: Literal["image"] = Field(default=..., description="""The kind of object, always `image`.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
-         'domain_of': ['McpAudioContent',
-                       'McpBooleanSchema',
-                       'McpElicitRequestFormParamsRequestedSchema',
-                       'McpEmbeddedResource',
-                       'McpImageContent',
-                       'McpLegacyTitledEnumSchema',
-                       'McpNumberSchema',
-                       'McpPromptReference',
-                       'McpResourceLink',
-                       'McpResourceTemplateReference',
-                       'McpStringSchema',
-                       'McpTextContent',
-                       'McpTitledMultiSelectEnumSchema',
-                       'McpTitledSingleSelectEnumSchema',
-                       'McpToolInputSchema',
-                       'McpToolResultContent',
-                       'McpToolUseContent',
-                       'McpUntitledMultiSelectEnumSchema',
-                       'McpUntitledMultiSelectEnumSchemaItems',
-                       'McpUntitledSingleSelectEnumSchema'],
-         'equals_string': 'image'} })
 
 
 class McpImplementation(McpIcons, McpBaseMetadata):
@@ -2014,14 +2060,13 @@ class McpJSONRPCErrorResponse(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:JSONRPCErrorResponse'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['json_rpc']})
+         'in_subset': ['json_rpc'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id'}}})
 
-    error: McpError = Field(default=..., description="""The error the request ended with.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpHeaderMismatchError',
-                       'McpJSONRPCErrorResponse',
-                       'McpMissingRequiredClientCapabilityError',
-                       'McpUnsupportedProtocolVersionError']} })
-    identifier: Optional[Union[int, str]] = Field(default=None, description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Optional[Union[int, str]] = Field(default=None, description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -2049,6 +2094,11 @@ class McpJSONRPCErrorResponse(ConfiguredBaseModel):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
+    error: McpError = Field(default=..., description="""The error the request ended with.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpHeaderMismatchError',
+                       'McpJSONRPCErrorResponse',
+                       'McpMissingRequiredClientCapabilityError',
                        'McpUnsupportedProtocolVersionError']} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
@@ -2100,14 +2150,13 @@ class McpHeaderMismatchError(McpJSONRPCErrorResponse):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:HeaderMismatchError'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['errors']})
+         'in_subset': ['errors'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id'}}})
 
-    error: McpHeaderMismatchErrorError = Field(default=..., description="""The error the request ended with.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpHeaderMismatchError',
-                       'McpJSONRPCErrorResponse',
-                       'McpMissingRequiredClientCapabilityError',
-                       'McpUnsupportedProtocolVersionError']} })
-    identifier: Optional[Union[int, str]] = Field(default=None, description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Optional[Union[int, str]] = Field(default=None, description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -2135,6 +2184,11 @@ class McpHeaderMismatchError(McpJSONRPCErrorResponse):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
+    error: McpHeaderMismatchErrorError = Field(default=..., description="""The error the request ended with.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpHeaderMismatchError',
+                       'McpJSONRPCErrorResponse',
+                       'McpMissingRequiredClientCapabilityError',
                        'McpUnsupportedProtocolVersionError']} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
@@ -2213,10 +2267,14 @@ class McpJSONRPCResultResponse(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:JSONRPCResultResponse'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['json_rpc']})
+         'in_subset': ['json_rpc'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -2244,7 +2302,8 @@ class McpJSONRPCResultResponse(ConfiguredBaseModel):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -2303,10 +2362,14 @@ class McpCallToolResultResponse(McpJSONRPCResultResponse):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:CallToolResultResponse'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['tools_call']})
+         'in_subset': ['tools_call'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -2334,7 +2397,8 @@ class McpCallToolResultResponse(McpJSONRPCResultResponse):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -2395,10 +2459,14 @@ class McpCompleteResultResponse(McpJSONRPCResultResponse):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:CompleteResultResponse'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['completion_complete']})
+         'in_subset': ['completion_complete'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -2426,7 +2494,8 @@ class McpCompleteResultResponse(McpJSONRPCResultResponse):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -2485,10 +2554,14 @@ class McpDiscoverResultResponse(McpJSONRPCResultResponse):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:DiscoverResultResponse'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['server_discover']})
+         'in_subset': ['server_discover'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -2516,7 +2589,8 @@ class McpDiscoverResultResponse(McpJSONRPCResultResponse):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -2575,10 +2649,14 @@ class McpGetPromptResultResponse(McpJSONRPCResultResponse):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:GetPromptResultResponse'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['prompts_get']})
+         'in_subset': ['prompts_get'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -2606,7 +2684,8 @@ class McpGetPromptResultResponse(McpJSONRPCResultResponse):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -2676,7 +2755,11 @@ class McpLegacyTitledEnumSchema(ConfiguredBaseModel):
                                                        'the user.',
                                         'name': 'description'},
                         'title': {'description': 'A title for the field.',
-                                  'name': 'title'}}})
+                                  'name': 'title'},
+                        'type': {'description': 'The kind of object, always `string`.',
+                                 'equals_string': 'string',
+                                 'name': 'type',
+                                 'required': True}}})
 
     description: Optional[str] = Field(default=None, description="""A description of the field for the user.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
                        'McpGetPromptResult',
@@ -2716,21 +2799,7 @@ class McpLegacyTitledEnumSchema(ConfiguredBaseModel):
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledSingleSelectEnumSchema'],
          'slot_uri': 'schema:name'} })
-    default: Optional[str] = Field(default=None, description="""The value the field takes when the user gives none.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
-                       'McpLegacyTitledEnumSchema',
-                       'McpNumberSchema',
-                       'McpStringSchema',
-                       'McpTitledMultiSelectEnumSchema',
-                       'McpTitledSingleSelectEnumSchema',
-                       'McpUntitledMultiSelectEnumSchema',
-                       'McpUntitledSingleSelectEnumSchema']} })
-    enum: list[str] = Field(default=..., description="""The values the field offers.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpLegacyTitledEnumSchema',
-                       'McpUntitledMultiSelectEnumSchemaItems',
-                       'McpUntitledSingleSelectEnumSchema']} })
-    enumNames: Optional[list[str]] = Field(default=None, description="""(Legacy) Display names for enum values.
-Non-standard according to JSON schema 2020-12.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpLegacyTitledEnumSchema']} })
-    kind: Literal["string"] = Field(default=..., description="""The kind of object, always `string`.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
-         'domain_of': ['McpAudioContent',
+    type: Literal["string"] = Field(default=..., description="""The kind of object, always `string`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBooleanSchema',
                        'McpElicitRequestFormParamsRequestedSchema',
                        'McpEmbeddedResource',
@@ -2750,7 +2819,21 @@ Non-standard according to JSON schema 2020-12.""", json_schema_extra = { "linkml
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledMultiSelectEnumSchemaItems',
                        'McpUntitledSingleSelectEnumSchema'],
-         'equals_string': 'string'} })
+         'equals_string': 'string',
+         'slot_uri': 'mcp:type'} })
+    default: Optional[str] = Field(default=None, description="""The value the field takes when the user gives none.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
+                       'McpLegacyTitledEnumSchema',
+                       'McpNumberSchema',
+                       'McpStringSchema',
+                       'McpTitledMultiSelectEnumSchema',
+                       'McpTitledSingleSelectEnumSchema',
+                       'McpUntitledMultiSelectEnumSchema',
+                       'McpUntitledSingleSelectEnumSchema']} })
+    enum: list[str] = Field(default=..., description="""The values the field offers.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpLegacyTitledEnumSchema',
+                       'McpUntitledMultiSelectEnumSchemaItems',
+                       'McpUntitledSingleSelectEnumSchema']} })
+    enumNames: Optional[list[str]] = Field(default=None, description="""(Legacy) Display names for enum values.
+Non-standard according to JSON schema 2020-12.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpLegacyTitledEnumSchema']} })
 
 
 class McpListPromptsResultResponse(McpJSONRPCResultResponse):
@@ -2760,10 +2843,14 @@ class McpListPromptsResultResponse(McpJSONRPCResultResponse):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ListPromptsResultResponse'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['prompts_list']})
+         'in_subset': ['prompts_list'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -2791,7 +2878,8 @@ class McpListPromptsResultResponse(McpJSONRPCResultResponse):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -2850,10 +2938,14 @@ class McpListResourceTemplatesResultResponse(McpJSONRPCResultResponse):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ListResourceTemplatesResultResponse'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['resources_templates_list']})
+         'in_subset': ['resources_templates_list'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -2881,7 +2973,8 @@ class McpListResourceTemplatesResultResponse(McpJSONRPCResultResponse):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -2940,10 +3033,14 @@ class McpListResourcesResultResponse(McpJSONRPCResultResponse):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ListResourcesResultResponse'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['resources_list']})
+         'in_subset': ['resources_list'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -2971,7 +3068,8 @@ class McpListResourcesResultResponse(McpJSONRPCResultResponse):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -3194,10 +3292,14 @@ class McpListToolsResultResponse(McpJSONRPCResultResponse):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ListToolsResultResponse'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['tools_list']})
+         'in_subset': ['tools_list'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -3225,7 +3327,8 @@ class McpListToolsResultResponse(McpJSONRPCResultResponse):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -3356,14 +3459,13 @@ class McpMissingRequiredClientCapabilityError(McpJSONRPCErrorResponse):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:MissingRequiredClientCapabilityError'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['errors']})
+         'in_subset': ['errors'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id'}}})
 
-    error: McpMissingRequiredClientCapabilityErrorError = Field(default=..., description="""The error the request ended with.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpHeaderMismatchError',
-                       'McpJSONRPCErrorResponse',
-                       'McpMissingRequiredClientCapabilityError',
-                       'McpUnsupportedProtocolVersionError']} })
-    identifier: Optional[Union[int, str]] = Field(default=None, description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Optional[Union[int, str]] = Field(default=None, description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -3391,6 +3493,11 @@ class McpMissingRequiredClientCapabilityError(McpJSONRPCErrorResponse):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
+    error: McpMissingRequiredClientCapabilityErrorError = Field(default=..., description="""The error the request ended with.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpHeaderMismatchError',
+                       'McpJSONRPCErrorResponse',
+                       'McpMissingRequiredClientCapabilityError',
                        'McpUnsupportedProtocolVersionError']} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
@@ -4184,8 +4291,14 @@ class McpCancelledNotificationParams(McpNotificationParams):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:CancelledNotificationParams'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['notifications_cancelled']})
+         'in_subset': ['notifications_cancelled'],
+         'slot_usage': {'reason': {'description': 'An optional string describing the '
+                                                  'reason for the cancellation. This '
+                                                  'MAY be logged or presented to the '
+                                                  'user.',
+                                   'name': 'reason'}}})
 
+    reason: Optional[str] = Field(default=None, description="""An optional string describing the reason for the cancellation. This MAY be logged or presented to the user.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCancelledNotificationParams'], 'slot_uri': 'mcp:reason'} })
     meta: Optional[McpNotificationMetaObject] = Field(default=None, alias="_meta", description="""Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBlobResourceContents',
                        'McpCacheableResult',
@@ -4233,7 +4346,6 @@ class McpCancelledNotificationParams(McpNotificationParams):
                        'McpTool',
                        'McpToolResultContent',
                        'McpToolUseContent']} })
-    reason_text: Optional[str] = Field(default=None, description="""An optional string describing the reason for the cancellation. This MAY be logged or presented to the user.""", json_schema_extra = { "linkml_meta": {'aliases': ['reason'], 'domain_of': ['McpCancelledNotificationParams']} })
     requestId: Union[int, str] = Field(default=..., description="""The ID of the request to cancel.
 
 This MUST correspond to the ID of a request the client previously issued.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
@@ -4326,7 +4438,11 @@ class McpNumberSchema(ConfiguredBaseModel):
                                                        'the user.',
                                         'name': 'description'},
                         'title': {'description': 'A title for the field.',
-                                  'name': 'title'}}})
+                                  'name': 'title'},
+                        'type': {'description': 'The kind of value the field takes.',
+                                 'name': 'type',
+                                 'range': 'McpNumberSchemaType',
+                                 'required': True}}})
 
     description: Optional[str] = Field(default=None, description="""A description of the field for the user.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
                        'McpGetPromptResult',
@@ -4366,18 +4482,7 @@ class McpNumberSchema(ConfiguredBaseModel):
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledSingleSelectEnumSchema'],
          'slot_uri': 'schema:name'} })
-    default: Optional[float] = Field(default=None, description="""The value the field takes when the user gives none.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
-                       'McpLegacyTitledEnumSchema',
-                       'McpNumberSchema',
-                       'McpStringSchema',
-                       'McpTitledMultiSelectEnumSchema',
-                       'McpTitledSingleSelectEnumSchema',
-                       'McpUntitledMultiSelectEnumSchema',
-                       'McpUntitledSingleSelectEnumSchema']} })
-    maximum: Optional[float] = Field(default=None, description="""The largest value the field accepts.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpNumberSchema']} })
-    minimum: Optional[float] = Field(default=None, description="""The smallest value the field accepts.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpNumberSchema']} })
-    kind: McpNumberSchemaType = Field(default=..., description="""The kind of value the field takes.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
-         'domain_of': ['McpAudioContent',
+    type: McpNumberSchemaType = Field(default=..., description="""The kind of value the field takes.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBooleanSchema',
                        'McpElicitRequestFormParamsRequestedSchema',
                        'McpEmbeddedResource',
@@ -4396,7 +4501,18 @@ class McpNumberSchema(ConfiguredBaseModel):
                        'McpToolUseContent',
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledMultiSelectEnumSchemaItems',
+                       'McpUntitledSingleSelectEnumSchema'],
+         'slot_uri': 'mcp:type'} })
+    default: Optional[float] = Field(default=None, description="""The value the field takes when the user gives none.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
+                       'McpLegacyTitledEnumSchema',
+                       'McpNumberSchema',
+                       'McpStringSchema',
+                       'McpTitledMultiSelectEnumSchema',
+                       'McpTitledSingleSelectEnumSchema',
+                       'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledSingleSelectEnumSchema']} })
+    maximum: Optional[float] = Field(default=None, description="""The largest value the field accepts.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpNumberSchema']} })
+    minimum: Optional[float] = Field(default=None, description="""The smallest value the field accepts.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpNumberSchema']} })
 
 
 class McpParseError(McpError):
@@ -5057,7 +5173,12 @@ class McpPromptReference(McpBaseMetadata):
                                                  'where `annotations.title` should be '
                                                  'given precedence over using `name`,\n'
                                                  'if present).',
-                                  'name': 'title'}}})
+                                  'name': 'title'},
+                        'type': {'description': 'The kind of object, always '
+                                                '`ref/prompt`.',
+                                 'equals_string': 'ref/prompt',
+                                 'name': 'type',
+                                 'required': True}}})
 
     name: str = Field(default=..., description="""Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBaseMetadata',
                        'McpCallToolRequestParams',
@@ -5101,8 +5222,7 @@ if present).""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBaseMet
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledSingleSelectEnumSchema'],
          'slot_uri': 'schema:name'} })
-    kind: Literal["ref/prompt"] = Field(default=..., description="""The kind of object, always `ref/prompt`.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
-         'domain_of': ['McpAudioContent',
+    type: Literal["ref/prompt"] = Field(default=..., description="""The kind of object, always `ref/prompt`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBooleanSchema',
                        'McpElicitRequestFormParamsRequestedSchema',
                        'McpEmbeddedResource',
@@ -5122,7 +5242,8 @@ if present).""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBaseMet
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledMultiSelectEnumSchemaItems',
                        'McpUntitledSingleSelectEnumSchema'],
-         'equals_string': 'ref/prompt'} })
+         'equals_string': 'ref/prompt',
+         'slot_uri': 'mcp:type'} })
 
 
 class McpReadResourceResultResponse(McpJSONRPCResultResponse):
@@ -5132,10 +5253,14 @@ class McpReadResourceResultResponse(McpJSONRPCResultResponse):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ReadResourceResultResponse'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['resources_read']})
+         'in_subset': ['resources_read'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -5163,7 +5288,8 @@ class McpReadResourceResultResponse(McpJSONRPCResultResponse):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -5289,10 +5415,14 @@ class McpJSONRPCRequest(McpRequest):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:JSONRPCRequest'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['json_rpc']})
+         'in_subset': ['json_rpc'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -5320,7 +5450,8 @@ class McpJSONRPCRequest(McpRequest):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -5422,10 +5553,14 @@ class McpCallToolRequest(McpJSONRPCRequest):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:CallToolRequest'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['tools_call']})
+         'in_subset': ['tools_call'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -5453,7 +5588,8 @@ class McpCallToolRequest(McpJSONRPCRequest):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -5556,10 +5692,14 @@ class McpCompleteRequest(McpJSONRPCRequest):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:CompleteRequest'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['completion_complete']})
+         'in_subset': ['completion_complete'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -5587,7 +5727,8 @@ class McpCompleteRequest(McpJSONRPCRequest):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -5693,10 +5834,14 @@ class McpDiscoverRequest(McpJSONRPCRequest):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:DiscoverRequest'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['server_discover']})
+         'in_subset': ['server_discover'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -5724,7 +5869,8 @@ class McpDiscoverRequest(McpJSONRPCRequest):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -5827,10 +5973,14 @@ class McpGetPromptRequest(McpJSONRPCRequest):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:GetPromptRequest'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['prompts_get']})
+         'in_subset': ['prompts_get'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -5858,7 +6008,8 @@ class McpGetPromptRequest(McpJSONRPCRequest):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -5961,10 +6112,14 @@ class McpPaginatedRequest(McpJSONRPCRequest):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:PaginatedRequest'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['internal']})
+         'in_subset': ['internal'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -5992,7 +6147,8 @@ class McpPaginatedRequest(McpJSONRPCRequest):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -6094,10 +6250,14 @@ class McpListPromptsRequest(McpPaginatedRequest):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ListPromptsRequest'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['prompts_list']})
+         'in_subset': ['prompts_list'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -6125,7 +6285,8 @@ class McpListPromptsRequest(McpPaginatedRequest):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -6228,10 +6389,14 @@ class McpListResourceTemplatesRequest(McpPaginatedRequest):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ListResourceTemplatesRequest'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['resources_templates_list']})
+         'in_subset': ['resources_templates_list'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -6259,7 +6424,8 @@ class McpListResourceTemplatesRequest(McpPaginatedRequest):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -6362,10 +6528,14 @@ class McpListResourcesRequest(McpPaginatedRequest):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ListResourcesRequest'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['resources_list']})
+         'in_subset': ['resources_list'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -6393,7 +6563,8 @@ class McpListResourcesRequest(McpPaginatedRequest):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -6496,10 +6667,14 @@ class McpListToolsRequest(McpPaginatedRequest):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ListToolsRequest'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['tools_list']})
+         'in_subset': ['tools_list'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -6527,7 +6702,8 @@ class McpListToolsRequest(McpPaginatedRequest):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -6630,10 +6806,14 @@ class McpReadResourceRequest(McpJSONRPCRequest):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ReadResourceRequest'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['resources_read']})
+         'in_subset': ['resources_read'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -6661,7 +6841,8 @@ class McpReadResourceRequest(McpJSONRPCRequest):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -6869,8 +7050,14 @@ class McpCompleteRequestParams(McpRequestParams):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:CompleteRequestParams'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['completion_complete']})
+         'in_subset': ['completion_complete'],
+         'slot_usage': {'context': {'description': 'Additional, optional context for '
+                                                   'completions',
+                                    'name': 'context',
+                                    'range': 'McpCompleteRequestParamsContext'}}})
 
+    context: Optional[McpCompleteRequestParamsContext] = Field(default=None, description="""Additional, optional context for completions""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpClientCapabilitiesSampling', 'McpCompleteRequestParams'],
+         'slot_uri': 'mcp:context'} })
     meta: McpRequestMetaObject = Field(default=..., alias="_meta", description="""Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBlobResourceContents',
                        'McpCacheableResult',
@@ -6919,8 +7106,6 @@ class McpCompleteRequestParams(McpRequestParams):
                        'McpToolResultContent',
                        'McpToolUseContent']} })
     argument: McpCompleteRequestParamsArgument = Field(default=..., description="""The argument's information""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCompleteRequestParams']} })
-    context_info: Optional[McpCompleteRequestParamsContext] = Field(default=None, description="""Additional, optional context for completions""", json_schema_extra = { "linkml_meta": {'aliases': ['context'],
-         'domain_of': ['McpClientCapabilitiesSampling', 'McpCompleteRequestParams']} })
     ref: Union[McpPromptReference, McpResourceTemplateReference] = Field(default=..., description="""What the completion is for: a prompt or a resource template.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'McpPromptReference'},
                     {'range': 'McpResourceTemplateReference'}],
          'domain_of': ['McpCompleteRequestParams']} })
@@ -7668,7 +7853,12 @@ class McpResourceLink(McpResource):
                                                  'where `annotations.title` should be '
                                                  'given precedence over using `name`,\n'
                                                  'if present).',
-                                  'name': 'title'}}})
+                                  'name': 'title'},
+                        'type': {'description': 'The kind of object, always '
+                                                '`resource_link`.',
+                                 'equals_string': 'resource_link',
+                                 'name': 'type',
+                                 'required': True}}})
 
     description: Optional[str] = Field(default=None, description="""A description of what this resource represents.
 
@@ -7731,6 +7921,28 @@ if present).""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBaseMet
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledSingleSelectEnumSchema'],
          'slot_uri': 'schema:name'} })
+    type: Literal["resource_link"] = Field(default=..., description="""The kind of object, always `resource_link`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
+                       'McpBooleanSchema',
+                       'McpElicitRequestFormParamsRequestedSchema',
+                       'McpEmbeddedResource',
+                       'McpImageContent',
+                       'McpLegacyTitledEnumSchema',
+                       'McpNumberSchema',
+                       'McpPromptReference',
+                       'McpResourceLink',
+                       'McpResourceTemplateReference',
+                       'McpStringSchema',
+                       'McpTextContent',
+                       'McpTitledMultiSelectEnumSchema',
+                       'McpTitledSingleSelectEnumSchema',
+                       'McpToolInputSchema',
+                       'McpToolResultContent',
+                       'McpToolUseContent',
+                       'McpUntitledMultiSelectEnumSchema',
+                       'McpUntitledMultiSelectEnumSchemaItems',
+                       'McpUntitledSingleSelectEnumSchema'],
+         'equals_string': 'resource_link',
+         'slot_uri': 'mcp:type'} })
     meta: Optional[McpMetaObject] = Field(default=None, alias="_meta", description="""Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
 
 Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
@@ -7827,28 +8039,6 @@ Clients that support rendering icons SHOULD also support:
     size: Optional[int] = Field(default=None, description="""The size of the raw resource content, in bytes (i.e., before base64 encoding or any tokenization), if known.
 
 This can be used by Hosts to display file sizes and estimate context window usage.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpResource', 'McpResourceLink']} })
-    kind: Literal["resource_link"] = Field(default=..., description="""The kind of object, always `resource_link`.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
-         'domain_of': ['McpAudioContent',
-                       'McpBooleanSchema',
-                       'McpElicitRequestFormParamsRequestedSchema',
-                       'McpEmbeddedResource',
-                       'McpImageContent',
-                       'McpLegacyTitledEnumSchema',
-                       'McpNumberSchema',
-                       'McpPromptReference',
-                       'McpResourceLink',
-                       'McpResourceTemplateReference',
-                       'McpStringSchema',
-                       'McpTextContent',
-                       'McpTitledMultiSelectEnumSchema',
-                       'McpTitledSingleSelectEnumSchema',
-                       'McpToolInputSchema',
-                       'McpToolResultContent',
-                       'McpToolUseContent',
-                       'McpUntitledMultiSelectEnumSchema',
-                       'McpUntitledMultiSelectEnumSchemaItems',
-                       'McpUntitledSingleSelectEnumSchema'],
-         'equals_string': 'resource_link'} })
     uri: str = Field(default=..., description="""The URI of this resource.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBlobResourceContents',
                        'McpReadResourceRequestParams',
                        'McpResource',
@@ -8316,10 +8506,14 @@ class McpResourceTemplateReference(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ResourceTemplateReference'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['completion_complete']})
+         'in_subset': ['completion_complete'],
+         'slot_usage': {'type': {'description': 'The kind of object, always '
+                                                '`ref/resource`.',
+                                 'equals_string': 'ref/resource',
+                                 'name': 'type',
+                                 'required': True}}})
 
-    kind: Literal["ref/resource"] = Field(default=..., description="""The kind of object, always `ref/resource`.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
-         'domain_of': ['McpAudioContent',
+    type: Literal["ref/resource"] = Field(default=..., description="""The kind of object, always `ref/resource`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBooleanSchema',
                        'McpElicitRequestFormParamsRequestedSchema',
                        'McpEmbeddedResource',
@@ -8339,7 +8533,8 @@ class McpResourceTemplateReference(ConfiguredBaseModel):
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledMultiSelectEnumSchemaItems',
                        'McpUntitledSingleSelectEnumSchema'],
-         'equals_string': 'ref/resource'} })
+         'equals_string': 'ref/resource',
+         'slot_uri': 'mcp:type'} })
     uri: str = Field(default=..., description="""The URI or URI template of the resource.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBlobResourceContents',
                        'McpReadResourceRequestParams',
                        'McpResource',
@@ -10544,7 +10739,11 @@ class McpStringSchema(ConfiguredBaseModel):
                                                        'the user.',
                                         'name': 'description'},
                         'title': {'description': 'A title for the field.',
-                                  'name': 'title'}}})
+                                  'name': 'title'},
+                        'type': {'description': 'The kind of object, always `string`.',
+                                 'equals_string': 'string',
+                                 'name': 'type',
+                                 'required': True}}})
 
     description: Optional[str] = Field(default=None, description="""A description of the field for the user.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
                        'McpGetPromptResult',
@@ -10584,19 +10783,7 @@ class McpStringSchema(ConfiguredBaseModel):
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledSingleSelectEnumSchema'],
          'slot_uri': 'schema:name'} })
-    default: Optional[str] = Field(default=None, description="""The value the field takes when the user gives none.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
-                       'McpLegacyTitledEnumSchema',
-                       'McpNumberSchema',
-                       'McpStringSchema',
-                       'McpTitledMultiSelectEnumSchema',
-                       'McpTitledSingleSelectEnumSchema',
-                       'McpUntitledMultiSelectEnumSchema',
-                       'McpUntitledSingleSelectEnumSchema']} })
-    format: Optional[McpStringSchemaFormat] = Field(default=None, description="""The format the string must have.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpStringSchema']} })
-    maxLength: Optional[int] = Field(default=None, description="""The most characters the field accepts.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpStringSchema']} })
-    minLength: Optional[int] = Field(default=None, description="""The fewest characters the field accepts.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpStringSchema']} })
-    kind: Literal["string"] = Field(default=..., description="""The kind of object, always `string`.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
-         'domain_of': ['McpAudioContent',
+    type: Literal["string"] = Field(default=..., description="""The kind of object, always `string`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBooleanSchema',
                        'McpElicitRequestFormParamsRequestedSchema',
                        'McpEmbeddedResource',
@@ -10616,7 +10803,19 @@ class McpStringSchema(ConfiguredBaseModel):
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledMultiSelectEnumSchemaItems',
                        'McpUntitledSingleSelectEnumSchema'],
-         'equals_string': 'string'} })
+         'equals_string': 'string',
+         'slot_uri': 'mcp:type'} })
+    default: Optional[str] = Field(default=None, description="""The value the field takes when the user gives none.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
+                       'McpLegacyTitledEnumSchema',
+                       'McpNumberSchema',
+                       'McpStringSchema',
+                       'McpTitledMultiSelectEnumSchema',
+                       'McpTitledSingleSelectEnumSchema',
+                       'McpUntitledMultiSelectEnumSchema',
+                       'McpUntitledSingleSelectEnumSchema']} })
+    format: Optional[McpStringSchemaFormat] = Field(default=None, description="""The format the string must have.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpStringSchema']} })
+    maxLength: Optional[int] = Field(default=None, description="""The most characters the field accepts.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpStringSchema']} })
+    minLength: Optional[int] = Field(default=None, description="""The fewest characters the field accepts.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpStringSchema']} })
 
 
 class McpSubscriptionFilter(ConfiguredBaseModel):
@@ -10824,10 +11023,14 @@ class McpSubscriptionsListenRequest(McpJSONRPCRequest):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:SubscriptionsListenRequest'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['subscriptions_listen']})
+         'in_subset': ['subscriptions_listen'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -10855,7 +11058,8 @@ class McpSubscriptionsListenRequest(McpJSONRPCRequest):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -11136,10 +11340,14 @@ class McpSubscriptionsListenResultResponse(McpJSONRPCResultResponse):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:SubscriptionsListenResultResponse'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['subscriptions_listen']})
+         'in_subset': ['subscriptions_listen'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id',
+                               'required': True}}})
 
-    identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -11167,7 +11375,8 @@ class McpSubscriptionsListenResultResponse(McpJSONRPCResultResponse):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCancelledNotification',
@@ -11230,8 +11439,34 @@ class McpTextContent(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:TextContent'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['content']})
+         'in_subset': ['content'],
+         'slot_usage': {'type': {'description': 'The kind of object, always `text`.',
+                                 'equals_string': 'text',
+                                 'name': 'type',
+                                 'required': True}}})
 
+    type: Literal["text"] = Field(default=..., description="""The kind of object, always `text`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
+                       'McpBooleanSchema',
+                       'McpElicitRequestFormParamsRequestedSchema',
+                       'McpEmbeddedResource',
+                       'McpImageContent',
+                       'McpLegacyTitledEnumSchema',
+                       'McpNumberSchema',
+                       'McpPromptReference',
+                       'McpResourceLink',
+                       'McpResourceTemplateReference',
+                       'McpStringSchema',
+                       'McpTextContent',
+                       'McpTitledMultiSelectEnumSchema',
+                       'McpTitledSingleSelectEnumSchema',
+                       'McpToolInputSchema',
+                       'McpToolResultContent',
+                       'McpToolUseContent',
+                       'McpUntitledMultiSelectEnumSchema',
+                       'McpUntitledMultiSelectEnumSchemaItems',
+                       'McpUntitledSingleSelectEnumSchema'],
+         'equals_string': 'text',
+         'slot_uri': 'mcp:type'} })
     meta: Optional[McpMetaObject] = Field(default=None, alias="_meta", description="""Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
 
 Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
@@ -11302,28 +11537,6 @@ Valid keys have two segments:
                        'McpTextContent',
                        'McpTool']} })
     text: str = Field(default=..., description="""The text content of the message.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpTextContent', 'McpTextResourceContents']} })
-    kind: Literal["text"] = Field(default=..., description="""The kind of object, always `text`.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
-         'domain_of': ['McpAudioContent',
-                       'McpBooleanSchema',
-                       'McpElicitRequestFormParamsRequestedSchema',
-                       'McpEmbeddedResource',
-                       'McpImageContent',
-                       'McpLegacyTitledEnumSchema',
-                       'McpNumberSchema',
-                       'McpPromptReference',
-                       'McpResourceLink',
-                       'McpResourceTemplateReference',
-                       'McpStringSchema',
-                       'McpTextContent',
-                       'McpTitledMultiSelectEnumSchema',
-                       'McpTitledSingleSelectEnumSchema',
-                       'McpToolInputSchema',
-                       'McpToolResultContent',
-                       'McpToolUseContent',
-                       'McpUntitledMultiSelectEnumSchema',
-                       'McpUntitledMultiSelectEnumSchemaItems',
-                       'McpUntitledSingleSelectEnumSchema'],
-         'equals_string': 'text'} })
 
 
 class McpTextResourceContents(McpResourceContents):
@@ -11430,7 +11643,11 @@ class McpTitledMultiSelectEnumSchema(ConfiguredBaseModel):
                                                        'enum field.',
                                         'name': 'description'},
                         'title': {'description': 'Optional title for the enum field.',
-                                  'name': 'title'}}})
+                                  'name': 'title'},
+                        'type': {'description': 'The kind of object, always `array`.',
+                                 'equals_string': 'array',
+                                 'name': 'type',
+                                 'required': True}}})
 
     description: Optional[str] = Field(default=None, description="""Optional description for the enum field.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
                        'McpGetPromptResult',
@@ -11470,22 +11687,7 @@ class McpTitledMultiSelectEnumSchema(ConfiguredBaseModel):
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledSingleSelectEnumSchema'],
          'slot_uri': 'schema:name'} })
-    default: Optional[list[str]] = Field(default=None, description="""Optional default value.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
-                       'McpLegacyTitledEnumSchema',
-                       'McpNumberSchema',
-                       'McpStringSchema',
-                       'McpTitledMultiSelectEnumSchema',
-                       'McpTitledSingleSelectEnumSchema',
-                       'McpUntitledMultiSelectEnumSchema',
-                       'McpUntitledSingleSelectEnumSchema']} })
-    items: McpTitledMultiSelectEnumSchemaItems = Field(default=..., description="""Schema for array items with enum options and display labels.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpTitledMultiSelectEnumSchema',
-                       'McpUntitledMultiSelectEnumSchema']} })
-    maxItems: Optional[int] = Field(default=None, description="""Maximum number of items to select.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpTitledMultiSelectEnumSchema',
-                       'McpUntitledMultiSelectEnumSchema']} })
-    minItems: Optional[int] = Field(default=None, description="""Minimum number of items to select.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpTitledMultiSelectEnumSchema',
-                       'McpUntitledMultiSelectEnumSchema']} })
-    kind: Literal["array"] = Field(default=..., description="""The kind of object, always `array`.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
-         'domain_of': ['McpAudioContent',
+    type: Literal["array"] = Field(default=..., description="""The kind of object, always `array`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBooleanSchema',
                        'McpElicitRequestFormParamsRequestedSchema',
                        'McpEmbeddedResource',
@@ -11505,7 +11707,22 @@ class McpTitledMultiSelectEnumSchema(ConfiguredBaseModel):
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledMultiSelectEnumSchemaItems',
                        'McpUntitledSingleSelectEnumSchema'],
-         'equals_string': 'array'} })
+         'equals_string': 'array',
+         'slot_uri': 'mcp:type'} })
+    default: Optional[list[str]] = Field(default=None, description="""Optional default value.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
+                       'McpLegacyTitledEnumSchema',
+                       'McpNumberSchema',
+                       'McpStringSchema',
+                       'McpTitledMultiSelectEnumSchema',
+                       'McpTitledSingleSelectEnumSchema',
+                       'McpUntitledMultiSelectEnumSchema',
+                       'McpUntitledSingleSelectEnumSchema']} })
+    items: McpTitledMultiSelectEnumSchemaItems = Field(default=..., description="""Schema for array items with enum options and display labels.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpTitledMultiSelectEnumSchema',
+                       'McpUntitledMultiSelectEnumSchema']} })
+    maxItems: Optional[int] = Field(default=None, description="""Maximum number of items to select.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpTitledMultiSelectEnumSchema',
+                       'McpUntitledMultiSelectEnumSchema']} })
+    minItems: Optional[int] = Field(default=None, description="""Minimum number of items to select.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpTitledMultiSelectEnumSchema',
+                       'McpUntitledMultiSelectEnumSchema']} })
 
 
 class McpTitledMultiSelectEnumSchemaItems(ConfiguredBaseModel):
@@ -11569,7 +11786,11 @@ class McpTitledSingleSelectEnumSchema(ConfiguredBaseModel):
                                                        'enum field.',
                                         'name': 'description'},
                         'title': {'description': 'Optional title for the enum field.',
-                                  'name': 'title'}}})
+                                  'name': 'title'},
+                        'type': {'description': 'The kind of object, always `string`.',
+                                 'equals_string': 'string',
+                                 'name': 'type',
+                                 'required': True}}})
 
     description: Optional[str] = Field(default=None, description="""Optional description for the enum field.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
                        'McpGetPromptResult',
@@ -11609,17 +11830,7 @@ class McpTitledSingleSelectEnumSchema(ConfiguredBaseModel):
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledSingleSelectEnumSchema'],
          'slot_uri': 'schema:name'} })
-    default: Optional[str] = Field(default=None, description="""Optional default value.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
-                       'McpLegacyTitledEnumSchema',
-                       'McpNumberSchema',
-                       'McpStringSchema',
-                       'McpTitledMultiSelectEnumSchema',
-                       'McpTitledSingleSelectEnumSchema',
-                       'McpUntitledMultiSelectEnumSchema',
-                       'McpUntitledSingleSelectEnumSchema']} })
-    oneOf: list[McpTitledSingleSelectEnumSchemaOneOf] = Field(default=..., description="""Array of enum options with values and display labels.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpTitledSingleSelectEnumSchema']} })
-    kind: Literal["string"] = Field(default=..., description="""The kind of object, always `string`.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
-         'domain_of': ['McpAudioContent',
+    type: Literal["string"] = Field(default=..., description="""The kind of object, always `string`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBooleanSchema',
                        'McpElicitRequestFormParamsRequestedSchema',
                        'McpEmbeddedResource',
@@ -11639,7 +11850,17 @@ class McpTitledSingleSelectEnumSchema(ConfiguredBaseModel):
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledMultiSelectEnumSchemaItems',
                        'McpUntitledSingleSelectEnumSchema'],
-         'equals_string': 'string'} })
+         'equals_string': 'string',
+         'slot_uri': 'mcp:type'} })
+    default: Optional[str] = Field(default=None, description="""Optional default value.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
+                       'McpLegacyTitledEnumSchema',
+                       'McpNumberSchema',
+                       'McpStringSchema',
+                       'McpTitledMultiSelectEnumSchema',
+                       'McpTitledSingleSelectEnumSchema',
+                       'McpUntitledMultiSelectEnumSchema',
+                       'McpUntitledSingleSelectEnumSchema']} })
+    oneOf: list[McpTitledSingleSelectEnumSchemaOneOf] = Field(default=..., description="""Array of enum options with values and display labels.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpTitledSingleSelectEnumSchema']} })
 
 
 class McpTitledSingleSelectEnumSchemaOneOf(ConfiguredBaseModel):
@@ -11987,14 +12208,13 @@ class McpToolInputSchema(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:Tool/properties/inputSchema'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['tools_list']})
+         'in_subset': ['tools_list'],
+         'slot_usage': {'type': {'description': 'The kind of object, always `object`.',
+                                 'equals_string': 'object',
+                                 'name': 'type',
+                                 'required': True}}})
 
-    schema_dialect: Optional[str] = Field(default=None, description="""The JSON Schema dialect the schema is written in.""", json_schema_extra = { "linkml_meta": {'aliases': ['$schema'],
-         'domain_of': ['McpElicitRequestFormParamsRequestedSchema',
-                       'McpToolInputSchema',
-                       'McpToolOutputSchema']} })
-    kind: Literal["object"] = Field(default=..., description="""The kind of object, always `object`.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
-         'domain_of': ['McpAudioContent',
+    type: Literal["object"] = Field(default=..., description="""The kind of object, always `object`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBooleanSchema',
                        'McpElicitRequestFormParamsRequestedSchema',
                        'McpEmbeddedResource',
@@ -12014,7 +12234,12 @@ class McpToolInputSchema(ConfiguredBaseModel):
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledMultiSelectEnumSchemaItems',
                        'McpUntitledSingleSelectEnumSchema'],
-         'equals_string': 'object'} })
+         'equals_string': 'object',
+         'slot_uri': 'mcp:type'} })
+    schema_dialect: Optional[str] = Field(default=None, description="""The JSON Schema dialect the schema is written in.""", json_schema_extra = { "linkml_meta": {'aliases': ['$schema'],
+         'domain_of': ['McpElicitRequestFormParamsRequestedSchema',
+                       'McpToolInputSchema',
+                       'McpToolOutputSchema']} })
 
 
 class McpToolListChangedNotification(McpJSONRPCNotification):
@@ -12149,8 +12374,35 @@ class McpToolResultContent(ConfiguredBaseModel):
          'exact_mappings': ['mcp_schema:ToolResultContent'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['sampling_createmessage']})
+         'in_subset': ['sampling_createmessage'],
+         'slot_usage': {'type': {'description': 'The kind of object, always '
+                                                '`tool_result`.',
+                                 'equals_string': 'tool_result',
+                                 'name': 'type',
+                                 'required': True}}})
 
+    type: Literal["tool_result"] = Field(default=..., description="""The kind of object, always `tool_result`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
+                       'McpBooleanSchema',
+                       'McpElicitRequestFormParamsRequestedSchema',
+                       'McpEmbeddedResource',
+                       'McpImageContent',
+                       'McpLegacyTitledEnumSchema',
+                       'McpNumberSchema',
+                       'McpPromptReference',
+                       'McpResourceLink',
+                       'McpResourceTemplateReference',
+                       'McpStringSchema',
+                       'McpTextContent',
+                       'McpTitledMultiSelectEnumSchema',
+                       'McpTitledSingleSelectEnumSchema',
+                       'McpToolInputSchema',
+                       'McpToolResultContent',
+                       'McpToolUseContent',
+                       'McpUntitledMultiSelectEnumSchema',
+                       'McpUntitledMultiSelectEnumSchemaItems',
+                       'McpUntitledSingleSelectEnumSchema'],
+         'equals_string': 'tool_result',
+         'slot_uri': 'mcp:type'} })
     meta: Optional[McpMetaObject] = Field(default=None, alias="_meta", description="""Optional metadata about the tool result. Clients SHOULD preserve this field when
 including tool results in subsequent sampling requests to enable caching optimizations.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBlobResourceContents',
@@ -12219,8 +12471,82 @@ If the tool defined an {@link Tool.outputSchema}, this SHOULD conform to that sc
     toolUseId: str = Field(default=..., description="""The ID of the tool use this result corresponds to.
 
 This MUST match the ID from a previous {@link ToolUseContent}.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpToolResultContent']} })
-    kind: Literal["tool_result"] = Field(default=..., description="""The kind of object, always `tool_result`.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
-         'domain_of': ['McpAudioContent',
+
+
+class McpToolUseContent(ConfiguredBaseModel):
+    """
+    A request from the assistant to call a tool.
+    """
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
+                       'Remains in the specification for at least twelve months; see '
+                       'the deprecated features registry.',
+         'exact_mappings': ['mcp_schema:ToolUseContent'],
+         'extra_slots': {'allowed': True},
+         'from_schema': 'https://w3id.org/lmodel/mcp',
+         'in_subset': ['sampling_createmessage'],
+         'slot_usage': {'id': {'description': 'A unique identifier for this tool use.\n'
+                                              '\n'
+                                              'This ID is used to match tool results '
+                                              'to their corresponding tool uses.',
+                               'name': 'id',
+                               'required': True},
+                        'name': {'description': 'The name of the tool to call.',
+                                 'name': 'name',
+                                 'required': True},
+                        'type': {'description': 'The kind of object, always '
+                                                '`tool_use`.',
+                                 'equals_string': 'tool_use',
+                                 'name': 'type',
+                                 'required': True}}})
+
+    id: str = Field(default=..., description="""A unique identifier for this tool use.
+
+This ID is used to match tool results to their corresponding tool uses.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
+                       'McpCallToolResultResponse',
+                       'McpCompleteRequest',
+                       'McpCompleteResultResponse',
+                       'McpDiscoverRequest',
+                       'McpDiscoverResultResponse',
+                       'McpGetPromptRequest',
+                       'McpGetPromptResultResponse',
+                       'McpHeaderMismatchError',
+                       'McpJSONRPCErrorResponse',
+                       'McpJSONRPCRequest',
+                       'McpJSONRPCResultResponse',
+                       'McpListPromptsRequest',
+                       'McpListPromptsResultResponse',
+                       'McpListResourceTemplatesRequest',
+                       'McpListResourceTemplatesResultResponse',
+                       'McpListResourcesRequest',
+                       'McpListResourcesResultResponse',
+                       'McpListToolsRequest',
+                       'McpListToolsResultResponse',
+                       'McpMissingRequiredClientCapabilityError',
+                       'McpPaginatedRequest',
+                       'McpReadResourceRequest',
+                       'McpReadResourceResultResponse',
+                       'McpSubscriptionsListenRequest',
+                       'McpSubscriptionsListenResultResponse',
+                       'McpToolUseContent',
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
+    name: str = Field(default=..., description="""The name of the tool to call.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBaseMetadata',
+                       'McpCallToolRequestParams',
+                       'McpCompleteRequestParamsArgument',
+                       'McpGetPromptRequestParams',
+                       'McpImplementation',
+                       'McpModelHint',
+                       'McpPrompt',
+                       'McpPromptArgument',
+                       'McpPromptReference',
+                       'McpResource',
+                       'McpResourceLink',
+                       'McpResourceTemplate',
+                       'McpRoot',
+                       'McpTool',
+                       'McpToolUseContent'],
+         'slot_uri': 'schema:name'} })
+    type: Literal["tool_use"] = Field(default=..., description="""The kind of object, always `tool_use`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBooleanSchema',
                        'McpElicitRequestFormParamsRequestedSchema',
                        'McpEmbeddedResource',
@@ -12240,40 +12566,8 @@ This MUST match the ID from a previous {@link ToolUseContent}.""", json_schema_e
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledMultiSelectEnumSchemaItems',
                        'McpUntitledSingleSelectEnumSchema'],
-         'equals_string': 'tool_result'} })
-
-
-class McpToolUseContent(ConfiguredBaseModel):
-    """
-    A request from the assistant to call a tool.
-    """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
-                       'Remains in the specification for at least twelve months; see '
-                       'the deprecated features registry.',
-         'exact_mappings': ['mcp_schema:ToolUseContent'],
-         'extra_slots': {'allowed': True},
-         'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['sampling_createmessage'],
-         'slot_usage': {'name': {'description': 'The name of the tool to call.',
-                                 'name': 'name',
-                                 'required': True}}})
-
-    name: str = Field(default=..., description="""The name of the tool to call.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBaseMetadata',
-                       'McpCallToolRequestParams',
-                       'McpCompleteRequestParamsArgument',
-                       'McpGetPromptRequestParams',
-                       'McpImplementation',
-                       'McpModelHint',
-                       'McpPrompt',
-                       'McpPromptArgument',
-                       'McpPromptReference',
-                       'McpResource',
-                       'McpResourceLink',
-                       'McpResourceTemplate',
-                       'McpRoot',
-                       'McpTool',
-                       'McpToolUseContent'],
-         'slot_uri': 'schema:name'} })
+         'equals_string': 'tool_use',
+         'slot_uri': 'mcp:type'} })
     meta: Optional[McpMetaObject] = Field(default=None, alias="_meta", description="""Optional metadata about the tool use. Clients SHOULD preserve this field when
 including tool uses in subsequent sampling requests to enable caching optimizations.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBlobResourceContents',
@@ -12322,60 +12616,7 @@ including tool uses in subsequent sampling requests to enable caching optimizati
                        'McpTool',
                        'McpToolResultContent',
                        'McpToolUseContent']} })
-    identifier: str = Field(default=..., description="""A unique identifier for this tool use.
-
-This ID is used to match tool results to their corresponding tool uses.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'domain_of': ['McpCallToolRequest',
-                       'McpCallToolResultResponse',
-                       'McpCompleteRequest',
-                       'McpCompleteResultResponse',
-                       'McpDiscoverRequest',
-                       'McpDiscoverResultResponse',
-                       'McpGetPromptRequest',
-                       'McpGetPromptResultResponse',
-                       'McpHeaderMismatchError',
-                       'McpJSONRPCErrorResponse',
-                       'McpJSONRPCRequest',
-                       'McpJSONRPCResultResponse',
-                       'McpListPromptsRequest',
-                       'McpListPromptsResultResponse',
-                       'McpListResourceTemplatesRequest',
-                       'McpListResourceTemplatesResultResponse',
-                       'McpListResourcesRequest',
-                       'McpListResourcesResultResponse',
-                       'McpListToolsRequest',
-                       'McpListToolsResultResponse',
-                       'McpMissingRequiredClientCapabilityError',
-                       'McpPaginatedRequest',
-                       'McpReadResourceRequest',
-                       'McpReadResourceResultResponse',
-                       'McpSubscriptionsListenRequest',
-                       'McpSubscriptionsListenResultResponse',
-                       'McpToolUseContent',
-                       'McpUnsupportedProtocolVersionError']} })
     input: McpJSONObject = Field(default=..., description="""The arguments to pass to the tool, conforming to the tool's input schema.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpToolUseContent']} })
-    kind: Literal["tool_use"] = Field(default=..., description="""The kind of object, always `tool_use`.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
-         'domain_of': ['McpAudioContent',
-                       'McpBooleanSchema',
-                       'McpElicitRequestFormParamsRequestedSchema',
-                       'McpEmbeddedResource',
-                       'McpImageContent',
-                       'McpLegacyTitledEnumSchema',
-                       'McpNumberSchema',
-                       'McpPromptReference',
-                       'McpResourceLink',
-                       'McpResourceTemplateReference',
-                       'McpStringSchema',
-                       'McpTextContent',
-                       'McpTitledMultiSelectEnumSchema',
-                       'McpTitledSingleSelectEnumSchema',
-                       'McpToolInputSchema',
-                       'McpToolResultContent',
-                       'McpToolUseContent',
-                       'McpUntitledMultiSelectEnumSchema',
-                       'McpUntitledMultiSelectEnumSchemaItems',
-                       'McpUntitledSingleSelectEnumSchema'],
-         'equals_string': 'tool_use'} })
 
 
 class McpUnsupportedProtocolVersionError(McpJSONRPCErrorResponse):
@@ -12388,14 +12629,13 @@ class McpUnsupportedProtocolVersionError(McpJSONRPCErrorResponse):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:UnsupportedProtocolVersionError'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['errors']})
+         'in_subset': ['errors'],
+         'slot_usage': {'id': {'any_of': [{'range': 'string'}, {'range': 'integer'}],
+                               'description': 'A uniquely identifying ID for a request '
+                                              'in JSON-RPC.',
+                               'name': 'id'}}})
 
-    error: McpUnsupportedProtocolVersionErrorError = Field(default=..., description="""The error the request ended with.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpHeaderMismatchError',
-                       'McpJSONRPCErrorResponse',
-                       'McpMissingRequiredClientCapabilityError',
-                       'McpUnsupportedProtocolVersionError']} })
-    identifier: Optional[Union[int, str]] = Field(default=None, description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
-         'any_of': [{'range': 'string'}, {'range': 'integer'}],
+    id: Optional[Union[int, str]] = Field(default=None, description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'any_of': [{'range': 'string'}, {'range': 'integer'}],
          'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
                        'McpCompleteRequest',
@@ -12423,6 +12663,11 @@ class McpUnsupportedProtocolVersionError(McpJSONRPCErrorResponse):
                        'McpSubscriptionsListenRequest',
                        'McpSubscriptionsListenResultResponse',
                        'McpToolUseContent',
+                       'McpUnsupportedProtocolVersionError'],
+         'slot_uri': 'mcp:id'} })
+    error: McpUnsupportedProtocolVersionErrorError = Field(default=..., description="""The error the request ended with.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpHeaderMismatchError',
+                       'McpJSONRPCErrorResponse',
+                       'McpMissingRequiredClientCapabilityError',
                        'McpUnsupportedProtocolVersionError']} })
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
@@ -12530,7 +12775,11 @@ class McpUntitledMultiSelectEnumSchema(ConfiguredBaseModel):
                                                        'enum field.',
                                         'name': 'description'},
                         'title': {'description': 'Optional title for the enum field.',
-                                  'name': 'title'}}})
+                                  'name': 'title'},
+                        'type': {'description': 'The kind of object, always `array`.',
+                                 'equals_string': 'array',
+                                 'name': 'type',
+                                 'required': True}}})
 
     description: Optional[str] = Field(default=None, description="""Optional description for the enum field.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
                        'McpGetPromptResult',
@@ -12570,6 +12819,28 @@ class McpUntitledMultiSelectEnumSchema(ConfiguredBaseModel):
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledSingleSelectEnumSchema'],
          'slot_uri': 'schema:name'} })
+    type: Literal["array"] = Field(default=..., description="""The kind of object, always `array`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
+                       'McpBooleanSchema',
+                       'McpElicitRequestFormParamsRequestedSchema',
+                       'McpEmbeddedResource',
+                       'McpImageContent',
+                       'McpLegacyTitledEnumSchema',
+                       'McpNumberSchema',
+                       'McpPromptReference',
+                       'McpResourceLink',
+                       'McpResourceTemplateReference',
+                       'McpStringSchema',
+                       'McpTextContent',
+                       'McpTitledMultiSelectEnumSchema',
+                       'McpTitledSingleSelectEnumSchema',
+                       'McpToolInputSchema',
+                       'McpToolResultContent',
+                       'McpToolUseContent',
+                       'McpUntitledMultiSelectEnumSchema',
+                       'McpUntitledMultiSelectEnumSchemaItems',
+                       'McpUntitledSingleSelectEnumSchema'],
+         'equals_string': 'array',
+         'slot_uri': 'mcp:type'} })
     default: Optional[list[str]] = Field(default=None, description="""Optional default value.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
                        'McpLegacyTitledEnumSchema',
                        'McpNumberSchema',
@@ -12584,28 +12855,6 @@ class McpUntitledMultiSelectEnumSchema(ConfiguredBaseModel):
                        'McpUntitledMultiSelectEnumSchema']} })
     minItems: Optional[int] = Field(default=None, description="""Minimum number of items to select.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpTitledMultiSelectEnumSchema',
                        'McpUntitledMultiSelectEnumSchema']} })
-    kind: Literal["array"] = Field(default=..., description="""The kind of object, always `array`.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
-         'domain_of': ['McpAudioContent',
-                       'McpBooleanSchema',
-                       'McpElicitRequestFormParamsRequestedSchema',
-                       'McpEmbeddedResource',
-                       'McpImageContent',
-                       'McpLegacyTitledEnumSchema',
-                       'McpNumberSchema',
-                       'McpPromptReference',
-                       'McpResourceLink',
-                       'McpResourceTemplateReference',
-                       'McpStringSchema',
-                       'McpTextContent',
-                       'McpTitledMultiSelectEnumSchema',
-                       'McpTitledSingleSelectEnumSchema',
-                       'McpToolInputSchema',
-                       'McpToolResultContent',
-                       'McpToolUseContent',
-                       'McpUntitledMultiSelectEnumSchema',
-                       'McpUntitledMultiSelectEnumSchemaItems',
-                       'McpUntitledSingleSelectEnumSchema'],
-         'equals_string': 'array'} })
 
 
 class McpUntitledMultiSelectEnumSchemaItems(ConfiguredBaseModel):
@@ -12615,13 +12864,13 @@ class McpUntitledMultiSelectEnumSchemaItems(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:UntitledMultiSelectEnumSchema/properties/items'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
-         'in_subset': ['elicitation_create']})
+         'in_subset': ['elicitation_create'],
+         'slot_usage': {'type': {'description': 'The kind of object, always `string`.',
+                                 'equals_string': 'string',
+                                 'name': 'type',
+                                 'required': True}}})
 
-    enum: list[str] = Field(default=..., description="""Array of enum values to choose from.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpLegacyTitledEnumSchema',
-                       'McpUntitledMultiSelectEnumSchemaItems',
-                       'McpUntitledSingleSelectEnumSchema']} })
-    kind: Literal["string"] = Field(default=..., description="""The kind of object, always `string`.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
-         'domain_of': ['McpAudioContent',
+    type: Literal["string"] = Field(default=..., description="""The kind of object, always `string`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBooleanSchema',
                        'McpElicitRequestFormParamsRequestedSchema',
                        'McpEmbeddedResource',
@@ -12641,7 +12890,11 @@ class McpUntitledMultiSelectEnumSchemaItems(ConfiguredBaseModel):
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledMultiSelectEnumSchemaItems',
                        'McpUntitledSingleSelectEnumSchema'],
-         'equals_string': 'string'} })
+         'equals_string': 'string',
+         'slot_uri': 'mcp:type'} })
+    enum: list[str] = Field(default=..., description="""Array of enum values to choose from.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpLegacyTitledEnumSchema',
+                       'McpUntitledMultiSelectEnumSchemaItems',
+                       'McpUntitledSingleSelectEnumSchema']} })
 
 
 class McpUntitledSingleSelectEnumSchema(ConfiguredBaseModel):
@@ -12656,7 +12909,11 @@ class McpUntitledSingleSelectEnumSchema(ConfiguredBaseModel):
                                                        'enum field.',
                                         'name': 'description'},
                         'title': {'description': 'Optional title for the enum field.',
-                                  'name': 'title'}}})
+                                  'name': 'title'},
+                        'type': {'description': 'The kind of object, always `string`.',
+                                 'equals_string': 'string',
+                                 'name': 'type',
+                                 'required': True}}})
 
     description: Optional[str] = Field(default=None, description="""Optional description for the enum field.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
                        'McpGetPromptResult',
@@ -12696,19 +12953,7 @@ class McpUntitledSingleSelectEnumSchema(ConfiguredBaseModel):
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledSingleSelectEnumSchema'],
          'slot_uri': 'schema:name'} })
-    default: Optional[str] = Field(default=None, description="""Optional default value.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
-                       'McpLegacyTitledEnumSchema',
-                       'McpNumberSchema',
-                       'McpStringSchema',
-                       'McpTitledMultiSelectEnumSchema',
-                       'McpTitledSingleSelectEnumSchema',
-                       'McpUntitledMultiSelectEnumSchema',
-                       'McpUntitledSingleSelectEnumSchema']} })
-    enum: list[str] = Field(default=..., description="""Array of enum values to choose from.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpLegacyTitledEnumSchema',
-                       'McpUntitledMultiSelectEnumSchemaItems',
-                       'McpUntitledSingleSelectEnumSchema']} })
-    kind: Literal["string"] = Field(default=..., description="""The kind of object, always `string`.""", json_schema_extra = { "linkml_meta": {'aliases': ['type'],
-         'domain_of': ['McpAudioContent',
+    type: Literal["string"] = Field(default=..., description="""The kind of object, always `string`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBooleanSchema',
                        'McpElicitRequestFormParamsRequestedSchema',
                        'McpEmbeddedResource',
@@ -12728,7 +12973,19 @@ class McpUntitledSingleSelectEnumSchema(ConfiguredBaseModel):
                        'McpUntitledMultiSelectEnumSchema',
                        'McpUntitledMultiSelectEnumSchemaItems',
                        'McpUntitledSingleSelectEnumSchema'],
-         'equals_string': 'string'} })
+         'equals_string': 'string',
+         'slot_uri': 'mcp:type'} })
+    default: Optional[str] = Field(default=None, description="""Optional default value.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpBooleanSchema',
+                       'McpLegacyTitledEnumSchema',
+                       'McpNumberSchema',
+                       'McpStringSchema',
+                       'McpTitledMultiSelectEnumSchema',
+                       'McpTitledSingleSelectEnumSchema',
+                       'McpUntitledMultiSelectEnumSchema',
+                       'McpUntitledSingleSelectEnumSchema']} })
+    enum: list[str] = Field(default=..., description="""Array of enum values to choose from.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpLegacyTitledEnumSchema',
+                       'McpUntitledMultiSelectEnumSchemaItems',
+                       'McpUntitledSingleSelectEnumSchema']} })
 
 
 # Model rebuild

@@ -16,7 +16,7 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpPromptReference extends McpBaseMetadata {
 
-  private String kind;
+  private String type;
 
 
 }

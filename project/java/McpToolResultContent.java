@@ -16,12 +16,12 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpToolResultContent  {
 
+  private String type;
   private McpMetaObject meta;
   private List<McpContentBlock> content;
   private Boolean isError;
   private Object structuredContent;
   private String toolUseId;
-  private String kind;
 
 
 }

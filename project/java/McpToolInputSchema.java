@@ -29,8 +29,8 @@ Defaults to JSON Schema 2020-12 when no explicit `$schema` is provided.
 @EqualsAndHashCode(callSuper=false)
 public class McpToolInputSchema  {
 
+  private String type;
   private String schemaDialect;
-  private String kind;
 
 
 }

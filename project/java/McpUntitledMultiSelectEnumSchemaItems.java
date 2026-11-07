@@ -16,8 +16,8 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpUntitledMultiSelectEnumSchemaItems  {
 
+  private String type;
   private List<String> enum_;
-  private String kind;
 
 
 }

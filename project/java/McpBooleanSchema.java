@@ -18,8 +18,8 @@ public class McpBooleanSchema  {
 
   private String description;
   private String title;
+  private String type;
   private Boolean default_;
-  private String kind;
 
 
 }

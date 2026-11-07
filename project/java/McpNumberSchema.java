@@ -18,10 +18,10 @@ public class McpNumberSchema  {
 
   private String description;
   private String title;
+  private String type;
   private Float default_;
   private Float maximum;
   private Float minimum;
-  private String kind;
 
 
 }

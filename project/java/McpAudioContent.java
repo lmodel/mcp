@@ -16,11 +16,11 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpAudioContent  {
 
+  private String type;
   private McpMetaObject meta;
   private McpAnnotations annotations;
   private String data;
   private String mimeType;
-  private String kind;
 
 
 }

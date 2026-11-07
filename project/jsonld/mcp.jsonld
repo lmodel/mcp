@@ -889,6 +889,39 @@
   ],
   "slots": [
     {
+      "name": "audience",
+      "definition_uri": "https://w3id.org/lmodel/mcp/audience",
+      "description": "Who an object or its data is for.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/audience"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/audience",
+      "owner": "McpAnnotations",
+      "domain_of": [
+        "McpAnnotations"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "context",
+      "definition_uri": "https://w3id.org/lmodel/mcp/context",
+      "description": "Context: for a completion, the arguments resolved so far; for sampling, support for including it.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/context"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/context",
+      "owner": "McpCompleteRequestParams",
+      "domain_of": [
+        "McpClientCapabilitiesSampling",
+        "McpCompleteRequestParams"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "description",
       "definition_uri": "https://w3id.org/lmodel/mcp/description",
       "description": "A description for people to read.",
@@ -920,6 +953,49 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "An identifier: of a JSON-RPC request, or of a tool use.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "owner": "McpUnsupportedProtocolVersionError",
+      "domain_of": [
+        "McpCallToolRequest",
+        "McpCallToolResultResponse",
+        "McpCompleteRequest",
+        "McpCompleteResultResponse",
+        "McpDiscoverRequest",
+        "McpDiscoverResultResponse",
+        "McpGetPromptRequest",
+        "McpGetPromptResultResponse",
+        "McpHeaderMismatchError",
+        "McpJSONRPCErrorResponse",
+        "McpJSONRPCRequest",
+        "McpJSONRPCResultResponse",
+        "McpListPromptsRequest",
+        "McpListPromptsResultResponse",
+        "McpListResourceTemplatesRequest",
+        "McpListResourceTemplatesResultResponse",
+        "McpListResourcesRequest",
+        "McpListResourcesResultResponse",
+        "McpListToolsRequest",
+        "McpListToolsResultResponse",
+        "McpMissingRequiredClientCapabilityError",
+        "McpPaginatedRequest",
+        "McpReadResourceRequest",
+        "McpReadResourceResultResponse",
+        "McpSubscriptionsListenRequest",
+        "McpSubscriptionsListenResultResponse",
+        "McpToolUseContent",
+        "McpUnsupportedProtocolVersionError"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "name",
       "definition_uri": "https://w3id.org/lmodel/mcp/name",
       "description": "The name a program uses to refer to the thing.",
@@ -945,6 +1021,38 @@
         "McpRoot",
         "McpTool",
         "McpToolUseContent"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "reason",
+      "definition_uri": "https://w3id.org/lmodel/mcp/reason",
+      "description": "Why something happened, such as a request's cancellation, for people to read.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/reason"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/reason",
+      "owner": "McpCancelledNotificationParams",
+      "domain_of": [
+        "McpCancelledNotificationParams"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "resource",
+      "definition_uri": "https://w3id.org/lmodel/mcp/resource",
+      "description": "The contents of a resource embedded in a message.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/resource"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/resource",
+      "owner": "McpEmbeddedResource",
+      "domain_of": [
+        "McpEmbeddedResource"
       ],
       "range": "string",
       "@type": "SlotDefinition"
@@ -985,6 +1093,41 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of an object or a value, as a constant or a value from a list.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "owner": "McpUntitledSingleSelectEnumSchema",
+      "domain_of": [
+        "McpAudioContent",
+        "McpBooleanSchema",
+        "McpElicitRequestFormParamsRequestedSchema",
+        "McpEmbeddedResource",
+        "McpImageContent",
+        "McpLegacyTitledEnumSchema",
+        "McpNumberSchema",
+        "McpPromptReference",
+        "McpResourceLink",
+        "McpResourceTemplateReference",
+        "McpStringSchema",
+        "McpTextContent",
+        "McpTitledMultiSelectEnumSchema",
+        "McpTitledSingleSelectEnumSchema",
+        "McpToolInputSchema",
+        "McpToolResultContent",
+        "McpToolUseContent",
+        "McpUntitledMultiSelectEnumSchema",
+        "McpUntitledMultiSelectEnumSchemaItems",
+        "McpUntitledSingleSelectEnumSchema"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "url",
       "definition_uri": "https://w3id.org/lmodel/mcp/url",
       "description": "A URL.",
@@ -1014,23 +1157,6 @@
         "McpImplementation"
       ],
       "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpAnnotations__intended_audience",
-      "description": "Describes who the intended audience of this object or data is.\n\nIt can include multiple entries to indicate content useful for multiple audiences (e.g., `[\"user\", \"assistant\"]`).",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "audience"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/intended_audience",
-      "alias": "intended_audience",
-      "owner": "McpAnnotations",
-      "domain_of": [
-        "McpAnnotations"
-      ],
-      "range": "McpRole",
-      "multivalued": true,
       "@type": "SlotDefinition"
     },
     {
@@ -1120,24 +1246,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpAudioContent__kind",
-      "description": "The kind of object, always `audio`.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "type"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
-      "alias": "kind",
-      "owner": "McpAudioContent",
-      "domain_of": [
-        "McpAudioContent"
-      ],
-      "range": "string",
-      "required": true,
-      "equals_string": "audio",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpBlobResourceContents__meta",
       "description": "Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.\n\nCertain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.\n\nValid keys have two segments:\n\n**Prefix:**\n- Optional \u2014 if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).\n- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).\n- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).\n- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.\n\n**Name:**\n- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).\n- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -1207,24 +1315,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpBooleanSchema__kind",
-      "description": "The kind of object, always `boolean`.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "type"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
-      "alias": "kind",
-      "owner": "McpBooleanSchema",
-      "domain_of": [
-        "McpBooleanSchema"
-      ],
-      "range": "string",
-      "required": true,
-      "equals_string": "boolean",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpCacheableResult__meta",
       "description": "Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -1280,33 +1370,6 @@
       "range": "integer",
       "required": true,
       "minimum_value": 0,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpCallToolRequest__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpCallToolRequest",
-      "domain_of": [
-        "McpCallToolRequest"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
       "@type": "SlotDefinition"
     },
     {
@@ -1489,33 +1552,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpCallToolResultResponse__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpCallToolResultResponse",
-      "domain_of": [
-        "McpCallToolResultResponse"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpCallToolResultResponse__jsonrpc",
       "description": "The JSON-RPC version, always `2.0`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -1613,22 +1649,6 @@
       "range": "McpNotificationMetaObject",
       "inlined": true,
       "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpCancelledNotificationParams__reason_text",
-      "description": "An optional string describing the reason for the cancellation. This MAY be logged or presented to the user.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "reason"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/reason_text",
-      "alias": "reason_text",
-      "owner": "McpCancelledNotificationParams",
-      "domain_of": [
-        "McpCancelledNotificationParams"
-      ],
-      "range": "string",
       "@type": "SlotDefinition"
     },
     {
@@ -1766,24 +1786,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpClientCapabilitiesSampling__context_info",
-      "description": "Whether the client supports context inclusion via `includeContext` parameter.\nIf not declared, servers SHOULD only use `includeContext: \"none\"` (or omit it).",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "context"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/context_info",
-      "alias": "context_info",
-      "owner": "McpClientCapabilitiesSampling",
-      "domain_of": [
-        "McpClientCapabilitiesSampling"
-      ],
-      "range": "McpJSONObject",
-      "inlined": true,
-      "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpClientCapabilitiesSampling__tools",
       "description": "Whether the client supports tool use via `tools` and `toolChoice` parameters.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -1842,33 +1844,6 @@
       "required": true,
       "inlined": true,
       "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpCompleteRequest__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpCompleteRequest",
-      "domain_of": [
-        "McpCompleteRequest"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
       "@type": "SlotDefinition"
     },
     {
@@ -1945,24 +1920,6 @@
       ],
       "range": "McpCompleteRequestParamsArgument",
       "required": true,
-      "inlined": true,
-      "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpCompleteRequestParams__context_info",
-      "description": "Additional, optional context for completions",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "context"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/context_info",
-      "alias": "context_info",
-      "owner": "McpCompleteRequestParams",
-      "domain_of": [
-        "McpCompleteRequestParams"
-      ],
-      "range": "McpCompleteRequestParamsContext",
       "inlined": true,
       "inlined_as_list": true,
       "@type": "SlotDefinition"
@@ -2105,33 +2062,6 @@
       "required": true,
       "multivalued": true,
       "maximum_cardinality": 100,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpCompleteResultResponse__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpCompleteResultResponse",
-      "domain_of": [
-        "McpCompleteResultResponse"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
       "@type": "SlotDefinition"
     },
     {
@@ -2441,33 +2371,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpDiscoverRequest__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpDiscoverRequest",
-      "domain_of": [
-        "McpDiscoverRequest"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpDiscoverRequest__jsonrpc",
       "description": "The JSON-RPC version, always `2.0`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -2613,33 +2516,6 @@
       "range": "integer",
       "required": true,
       "minimum_value": 0,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpDiscoverResultResponse__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpDiscoverResultResponse",
-      "domain_of": [
-        "McpDiscoverResultResponse"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
       "@type": "SlotDefinition"
     },
     {
@@ -2798,24 +2674,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpElicitRequestFormParamsRequestedSchema__kind",
-      "description": "The kind of object, always `object`.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "type"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
-      "alias": "kind",
-      "owner": "McpElicitRequestFormParamsRequestedSchema",
-      "domain_of": [
-        "McpElicitRequestFormParamsRequestedSchema"
-      ],
-      "range": "string",
-      "required": true,
-      "equals_string": "object",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpElicitRequestURLParams__message",
       "description": "The message to present to the user explaining why the interaction is needed.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -2904,51 +2762,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpEmbeddedResource__resource_contents",
-      "description": "The resource's contents, as text or as binary data.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "resource"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/resource_contents",
-      "alias": "resource_contents",
-      "owner": "McpEmbeddedResource",
-      "domain_of": [
-        "McpEmbeddedResource"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "McpTextResourceContents",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "McpBlobResourceContents",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpEmbeddedResource__kind",
-      "description": "The kind of object, always `resource`.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "type"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
-      "alias": "kind",
-      "owner": "McpEmbeddedResource",
-      "domain_of": [
-        "McpEmbeddedResource"
-      ],
-      "range": "string",
-      "required": true,
-      "equals_string": "resource",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpError__code",
       "description": "The error type that occurred.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -2989,33 +2802,6 @@
       ],
       "range": "string",
       "required": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpGetPromptRequest__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpGetPromptRequest",
-      "domain_of": [
-        "McpGetPromptRequest"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
       "@type": "SlotDefinition"
     },
     {
@@ -3170,33 +2956,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpGetPromptResultResponse__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpGetPromptResultResponse",
-      "domain_of": [
-        "McpGetPromptResultResponse"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpGetPromptResultResponse__jsonrpc",
       "description": "The JSON-RPC version, always `2.0`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -3249,32 +3008,6 @@
       "required": true,
       "inlined": true,
       "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpHeaderMismatchError__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpHeaderMismatchError",
-      "domain_of": [
-        "McpHeaderMismatchError"
-      ],
-      "range": "string",
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
       "@type": "SlotDefinition"
     },
     {
@@ -3433,24 +3166,6 @@
       ],
       "range": "string",
       "required": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpImageContent__kind",
-      "description": "The kind of object, always `image`.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "type"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
-      "alias": "kind",
-      "owner": "McpImageContent",
-      "domain_of": [
-        "McpImageContent"
-      ],
-      "range": "string",
-      "required": true,
-      "equals_string": "image",
       "@type": "SlotDefinition"
     },
     {
@@ -3732,32 +3447,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpJSONRPCErrorResponse__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpJSONRPCErrorResponse",
-      "domain_of": [
-        "McpJSONRPCErrorResponse"
-      ],
-      "range": "string",
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpJSONRPCErrorResponse__jsonrpc",
       "description": "The JSON-RPC version, always `2.0`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -3817,33 +3506,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpJSONRPCRequest__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpJSONRPCRequest",
-      "domain_of": [
-        "McpJSONRPCRequest"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpJSONRPCRequest__jsonrpc",
       "description": "The JSON-RPC version, always `2.0`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -3885,33 +3547,6 @@
       "range": "McpJSONObject",
       "inlined": true,
       "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpJSONRPCResultResponse__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpJSONRPCResultResponse",
-      "domain_of": [
-        "McpJSONRPCResultResponse"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
       "@type": "SlotDefinition"
     },
     {
@@ -3985,51 +3620,6 @@
       ],
       "range": "string",
       "multivalued": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpLegacyTitledEnumSchema__kind",
-      "description": "The kind of object, always `string`.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "type"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
-      "alias": "kind",
-      "owner": "McpLegacyTitledEnumSchema",
-      "domain_of": [
-        "McpLegacyTitledEnumSchema"
-      ],
-      "range": "string",
-      "required": true,
-      "equals_string": "string",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpListPromptsRequest__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpListPromptsRequest",
-      "domain_of": [
-        "McpListPromptsRequest"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
       "@type": "SlotDefinition"
     },
     {
@@ -4167,33 +3757,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpListPromptsResultResponse__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpListPromptsResultResponse",
-      "domain_of": [
-        "McpListPromptsResultResponse"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpListPromptsResultResponse__jsonrpc",
       "description": "The JSON-RPC version, always `2.0`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -4222,33 +3785,6 @@
       "required": true,
       "inlined": true,
       "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpListResourceTemplatesRequest__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpListResourceTemplatesRequest",
-      "domain_of": [
-        "McpListResourceTemplatesRequest"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
       "@type": "SlotDefinition"
     },
     {
@@ -4386,33 +3922,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpListResourceTemplatesResultResponse__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpListResourceTemplatesResultResponse",
-      "domain_of": [
-        "McpListResourceTemplatesResultResponse"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpListResourceTemplatesResultResponse__jsonrpc",
       "description": "The JSON-RPC version, always `2.0`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -4441,33 +3950,6 @@
       "required": true,
       "inlined": true,
       "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpListResourcesRequest__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpListResourcesRequest",
-      "domain_of": [
-        "McpListResourcesRequest"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
       "@type": "SlotDefinition"
     },
     {
@@ -4605,33 +4087,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpListResourcesResultResponse__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpListResourcesResultResponse",
-      "domain_of": [
-        "McpListResourcesResultResponse"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpListResourcesResultResponse__jsonrpc",
       "description": "The JSON-RPC version, always `2.0`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -4722,33 +4177,6 @@
       "multivalued": true,
       "inlined": true,
       "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpListToolsRequest__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpListToolsRequest",
-      "domain_of": [
-        "McpListToolsRequest"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
       "@type": "SlotDefinition"
     },
     {
@@ -4883,33 +4311,6 @@
       "range": "integer",
       "required": true,
       "minimum_value": 0,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpListToolsResultResponse__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpListToolsResultResponse",
-      "domain_of": [
-        "McpListToolsResultResponse"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
       "@type": "SlotDefinition"
     },
     {
@@ -5105,32 +4506,6 @@
       "required": true,
       "inlined": true,
       "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpMissingRequiredClientCapabilityError__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpMissingRequiredClientCapabilityError",
-      "domain_of": [
-        "McpMissingRequiredClientCapabilityError"
-      ],
-      "range": "string",
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
       "@type": "SlotDefinition"
     },
     {
@@ -5363,50 +4738,6 @@
         "McpNumberSchema"
       ],
       "range": "float",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpNumberSchema__kind",
-      "description": "The kind of value the field takes.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "type"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
-      "alias": "kind",
-      "owner": "McpNumberSchema",
-      "domain_of": [
-        "McpNumberSchema"
-      ],
-      "range": "McpNumberSchemaType",
-      "required": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpPaginatedRequest__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpPaginatedRequest",
-      "domain_of": [
-        "McpPaginatedRequest"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
       "@type": "SlotDefinition"
     },
     {
@@ -5833,51 +5164,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpPromptReference__kind",
-      "description": "The kind of object, always `ref/prompt`.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "type"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
-      "alias": "kind",
-      "owner": "McpPromptReference",
-      "domain_of": [
-        "McpPromptReference"
-      ],
-      "range": "string",
-      "required": true,
-      "equals_string": "ref/prompt",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpReadResourceRequest__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpReadResourceRequest",
-      "domain_of": [
-        "McpReadResourceRequest"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpReadResourceRequest__jsonrpc",
       "description": "The JSON-RPC version, always `2.0`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -6063,33 +5349,6 @@
       "range": "integer",
       "required": true,
       "minimum_value": 0,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpReadResourceResultResponse__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpReadResourceResultResponse",
-      "domain_of": [
-        "McpReadResourceResultResponse"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
       "@type": "SlotDefinition"
     },
     {
@@ -6471,24 +5730,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpResourceLink__kind",
-      "description": "The kind of object, always `resource_link`.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "type"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
-      "alias": "kind",
-      "owner": "McpResourceLink",
-      "domain_of": [
-        "McpResourceLink"
-      ],
-      "range": "string",
-      "required": true,
-      "equals_string": "resource_link",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpResourceLink__uri",
       "description": "The URI of this resource.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -6648,24 +5889,6 @@
       ],
       "range": "McpUriTemplate",
       "required": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpResourceTemplateReference__kind",
-      "description": "The kind of object, always `ref/resource`.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "type"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
-      "alias": "kind",
-      "owner": "McpResourceTemplateReference",
-      "domain_of": [
-        "McpResourceTemplateReference"
-      ],
-      "range": "string",
-      "required": true,
-      "equals_string": "ref/resource",
       "@type": "SlotDefinition"
     },
     {
@@ -7115,24 +6338,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpStringSchema__kind",
-      "description": "The kind of object, always `string`.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "type"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
-      "alias": "kind",
-      "owner": "McpStringSchema",
-      "domain_of": [
-        "McpStringSchema"
-      ],
-      "range": "string",
-      "required": true,
-      "equals_string": "string",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpSubscriptionFilter__prompts_list_changed",
       "description": "If true, receive {@link PromptListChangedNotificationnotifications/prompts/list_changed}.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -7260,33 +6465,6 @@
       "required": true,
       "inlined": true,
       "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpSubscriptionsListenRequest__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpSubscriptionsListenRequest",
-      "domain_of": [
-        "McpSubscriptionsListenRequest"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
       "@type": "SlotDefinition"
     },
     {
@@ -7443,33 +6621,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpSubscriptionsListenResultResponse__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpSubscriptionsListenResultResponse",
-      "domain_of": [
-        "McpSubscriptionsListenResultResponse"
-      ],
-      "range": "string",
-      "required": true,
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpSubscriptionsListenResultResponse__jsonrpc",
       "description": "The JSON-RPC version, always `2.0`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -7542,24 +6693,6 @@
       ],
       "range": "string",
       "required": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpTextContent__kind",
-      "description": "The kind of object, always `text`.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "type"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
-      "alias": "kind",
-      "owner": "McpTextContent",
-      "domain_of": [
-        "McpTextContent"
-      ],
-      "range": "string",
-      "required": true,
-      "equals_string": "text",
       "@type": "SlotDefinition"
     },
     {
@@ -7675,24 +6808,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpTitledMultiSelectEnumSchema__kind",
-      "description": "The kind of object, always `array`.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "type"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
-      "alias": "kind",
-      "owner": "McpTitledMultiSelectEnumSchema",
-      "domain_of": [
-        "McpTitledMultiSelectEnumSchema"
-      ],
-      "range": "string",
-      "required": true,
-      "equals_string": "array",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpTitledMultiSelectEnumSchemaItems__any_of",
       "description": "Array of enum options with values and display labels.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -7751,24 +6866,6 @@
       "multivalued": true,
       "inlined": true,
       "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpTitledSingleSelectEnumSchema__kind",
-      "description": "The kind of object, always `string`.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "type"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
-      "alias": "kind",
-      "owner": "McpTitledSingleSelectEnumSchema",
-      "domain_of": [
-        "McpTitledSingleSelectEnumSchema"
-      ],
-      "range": "string",
-      "required": true,
-      "equals_string": "string",
       "@type": "SlotDefinition"
     },
     {
@@ -7944,24 +7041,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpToolInputSchema__kind",
-      "description": "The kind of object, always `object`.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "type"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
-      "alias": "kind",
-      "owner": "McpToolInputSchema",
-      "domain_of": [
-        "McpToolInputSchema"
-      ],
-      "range": "string",
-      "required": true,
-      "equals_string": "object",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpToolListChangedNotification__jsonrpc",
       "description": "The JSON-RPC version, always `2.0`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -8097,24 +7176,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpToolResultContent__kind",
-      "description": "The kind of object, always `tool_result`.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "type"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
-      "alias": "kind",
-      "owner": "McpToolResultContent",
-      "domain_of": [
-        "McpToolResultContent"
-      ],
-      "range": "string",
-      "required": true,
-      "equals_string": "tool_result",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpToolUseContent__meta",
       "description": "Optional metadata about the tool use. Clients SHOULD preserve this field when\nincluding tool uses in subsequent sampling requests to enable caching optimizations.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -8127,23 +7188,6 @@
       "range": "McpMetaObject",
       "inlined": true,
       "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpToolUseContent__identifier",
-      "description": "A unique identifier for this tool use.\n\nThis ID is used to match tool results to their corresponding tool uses.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpToolUseContent",
-      "domain_of": [
-        "McpToolUseContent"
-      ],
-      "range": "string",
-      "required": true,
       "@type": "SlotDefinition"
     },
     {
@@ -8163,24 +7207,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpToolUseContent__kind",
-      "description": "The kind of object, always `tool_use`.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "type"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
-      "alias": "kind",
-      "owner": "McpToolUseContent",
-      "domain_of": [
-        "McpToolUseContent"
-      ],
-      "range": "string",
-      "required": true,
-      "equals_string": "tool_use",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpUnsupportedProtocolVersionError__error",
       "description": "The error the request ended with.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -8194,32 +7220,6 @@
       "required": true,
       "inlined": true,
       "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpUnsupportedProtocolVersionError__identifier",
-      "description": "A uniquely identifying ID for a request in JSON-RPC.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "id"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
-      "alias": "identifier",
-      "owner": "McpUnsupportedProtocolVersionError",
-      "domain_of": [
-        "McpUnsupportedProtocolVersionError"
-      ],
-      "range": "string",
-      "any_of": [
-        {
-          "range": "string",
-          "@type": "AnonymousSlotExpression"
-        },
-        {
-          "range": "integer",
-          "@type": "AnonymousSlotExpression"
-        }
-      ],
       "@type": "SlotDefinition"
     },
     {
@@ -8354,24 +7354,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpUntitledMultiSelectEnumSchema__kind",
-      "description": "The kind of object, always `array`.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "type"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
-      "alias": "kind",
-      "owner": "McpUntitledMultiSelectEnumSchema",
-      "domain_of": [
-        "McpUntitledMultiSelectEnumSchema"
-      ],
-      "range": "string",
-      "required": true,
-      "equals_string": "array",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpUntitledMultiSelectEnumSchemaItems__enum",
       "description": "Array of enum values to choose from.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -8384,24 +7366,6 @@
       "range": "string",
       "required": true,
       "multivalued": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpUntitledMultiSelectEnumSchemaItems__kind",
-      "description": "The kind of object, always `string`.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "type"
-      ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
-      "alias": "kind",
-      "owner": "McpUntitledMultiSelectEnumSchemaItems",
-      "domain_of": [
-        "McpUntitledMultiSelectEnumSchemaItems"
-      ],
-      "range": "string",
-      "required": true,
-      "equals_string": "string",
       "@type": "SlotDefinition"
     },
     {
@@ -8433,21 +7397,48 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpUntitledSingleSelectEnumSchema__kind",
-      "description": "The kind of object, always `string`.",
+      "name": "McpAnnotations_audience",
+      "definition_uri": "https://w3id.org/lmodel/mcp/audience",
+      "description": "Describes who the intended audience of this object or data is.\n\nIt can include multiple entries to indicate content useful for multiple audiences (e.g., `[\"user\", \"assistant\"]`).",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "aliases": [
-        "type"
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/audience"
       ],
-      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
-      "alias": "kind",
-      "owner": "McpUntitledSingleSelectEnumSchema",
+      "is_a": "audience",
+      "domain": "McpAnnotations",
+      "slot_uri": "https://w3id.org/lmodel/mcp/audience",
+      "alias": "audience",
+      "owner": "McpAnnotations",
       "domain_of": [
-        "McpUntitledSingleSelectEnumSchema"
+        "McpAnnotations"
       ],
+      "is_usage_slot": true,
+      "usage_slot_name": "audience",
+      "range": "McpRole",
+      "multivalued": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpAudioContent_type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of object, always `audio`.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "is_a": "type",
+      "domain": "McpAudioContent",
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "alias": "type",
+      "owner": "McpAudioContent",
+      "domain_of": [
+        "McpAudioContent"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "type",
       "range": "string",
       "required": true,
-      "equals_string": "string",
+      "equals_string": "audio",
       "@type": "SlotDefinition"
     },
     {
@@ -8536,6 +7527,61 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "McpBooleanSchema_type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of object, always `boolean`.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "is_a": "type",
+      "domain": "McpBooleanSchema",
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "alias": "type",
+      "owner": "McpBooleanSchema",
+      "domain_of": [
+        "McpBooleanSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "type",
+      "range": "string",
+      "required": true,
+      "equals_string": "boolean",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpCallToolRequest_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "id",
+      "domain": "McpCallToolRequest",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpCallToolRequest",
+      "domain_of": [
+        "McpCallToolRequest"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "McpCallToolRequestParams_name",
       "definition_uri": "https://w3id.org/lmodel/mcp/name",
       "description": "The name of the tool.",
@@ -8555,6 +7601,137 @@
       "usage_slot_name": "name",
       "range": "string",
       "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpCallToolResultResponse_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "id",
+      "domain": "McpCallToolResultResponse",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpCallToolResultResponse",
+      "domain_of": [
+        "McpCallToolResultResponse"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpCancelledNotificationParams_reason",
+      "definition_uri": "https://w3id.org/lmodel/mcp/reason",
+      "description": "An optional string describing the reason for the cancellation. This MAY be logged or presented to the user.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/reason"
+      ],
+      "is_a": "reason",
+      "domain": "McpCancelledNotificationParams",
+      "slot_uri": "https://w3id.org/lmodel/mcp/reason",
+      "alias": "reason",
+      "owner": "McpCancelledNotificationParams",
+      "domain_of": [
+        "McpCancelledNotificationParams"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "reason",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpClientCapabilitiesSampling_context",
+      "definition_uri": "https://w3id.org/lmodel/mcp/context",
+      "description": "Whether the client supports context inclusion via `includeContext` parameter.\nIf not declared, servers SHOULD only use `includeContext: \"none\"` (or omit it).",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/context"
+      ],
+      "is_a": "context",
+      "domain": "McpClientCapabilitiesSampling",
+      "slot_uri": "https://w3id.org/lmodel/mcp/context",
+      "alias": "context",
+      "owner": "McpClientCapabilitiesSampling",
+      "domain_of": [
+        "McpClientCapabilitiesSampling"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "context",
+      "range": "McpJSONObject",
+      "inlined": true,
+      "inlined_as_list": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpCompleteRequest_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "id",
+      "domain": "McpCompleteRequest",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpCompleteRequest",
+      "domain_of": [
+        "McpCompleteRequest"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpCompleteRequestParams_context",
+      "definition_uri": "https://w3id.org/lmodel/mcp/context",
+      "description": "Additional, optional context for completions",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/context"
+      ],
+      "is_a": "context",
+      "domain": "McpCompleteRequestParams",
+      "slot_uri": "https://w3id.org/lmodel/mcp/context",
+      "alias": "context",
+      "owner": "McpCompleteRequestParams",
+      "domain_of": [
+        "McpCompleteRequestParams"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "context",
+      "range": "McpCompleteRequestParamsContext",
+      "inlined": true,
+      "inlined_as_list": true,
       "@type": "SlotDefinition"
     },
     {
@@ -8580,6 +7757,125 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "McpCompleteResultResponse_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "id",
+      "domain": "McpCompleteResultResponse",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpCompleteResultResponse",
+      "domain_of": [
+        "McpCompleteResultResponse"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpDiscoverRequest_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "id",
+      "domain": "McpDiscoverRequest",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpDiscoverRequest",
+      "domain_of": [
+        "McpDiscoverRequest"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpDiscoverResultResponse_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "id",
+      "domain": "McpDiscoverResultResponse",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpDiscoverResultResponse",
+      "domain_of": [
+        "McpDiscoverResultResponse"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpElicitRequestFormParamsRequestedSchema_type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of object, always `object`.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "is_a": "type",
+      "domain": "McpElicitRequestFormParamsRequestedSchema",
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "alias": "type",
+      "owner": "McpElicitRequestFormParamsRequestedSchema",
+      "domain_of": [
+        "McpElicitRequestFormParamsRequestedSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "type",
+      "range": "string",
+      "required": true,
+      "equals_string": "object",
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "McpElicitRequestURLParams_url",
       "definition_uri": "https://w3id.org/lmodel/mcp/url",
       "description": "The URL that the user should navigate to.",
@@ -8599,6 +7895,93 @@
       "usage_slot_name": "url",
       "range": "uri",
       "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpEmbeddedResource_resource",
+      "definition_uri": "https://w3id.org/lmodel/mcp/resource",
+      "description": "The resource's contents, as text or as binary data.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/resource"
+      ],
+      "is_a": "resource",
+      "domain": "McpEmbeddedResource",
+      "slot_uri": "https://w3id.org/lmodel/mcp/resource",
+      "alias": "resource",
+      "owner": "McpEmbeddedResource",
+      "domain_of": [
+        "McpEmbeddedResource"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "resource",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "McpTextResourceContents",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "McpBlobResourceContents",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpEmbeddedResource_type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of object, always `resource`.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "is_a": "type",
+      "domain": "McpEmbeddedResource",
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "alias": "type",
+      "owner": "McpEmbeddedResource",
+      "domain_of": [
+        "McpEmbeddedResource"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "type",
+      "range": "string",
+      "required": true,
+      "equals_string": "resource",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpGetPromptRequest_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "id",
+      "domain": "McpGetPromptRequest",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpGetPromptRequest",
+      "domain_of": [
+        "McpGetPromptRequest"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
       "@type": "SlotDefinition"
     },
     {
@@ -8642,6 +8025,92 @@
       "is_usage_slot": true,
       "usage_slot_name": "description",
       "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpGetPromptResultResponse_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "id",
+      "domain": "McpGetPromptResultResponse",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpGetPromptResultResponse",
+      "domain_of": [
+        "McpGetPromptResultResponse"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpHeaderMismatchError_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "id",
+      "domain": "McpHeaderMismatchError",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpHeaderMismatchError",
+      "domain_of": [
+        "McpHeaderMismatchError"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpImageContent_type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of object, always `image`.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "is_a": "type",
+      "domain": "McpImageContent",
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "alias": "type",
+      "owner": "McpImageContent",
+      "domain_of": [
+        "McpImageContent"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "type",
+      "range": "string",
+      "required": true,
+      "equals_string": "image",
       "@type": "SlotDefinition"
     },
     {
@@ -8731,6 +8200,101 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "McpJSONRPCErrorResponse_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "id",
+      "domain": "McpJSONRPCErrorResponse",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpJSONRPCErrorResponse",
+      "domain_of": [
+        "McpJSONRPCErrorResponse"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpJSONRPCRequest_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "id",
+      "domain": "McpJSONRPCRequest",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpJSONRPCRequest",
+      "domain_of": [
+        "McpJSONRPCRequest"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpJSONRPCResultResponse_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "id",
+      "domain": "McpJSONRPCResultResponse",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpJSONRPCResultResponse",
+      "domain_of": [
+        "McpJSONRPCResultResponse"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "McpLegacyTitledEnumSchema_description",
       "definition_uri": "https://w3id.org/lmodel/mcp/description",
       "description": "A description of the field for the user.",
@@ -8770,6 +8334,316 @@
       "is_usage_slot": true,
       "usage_slot_name": "title",
       "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpLegacyTitledEnumSchema_type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of object, always `string`.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "is_a": "type",
+      "domain": "McpLegacyTitledEnumSchema",
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "alias": "type",
+      "owner": "McpLegacyTitledEnumSchema",
+      "domain_of": [
+        "McpLegacyTitledEnumSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "type",
+      "range": "string",
+      "required": true,
+      "equals_string": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpListPromptsRequest_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "id",
+      "domain": "McpListPromptsRequest",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpListPromptsRequest",
+      "domain_of": [
+        "McpListPromptsRequest"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpListPromptsResultResponse_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "McpJSONRPCResultResponse_id",
+      "domain": "McpListPromptsResultResponse",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpListPromptsResultResponse",
+      "domain_of": [
+        "McpListPromptsResultResponse"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpListResourceTemplatesRequest_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "id",
+      "domain": "McpListResourceTemplatesRequest",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpListResourceTemplatesRequest",
+      "domain_of": [
+        "McpListResourceTemplatesRequest"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpListResourceTemplatesResultResponse_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "McpJSONRPCResultResponse_id",
+      "domain": "McpListResourceTemplatesResultResponse",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpListResourceTemplatesResultResponse",
+      "domain_of": [
+        "McpListResourceTemplatesResultResponse"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpListResourcesRequest_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "id",
+      "domain": "McpListResourcesRequest",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpListResourcesRequest",
+      "domain_of": [
+        "McpListResourcesRequest"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpListResourcesResultResponse_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "McpJSONRPCResultResponse_id",
+      "domain": "McpListResourcesResultResponse",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpListResourcesResultResponse",
+      "domain_of": [
+        "McpListResourcesResultResponse"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpListToolsRequest_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "id",
+      "domain": "McpListToolsRequest",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpListToolsRequest",
+      "domain_of": [
+        "McpListToolsRequest"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpListToolsResultResponse_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "McpJSONRPCResultResponse_id",
+      "domain": "McpListToolsResultResponse",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpListToolsResultResponse",
+      "domain_of": [
+        "McpListToolsResultResponse"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpMissingRequiredClientCapabilityError_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "McpJSONRPCErrorResponse_id",
+      "domain": "McpMissingRequiredClientCapabilityError",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpMissingRequiredClientCapabilityError",
+      "domain_of": [
+        "McpMissingRequiredClientCapabilityError"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
       "@type": "SlotDefinition"
     },
     {
@@ -8833,6 +8707,60 @@
       "is_usage_slot": true,
       "usage_slot_name": "title",
       "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpNumberSchema_type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of value the field takes.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "is_a": "type",
+      "domain": "McpNumberSchema",
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "alias": "type",
+      "owner": "McpNumberSchema",
+      "domain_of": [
+        "McpNumberSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "type",
+      "range": "McpNumberSchemaType",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpPaginatedRequest_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "McpJSONRPCRequest_id",
+      "domain": "McpPaginatedRequest",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpPaginatedRequest",
+      "domain_of": [
+        "McpPaginatedRequest"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
       "@type": "SlotDefinition"
     },
     {
@@ -9007,6 +8935,93 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "McpPromptReference_type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of object, always `ref/prompt`.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "is_a": "type",
+      "domain": "McpPromptReference",
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "alias": "type",
+      "owner": "McpPromptReference",
+      "domain_of": [
+        "McpPromptReference"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "type",
+      "range": "string",
+      "required": true,
+      "equals_string": "ref/prompt",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpReadResourceRequest_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "McpJSONRPCRequest_id",
+      "domain": "McpReadResourceRequest",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpReadResourceRequest",
+      "domain_of": [
+        "McpReadResourceRequest"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpReadResourceResultResponse_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "McpJSONRPCResultResponse_id",
+      "domain": "McpReadResourceResultResponse",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpReadResourceResultResponse",
+      "domain_of": [
+        "McpReadResourceResultResponse"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "McpResource_description",
       "definition_uri": "https://w3id.org/lmodel/mcp/description",
       "description": "A description of what this resource represents.\n\nThis can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a \"hint\" to the model.",
@@ -9135,6 +9150,29 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "McpResourceLink_type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of object, always `resource_link`.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "is_a": "type",
+      "domain": "McpResourceLink",
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "alias": "type",
+      "owner": "McpResourceLink",
+      "domain_of": [
+        "McpResourceLink"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "type",
+      "range": "string",
+      "required": true,
+      "equals_string": "resource_link",
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "McpResourceTemplate_description",
       "definition_uri": "https://w3id.org/lmodel/mcp/description",
       "description": "A description of what this template is for.\n\nThis can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a \"hint\" to the model.",
@@ -9196,6 +9234,29 @@
       "is_usage_slot": true,
       "usage_slot_name": "title",
       "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpResourceTemplateReference_type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of object, always `ref/resource`.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "is_a": "type",
+      "domain": "McpResourceTemplateReference",
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "alias": "type",
+      "owner": "McpResourceTemplateReference",
+      "domain_of": [
+        "McpResourceTemplateReference"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "type",
+      "range": "string",
+      "required": true,
+      "equals_string": "ref/resource",
       "@type": "SlotDefinition"
     },
     {
@@ -9262,6 +9323,116 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "McpStringSchema_type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of object, always `string`.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "is_a": "type",
+      "domain": "McpStringSchema",
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "alias": "type",
+      "owner": "McpStringSchema",
+      "domain_of": [
+        "McpStringSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "type",
+      "range": "string",
+      "required": true,
+      "equals_string": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpSubscriptionsListenRequest_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "McpJSONRPCRequest_id",
+      "domain": "McpSubscriptionsListenRequest",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpSubscriptionsListenRequest",
+      "domain_of": [
+        "McpSubscriptionsListenRequest"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpSubscriptionsListenResultResponse_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "McpJSONRPCResultResponse_id",
+      "domain": "McpSubscriptionsListenResultResponse",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpSubscriptionsListenResultResponse",
+      "domain_of": [
+        "McpSubscriptionsListenResultResponse"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpTextContent_type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of object, always `text`.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "is_a": "type",
+      "domain": "McpTextContent",
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "alias": "type",
+      "owner": "McpTextContent",
+      "domain_of": [
+        "McpTextContent"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "type",
+      "range": "string",
+      "required": true,
+      "equals_string": "text",
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "McpTitledMultiSelectEnumSchema_description",
       "definition_uri": "https://w3id.org/lmodel/mcp/description",
       "description": "Optional description for the enum field.",
@@ -9301,6 +9472,29 @@
       "is_usage_slot": true,
       "usage_slot_name": "title",
       "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpTitledMultiSelectEnumSchema_type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of object, always `array`.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "is_a": "type",
+      "domain": "McpTitledMultiSelectEnumSchema",
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "alias": "type",
+      "owner": "McpTitledMultiSelectEnumSchema",
+      "domain_of": [
+        "McpTitledMultiSelectEnumSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "type",
+      "range": "string",
+      "required": true,
+      "equals_string": "array",
       "@type": "SlotDefinition"
     },
     {
@@ -9365,6 +9559,29 @@
       "is_usage_slot": true,
       "usage_slot_name": "title",
       "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpTitledSingleSelectEnumSchema_type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of object, always `string`.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "is_a": "type",
+      "domain": "McpTitledSingleSelectEnumSchema",
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "alias": "type",
+      "owner": "McpTitledSingleSelectEnumSchema",
+      "domain_of": [
+        "McpTitledSingleSelectEnumSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "type",
+      "range": "string",
+      "required": true,
+      "equals_string": "string",
       "@type": "SlotDefinition"
     },
     {
@@ -9475,6 +9692,74 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "McpToolInputSchema_type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of object, always `object`.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "is_a": "type",
+      "domain": "McpToolInputSchema",
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "alias": "type",
+      "owner": "McpToolInputSchema",
+      "domain_of": [
+        "McpToolInputSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "type",
+      "range": "string",
+      "required": true,
+      "equals_string": "object",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpToolResultContent_type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of object, always `tool_result`.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "is_a": "type",
+      "domain": "McpToolResultContent",
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "alias": "type",
+      "owner": "McpToolResultContent",
+      "domain_of": [
+        "McpToolResultContent"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "type",
+      "range": "string",
+      "required": true,
+      "equals_string": "tool_result",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpToolUseContent_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A unique identifier for this tool use.\n\nThis ID is used to match tool results to their corresponding tool uses.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "id",
+      "domain": "McpToolUseContent",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpToolUseContent",
+      "domain_of": [
+        "McpToolUseContent"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "McpToolUseContent_name",
       "definition_uri": "https://w3id.org/lmodel/mcp/name",
       "description": "The name of the tool to call.",
@@ -9494,6 +9779,60 @@
       "usage_slot_name": "name",
       "range": "string",
       "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpToolUseContent_type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of object, always `tool_use`.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "is_a": "type",
+      "domain": "McpToolUseContent",
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "alias": "type",
+      "owner": "McpToolUseContent",
+      "domain_of": [
+        "McpToolUseContent"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "type",
+      "range": "string",
+      "required": true,
+      "equals_string": "tool_use",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpUnsupportedProtocolVersionError_id",
+      "definition_uri": "https://w3id.org/lmodel/mcp/id",
+      "description": "A uniquely identifying ID for a request in JSON-RPC.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/id"
+      ],
+      "is_a": "McpJSONRPCErrorResponse_id",
+      "domain": "McpUnsupportedProtocolVersionError",
+      "slot_uri": "https://w3id.org/lmodel/mcp/id",
+      "alias": "id",
+      "owner": "McpUnsupportedProtocolVersionError",
+      "domain_of": [
+        "McpUnsupportedProtocolVersionError"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "id",
+      "range": "string",
+      "any_of": [
+        {
+          "range": "string",
+          "@type": "AnonymousSlotExpression"
+        },
+        {
+          "range": "integer",
+          "@type": "AnonymousSlotExpression"
+        }
+      ],
       "@type": "SlotDefinition"
     },
     {
@@ -9539,6 +9878,52 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "McpUntitledMultiSelectEnumSchema_type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of object, always `array`.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "is_a": "type",
+      "domain": "McpUntitledMultiSelectEnumSchema",
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "alias": "type",
+      "owner": "McpUntitledMultiSelectEnumSchema",
+      "domain_of": [
+        "McpUntitledMultiSelectEnumSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "type",
+      "range": "string",
+      "required": true,
+      "equals_string": "array",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpUntitledMultiSelectEnumSchemaItems_type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of object, always `string`.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "is_a": "type",
+      "domain": "McpUntitledMultiSelectEnumSchemaItems",
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "alias": "type",
+      "owner": "McpUntitledMultiSelectEnumSchemaItems",
+      "domain_of": [
+        "McpUntitledMultiSelectEnumSchemaItems"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "type",
+      "range": "string",
+      "required": true,
+      "equals_string": "string",
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "McpUntitledSingleSelectEnumSchema_description",
       "definition_uri": "https://w3id.org/lmodel/mcp/description",
       "description": "Optional description for the enum field.",
@@ -9579,6 +9964,29 @@
       "usage_slot_name": "title",
       "range": "string",
       "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpUntitledSingleSelectEnumSchema_type",
+      "definition_uri": "https://w3id.org/lmodel/mcp/type",
+      "description": "The kind of object, always `string`.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "https://w3id.org/lmodel/mcp/type"
+      ],
+      "is_a": "type",
+      "domain": "McpUntitledSingleSelectEnumSchema",
+      "slot_uri": "https://w3id.org/lmodel/mcp/type",
+      "alias": "type",
+      "owner": "McpUntitledSingleSelectEnumSchema",
+      "domain_of": [
+        "McpUntitledSingleSelectEnumSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "type",
+      "range": "string",
+      "required": true,
+      "equals_string": "string",
+      "@type": "SlotDefinition"
     }
   ],
   "classes": [
@@ -9594,22 +10002,12 @@
         "mcp_schema:Annotations"
       ],
       "slots": [
-        "mcpAnnotations__intended_audience",
+        "McpAnnotations_audience",
         "mcpAnnotations__last_modified",
         "mcpAnnotations__priority"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "intended_audience",
-          "description": "Describes who the intended audience of this object or data is.\n\nIt can include multiple entries to indicate content useful for multiple audiences (e.g., `[\"user\", \"assistant\"]`).",
-          "aliases": [
-            "audience"
-          ],
-          "range": "McpRole",
-          "multivalued": true,
-          "@type": "SlotDefinition"
-        },
         {
           "name": "last_modified",
           "description": "The moment the resource was last modified, as an ISO 8601 formatted string.\n\nShould be an ISO 8601 formatted string (e.g., \"2025-01-12T15:00:58Z\").\n\nExamples: last activity timestamp in an open file, timestamp when the resource\nwas attached, etc.",
@@ -9644,11 +10042,11 @@
         "mcp_schema:AudioContent"
       ],
       "slots": [
+        "McpAudioContent_type",
         "mcpAudioContent__meta",
         "mcpAudioContent__annotations",
         "mcpAudioContent__data",
-        "mcpAudioContent__mime_type",
-        "mcpAudioContent__kind"
+        "mcpAudioContent__mime_type"
       ],
       "slot_usage": {},
       "attributes": [
@@ -9677,16 +10075,6 @@
           "description": "The MIME type of the audio. Different providers may support different audio types.",
           "alias": "mimeType",
           "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "kind",
-          "description": "The kind of object, always `audio`.",
-          "aliases": [
-            "type"
-          ],
-          "required": true,
-          "equals_string": "audio",
           "@type": "SlotDefinition"
         }
       ],
@@ -9789,8 +10177,8 @@
       "slots": [
         "McpBooleanSchema_description",
         "McpBooleanSchema_title",
-        "mcpBooleanSchema__default",
-        "mcpBooleanSchema__kind"
+        "McpBooleanSchema_type",
+        "mcpBooleanSchema__default"
       ],
       "slot_usage": {},
       "attributes": [
@@ -9798,16 +10186,6 @@
           "name": "default",
           "description": "The value the field takes when the user gives none.",
           "range": "boolean",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "kind",
-          "description": "The kind of object, always `boolean`.",
-          "aliases": [
-            "type"
-          ],
-          "required": true,
-          "equals_string": "boolean",
           "@type": "SlotDefinition"
         }
       ],
@@ -9891,32 +10269,13 @@
       ],
       "is_a": "McpJSONRPCRequest",
       "slots": [
-        "mcpCallToolRequest__identifier",
+        "McpCallToolRequest_id",
         "mcpCallToolRequest__jsonrpc",
         "mcpCallToolRequest__method",
         "mcpCallToolRequest__params"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -10082,31 +10441,12 @@
       ],
       "is_a": "McpJSONRPCResultResponse",
       "slots": [
-        "mcpCallToolResultResponse__identifier",
+        "McpCallToolResultResponse_id",
         "mcpCallToolResultResponse__jsonrpc",
         "mcpCallToolResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -10199,8 +10539,8 @@
       ],
       "is_a": "McpNotificationParams",
       "slots": [
+        "McpCancelledNotificationParams_reason",
         "mcpCancelledNotificationParams__meta",
-        "mcpCancelledNotificationParams__reason_text",
         "mcpCancelledNotificationParams__request_id"
       ],
       "slot_usage": {},
@@ -10210,14 +10550,6 @@
           "description": "Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply.",
           "alias": "_meta",
           "range": "McpNotificationMetaObject",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "reason_text",
-          "description": "An optional string describing the reason for the cancellation. This MAY be logged or presented to the user.",
-          "aliases": [
-            "reason"
-          ],
           "@type": "SlotDefinition"
         },
         {
@@ -10420,20 +10752,11 @@
         "mcp_schema:ClientCapabilities/properties/sampling"
       ],
       "slots": [
-        "mcpClientCapabilitiesSampling__context_info",
+        "McpClientCapabilitiesSampling_context",
         "mcpClientCapabilitiesSampling__tools"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "context_info",
-          "description": "Whether the client supports context inclusion via `includeContext` parameter.\nIf not declared, servers SHOULD only use `includeContext: \"none\"` (or omit it).",
-          "aliases": [
-            "context"
-          ],
-          "range": "McpJSONObject",
-          "@type": "SlotDefinition"
-        },
         {
           "name": "tools",
           "description": "Whether the client supports tool use via `tools` and `toolChoice` parameters.",
@@ -10594,32 +10917,13 @@
       ],
       "is_a": "McpJSONRPCRequest",
       "slots": [
-        "mcpCompleteRequest__identifier",
+        "McpCompleteRequest_id",
         "mcpCompleteRequest__jsonrpc",
         "mcpCompleteRequest__method",
         "mcpCompleteRequest__params"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -10662,9 +10966,9 @@
       ],
       "is_a": "McpRequestParams",
       "slots": [
+        "McpCompleteRequestParams_context",
         "mcpCompleteRequestParams__meta",
         "mcpCompleteRequestParams__argument",
-        "mcpCompleteRequestParams__context_info",
         "mcpCompleteRequestParams__ref"
       ],
       "slot_usage": {},
@@ -10682,15 +10986,6 @@
           "description": "The argument's information",
           "range": "McpCompleteRequestParamsArgument",
           "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "context_info",
-          "description": "Additional, optional context for completions",
-          "aliases": [
-            "context"
-          ],
-          "range": "McpCompleteRequestParamsContext",
           "@type": "SlotDefinition"
         },
         {
@@ -10909,31 +11204,12 @@
       ],
       "is_a": "McpJSONRPCResultResponse",
       "slots": [
-        "mcpCompleteResultResponse__identifier",
+        "McpCompleteResultResponse_id",
         "mcpCompleteResultResponse__jsonrpc",
         "mcpCompleteResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -11246,32 +11522,13 @@
       ],
       "is_a": "McpJSONRPCRequest",
       "slots": [
-        "mcpDiscoverRequest__identifier",
+        "McpDiscoverRequest_id",
         "mcpDiscoverRequest__jsonrpc",
         "mcpDiscoverRequest__method",
         "mcpDiscoverRequest__params"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -11397,31 +11654,12 @@
       ],
       "is_a": "McpJSONRPCResultResponse",
       "slots": [
-        "mcpDiscoverResultResponse__identifier",
+        "McpDiscoverResultResponse_id",
         "mcpDiscoverResultResponse__jsonrpc",
         "mcpDiscoverResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -11541,10 +11779,10 @@
         "mcp_schema:ElicitRequestFormParams/properties/requestedSchema"
       ],
       "slots": [
+        "McpElicitRequestFormParamsRequestedSchema_type",
         "mcpElicitRequestFormParamsRequestedSchema__schema_dialect",
         "mcpElicitRequestFormParamsRequestedSchema__properties",
-        "mcpElicitRequestFormParamsRequestedSchema__required_names",
-        "mcpElicitRequestFormParamsRequestedSchema__kind"
+        "mcpElicitRequestFormParamsRequestedSchema__required_names"
       ],
       "slot_usage": {},
       "attributes": [
@@ -11570,16 +11808,6 @@
             "required"
           ],
           "multivalued": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "kind",
-          "description": "The kind of object, always `object`.",
-          "aliases": [
-            "type"
-          ],
-          "required": true,
-          "equals_string": "object",
           "@type": "SlotDefinition"
         }
       ],
@@ -11770,10 +11998,10 @@
         "mcp_schema:EmbeddedResource"
       ],
       "slots": [
+        "McpEmbeddedResource_resource",
+        "McpEmbeddedResource_type",
         "mcpEmbeddedResource__meta",
-        "mcpEmbeddedResource__annotations",
-        "mcpEmbeddedResource__resource_contents",
-        "mcpEmbeddedResource__kind"
+        "mcpEmbeddedResource__annotations"
       ],
       "slot_usage": {},
       "attributes": [
@@ -11788,35 +12016,6 @@
           "name": "annotations",
           "description": "Optional annotations for the client.",
           "range": "McpAnnotations",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "resource_contents",
-          "description": "The resource's contents, as text or as binary data.",
-          "aliases": [
-            "resource"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "McpTextResourceContents",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "McpBlobResourceContents",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "kind",
-          "description": "The kind of object, always `resource`.",
-          "aliases": [
-            "type"
-          ],
-          "required": true,
-          "equals_string": "resource",
           "@type": "SlotDefinition"
         }
       ],
@@ -11950,32 +12149,13 @@
       ],
       "is_a": "McpJSONRPCRequest",
       "slots": [
-        "mcpGetPromptRequest__identifier",
+        "McpGetPromptRequest_id",
         "mcpGetPromptRequest__jsonrpc",
         "mcpGetPromptRequest__method",
         "mcpGetPromptRequest__params"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -12148,31 +12328,12 @@
       ],
       "is_a": "McpJSONRPCResultResponse",
       "slots": [
-        "mcpGetPromptResultResponse__identifier",
+        "McpGetPromptResultResponse_id",
         "mcpGetPromptResultResponse__jsonrpc",
         "mcpGetPromptResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -12217,8 +12378,8 @@
       ],
       "is_a": "McpJSONRPCErrorResponse",
       "slots": [
+        "McpHeaderMismatchError_id",
         "mcpHeaderMismatchError__error",
-        "mcpHeaderMismatchError__identifier",
         "mcpHeaderMismatchError__jsonrpc"
       ],
       "slot_usage": {},
@@ -12228,24 +12389,6 @@
           "description": "The error the request ended with.",
           "range": "McpHeaderMismatchErrorError",
           "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
           "@type": "SlotDefinition"
         },
         {
@@ -12394,11 +12537,11 @@
         "mcp_schema:ImageContent"
       ],
       "slots": [
+        "McpImageContent_type",
         "mcpImageContent__meta",
         "mcpImageContent__annotations",
         "mcpImageContent__data",
-        "mcpImageContent__mime_type",
-        "mcpImageContent__kind"
+        "mcpImageContent__mime_type"
       ],
       "slot_usage": {},
       "attributes": [
@@ -12427,16 +12570,6 @@
           "description": "The MIME type of the image. Different providers may support different image types.",
           "alias": "mimeType",
           "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "kind",
-          "description": "The kind of object, always `image`.",
-          "aliases": [
-            "type"
-          ],
-          "required": true,
-          "equals_string": "image",
           "@type": "SlotDefinition"
         }
       ],
@@ -12906,8 +13039,8 @@
         "mcp_schema:JSONRPCErrorResponse"
       ],
       "slots": [
+        "McpJSONRPCErrorResponse_id",
         "mcpJSONRPCErrorResponse__error",
-        "mcpJSONRPCErrorResponse__identifier",
         "mcpJSONRPCErrorResponse__jsonrpc"
       ],
       "slot_usage": {},
@@ -12917,24 +13050,6 @@
           "description": "The error the request ended with.",
           "range": "McpError",
           "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
           "@type": "SlotDefinition"
         },
         {
@@ -13048,32 +13163,13 @@
       ],
       "is_a": "McpRequest",
       "slots": [
-        "mcpJSONRPCRequest__identifier",
+        "McpJSONRPCRequest_id",
         "mcpJSONRPCRequest__jsonrpc",
         "mcpJSONRPCRequest__method",
         "mcpJSONRPCRequest__params"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -13142,31 +13238,12 @@
         "mcp_schema:JSONRPCResultResponse"
       ],
       "slots": [
-        "mcpJSONRPCResultResponse__identifier",
+        "McpJSONRPCResultResponse_id",
         "mcpJSONRPCResultResponse__jsonrpc",
         "mcpJSONRPCResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -13228,10 +13305,10 @@
       "slots": [
         "McpLegacyTitledEnumSchema_description",
         "McpLegacyTitledEnumSchema_title",
+        "McpLegacyTitledEnumSchema_type",
         "mcpLegacyTitledEnumSchema__default",
         "mcpLegacyTitledEnumSchema__enum",
-        "mcpLegacyTitledEnumSchema__enum_names",
-        "mcpLegacyTitledEnumSchema__kind"
+        "mcpLegacyTitledEnumSchema__enum_names"
       ],
       "slot_usage": {},
       "attributes": [
@@ -13252,16 +13329,6 @@
           "description": "(Legacy) Display names for enum values.\nNon-standard according to JSON schema 2020-12.",
           "alias": "enumNames",
           "multivalued": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "kind",
-          "description": "The kind of object, always `string`.",
-          "aliases": [
-            "type"
-          ],
-          "required": true,
-          "equals_string": "string",
           "@type": "SlotDefinition"
         }
       ],
@@ -13285,32 +13352,13 @@
       ],
       "is_a": "McpPaginatedRequest",
       "slots": [
-        "mcpListPromptsRequest__identifier",
+        "McpListPromptsRequest_id",
         "mcpListPromptsRequest__jsonrpc",
         "mcpListPromptsRequest__method",
         "mcpListPromptsRequest__params"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -13434,31 +13482,12 @@
       ],
       "is_a": "McpJSONRPCResultResponse",
       "slots": [
-        "mcpListPromptsResultResponse__identifier",
+        "McpListPromptsResultResponse_id",
         "mcpListPromptsResultResponse__jsonrpc",
         "mcpListPromptsResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -13494,32 +13523,13 @@
       ],
       "is_a": "McpPaginatedRequest",
       "slots": [
-        "mcpListResourceTemplatesRequest__identifier",
+        "McpListResourceTemplatesRequest_id",
         "mcpListResourceTemplatesRequest__jsonrpc",
         "mcpListResourceTemplatesRequest__method",
         "mcpListResourceTemplatesRequest__params"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -13644,31 +13654,12 @@
       ],
       "is_a": "McpJSONRPCResultResponse",
       "slots": [
-        "mcpListResourceTemplatesResultResponse__identifier",
+        "McpListResourceTemplatesResultResponse_id",
         "mcpListResourceTemplatesResultResponse__jsonrpc",
         "mcpListResourceTemplatesResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -13704,32 +13695,13 @@
       ],
       "is_a": "McpPaginatedRequest",
       "slots": [
-        "mcpListResourcesRequest__identifier",
+        "McpListResourcesRequest_id",
         "mcpListResourcesRequest__jsonrpc",
         "mcpListResourcesRequest__method",
         "mcpListResourcesRequest__params"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -13853,31 +13825,12 @@
       ],
       "is_a": "McpJSONRPCResultResponse",
       "slots": [
-        "mcpListResourcesResultResponse__identifier",
+        "McpListResourcesResultResponse_id",
         "mcpListResourcesResultResponse__jsonrpc",
         "mcpListResourcesResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -14017,32 +13970,13 @@
       ],
       "is_a": "McpPaginatedRequest",
       "slots": [
-        "mcpListToolsRequest__identifier",
+        "McpListToolsRequest_id",
         "mcpListToolsRequest__jsonrpc",
         "mcpListToolsRequest__method",
         "mcpListToolsRequest__params"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -14166,31 +14100,12 @@
       ],
       "is_a": "McpJSONRPCResultResponse",
       "slots": [
-        "mcpListToolsResultResponse__identifier",
+        "McpListToolsResultResponse_id",
         "mcpListToolsResultResponse__jsonrpc",
         "mcpListToolsResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -14396,8 +14311,8 @@
       ],
       "is_a": "McpJSONRPCErrorResponse",
       "slots": [
+        "McpMissingRequiredClientCapabilityError_id",
         "mcpMissingRequiredClientCapabilityError__error",
-        "mcpMissingRequiredClientCapabilityError__identifier",
         "mcpMissingRequiredClientCapabilityError__jsonrpc"
       ],
       "slot_usage": {},
@@ -14407,24 +14322,6 @@
           "description": "The error the request ended with.",
           "range": "McpMissingRequiredClientCapabilityErrorError",
           "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
           "@type": "SlotDefinition"
         },
         {
@@ -14756,10 +14653,10 @@
       "slots": [
         "McpNumberSchema_description",
         "McpNumberSchema_title",
+        "McpNumberSchema_type",
         "mcpNumberSchema__default",
         "mcpNumberSchema__maximum",
-        "mcpNumberSchema__minimum",
-        "mcpNumberSchema__kind"
+        "mcpNumberSchema__minimum"
       ],
       "slot_usage": {},
       "attributes": [
@@ -14779,16 +14676,6 @@
           "name": "minimum",
           "description": "The smallest value the field accepts.",
           "range": "float",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "kind",
-          "description": "The kind of value the field takes.",
-          "aliases": [
-            "type"
-          ],
-          "range": "McpNumberSchemaType",
-          "required": true,
           "@type": "SlotDefinition"
         }
       ],
@@ -14812,32 +14699,13 @@
       ],
       "is_a": "McpJSONRPCRequest",
       "slots": [
-        "mcpPaginatedRequest__identifier",
+        "McpPaginatedRequest_id",
         "mcpPaginatedRequest__jsonrpc",
         "mcpPaginatedRequest__method",
         "mcpPaginatedRequest__params"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -15366,21 +15234,9 @@
       "slots": [
         "McpPromptReference_name",
         "McpPromptReference_title",
-        "mcpPromptReference__kind"
+        "McpPromptReference_type"
       ],
       "slot_usage": {},
-      "attributes": [
-        {
-          "name": "kind",
-          "description": "The kind of object, always `ref/prompt`.",
-          "aliases": [
-            "type"
-          ],
-          "required": true,
-          "equals_string": "ref/prompt",
-          "@type": "SlotDefinition"
-        }
-      ],
       "class_uri": "https://w3id.org/lmodel/mcp/McpPromptReference",
       "extra_slots": {
         "allowed": true,
@@ -15401,32 +15257,13 @@
       ],
       "is_a": "McpJSONRPCRequest",
       "slots": [
-        "mcpReadResourceRequest__identifier",
+        "McpReadResourceRequest_id",
         "mcpReadResourceRequest__jsonrpc",
         "mcpReadResourceRequest__method",
         "mcpReadResourceRequest__params"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -15607,31 +15444,12 @@
       ],
       "is_a": "McpJSONRPCResultResponse",
       "slots": [
-        "mcpReadResourceResultResponse__identifier",
+        "McpReadResourceResultResponse_id",
         "mcpReadResourceResultResponse__jsonrpc",
         "mcpReadResourceResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -15953,12 +15771,12 @@
         "McpResourceLink_description",
         "McpResourceLink_name",
         "McpResourceLink_title",
+        "McpResourceLink_type",
         "mcpResourceLink__meta",
         "mcpResourceLink__annotations",
         "mcpResourceLink__icons",
         "mcpResourceLink__mime_type",
         "mcpResourceLink__size",
-        "mcpResourceLink__kind",
         "mcpResourceLink__uri"
       ],
       "slot_usage": {},
@@ -15994,16 +15812,6 @@
           "name": "size",
           "description": "The size of the raw resource content, in bytes (i.e., before base64 encoding or any tokenization), if known.\n\nThis can be used by Hosts to display file sizes and estimate context window usage.",
           "range": "integer",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "kind",
-          "description": "The kind of object, always `resource_link`.",
-          "aliases": [
-            "type"
-          ],
-          "required": true,
-          "equals_string": "resource_link",
           "@type": "SlotDefinition"
         },
         {
@@ -16191,21 +15999,11 @@
         "mcp_schema:ResourceTemplateReference"
       ],
       "slots": [
-        "mcpResourceTemplateReference__kind",
+        "McpResourceTemplateReference_type",
         "mcpResourceTemplateReference__uri"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "kind",
-          "description": "The kind of object, always `ref/resource`.",
-          "aliases": [
-            "type"
-          ],
-          "required": true,
-          "equals_string": "ref/resource",
-          "@type": "SlotDefinition"
-        },
         {
           "name": "uri",
           "description": "The URI or URI template of the resource.",
@@ -16923,11 +16721,11 @@
       "slots": [
         "McpStringSchema_description",
         "McpStringSchema_title",
+        "McpStringSchema_type",
         "mcpStringSchema__default",
         "mcpStringSchema__format",
         "mcpStringSchema__max_length",
-        "mcpStringSchema__min_length",
-        "mcpStringSchema__kind"
+        "mcpStringSchema__min_length"
       ],
       "slot_usage": {},
       "attributes": [
@@ -16954,16 +16752,6 @@
           "description": "The fewest characters the field accepts.",
           "alias": "minLength",
           "range": "integer",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "kind",
-          "description": "The kind of object, always `string`.",
-          "aliases": [
-            "type"
-          ],
-          "required": true,
-          "equals_string": "string",
           "@type": "SlotDefinition"
         }
       ],
@@ -17130,32 +16918,13 @@
       ],
       "is_a": "McpJSONRPCRequest",
       "slots": [
-        "mcpSubscriptionsListenRequest__identifier",
+        "McpSubscriptionsListenRequest_id",
         "mcpSubscriptionsListenRequest__jsonrpc",
         "mcpSubscriptionsListenRequest__method",
         "mcpSubscriptionsListenRequest__params"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -17335,31 +17104,12 @@
       ],
       "is_a": "McpJSONRPCResultResponse",
       "slots": [
-        "mcpSubscriptionsListenResultResponse__identifier",
+        "McpSubscriptionsListenResultResponse_id",
         "mcpSubscriptionsListenResultResponse__jsonrpc",
         "mcpSubscriptionsListenResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
-          "@type": "SlotDefinition"
-        },
         {
           "name": "jsonrpc",
           "description": "The JSON-RPC version, always `2.0`.",
@@ -17394,10 +17144,10 @@
         "mcp_schema:TextContent"
       ],
       "slots": [
+        "McpTextContent_type",
         "mcpTextContent__meta",
         "mcpTextContent__annotations",
-        "mcpTextContent__text",
-        "mcpTextContent__kind"
+        "mcpTextContent__text"
       ],
       "slot_usage": {},
       "attributes": [
@@ -17418,16 +17168,6 @@
           "name": "text",
           "description": "The text content of the message.",
           "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "kind",
-          "description": "The kind of object, always `text`.",
-          "aliases": [
-            "type"
-          ],
-          "required": true,
-          "equals_string": "text",
           "@type": "SlotDefinition"
         }
       ],
@@ -17506,11 +17246,11 @@
       "slots": [
         "McpTitledMultiSelectEnumSchema_description",
         "McpTitledMultiSelectEnumSchema_title",
+        "McpTitledMultiSelectEnumSchema_type",
         "mcpTitledMultiSelectEnumSchema__default",
         "mcpTitledMultiSelectEnumSchema__items",
         "mcpTitledMultiSelectEnumSchema__max_items",
-        "mcpTitledMultiSelectEnumSchema__min_items",
-        "mcpTitledMultiSelectEnumSchema__kind"
+        "mcpTitledMultiSelectEnumSchema__min_items"
       ],
       "slot_usage": {},
       "attributes": [
@@ -17539,16 +17279,6 @@
           "description": "Minimum number of items to select.",
           "alias": "minItems",
           "range": "integer",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "kind",
-          "description": "The kind of object, always `array`.",
-          "aliases": [
-            "type"
-          ],
-          "required": true,
-          "equals_string": "array",
           "@type": "SlotDefinition"
         }
       ],
@@ -17638,9 +17368,9 @@
       "slots": [
         "McpTitledSingleSelectEnumSchema_description",
         "McpTitledSingleSelectEnumSchema_title",
+        "McpTitledSingleSelectEnumSchema_type",
         "mcpTitledSingleSelectEnumSchema__default",
-        "mcpTitledSingleSelectEnumSchema__one_of",
-        "mcpTitledSingleSelectEnumSchema__kind"
+        "mcpTitledSingleSelectEnumSchema__one_of"
       ],
       "slot_usage": {},
       "attributes": [
@@ -17657,16 +17387,6 @@
           "required": true,
           "multivalued": true,
           "inlined_as_list": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "kind",
-          "description": "The kind of object, always `string`.",
-          "aliases": [
-            "type"
-          ],
-          "required": true,
-          "equals_string": "string",
           "@type": "SlotDefinition"
         }
       ],
@@ -17878,8 +17598,8 @@
         "mcp_schema:Tool/properties/inputSchema"
       ],
       "slots": [
-        "mcpToolInputSchema__schema_dialect",
-        "mcpToolInputSchema__kind"
+        "McpToolInputSchema_type",
+        "mcpToolInputSchema__schema_dialect"
       ],
       "slot_usage": {},
       "attributes": [
@@ -17889,16 +17609,6 @@
           "aliases": [
             "$schema"
           ],
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "kind",
-          "description": "The kind of object, always `object`.",
-          "aliases": [
-            "type"
-          ],
-          "required": true,
-          "equals_string": "object",
           "@type": "SlotDefinition"
         }
       ],
@@ -18001,12 +17711,12 @@
         "mcp_schema:ToolResultContent"
       ],
       "slots": [
+        "McpToolResultContent_type",
         "mcpToolResultContent__meta",
         "mcpToolResultContent__content",
         "mcpToolResultContent__is_error",
         "mcpToolResultContent__structured_content",
-        "mcpToolResultContent__tool_use_id",
-        "mcpToolResultContent__kind"
+        "mcpToolResultContent__tool_use_id"
       ],
       "slot_usage": {},
       "attributes": [
@@ -18046,16 +17756,6 @@
           "alias": "toolUseId",
           "required": true,
           "@type": "SlotDefinition"
-        },
-        {
-          "name": "kind",
-          "description": "The kind of object, always `tool_result`.",
-          "aliases": [
-            "type"
-          ],
-          "required": true,
-          "equals_string": "tool_result",
-          "@type": "SlotDefinition"
         }
       ],
       "class_uri": "https://w3id.org/lmodel/mcp/McpToolResultContent",
@@ -18078,11 +17778,11 @@
         "mcp_schema:ToolUseContent"
       ],
       "slots": [
+        "McpToolUseContent_id",
         "McpToolUseContent_name",
+        "McpToolUseContent_type",
         "mcpToolUseContent__meta",
-        "mcpToolUseContent__identifier",
-        "mcpToolUseContent__input",
-        "mcpToolUseContent__kind"
+        "mcpToolUseContent__input"
       ],
       "slot_usage": {},
       "attributes": [
@@ -18094,29 +17794,10 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "identifier",
-          "description": "A unique identifier for this tool use.\n\nThis ID is used to match tool results to their corresponding tool uses.",
-          "aliases": [
-            "id"
-          ],
-          "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
           "name": "input",
           "description": "The arguments to pass to the tool, conforming to the tool's input schema.",
           "range": "McpJSONObject",
           "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "kind",
-          "description": "The kind of object, always `tool_use`.",
-          "aliases": [
-            "type"
-          ],
-          "required": true,
-          "equals_string": "tool_use",
           "@type": "SlotDefinition"
         }
       ],
@@ -18140,8 +17821,8 @@
       ],
       "is_a": "McpJSONRPCErrorResponse",
       "slots": [
+        "McpUnsupportedProtocolVersionError_id",
         "mcpUnsupportedProtocolVersionError__error",
-        "mcpUnsupportedProtocolVersionError__identifier",
         "mcpUnsupportedProtocolVersionError__jsonrpc"
       ],
       "slot_usage": {},
@@ -18151,24 +17832,6 @@
           "description": "The error the request ended with.",
           "range": "McpUnsupportedProtocolVersionErrorError",
           "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "identifier",
-          "description": "A uniquely identifying ID for a request in JSON-RPC.",
-          "aliases": [
-            "id"
-          ],
-          "any_of": [
-            {
-              "range": "string",
-              "@type": "AnonymousSlotExpression"
-            },
-            {
-              "range": "integer",
-              "@type": "AnonymousSlotExpression"
-            }
-          ],
           "@type": "SlotDefinition"
         },
         {
@@ -18280,11 +17943,11 @@
       "slots": [
         "McpUntitledMultiSelectEnumSchema_description",
         "McpUntitledMultiSelectEnumSchema_title",
+        "McpUntitledMultiSelectEnumSchema_type",
         "mcpUntitledMultiSelectEnumSchema__default",
         "mcpUntitledMultiSelectEnumSchema__items",
         "mcpUntitledMultiSelectEnumSchema__max_items",
-        "mcpUntitledMultiSelectEnumSchema__min_items",
-        "mcpUntitledMultiSelectEnumSchema__kind"
+        "mcpUntitledMultiSelectEnumSchema__min_items"
       ],
       "slot_usage": {},
       "attributes": [
@@ -18314,16 +17977,6 @@
           "alias": "minItems",
           "range": "integer",
           "@type": "SlotDefinition"
-        },
-        {
-          "name": "kind",
-          "description": "The kind of object, always `array`.",
-          "aliases": [
-            "type"
-          ],
-          "required": true,
-          "equals_string": "array",
-          "@type": "SlotDefinition"
         }
       ],
       "class_uri": "https://w3id.org/lmodel/mcp/McpUntitledMultiSelectEnumSchema",
@@ -18345,8 +17998,8 @@
         "mcp_schema:UntitledMultiSelectEnumSchema/properties/items"
       ],
       "slots": [
-        "mcpUntitledMultiSelectEnumSchemaItems__enum",
-        "mcpUntitledMultiSelectEnumSchemaItems__kind"
+        "McpUntitledMultiSelectEnumSchemaItems_type",
+        "mcpUntitledMultiSelectEnumSchemaItems__enum"
       ],
       "slot_usage": {},
       "attributes": [
@@ -18355,16 +18008,6 @@
           "description": "Array of enum values to choose from.",
           "required": true,
           "multivalued": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "kind",
-          "description": "The kind of object, always `string`.",
-          "aliases": [
-            "type"
-          ],
-          "required": true,
-          "equals_string": "string",
           "@type": "SlotDefinition"
         }
       ],
@@ -18389,9 +18032,9 @@
       "slots": [
         "McpUntitledSingleSelectEnumSchema_description",
         "McpUntitledSingleSelectEnumSchema_title",
+        "McpUntitledSingleSelectEnumSchema_type",
         "mcpUntitledSingleSelectEnumSchema__default",
-        "mcpUntitledSingleSelectEnumSchema__enum",
-        "mcpUntitledSingleSelectEnumSchema__kind"
+        "mcpUntitledSingleSelectEnumSchema__enum"
       ],
       "slot_usage": {},
       "attributes": [
@@ -18406,16 +18049,6 @@
           "required": true,
           "multivalued": true,
           "@type": "SlotDefinition"
-        },
-        {
-          "name": "kind",
-          "description": "The kind of object, always `string`.",
-          "aliases": [
-            "type"
-          ],
-          "required": true,
-          "equals_string": "string",
-          "@type": "SlotDefinition"
         }
       ],
       "class_uri": "https://w3id.org/lmodel/mcp/McpUntitledSingleSelectEnumSchema",
@@ -18428,8 +18061,8 @@
   ],
   "metamodel_version": "1.12.0",
   "source_file": "mcp.yaml",
-  "source_file_date": "2026-11-07T10:17:38",
-  "source_file_size": 219211,
+  "source_file_date": "2026-11-07T10:26:05",
+  "source_file_size": 219613,
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/mcp.context.jsonld",

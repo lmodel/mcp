@@ -2,6 +2,7 @@
 
 ## 2026-11-07
 
+* **Changed**: The release says the knowledge release attaches the copy only when the bundle or the schema changed.
 * **Changed**: How the schema names MCP's keys says LOKF shares one meaning of `url` and of `required`, and the other takes a name of its own.
 * **Changed**: The converter names all four kinds of sentence it writes where MCP gives no description.
 * **Changed**: How the tests hold the schema to MCP counts about 12,000 mutations; tier 2 builds 12,011.

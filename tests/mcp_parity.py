@@ -2,12 +2,12 @@
 
 tests/test_parity.py runs three tiers over these helpers:
 
-1. Addresses. The generated file compiles, every reference in it resolves, and every
-   definition MCP publishes is there, but those parity/probes.yaml lists as gaps.
+1. Addresses. The generated file compiles, every reference in it resolves, and it holds
+   every definition MCP publishes, except those parity/probes.yaml lists as gaps.
 2. Verdicts. Each of MCP's examples, each example under tests/data/problem/, a smallest
    valid instance of each definition, and each mutation of all of these get the same
    verdict from both files, or the difference parity/probes.yaml expects.
-3. Structure. The definitions that differ in shape once both sides are normalised are the
+3. Shapes. The definitions that differ in shape once both sides are normalised are the
    ones parity/structural.yaml lists, each with its reason.
 """
 
@@ -248,11 +248,17 @@ def _scalar(body: dict) -> bool:
 
 
 def normalise(node, defs: dict, inline: bool = False):
-    """A schema in a form both files share: annotations out, a reference to a scalar
-    definition replaced by its body and any other kept by name, allOf merged with its base
-    inlined, a type list read as an anyOf of types, an open object's additionalProperties
-    dropped, required as a sorted list. With ``inline``, a reference at the top is followed
-    once, as for a definition that only names another."""
+    """A schema in a form both files share:
+
+    - annotations out;
+    - a reference to a scalar definition replaced by its body, and any other kept by name;
+    - allOf merged with its base inlined;
+    - a type list read as an anyOf of types;
+    - an open object's additionalProperties dropped;
+    - required as a sorted list.
+
+    With ``inline``, a reference at the top is followed once, as for a definition that only
+    names another."""
     if isinstance(node, list):
         return [normalise(item, defs) for item in node]
     if not isinstance(node, dict):

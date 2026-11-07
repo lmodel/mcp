@@ -1,4 +1,4 @@
-"""Holds the schema to MCP's files, and the generated files to the schema."""
+"""Checks the schema against MCP's files, and the generated files against the schema."""
 
 import json
 import subprocess

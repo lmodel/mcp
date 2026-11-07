@@ -2,10 +2,10 @@
 
 An example is an MCP message or part of one, with MCP's keys, such as inputSchema or
 io.modelcontextprotocol/protocolVersion. linkml-validate and the example runner read the
-key a slot lists under aliases by the slot's name, so they cannot read every example;
-the examples sit under tests/data/problem/, where the runner does not look, and this test
-validates them against the file scripts/mcp_meta.py gives, and against MCP's own, by the
-definition the class renders. `tests/data/problem/valid/<Class>-<anything>.yaml` must
+key a slot lists under aliases by the slot's name, so they cannot read every example.
+The examples are kept under tests/data/problem/, where the runner does not look. This
+test validates them against the file scripts/mcp_meta.py gives, and against MCP's own, by
+the definition the class renders. `tests/data/problem/valid/<Class>-<anything>.yaml` must
 pass both, and `tests/data/problem/invalid/<Class>-<anything>.yaml` must fail both.
 """
 

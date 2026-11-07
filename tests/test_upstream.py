@@ -2,8 +2,8 @@
 
 upstream/ holds MCP 2026-07-28's schema files and examples and the repository's licence,
 as they are published. scripts/check_upstream_release.py compares them with GitHub. These
-tests make the same comparison offline, and hold the schema's header, the converter and
-NOTICE to the same pins.
+tests make the same comparison offline, and check the schema's header, the converter and
+NOTICE against the same pins.
 """
 
 import hashlib

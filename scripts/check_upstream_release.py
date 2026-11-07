@@ -10,7 +10,7 @@ upstream/ holds that folder's schema.json, schema.ts and examples, and the repos
 LICENSE, unchanged. These things can change without any change in this repository:
 
 - a new tag appears, or a new version folder under schema/;
-- the pinned tag moves, or a pinned file changes or goes, at the tag or on the default
+- the pinned tag moves, or a pinned file changes or is deleted, at the tag or on the default
   branch, beyond the edits the default branch already held when the pins were read;
 - the licence file on the default branch changes.
 
@@ -50,8 +50,8 @@ MAX_BYTES = 20_000_000
 SPEC = "modelcontextprotocol"
 BRANCH = "main"
 
-# What the schema models. tests/test_upstream.py holds the schema header and these pins
-# equal. Move them together, with upstream/ and scripts/upstream_pins.tsv, for another version.
+# What the schema models. tests/test_upstream.py checks that the schema header and these
+# pins agree. Move them together, with upstream/ and scripts/upstream_pins.tsv, for another version.
 VERSION = "2026-07-28"
 TAG = "2026-07-28"
 COMMIT = "5f5440bb26a62e2cf3440b92da5a667efa03b267"

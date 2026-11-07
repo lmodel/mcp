@@ -10,19 +10,22 @@ meta/schema.json:
   place inside a definition (an inline object or value list) is written inline wherever it
   is used, as MCP writes it.
 - A key that an attribute lists under ``aliases``, such as ``$schema`` or
-  ``io.modelcontextprotocol/clientInfo``, is the property's key here.
+  ``io.modelcontextprotocol/clientInfo``, is the property's key in meta/schema.json.
 - A string type gives its format: ``McpBase64`` is ``byte``, ``McpUriTemplate``
   ``uri-template``, and each type that maps to a definition becomes that definition.
 - A class that is a union of others is written as MCP writes one, an ``anyOf`` of
   references and nothing else.
 - ``$schema`` is draft 2020-12.
 
-linkml 1.12.1's generator needs three repairs here, each a fault of the generator: an
-``any_of`` of classes and an ``extra_slots`` range still admit ``null`` despite
-``include_null=False``; ``linkml:Any`` leaves out arrays; and a class's ``any_of``
-conditions name slots, not the keys their aliases give. MCP's files never allow ``null``,
-so every ``null`` the generator writes goes, the any-value class becomes ``{}``, and each
-condition names the key. Usage::
+linkml 1.12.1's generator needs three repairs here, each a fault of the generator:
+
+- an ``any_of`` of classes and an ``extra_slots`` range still admit ``null`` despite
+  ``include_null=False``;
+- ``linkml:Any`` leaves out arrays;
+- a class's ``any_of`` conditions name slots, not the keys their aliases give.
+
+MCP's files never allow ``null``, so every ``null`` the generator writes is removed, the
+any-value class becomes ``{}``, and each condition names the key. Usage::
 
     python scripts/mcp_meta.py [--output FILE] [--check]
 """

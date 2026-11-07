@@ -5,9 +5,9 @@ MCP publishes each version's schema as TypeScript (schema.ts), which is the sour
 JSON Schema 2020-12 (schema.json), which is generated from it. This script reads the pinned
 copy of both under upstream/ and writes src/mcp/schema/mcp.yaml:
 
-- Each definition in schema.json becomes the element that states it: an object becomes a
-  class, a union of objects a class whose ``any_of`` names each member through ``is_a``, a
-  string list an enum, and a string or a string-or-integer a type. Every object MCP
+- Each definition in schema.json becomes the element that states it. An object becomes
+  a class, a union of objects a class whose ``any_of`` names each member through ``is_a``,
+  a string list an enum, and a string or a string-or-integer a type. Every object MCP
   publishes is open, so every class allows extra slots.
 - Each property becomes an attribute of its class, with MCP's description, so a class
   states every key the definition has, inherited or not, as schema.json does. An
@@ -20,8 +20,8 @@ copy of both under upstream/ and writes src/mcp/schema/mcp.yaml:
 A key that is no Python name, such as ``$schema`` or ``io.modelcontextprotocol/clientInfo``,
 goes under the attribute's ``aliases``, because gen-python writes an ``alias`` as an
 attribute name. So does a key LOKF defines with another meaning, such as ``type`` or
-``id`` (OWN_NAMES and lokf_naming below). scripts/mcp_meta.py gives each such key
-back when it writes MCP's form.
+``id`` (OWN_NAMES and lokf_naming below). scripts/mcp_meta.py writes each such key in
+place of the attribute's name when it writes MCP's form.
 Description text MCP leaves out is this project's, from DESCRIPTIONS below.
 
 Usage::
@@ -53,7 +53,7 @@ MAPPING_BASE = (
 # Definitions that name a scalar: a type each, with the datatype its values take.
 SCALAR_TYPES = {"Cursor", "ResultType"}
 UNION_TYPES = {"RequestId", "ProgressToken"}
-# JSON values: any JSON at all in this schema, which is wider than MCP's form (see
+# JSON values: any JSON in this schema, which is wider than MCP's form (see
 # parity/structural.yaml), since LinkML states no recursive union of a value's kinds.
 ANY_VALUE = "JSONValue"
 # An array definition: LinkML has no element for it, and no MCP definition names it.
@@ -142,9 +142,9 @@ def snake(key: str) -> str:
 
 
 # Keys that LOKF also defines. Where MCP's meaning is LOKF's, the key is a slot of the
-# schema's own with the schema.org IRI LOKF gives it, shared by every class that has
-# the key, as lmodel/calm's name and description are; each class states its own
-# description of the key in slot_usage. Where the meaning differs, the attribute takes
+# schema's own with the schema.org IRI LOKF gives it. Every class that has the key shares
+# the slot, as lmodel/calm's name and description are shared, and each class states its
+# own description of the key in slot_usage. Where the meaning differs, the attribute takes
 # a name of its own and lists MCP's key under aliases, so a composite with LOKF never
 # projects MCP's key under LOKF's IRI.
 SHARED_SLOTS = {

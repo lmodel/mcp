@@ -82,7 +82,7 @@ documents:
     document: {priority: 1.5}
     published: false
     generated: false
-    reason: A priority lies between 0 and 1.
+    reason: A priority is between 0 and 1.
   - definition: InputRequiredResult
     document: {resultType: input_required}
     published: true

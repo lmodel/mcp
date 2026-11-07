@@ -1,4 +1,4 @@
-"""Holds the JSON Schema the model gives (meta/schema.json) to MCP's schema.json."""
+"""Checks the JSON Schema the model gives (meta/schema.json) against MCP's schema.json."""
 
 import json
 
@@ -21,7 +21,7 @@ def test_every_reference_resolves():
 
 
 def test_every_published_definition_is_there():
-    """Tier 1: every definition MCP publishes is in the generated file, but the listed gaps,
+    """Tier 1: every definition MCP publishes is in the generated file, except the listed gaps,
     and the file adds none of its own."""
     published, generated = (
         parity.load("published")["$defs"],
@@ -33,7 +33,7 @@ def test_every_published_definition_is_there():
 
 def test_corpus_is_valid_against_both():
     """Tier 2: each example and each smallest instance is valid against both files, and
-    against MCP's with the stated rules, but the examples MCP's own words reject, which
+    against MCP's with the stated rules, except the examples MCP's own words reject, which
     are valid against MCP's file alone."""
     rejected = parity.probes()["examples_mcp_rejects"]
     for label, name, doc in parity.corpus():

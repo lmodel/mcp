@@ -2,6 +2,9 @@
 
 ## 2026-11-07
 
+* **Changed**: How the tests hold the schema to MCP says the tests add the rule to a copy of MCP's file, and that tier 2 allows the differences `parity/probes.yaml` lists.
+* **Changed**: The mcp LinkML schema says the two format types map to no place in MCP's file, as `tests/test_build.py` holds.
+* **Changed**: The release says which merges release, as CONTRIBUTING.md does.
 * **Prose**: reworded 8 concept bodies in plain English. No fact, link, number or frontmatter changed.
 * **Changed**: The Model Context Protocol, version 2026-07-28 links its specification site rather than naming it bare.
 * **Added**: The Model Context Protocol, version 2026-07-28, from NOTICE and MCP's repository.

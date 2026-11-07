@@ -11,7 +11,7 @@ references:
   - https://w3id.org/lmodel/mcp/knowledge/services/converter
 generated:
   by: process:ktl-librarian
-  at: "2026-11-07T03:33:30Z"
+  at: "2026-11-07T03:59:20Z"
 status: draft
 ---
 
@@ -19,4 +19,4 @@ status: draft
 
 The schema is one file, `src/mcp/schema/mcp.yaml`, written by the converter and never by hand. Its header names version `2026-07-28` and the schema folder at that tag as its source.
 
-Each class, enum and type maps exactly to the place in MCP's `schema.json` it renders, such as `mcp_schema:Tool`. Where MCP describes an element, the schema carries MCP's words unchanged.
+Each class and enum, and each type but the format types `McpBase64` and `McpUriTemplate`, maps exactly to the place in MCP's `schema.json` it renders, such as `mcp_schema:Tool`. Where MCP describes an element, the schema carries MCP's words unchanged.

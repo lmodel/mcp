@@ -20,11 +20,11 @@ upstream/ and writes src/mcp/schema/mcp.yaml:
   renders, by a JSON pointer into the published file.
 
 A key that is not a valid Python name, such as ``$schema``, goes under the attribute's
-``aliases``, since gen-python writes an ``alias`` as an attribute name. scripts/mcp_meta.py
-writes the key in the attribute's place in MCP's form. A key LOKF defines with another
-meaning is a slot under MCP's key, which lokf adapt renames in the copy (KEY_SLOTS). Of a
-key MCP uses in two meanings, one meaning takes a name of its own, with MCP's key under
-``aliases`` (lokf_naming). Where MCP gives no description, the words are this project's:
+``aliases``, since gen-python writes an ``alias`` as an attribute name. A key LOKF defines
+with another meaning is a slot under MCP's key, which lokf adapt renames in the copy
+(KEY_SLOTS). Of a key MCP uses in two meanings, where LOKF shares one, the other takes a
+name of its own, with MCP's key under ``aliases`` (lokf_naming). scripts/mcp_meta.py
+writes each key under ``aliases`` in place of the attribute's name. Where MCP gives no description, the words are this project's:
 CLASS_DESCRIPTIONS, CONST_DESCRIPTIONS, DESCRIPTIONS, and the sentences that name a
 union's members or where MCP holds an inline object.
 
@@ -166,8 +166,8 @@ CONST_DESCRIPTIONS = {
 
 
 def pascal(key: str) -> str:
-    """The last part of a key with its first letter in capitals, such as AnyOf for anyOf
-    and ClientInfo for io.modelcontextprotocol/clientInfo."""
+    """The last part of a key, without a leading _ or $, with its first letter in capitals,
+    such as AnyOf for anyOf and ClientInfo for io.modelcontextprotocol/clientInfo."""
     key = key.split("/")[-1].lstrip("_$")
     return key[:1].upper() + key[1:]
 
@@ -213,8 +213,8 @@ SHARED_SLOTS = {
 }
 # Keys LOKF defines with another meaning. Each is a slot under MCP's key, with an IRI in
 # the schema's namespace. Every class with the key uses the slot through slots and
-# slot_usage, as in lmodel/in-toto and lmodel/opa. lokf adapt renames each in the copy, as
-# mcp_type, and keeps its IRI, so no composite with LOKF reads MCP's key as LOKF's. url and required,
+# slot_usage, as in lmodel/in-toto and lmodel/opa. lokf adapt renames each in the copy, type
+# as mcp_type, and keeps its IRI, so no composite with LOKF reads MCP's key as LOKF's. url and required,
 # which MCP uses in two meanings, cannot be one slot: lokf_naming names the meaning LOKF
 # does not share.
 KEY_SLOTS = {

@@ -16,7 +16,7 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpCancelledNotificationParams extends McpNotificationParams {
 
-  private String reason;
+  private String reasonText;
   private String requestId;
 
 

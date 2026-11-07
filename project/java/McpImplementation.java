@@ -17,8 +17,8 @@ import lombok.*;
 public class McpImplementation extends McpBaseMetadata {
 
   private String description;
-  private List<McpIcon> icons;
   private String version;
+  private List<McpIcon> icons;
   private URI websiteUrl;
 
 

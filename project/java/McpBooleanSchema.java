@@ -16,10 +16,10 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpBooleanSchema  {
 
-  private Boolean default_;
   private String description;
   private String title;
-  private String type;
+  private Boolean default_;
+  private String kind;
 
 
 }

@@ -16,13 +16,13 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpStringSchema  {
 
-  private String default_;
   private String description;
+  private String title;
+  private String default_;
   private String format;
   private Integer maxLength;
   private Integer minLength;
-  private String title;
-  private String type;
+  private String kind;
 
 
 }

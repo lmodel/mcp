@@ -30,7 +30,7 @@ Defaults to JSON Schema 2020-12 when no explicit `$schema` is provided.
 public class McpToolInputSchema  {
 
   private String schemaDialect;
-  private String type;
+  private String kind;
 
 
 }

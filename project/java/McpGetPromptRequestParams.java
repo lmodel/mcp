@@ -16,8 +16,8 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpGetPromptRequestParams extends McpInputResponseRequestParams {
 
-  private McpGetPromptRequestParamsArguments arguments;
   private String name;
+  private McpGetPromptRequestParamsArguments arguments;
 
 
 }

@@ -16,11 +16,11 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpToolUseContent  {
 
-  private McpMetaObject meta;
-  private String id;
-  private McpJSONObject input;
   private String name;
-  private String type;
+  private McpMetaObject meta;
+  private String identifier;
+  private McpJSONObject input;
+  private String kind;
 
 
 }

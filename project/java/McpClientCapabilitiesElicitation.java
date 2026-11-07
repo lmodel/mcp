@@ -17,7 +17,7 @@ import lombok.*;
 public class McpClientCapabilitiesElicitation  {
 
   private McpJSONObject form;
-  private McpJSONObject url;
+  private McpJSONObject urlSettings;
 
 
 }

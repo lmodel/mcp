@@ -4,15 +4,19 @@
       "linkml": "https://w3id.org/linkml/",
       "mcp": "https://w3id.org/lmodel/mcp/",
       "mcp_schema": "https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/2026-07-28/schema/2026-07-28/schema.json#/$defs/",
+      "schema": "http://schema.org/",
       "skos": "http://www.w3.org/2004/02/skos/core#",
       "@vocab": "https://w3id.org/lmodel/mcp/",
-      "audience": {
+      "description": {
+         "@id": "schema:description"
+      },
+      "intended_audience": {
          "@context": {
             "text": "skos:notation",
             "description": "skos:prefLabel",
             "meaning": "@id"
          },
-         "@id": "audience"
+         "@id": "intended_audience"
       },
       "lastModified": {
          "@id": "lastModified"
@@ -29,21 +33,15 @@
          "@type": "@id",
          "@id": "data"
       },
+      "kind": {
+         "@id": "kind"
+      },
       "_meta": {
          "@type": "@id",
          "@id": "_meta"
       },
       "mimeType": {
          "@id": "mimeType"
-      },
-      "type": {
-         "@id": "type"
-      },
-      "name": {
-         "@id": "name"
-      },
-      "title": {
-         "@id": "title"
       },
       "blob": {
          "@type": "xsd:base64Binary",
@@ -55,9 +53,6 @@
       },
       "default": {
          "@id": "default"
-      },
-      "description": {
-         "@id": "description"
       },
       "cacheScope": {
          "@context": {
@@ -74,8 +69,8 @@
          "@type": "xsd:integer",
          "@id": "ttlMs"
       },
-      "id": {
-         "@id": "id"
+      "identifier": {
+         "@id": "identifier"
       },
       "jsonrpc": {
          "@id": "jsonrpc"
@@ -114,8 +109,8 @@
          "@type": "@id",
          "@id": "result"
       },
-      "reason": {
-         "@id": "reason"
+      "reason_text": {
+         "@id": "reason_text"
       },
       "requestId": {
          "@id": "requestId"
@@ -144,13 +139,13 @@
          "@type": "@id",
          "@id": "form"
       },
-      "url": {
-         "@type": "xsd:anyURI",
-         "@id": "url"
-      },
-      "context": {
+      "url_settings": {
          "@type": "@id",
-         "@id": "context"
+         "@id": "url_settings"
+      },
+      "context_info": {
+         "@type": "@id",
+         "@id": "context_info"
       },
       "tools": {
          "@type": "@id",
@@ -263,9 +258,8 @@
          "@type": "@id",
          "@id": "properties"
       },
-      "required": {
-         "@type": "xsd:boolean",
-         "@id": "required"
+      "required_names": {
+         "@id": "required_names"
       },
       "schema_dialect": {
          "@id": "schema_dialect"
@@ -278,9 +272,9 @@
          },
          "@id": "action"
       },
-      "resource": {
+      "resource_contents": {
          "@type": "@id",
-         "@id": "resource"
+         "@id": "resource_contents"
       },
       "code": {
          "@type": "xsd:integer",
@@ -308,9 +302,6 @@
       "icons": {
          "@type": "@id",
          "@id": "icons"
-      },
-      "version": {
-         "@id": "version"
       },
       "websiteUrl": {
          "@type": "xsd:anyURI",
@@ -392,6 +383,10 @@
       },
       "progressToken": {
          "@id": "progressToken"
+      },
+      "required": {
+         "@type": "xsd:boolean",
+         "@id": "schema:valueRequired"
       },
       "contents": {
          "@type": "@id",
@@ -540,6 +535,19 @@
       },
       "supported": {
          "@id": "supported"
+      },
+      "name": {
+         "@id": "schema:name"
+      },
+      "title": {
+         "@id": "schema:name"
+      },
+      "url": {
+         "@type": "xsd:anyURI",
+         "@id": "schema:url"
+      },
+      "version": {
+         "@id": "schema:version"
       },
       "McpAnnotations": {
          "@id": "McpAnnotations"

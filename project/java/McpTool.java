@@ -16,9 +16,9 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpTool extends McpBaseMetadata {
 
+  private String description;
   private McpMetaObject meta;
   private McpToolAnnotations annotations;
-  private String description;
   private List<McpIcon> icons;
   private McpToolInputSchema inputSchema;
   private McpToolOutputSchema outputSchema;

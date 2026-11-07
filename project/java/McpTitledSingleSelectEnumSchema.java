@@ -16,11 +16,11 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpTitledSingleSelectEnumSchema  {
 
-  private String default_;
   private String description;
-  private List<McpTitledSingleSelectEnumSchemaOneOf> oneOf;
   private String title;
-  private String type;
+  private String default_;
+  private List<McpTitledSingleSelectEnumSchemaOneOf> oneOf;
+  private String kind;
 
 
 }

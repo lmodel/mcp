@@ -16,7 +16,7 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpAnnotations  {
 
-  private List<String> audience;
+  private List<String> intendedAudience;
   private String lastModified;
   private Float priority;
 

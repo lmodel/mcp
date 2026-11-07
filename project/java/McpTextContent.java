@@ -19,7 +19,7 @@ public class McpTextContent  {
   private McpMetaObject meta;
   private McpAnnotations annotations;
   private String text;
-  private String type;
+  private String kind;
 
 
 }

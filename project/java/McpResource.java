@@ -16,9 +16,9 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpResource extends McpBaseMetadata {
 
+  private String description;
   private McpMetaObject meta;
   private McpAnnotations annotations;
-  private String description;
   private List<McpIcon> icons;
   private String mimeType;
   private Integer size;

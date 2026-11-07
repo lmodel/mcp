@@ -16,8 +16,8 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpRoot  {
 
-  private McpMetaObject meta;
   private String name;
+  private McpMetaObject meta;
   private URI uri;
 
 

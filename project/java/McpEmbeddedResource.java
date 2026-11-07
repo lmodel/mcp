@@ -21,8 +21,8 @@ public class McpEmbeddedResource  {
 
   private McpMetaObject meta;
   private McpAnnotations annotations;
-  private String resource;
-  private String type;
+  private String resourceContents;
+  private String kind;
 
 
 }

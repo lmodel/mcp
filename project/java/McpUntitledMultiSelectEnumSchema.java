@@ -16,13 +16,13 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpUntitledMultiSelectEnumSchema  {
 
-  private List<String> default_;
   private String description;
+  private String title;
+  private List<String> default_;
   private McpUntitledMultiSelectEnumSchemaItems items;
   private Integer maxItems;
   private Integer minItems;
-  private String title;
-  private String type;
+  private String kind;
 
 
 }

@@ -21,7 +21,7 @@ public class McpToolResultContent  {
   private Boolean isError;
   private Object structuredContent;
   private String toolUseId;
-  private String type;
+  private String kind;
 
 
 }

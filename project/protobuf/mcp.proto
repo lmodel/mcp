@@ -7,7 +7,7 @@ message McpAnnotations {
   // Describes who the intended audience of this object or data is.
   // 
   // It can include multiple entries to indicate content useful for multiple audiences (e.g., `["user", "assistant"]`).
-  repeated McpRole audience = 1;
+  repeated McpRole intended_audience = 1;
   // The moment the resource was last modified, as an ISO 8601 formatted string.
   // 
   // Should be an ISO 8601 formatted string (e.g., "2025-01-12T15:00:58Z").
@@ -47,7 +47,7 @@ message McpAudioContent {
   // The MIME type of the audio. Different providers may support different audio types.
   string mimeType = 4;
   // The kind of object, always `audio`.
-  string type = 5;
+  string kind = 5;
 }
 // Base interface for metadata with name (identifier) and title (display name) properties.
 message McpBaseMetadata {
@@ -88,14 +88,14 @@ message McpBlobResourceContents {
 }
 // MCP's `BooleanSchema`.
 message McpBooleanSchema {
-  // The value the field takes when the user gives none.
-  bool default = 1;
   // A description of the field for the user.
-  string description = 2;
+  string description = 1;
   // A title for the field.
-  string title = 3;
+  string title = 2;
+  // The value the field takes when the user gives none.
+  bool default = 3;
   // The kind of object, always `boolean`.
-  string type = 4;
+  string kind = 4;
 }
 // A result that supports a time-to-live (TTL) hint for client-side caching.
 message McpCacheableResult {
@@ -133,7 +133,7 @@ message McpCacheableResult {
 // Used by the client to invoke a tool provided by the server.
 message McpCallToolRequest {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // The method's name, always `tools/call`.
@@ -143,16 +143,16 @@ message McpCallToolRequest {
 }
 // Parameters for a `tools/call` request.
 message McpCallToolRequestParams {
+  // The name of the tool.
+  string name = 1;
   // Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.
-  McpRequestMetaObject meta = 1;
+  McpRequestMetaObject meta = 2;
   // Arguments to use for the tool call.
-  McpJSONObject arguments = 2;
+  McpJSONObject arguments = 3;
   // A map of client responses to server-initiated requests.
   // Keys correspond to the keys in the {@link InputRequests} map;
   // values are the client's result for each request.
-  McpInputResponses inputResponses = 3;
-  // The name of the tool.
-  string name = 4;
+  McpInputResponses inputResponses = 4;
   // State the server handed out with an input-required result, sent back unchanged when the request is retried.
   string requestState = 5;
 }
@@ -192,7 +192,7 @@ message McpCallToolResult {
 // A successful response from the server for a {@link CallToolRequesttools/call} request.
 message McpCallToolResultResponse {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // What the request returned.
@@ -218,7 +218,7 @@ message McpCancelledNotificationParams {
   // Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply.
   McpNotificationMetaObject meta = 1;
   // An optional string describing the reason for the cancellation. This MAY be logged or presented to the user.
-  string reason = 2;
+  string reason_text = 2;
   // The ID of the request to cancel.
   // 
   // This MUST correspond to the ID of a request the client previously issued.
@@ -247,7 +247,7 @@ message McpClientCapabilitiesElicitation {
   // Settings for elicitation by form.
   McpJSONObject form = 1;
   // Settings for elicitation by URL.
-  McpJSONObject url = 2;
+  McpJSONObject url_settings = 2;
 }
 // Experimental, non-standard capabilities that the client supports.
 message McpClientCapabilitiesExperimental {
@@ -267,7 +267,7 @@ message McpClientCapabilitiesRoots {
 message McpClientCapabilitiesSampling {
   // Whether the client supports context inclusion via `includeContext` parameter.
   // If not declared, servers SHOULD only use `includeContext: "none"` (or omit it).
-  McpJSONObject context = 1;
+  McpJSONObject context_info = 1;
   // Whether the client supports tool use via `tools` and `toolChoice` parameters.
   McpJSONObject tools = 2;
 }
@@ -305,7 +305,7 @@ message McpClientResult {
 // A request from the client to the server, to ask for completion options.
 message McpCompleteRequest {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // The method's name, always `completion/complete`.
@@ -320,7 +320,7 @@ message McpCompleteRequestParams {
   // The argument's information
   McpCompleteRequestParamsArgument argument = 2;
   // Additional, optional context for completions
-  McpCompleteRequestParamsContext context = 3;
+  McpCompleteRequestParamsContext context_info = 3;
   // What the completion is for: a prompt or a resource template.
   string ref = 4;
 }
@@ -366,7 +366,7 @@ message McpCompleteResultCompletion {
 // A successful response from the server for a {@link CompleteRequestcompletion/complete} request.
 message McpCompleteResultResponse {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // The result returned by the server for a {@link CompleteRequestcompletion/complete} request.
@@ -458,7 +458,7 @@ message McpCreateMessageResult {
 // to — version negotiation can also happen inline via per-request `_meta`.
 message McpDiscoverRequest {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // The method's name, always `server/discover`.
@@ -514,7 +514,7 @@ message McpDiscoverResult {
 // A successful response from the server for a {@link DiscoverRequestserver/discover} request.
 message McpDiscoverResultResponse {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // The result returned by the server for a {@link DiscoverRequestserver/discover} request.
@@ -545,9 +545,9 @@ message McpElicitRequestFormParamsRequestedSchema {
   // The fields of the form, by name.
   McpElicitRequestFormParamsRequestedSchemaProperties properties = 2;
   // The names of the fields the user must fill in.
-  repeated string required = 3;
+  repeated string required_names = 3;
   // The kind of object, always `object`.
-  string type = 4;
+  string kind = 4;
 }
 // The object MCP's `ElicitRequestFormParams` holds under `properties`.
 message McpElicitRequestFormParamsRequestedSchemaProperties {
@@ -557,12 +557,12 @@ message McpElicitRequestParams {
 }
 // The parameters for a request to elicit information from the user via a URL in the client.
 message McpElicitRequestURLParams {
-  // The message to present to the user explaining why the interaction is needed.
-  string message = 1;
-  // The elicitation mode.
-  string mode = 2;
   // The URL that the user should navigate to.
-  string url = 3;
+  string url = 1;
+  // The message to present to the user explaining why the interaction is needed.
+  string message = 2;
+  // The elicitation mode.
+  string mode = 3;
 }
 // The result returned by the client for an {@link ElicitRequestelicitation/create} request.
 message McpElicitResult {
@@ -605,9 +605,9 @@ message McpEmbeddedResource {
   // Optional annotations for the client.
   McpAnnotations annotations = 2;
   // The resource's contents, as text or as binary data.
-  string resource = 3;
+  string resource_contents = 3;
   // The kind of object, always `resource`.
-  string type = 4;
+  string kind = 4;
 }
 // Common result fields.
 message McpEmptyResult {
@@ -637,7 +637,7 @@ message McpError {
 // Used by the client to get a prompt provided by the server.
 message McpGetPromptRequest {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // The method's name, always `prompts/get`.
@@ -647,16 +647,16 @@ message McpGetPromptRequest {
 }
 // Parameters for a `prompts/get` request.
 message McpGetPromptRequestParams {
+  // The name of the prompt or prompt template.
+  string name = 1;
   // Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.
-  McpRequestMetaObject meta = 1;
+  McpRequestMetaObject meta = 2;
   // Arguments to use for templating the prompt.
-  McpGetPromptRequestParamsArguments arguments = 2;
+  McpGetPromptRequestParamsArguments arguments = 3;
   // A map of client responses to server-initiated requests.
   // Keys correspond to the keys in the {@link InputRequests} map;
   // values are the client's result for each request.
-  McpInputResponses inputResponses = 3;
-  // The name of the prompt or prompt template.
-  string name = 4;
+  McpInputResponses inputResponses = 4;
   // State the server handed out with an input-required result, sent back unchanged when the request is retried.
   string requestState = 5;
 }
@@ -665,10 +665,10 @@ message McpGetPromptRequestParamsArguments {
 }
 // The result returned by the server for a {@link GetPromptRequestprompts/get} request.
 message McpGetPromptResult {
-  // Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
-  McpResultMetaObject meta = 1;
   // An optional description for the prompt.
-  string description = 2;
+  string description = 1;
+  // Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
+  McpResultMetaObject meta = 2;
   // Describes a message returned as part of a prompt.
   // 
   // This is similar to {@link SamplingMessage}, but also supports the embedding of
@@ -686,7 +686,7 @@ message McpGetPromptResult {
 // A successful response from the server for a {@link GetPromptRequestprompts/get} request.
 message McpGetPromptResultResponse {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // What the request returned.
@@ -700,7 +700,7 @@ message McpHeaderMismatchError {
   // The error the request ended with.
   McpHeaderMismatchErrorError error = 1;
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 2;
+  string identifier = 2;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 3;
 }
@@ -777,7 +777,7 @@ message McpImageContent {
   // The MIME type of the image. Different providers may support different image types.
   string mimeType = 4;
   // The kind of object, always `image`.
-  string type = 5;
+  string kind = 5;
 }
 // Describes the MCP implementation.
 message McpImplementation {
@@ -787,6 +787,17 @@ message McpImplementation {
   // and capabilities. For example, a server might describe the types of resources
   // or tools it provides, while a client might describe its intended use case.
   string description = 1;
+  // Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
+  string name = 2;
+  // Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
+  // even by those unfamiliar with domain-specific terminology.
+  // 
+  // If not provided, the name should be used for display (except for {@link Tool},
+  // where `annotations.title` should be given precedence over using `name`,
+  // if present).
+  string title = 3;
+  // The version of this implementation.
+  string version = 4;
   // Optional set of sized icons that the client can display in a user interface.
   // 
   // Clients that support rendering icons MUST support at least the following MIME types:
@@ -796,18 +807,7 @@ message McpImplementation {
   // Clients that support rendering icons SHOULD also support:
   // - `image/svg+xml` - SVG images (scalable but requires security precautions)
   // - `image/webp` - WebP images (modern, efficient format)
-  repeated McpIcon icons = 2;
-  // Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
-  string name = 3;
-  // Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
-  // even by those unfamiliar with domain-specific terminology.
-  // 
-  // If not provided, the name should be used for display (except for {@link Tool},
-  // where `annotations.title` should be given precedence over using `name`,
-  // if present).
-  string title = 4;
-  // The version of this implementation.
-  string version = 5;
+  repeated McpIcon icons = 5;
   // An optional URL of the website for this implementation.
   string websiteUrl = 6;
 }
@@ -902,7 +902,7 @@ message McpJSONRPCErrorResponse {
   // The error the request ended with.
   McpError error = 1;
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 2;
+  string identifier = 2;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 3;
 }
@@ -921,7 +921,7 @@ message McpJSONRPCNotification {
 // A request that expects a response.
 message McpJSONRPCRequest {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // The name of the method.
@@ -935,7 +935,7 @@ message McpJSONRPCResponse {
 // A successful (non-error) response to a request.
 message McpJSONRPCResultResponse {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // Common result fields.
@@ -947,24 +947,24 @@ message McpJSONValue {
 // Use {@link TitledSingleSelectEnumSchema} instead.
 // This interface will be removed in a future version.
 message McpLegacyTitledEnumSchema {
-  // The value the field takes when the user gives none.
-  string default = 1;
   // A description of the field for the user.
-  string description = 2;
+  string description = 1;
+  // A title for the field.
+  string title = 2;
+  // The value the field takes when the user gives none.
+  string default = 3;
   // The values the field offers.
-  repeated string enum = 3;
+  repeated string enum = 4;
   // (Legacy) Display names for enum values.
   // Non-standard according to JSON schema 2020-12.
-  repeated string enumNames = 4;
-  // A title for the field.
-  string title = 5;
+  repeated string enumNames = 5;
   // The kind of object, always `string`.
-  string type = 6;
+  string kind = 6;
 }
 // Sent from the client to request a list of prompts and prompt templates the server has.
 message McpListPromptsRequest {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // The method's name, always `prompts/list`.
@@ -1013,7 +1013,7 @@ message McpListPromptsResult {
 // A successful response from the server for a {@link ListPromptsRequestprompts/list} request.
 message McpListPromptsResultResponse {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // The result returned by the server for a {@link ListPromptsRequestprompts/list} request.
@@ -1022,7 +1022,7 @@ message McpListPromptsResultResponse {
 // Sent from the client to request a list of resources the server has.
 message McpListResourcesRequest {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // The method's name, always `resources/list`.
@@ -1071,7 +1071,7 @@ message McpListResourcesResult {
 // A successful response from the server for a {@link ListResourcesRequestresources/list} request.
 message McpListResourcesResultResponse {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // The result returned by the server for a {@link ListResourcesRequestresources/list} request.
@@ -1080,7 +1080,7 @@ message McpListResourcesResultResponse {
 // Sent from the client to request a list of resource templates the server has.
 message McpListResourceTemplatesRequest {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // The method's name, always `resources/templates/list`.
@@ -1129,7 +1129,7 @@ message McpListResourceTemplatesResult {
 // A successful response from the server for a {@link ListResourceTemplatesRequestresources/templates/list} request.
 message McpListResourceTemplatesResultResponse {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // The result returned by the server for a {@link ListResourceTemplatesRequestresources/templates/list} request.
@@ -1177,7 +1177,7 @@ message McpListRootsResult {
 // Sent from the client to request a list of tools the server has.
 message McpListToolsRequest {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // The method's name, always `tools/list`.
@@ -1226,7 +1226,7 @@ message McpListToolsResult {
 // A successful response from the server for a {@link ListToolsRequesttools/list} request.
 message McpListToolsResultResponse {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // The result returned by the server for a {@link ListToolsRequesttools/list} request.
@@ -1289,7 +1289,7 @@ message McpMissingRequiredClientCapabilityError {
   // The error the request ended with.
   McpMissingRequiredClientCapabilityErrorError error = 1;
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 2;
+  string identifier = 2;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 3;
 }
@@ -1387,23 +1387,23 @@ message McpNotificationParams {
 }
 // MCP's `NumberSchema`.
 message McpNumberSchema {
-  // The value the field takes when the user gives none.
-  float default = 1;
   // A description of the field for the user.
-  string description = 2;
-  // The largest value the field accepts.
-  float maximum = 3;
-  // The smallest value the field accepts.
-  float minimum = 4;
+  string description = 1;
   // A title for the field.
-  string title = 5;
+  string title = 2;
+  // The value the field takes when the user gives none.
+  float default = 3;
+  // The largest value the field accepts.
+  float maximum = 4;
+  // The smallest value the field accepts.
+  float minimum = 5;
   // The kind of value the field takes.
-  McpNumberSchemaType type = 6;
+  McpNumberSchemaType kind = 6;
 }
 // MCP's `PaginatedRequest`.
 message McpPaginatedRequest {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // The name of the method.
@@ -1472,6 +1472,17 @@ message McpProgressNotificationParams {
 }
 // A prompt or prompt template that the server offers.
 message McpPrompt {
+  // An optional description of what this prompt provides
+  string description = 1;
+  // Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
+  string name = 2;
+  // Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
+  // even by those unfamiliar with domain-specific terminology.
+  // 
+  // If not provided, the name should be used for display (except for {@link Tool},
+  // where `annotations.title` should be given precedence over using `name`,
+  // if present).
+  string title = 3;
   // Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
   // 
   // Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
@@ -1487,11 +1498,9 @@ message McpPrompt {
   // **Name:**
   // - Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
   // - Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
-  McpMetaObject meta = 1;
+  McpMetaObject meta = 4;
   // A list of arguments to use for templating the prompt.
-  repeated McpPromptArgument arguments = 2;
-  // An optional description of what this prompt provides
-  string description = 3;
+  repeated McpPromptArgument arguments = 5;
   // Optional set of sized icons that the client can display in a user interface.
   // 
   // Clients that support rendering icons MUST support at least the following MIME types:
@@ -1501,16 +1510,7 @@ message McpPrompt {
   // Clients that support rendering icons SHOULD also support:
   // - `image/svg+xml` - SVG images (scalable but requires security precautions)
   // - `image/webp` - WebP images (modern, efficient format)
-  repeated McpIcon icons = 4;
-  // Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
-  string name = 5;
-  // Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
-  // even by those unfamiliar with domain-specific terminology.
-  // 
-  // If not provided, the name should be used for display (except for {@link Tool},
-  // where `annotations.title` should be given precedence over using `name`,
-  // if present).
-  string title = 6;
+  repeated McpIcon icons = 6;
 }
 // Describes an argument that a prompt can accept.
 message McpPromptArgument {
@@ -1518,15 +1518,15 @@ message McpPromptArgument {
   string description = 1;
   // Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
   string name = 2;
-  // Whether this argument must be provided.
-  bool required = 3;
   // Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
   // even by those unfamiliar with domain-specific terminology.
   // 
   // If not provided, the name should be used for display (except for {@link Tool},
   // where `annotations.title` should be given precedence over using `name`,
   // if present).
-  string title = 4;
+  string title = 3;
+  // Whether this argument must be provided.
+  bool required = 4;
 }
 // An optional notification from the server to the client, informing it that the list of prompts it offers has changed. This is only delivered on a {@link SubscriptionsListenRequestsubscriptions/listen} stream when the client requested it via the `promptsListChanged` filter field.
 message McpPromptListChangedNotification {
@@ -1559,12 +1559,12 @@ message McpPromptReference {
   // if present).
   string title = 2;
   // The kind of object, always `ref/prompt`.
-  string type = 3;
+  string kind = 3;
 }
 // Sent from the client to the server, to read a specific resource URI.
 message McpReadResourceRequest {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // The method's name, always `resources/read`.
@@ -1623,7 +1623,7 @@ message McpReadResourceResult {
 // A successful response from the server for a {@link ReadResourceRequestresources/read} request.
 message McpReadResourceResultResponse {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // What the request returned.
@@ -1679,6 +1679,19 @@ message McpRequestParams {
 }
 // A known resource that the server is capable of reading.
 message McpResource {
+  // A description of what this resource represents.
+  // 
+  // This can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a "hint" to the model.
+  string description = 1;
+  // Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
+  string name = 2;
+  // Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
+  // even by those unfamiliar with domain-specific terminology.
+  // 
+  // If not provided, the name should be used for display (except for {@link Tool},
+  // where `annotations.title` should be given precedence over using `name`,
+  // if present).
+  string title = 3;
   // Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
   // 
   // Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
@@ -1694,13 +1707,9 @@ message McpResource {
   // **Name:**
   // - Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
   // - Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
-  McpMetaObject meta = 1;
+  McpMetaObject meta = 4;
   // Optional annotations for the client.
-  McpAnnotations annotations = 2;
-  // A description of what this resource represents.
-  // 
-  // This can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a "hint" to the model.
-  string description = 3;
+  McpAnnotations annotations = 5;
   // Optional set of sized icons that the client can display in a user interface.
   // 
   // Clients that support rendering icons MUST support at least the following MIME types:
@@ -1710,22 +1719,13 @@ message McpResource {
   // Clients that support rendering icons SHOULD also support:
   // - `image/svg+xml` - SVG images (scalable but requires security precautions)
   // - `image/webp` - WebP images (modern, efficient format)
-  repeated McpIcon icons = 4;
+  repeated McpIcon icons = 6;
   // The MIME type of this resource, if known.
-  string mimeType = 5;
-  // Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
-  string name = 6;
+  string mimeType = 7;
   // The size of the raw resource content, in bytes (i.e., before base64 encoding or any tokenization), if known.
   // 
   // This can be used by Hosts to display file sizes and estimate context window usage.
-  int32 size = 7;
-  // Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
-  // even by those unfamiliar with domain-specific terminology.
-  // 
-  // If not provided, the name should be used for display (except for {@link Tool},
-  // where `annotations.title` should be given precedence over using `name`,
-  // if present).
-  string title = 8;
+  int32 size = 8;
   // The URI of this resource.
   string uri = 9;
 }
@@ -1756,6 +1756,19 @@ message McpResourceContents {
 // 
 // Note: resource links returned by tools are not guaranteed to appear in the results of {@link ListResourcesRequestresources/list} requests.
 message McpResourceLink {
+  // A description of what this resource represents.
+  // 
+  // This can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a "hint" to the model.
+  string description = 1;
+  // Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
+  string name = 2;
+  // Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
+  // even by those unfamiliar with domain-specific terminology.
+  // 
+  // If not provided, the name should be used for display (except for {@link Tool},
+  // where `annotations.title` should be given precedence over using `name`,
+  // if present).
+  string title = 3;
   // Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
   // 
   // Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
@@ -1771,13 +1784,9 @@ message McpResourceLink {
   // **Name:**
   // - Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
   // - Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
-  McpMetaObject meta = 1;
+  McpMetaObject meta = 4;
   // Optional annotations for the client.
-  McpAnnotations annotations = 2;
-  // A description of what this resource represents.
-  // 
-  // This can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a "hint" to the model.
-  string description = 3;
+  McpAnnotations annotations = 5;
   // Optional set of sized icons that the client can display in a user interface.
   // 
   // Clients that support rendering icons MUST support at least the following MIME types:
@@ -1787,24 +1796,15 @@ message McpResourceLink {
   // Clients that support rendering icons SHOULD also support:
   // - `image/svg+xml` - SVG images (scalable but requires security precautions)
   // - `image/webp` - WebP images (modern, efficient format)
-  repeated McpIcon icons = 4;
+  repeated McpIcon icons = 6;
   // The MIME type of this resource, if known.
-  string mimeType = 5;
-  // Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
-  string name = 6;
+  string mimeType = 7;
   // The size of the raw resource content, in bytes (i.e., before base64 encoding or any tokenization), if known.
   // 
   // This can be used by Hosts to display file sizes and estimate context window usage.
-  int32 size = 7;
-  // Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
-  // even by those unfamiliar with domain-specific terminology.
-  // 
-  // If not provided, the name should be used for display (except for {@link Tool},
-  // where `annotations.title` should be given precedence over using `name`,
-  // if present).
-  string title = 8;
+  int32 size = 8;
   // The kind of object, always `resource_link`.
-  string type = 9;
+  string kind = 9;
   // The URI of this resource.
   string uri = 10;
 }
@@ -1826,6 +1826,19 @@ message McpResourceRequestParams {
 }
 // A template description for resources available on the server.
 message McpResourceTemplate {
+  // A description of what this template is for.
+  // 
+  // This can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a "hint" to the model.
+  string description = 1;
+  // Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
+  string name = 2;
+  // Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
+  // even by those unfamiliar with domain-specific terminology.
+  // 
+  // If not provided, the name should be used for display (except for {@link Tool},
+  // where `annotations.title` should be given precedence over using `name`,
+  // if present).
+  string title = 3;
   // Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
   // 
   // Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
@@ -1841,13 +1854,9 @@ message McpResourceTemplate {
   // **Name:**
   // - Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
   // - Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
-  McpMetaObject meta = 1;
+  McpMetaObject meta = 4;
   // Optional annotations for the client.
-  McpAnnotations annotations = 2;
-  // A description of what this template is for.
-  // 
-  // This can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a "hint" to the model.
-  string description = 3;
+  McpAnnotations annotations = 5;
   // Optional set of sized icons that the client can display in a user interface.
   // 
   // Clients that support rendering icons MUST support at least the following MIME types:
@@ -1857,25 +1866,16 @@ message McpResourceTemplate {
   // Clients that support rendering icons SHOULD also support:
   // - `image/svg+xml` - SVG images (scalable but requires security precautions)
   // - `image/webp` - WebP images (modern, efficient format)
-  repeated McpIcon icons = 4;
+  repeated McpIcon icons = 6;
   // The MIME type for all resources that match this template. This should only be included if all resources matching this template have the same type.
-  string mimeType = 5;
-  // Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
-  string name = 6;
-  // Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
-  // even by those unfamiliar with domain-specific terminology.
-  // 
-  // If not provided, the name should be used for display (except for {@link Tool},
-  // where `annotations.title` should be given precedence over using `name`,
-  // if present).
-  string title = 7;
+  string mimeType = 7;
   // A URI template (according to RFC 6570) that can be used to construct resource URIs.
   string uriTemplate = 8;
 }
 // A reference to a resource or resource template definition.
 message McpResourceTemplateReference {
   // The kind of object, always `ref/resource`.
-  string type = 1;
+  string kind = 1;
   // The URI or URI template of the resource.
   string uri = 2;
 }
@@ -1925,6 +1925,10 @@ message McpResultMetaObject {
 }
 // Represents a root directory or file that the server can operate on.
 message McpRoot {
+  // An optional name for the root. This can be used to provide a human-readable
+  // identifier for the root, which may be useful for display purposes or for
+  // referencing the root in other parts of the application.
+  string name = 1;
   // Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
   // 
   // Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
@@ -1940,11 +1944,7 @@ message McpRoot {
   // **Name:**
   // - Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
   // - Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
-  McpMetaObject meta = 1;
-  // An optional name for the root. This can be used to provide a human-readable
-  // identifier for the root, which may be useful for display purposes or for
-  // referencing the root in other parts of the application.
-  string name = 2;
+  McpMetaObject meta = 2;
   // The URI identifying the root. This *must* start with `file://` for now.
   // This restriction may be relaxed in future versions of the protocol to allow
   // other URI schemes.
@@ -2037,20 +2037,20 @@ message McpSingleSelectEnumSchema {
 }
 // MCP's `StringSchema`.
 message McpStringSchema {
-  // The value the field takes when the user gives none.
-  string default = 1;
   // A description of the field for the user.
-  string description = 2;
-  // The format the string must have.
-  McpStringSchemaFormat format = 3;
-  // The most characters the field accepts.
-  int32 maxLength = 4;
-  // The fewest characters the field accepts.
-  int32 minLength = 5;
+  string description = 1;
   // A title for the field.
-  string title = 6;
+  string title = 2;
+  // The value the field takes when the user gives none.
+  string default = 3;
+  // The format the string must have.
+  McpStringSchemaFormat format = 4;
+  // The most characters the field accepts.
+  int32 maxLength = 5;
+  // The fewest characters the field accepts.
+  int32 minLength = 6;
   // The kind of object, always `string`.
-  string type = 7;
+  string kind = 7;
 }
 // The set of notification types a client may opt in to on a
 // {@link SubscriptionsListenRequestsubscriptions/listen} request.
@@ -2101,7 +2101,7 @@ message McpSubscriptionsAcknowledgedNotificationParams {
 // endpoint and ensures consistent behavior between HTTP and STDIO.
 message McpSubscriptionsListenRequest {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // The method's name, always `subscriptions/listen`.
@@ -2162,7 +2162,7 @@ message McpSubscriptionsListenResultMetaObject {
 // request, sent when the server tears the subscription down gracefully.
 message McpSubscriptionsListenResultResponse {
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 1;
+  string identifier = 1;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 2;
   // The response to a {@link SubscriptionsListenRequestsubscriptions/listen}
@@ -2195,7 +2195,7 @@ message McpTextContent {
   // The text content of the message.
   string text = 3;
   // The kind of object, always `text`.
-  string type = 4;
+  string kind = 4;
 }
 // MCP's `TextResourceContents`.
 message McpTextResourceContents {
@@ -2224,20 +2224,20 @@ message McpTextResourceContents {
 }
 // Schema for multiple-selection enumeration with display titles for each option.
 message McpTitledMultiSelectEnumSchema {
-  // Optional default value.
-  repeated string default = 1;
   // Optional description for the enum field.
-  string description = 2;
-  // Schema for array items with enum options and display labels.
-  McpTitledMultiSelectEnumSchemaItems items = 3;
-  // Maximum number of items to select.
-  int32 maxItems = 4;
-  // Minimum number of items to select.
-  int32 minItems = 5;
+  string description = 1;
   // Optional title for the enum field.
-  string title = 6;
+  string title = 2;
+  // Optional default value.
+  repeated string default = 3;
+  // Schema for array items with enum options and display labels.
+  McpTitledMultiSelectEnumSchemaItems items = 4;
+  // Maximum number of items to select.
+  int32 maxItems = 5;
+  // Minimum number of items to select.
+  int32 minItems = 6;
   // The kind of object, always `array`.
-  string type = 7;
+  string kind = 7;
 }
 // Schema for array items with enum options and display labels.
 message McpTitledMultiSelectEnumSchemaItems {
@@ -2246,33 +2246,46 @@ message McpTitledMultiSelectEnumSchemaItems {
 }
 // The object MCP's `TitledMultiSelectEnumSchema` holds under `anyOf`.
 message McpTitledMultiSelectEnumSchemaItemsAnyOf {
-  // The constant enum value.
-  string const = 1;
   // Display title for this option.
-  string title = 2;
+  string title = 1;
+  // The constant enum value.
+  string const = 2;
 }
 // Schema for single-selection enumeration with display titles for each option.
 message McpTitledSingleSelectEnumSchema {
-  // Optional default value.
-  string default = 1;
   // Optional description for the enum field.
-  string description = 2;
-  // Array of enum options with values and display labels.
-  repeated McpTitledSingleSelectEnumSchemaOneOf oneOf = 3;
+  string description = 1;
   // Optional title for the enum field.
-  string title = 4;
+  string title = 2;
+  // Optional default value.
+  string default = 3;
+  // Array of enum options with values and display labels.
+  repeated McpTitledSingleSelectEnumSchemaOneOf oneOf = 4;
   // The kind of object, always `string`.
-  string type = 5;
+  string kind = 5;
 }
 // The object MCP's `TitledSingleSelectEnumSchema` holds under `oneOf`.
 message McpTitledSingleSelectEnumSchemaOneOf {
-  // The enum value.
-  string const = 1;
   // Display label for this option.
-  string title = 2;
+  string title = 1;
+  // The enum value.
+  string const = 2;
 }
 // Definition for a tool the client can call.
 message McpTool {
+  // A human-readable description of the tool.
+  // 
+  // This can be used by clients to improve the LLM's understanding of available tools. It can be thought of like a "hint" to the model.
+  string description = 1;
+  // Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
+  string name = 2;
+  // Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
+  // even by those unfamiliar with domain-specific terminology.
+  // 
+  // If not provided, the name should be used for display (except for {@link Tool},
+  // where `annotations.title` should be given precedence over using `name`,
+  // if present).
+  string title = 3;
   // Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
   // 
   // Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.
@@ -2288,15 +2301,11 @@ message McpTool {
   // **Name:**
   // - Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).
   // - Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
-  McpMetaObject meta = 1;
+  McpMetaObject meta = 4;
   // Optional additional tool information.
   // 
   // Display name precedence order is: `title`, `annotations.title`, then `name`.
-  McpToolAnnotations annotations = 2;
-  // A human-readable description of the tool.
-  // 
-  // This can be used by clients to improve the LLM's understanding of available tools. It can be thought of like a "hint" to the model.
-  string description = 3;
+  McpToolAnnotations annotations = 5;
   // Optional set of sized icons that the client can display in a user interface.
   // 
   // Clients that support rendering icons MUST support at least the following MIME types:
@@ -2306,7 +2315,7 @@ message McpTool {
   // Clients that support rendering icons SHOULD also support:
   // - `image/svg+xml` - SVG images (scalable but requires security precautions)
   // - `image/webp` - WebP images (modern, efficient format)
-  repeated McpIcon icons = 4;
+  repeated McpIcon icons = 6;
   // A JSON Schema object defining the expected parameters for the tool.
   // 
   // Tool arguments are always JSON objects, so `type: "object"` is required at the root.
@@ -2321,21 +2330,12 @@ message McpTool {
   // extraction rules.
   // 
   // Defaults to JSON Schema 2020-12 when no explicit `$schema` is provided.
-  McpToolInputSchema inputSchema = 5;
-  // Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
-  string name = 6;
+  McpToolInputSchema inputSchema = 7;
   // An optional JSON Schema object defining the structure of the tool's output returned in
   // the structuredContent field of a {@link CallToolResult}. This can be any valid JSON Schema 2020-12.
   // 
   // Defaults to JSON Schema 2020-12 when no explicit `$schema` is provided.
-  McpToolOutputSchema outputSchema = 7;
-  // Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
-  // even by those unfamiliar with domain-specific terminology.
-  // 
-  // If not provided, the name should be used for display (except for {@link Tool},
-  // where `annotations.title` should be given precedence over using `name`,
-  // if present).
-  string title = 8;
+  McpToolOutputSchema outputSchema = 8;
 }
 // Additional properties describing a {@link Tool} to clients.
 // 
@@ -2346,33 +2346,33 @@ message McpTool {
 // Clients should never make tool use decisions based on `ToolAnnotations`
 // received from untrusted servers.
 message McpToolAnnotations {
+  // A human-readable title for the tool.
+  string title = 1;
   // If true, the tool may perform destructive updates to its environment.
   // If false, the tool performs only additive updates.
   // 
   // (This property is meaningful only when `readOnlyHint == false`)
   // 
   // Default: true
-  bool destructiveHint = 1;
+  bool destructiveHint = 2;
   // If true, calling the tool repeatedly with the same arguments
   // will have no additional effect on its environment.
   // 
   // (This property is meaningful only when `readOnlyHint == false`)
   // 
   // Default: false
-  bool idempotentHint = 2;
+  bool idempotentHint = 3;
   // If true, this tool may interact with an "open world" of external
   // entities. If false, the tool's domain of interaction is closed.
   // For example, the world of a web search tool is open, whereas that
   // of a memory tool is not.
   // 
   // Default: true
-  bool openWorldHint = 3;
+  bool openWorldHint = 4;
   // If true, the tool does not modify its environment.
   // 
   // Default: false
-  bool readOnlyHint = 4;
-  // A human-readable title for the tool.
-  string title = 5;
+  bool readOnlyHint = 5;
 }
 // Controls tool selection behavior for sampling requests.
 message McpToolChoice {
@@ -2400,7 +2400,7 @@ message McpToolInputSchema {
   // The JSON Schema dialect the schema is written in.
   string schema_dialect = 1;
   // The kind of object, always `object`.
-  string type = 2;
+  string kind = 2;
 }
 // An optional notification from the server to the client, informing it that the list of tools it offers has changed. This is only delivered on a {@link SubscriptionsListenRequestsubscriptions/listen} stream when the client requested it via the `toolsListChanged` filter field.
 message McpToolListChangedNotification {
@@ -2444,23 +2444,23 @@ message McpToolResultContent {
   // This MUST match the ID from a previous {@link ToolUseContent}.
   string toolUseId = 5;
   // The kind of object, always `tool_result`.
-  string type = 6;
+  string kind = 6;
 }
 // A request from the assistant to call a tool.
 message McpToolUseContent {
+  // The name of the tool to call.
+  string name = 1;
   // Optional metadata about the tool use. Clients SHOULD preserve this field when
   // including tool uses in subsequent sampling requests to enable caching optimizations.
-  McpMetaObject meta = 1;
+  McpMetaObject meta = 2;
   // A unique identifier for this tool use.
   // 
   // This ID is used to match tool results to their corresponding tool uses.
-  string id = 2;
+  string identifier = 3;
   // The arguments to pass to the tool, conforming to the tool's input schema.
-  McpJSONObject input = 3;
-  // The name of the tool to call.
-  string name = 4;
+  McpJSONObject input = 4;
   // The kind of object, always `tool_use`.
-  string type = 5;
+  string kind = 5;
 }
 // Returned when the request's protocol version is unknown to the server or
 // unsupported (e.g., a known experimental or draft version the server has
@@ -2470,7 +2470,7 @@ message McpUnsupportedProtocolVersionError {
   // The error the request ended with.
   McpUnsupportedProtocolVersionErrorError error = 1;
   // A uniquely identifying ID for a request in JSON-RPC.
-  string id = 2;
+  string identifier = 2;
   // The JSON-RPC version, always `2.0`.
   string jsonrpc = 3;
 }
@@ -2493,40 +2493,40 @@ message McpUnsupportedProtocolVersionErrorErrorData {
 }
 // Schema for multiple-selection enumeration without display titles for options.
 message McpUntitledMultiSelectEnumSchema {
-  // Optional default value.
-  repeated string default = 1;
   // Optional description for the enum field.
-  string description = 2;
-  // Schema for the array items.
-  McpUntitledMultiSelectEnumSchemaItems items = 3;
-  // Maximum number of items to select.
-  int32 maxItems = 4;
-  // Minimum number of items to select.
-  int32 minItems = 5;
+  string description = 1;
   // Optional title for the enum field.
-  string title = 6;
+  string title = 2;
+  // Optional default value.
+  repeated string default = 3;
+  // Schema for the array items.
+  McpUntitledMultiSelectEnumSchemaItems items = 4;
+  // Maximum number of items to select.
+  int32 maxItems = 5;
+  // Minimum number of items to select.
+  int32 minItems = 6;
   // The kind of object, always `array`.
-  string type = 7;
+  string kind = 7;
 }
 // Schema for the array items.
 message McpUntitledMultiSelectEnumSchemaItems {
   // Array of enum values to choose from.
   repeated string enum = 1;
   // The kind of object, always `string`.
-  string type = 2;
+  string kind = 2;
 }
 // Schema for single-selection enumeration without display titles for options.
 message McpUntitledSingleSelectEnumSchema {
-  // Optional default value.
-  string default = 1;
   // Optional description for the enum field.
-  string description = 2;
-  // Array of enum values to choose from.
-  repeated string enum = 3;
+  string description = 1;
   // Optional title for the enum field.
-  string title = 4;
+  string title = 2;
+  // Optional default value.
+  string default = 3;
+  // Array of enum values to choose from.
+  repeated string enum = 4;
   // The kind of object, always `string`.
-  string type = 5;
+  string kind = 5;
 }
 
 // The values MCP allows for `cacheScope`.

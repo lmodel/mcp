@@ -61,37 +61,26 @@ def test_every_element_maps_to_a_place_in_mcps_file():
 
 
 def test_mcps_descriptions_are_kept_word_for_word():
-    """Where MCP describes a definition or a property, the schema carries the same text."""
+    """Where MCP describes a definition or a property, the schema carries the same text, on
+    the element, on an attribute or in a class's slot_usage."""
     checked = 0
     for name, element in _elements():
-        pointer = (
-            element["exact_mappings"][0][len(MAPPING_PREFIX) :]
-            if element.get("exact_mappings")
-            else None
-        )
-        if not pointer:
+        mappings = element.get("exact_mappings") or []
+        if not mappings:
             continue
+        pointer = mappings[0][len(MAPPING_PREFIX) :]
         node = _node(pointer)
         if node.get("description") and "/" not in pointer:
             assert element["description"] == node["description"], name
             checked += 1
-        for slot in (element.get("attributes") or {}).values():
-            key = slot.get("alias") or (slot.get("aliases") or [None])[0]
-            for prop_key, prop in (node.get("properties") or {}).items():
-                if prop_key == key or (
-                    key is None and prop_key == _key_of(slot, element)
-                ):
-                    if prop.get("description"):
-                        assert slot["description"] == prop["description"], (
-                            name,
-                            prop_key,
-                        )
-                        checked += 1
+        texts = {}
+        for attr_name, slot in (element.get("attributes") or {}).items():
+            key = slot.get("alias") or (slot.get("aliases") or [attr_name])[0]
+            texts[key] = slot["description"]
+        for key, usage in (element.get("slot_usage") or {}).items():
+            texts[key] = usage["description"]
+        for key, prop in (node.get("properties") or {}).items():
+            if prop.get("description"):
+                assert texts[key] == prop["description"], (name, key)
+                checked += 1
     assert checked > 300
-
-
-def _key_of(slot, element):
-    for attr_name, attr in element["attributes"].items():
-        if attr is slot:
-            return attr_name
-    return None

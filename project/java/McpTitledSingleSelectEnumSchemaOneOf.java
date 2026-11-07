@@ -16,8 +16,8 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpTitledSingleSelectEnumSchemaOneOf  {
 
-  private String const_;
   private String title;
+  private String const_;
 
 
 }

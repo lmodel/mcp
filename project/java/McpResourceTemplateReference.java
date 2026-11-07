@@ -16,7 +16,7 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpResourceTemplateReference  {
 
-  private String type;
+  private String kind;
   private String uri;
 
 

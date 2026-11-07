@@ -16,12 +16,12 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpNumberSchema  {
 
-  private Float default_;
   private String description;
+  private String title;
+  private Float default_;
   private Float maximum;
   private Float minimum;
-  private String title;
-  private String type;
+  private String kind;
 
 
 }

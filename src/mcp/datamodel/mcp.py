@@ -65,6 +65,7 @@ version = "2026-07-28"
 LINKML = CurieNamespace('linkml', 'https://w3id.org/linkml/')
 MCP = CurieNamespace('mcp', 'https://w3id.org/lmodel/mcp/')
 MCP_SCHEMA = CurieNamespace('mcp_schema', 'https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/2026-07-28/schema/2026-07-28/schema.json#/$defs/')
+SCHEMA = CurieNamespace('schema', 'http://schema.org/')
 XSD = CurieNamespace('xsd', 'http://www.w3.org/2001/XMLSchema#')
 DEFAULT_ = MCP
 
@@ -138,14 +139,14 @@ class McpAnnotations(YAMLRoot):
     class_name: ClassVar[str] = "McpAnnotations"
     class_model_uri: ClassVar[URIRef] = MCP.McpAnnotations
 
-    audience: Optional[Union[Union[str, "McpRole"], list[Union[str, "McpRole"]]]] = empty_list()
+    intended_audience: Optional[Union[Union[str, "McpRole"], list[Union[str, "McpRole"]]]] = empty_list()
     lastModified: Optional[str] = None
     priority: Optional[float] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if not isinstance(self.audience, list):
-            self.audience = [self.audience] if self.audience is not None else []
-        self.audience = [v if isinstance(v, McpRole) else McpRole(v) for v in self.audience]
+        if not isinstance(self.intended_audience, list):
+            self.intended_audience = [self.intended_audience] if self.intended_audience is not None else []
+        self.intended_audience = [v if isinstance(v, McpRole) else McpRole(v) for v in self.intended_audience]
 
         if self.lastModified is not None and not isinstance(self.lastModified, str):
             self.lastModified = str(self.lastModified)
@@ -170,7 +171,7 @@ class McpAudioContent(YAMLRoot):
 
     data: Union[str, McpBase64] = None
     mimeType: str = None
-    type: str = None
+    kind: str = None
     _meta: Optional[Union[dict, "McpMetaObject"]] = None
     annotations: Optional[Union[dict, McpAnnotations]] = None
 
@@ -185,10 +186,10 @@ class McpAudioContent(YAMLRoot):
         if not isinstance(self.mimeType, str):
             self.mimeType = str(self.mimeType)
 
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, str):
-            self.type = str(self.type)
+        if self._is_empty(self.kind):
+            self.MissingRequiredField("kind")
+        if not isinstance(self.kind, str):
+            self.kind = str(self.kind)
 
         if self._meta is not None and not isinstance(self._meta, McpMetaObject):
             self._meta = McpMetaObject()
@@ -238,25 +239,25 @@ class McpBooleanSchema(YAMLRoot):
     class_name: ClassVar[str] = "McpBooleanSchema"
     class_model_uri: ClassVar[URIRef] = MCP.McpBooleanSchema
 
-    type: str = None
-    default: Optional[Union[bool, Bool]] = None
+    kind: str = None
     description: Optional[str] = None
     title: Optional[str] = None
+    default: Optional[Union[bool, Bool]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, str):
-            self.type = str(self.type)
-
-        if self.default is not None and not isinstance(self.default, Bool):
-            self.default = Bool(self.default)
+        if self._is_empty(self.kind):
+            self.MissingRequiredField("kind")
+        if not isinstance(self.kind, str):
+            self.kind = str(self.kind)
 
         if self.description is not None and not isinstance(self.description, str):
             self.description = str(self.description)
 
         if self.title is not None and not isinstance(self.title, str):
             self.title = str(self.title)
+
+        if self.default is not None and not isinstance(self.default, Bool):
+            self.default = Bool(self.default)
 
         super().__post_init__(**kwargs)
 
@@ -312,14 +313,14 @@ class McpClientCapabilitiesElicitation(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = MCP.McpClientCapabilitiesElicitation
 
     form: Optional[Union[dict, "McpJSONObject"]] = None
-    url: Optional[Union[dict, "McpJSONObject"]] = None
+    url_settings: Optional[Union[dict, "McpJSONObject"]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self.form is not None and not isinstance(self.form, McpJSONObject):
             self.form = McpJSONObject()
 
-        if self.url is not None and not isinstance(self.url, McpJSONObject):
-            self.url = McpJSONObject()
+        if self.url_settings is not None and not isinstance(self.url_settings, McpJSONObject):
+            self.url_settings = McpJSONObject()
 
         super().__post_init__(**kwargs)
 
@@ -377,12 +378,12 @@ class McpClientCapabilitiesSampling(YAMLRoot):
     class_name: ClassVar[str] = "McpClientCapabilitiesSampling"
     class_model_uri: ClassVar[URIRef] = MCP.McpClientCapabilitiesSampling
 
-    context: Optional[Union[dict, "McpJSONObject"]] = None
+    context_info: Optional[Union[dict, "McpJSONObject"]] = None
     tools: Optional[Union[dict, "McpJSONObject"]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self.context is not None and not isinstance(self.context, McpJSONObject):
-            self.context = McpJSONObject()
+        if self.context_info is not None and not isinstance(self.context_info, McpJSONObject):
+            self.context_info = McpJSONObject()
 
         if self.tools is not None and not isinstance(self.tools, McpJSONObject):
             self.tools = McpJSONObject()
@@ -677,9 +678,9 @@ class McpElicitRequestFormParamsRequestedSchema(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = MCP.McpElicitRequestFormParamsRequestedSchema
 
     properties: Union[dict, "McpElicitRequestFormParamsRequestedSchemaProperties"] = None
-    type: str = None
+    kind: str = None
     schema_dialect: Optional[str] = None
-    required: Optional[Union[str, list[str]]] = empty_list()
+    required_names: Optional[Union[str, list[str]]] = empty_list()
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.properties):
@@ -687,17 +688,17 @@ class McpElicitRequestFormParamsRequestedSchema(YAMLRoot):
         if not isinstance(self.properties, McpElicitRequestFormParamsRequestedSchemaProperties):
             self.properties = McpElicitRequestFormParamsRequestedSchemaProperties()
 
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, str):
-            self.type = str(self.type)
+        if self._is_empty(self.kind):
+            self.MissingRequiredField("kind")
+        if not isinstance(self.kind, str):
+            self.kind = str(self.kind)
 
         if self.schema_dialect is not None and not isinstance(self.schema_dialect, str):
             self.schema_dialect = str(self.schema_dialect)
 
-        if not isinstance(self.required, list):
-            self.required = [self.required] if self.required is not None else []
-        self.required = [v if isinstance(v, str) else str(v) for v in self.required]
+        if not isinstance(self.required_names, list):
+            self.required_names = [self.required_names] if self.required_names is not None else []
+        self.required_names = [v if isinstance(v, str) else str(v) for v in self.required_names]
 
         super().__post_init__(**kwargs)
 
@@ -738,11 +739,16 @@ class McpElicitRequestURLParams(YAMLRoot):
     class_name: ClassVar[str] = "McpElicitRequestURLParams"
     class_model_uri: ClassVar[URIRef] = MCP.McpElicitRequestURLParams
 
+    url: Union[str, URI] = None
     message: str = None
     mode: str = None
-    url: Union[str, URI] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.url):
+            self.MissingRequiredField("url")
+        if not isinstance(self.url, URI):
+            self.url = URI(self.url)
+
         if self._is_empty(self.message):
             self.MissingRequiredField("message")
         if not isinstance(self.message, str):
@@ -752,11 +758,6 @@ class McpElicitRequestURLParams(YAMLRoot):
             self.MissingRequiredField("mode")
         if not isinstance(self.mode, str):
             self.mode = str(self.mode)
-
-        if self._is_empty(self.url):
-            self.MissingRequiredField("url")
-        if not isinstance(self.url, URI):
-            self.url = URI(self.url)
 
         super().__post_init__(**kwargs)
 
@@ -817,29 +818,29 @@ class McpEmbeddedResource(YAMLRoot):
     class_name: ClassVar[str] = "McpEmbeddedResource"
     class_model_uri: ClassVar[URIRef] = MCP.McpEmbeddedResource
 
-    resource: Union[dict, "McpTextResourceContents", "McpBlobResourceContents"] = None
-    type: str = None
+    resource_contents: Union[dict, "McpTextResourceContents", "McpBlobResourceContents"] = None
+    kind: str = None
     _meta: Optional[Union[dict, "McpMetaObject"]] = None
     annotations: Optional[Union[dict, McpAnnotations]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.resource):
-            self.MissingRequiredField("resource")
-        if not isinstance(self.resource, (McpTextResourceContents, McpBlobResourceContents)):
-            value = self.resource
+        if self._is_empty(self.resource_contents):
+            self.MissingRequiredField("resource_contents")
+        if not isinstance(self.resource_contents, (McpTextResourceContents, McpBlobResourceContents)):
+            value = self.resource_contents
             for _coerce in (lambda: McpTextResourceContents(**as_dict(value)), lambda: McpBlobResourceContents(**as_dict(value))):
                 try:
-                    self.resource = _coerce()
+                    self.resource_contents = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[McpTextResourceContents, McpBlobResourceContents] could be constructed from {value!r} for slot resource")
+                raise ValueError(f"None of the candidate types Union[McpTextResourceContents, McpBlobResourceContents] could be constructed from {value!r} for slot resource_contents")
 
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, str):
-            self.type = str(self.type)
+        if self._is_empty(self.kind):
+            self.MissingRequiredField("kind")
+        if not isinstance(self.kind, str):
+            self.kind = str(self.kind)
 
         if self._meta is not None and not isinstance(self._meta, McpMetaObject):
             self._meta = McpMetaObject()
@@ -999,7 +1000,7 @@ class McpImageContent(YAMLRoot):
 
     data: Union[str, McpBase64] = None
     mimeType: str = None
-    type: str = None
+    kind: str = None
     _meta: Optional[Union[dict, "McpMetaObject"]] = None
     annotations: Optional[Union[dict, McpAnnotations]] = None
 
@@ -1014,10 +1015,10 @@ class McpImageContent(YAMLRoot):
         if not isinstance(self.mimeType, str):
             self.mimeType = str(self.mimeType)
 
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, str):
-            self.type = str(self.type)
+        if self._is_empty(self.kind):
+            self.MissingRequiredField("kind")
+        if not isinstance(self.kind, str):
+            self.kind = str(self.kind)
 
         if self._meta is not None and not isinstance(self._meta, McpMetaObject):
             self._meta = McpMetaObject()
@@ -1043,8 +1044,8 @@ class McpImplementation(McpBaseMetadata):
     name: str = None
     version: str = None
     description: Optional[str] = None
-    icons: Optional[Union[Union[dict, McpIcon], list[Union[dict, McpIcon]]]] = empty_list()
     title: Optional[str] = None
+    icons: Optional[Union[Union[dict, McpIcon], list[Union[dict, McpIcon]]]] = empty_list()
     websiteUrl: Optional[Union[str, URI]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
@@ -1061,10 +1062,10 @@ class McpImplementation(McpBaseMetadata):
         if self.description is not None and not isinstance(self.description, str):
             self.description = str(self.description)
 
-        self._normalize_inlined_as_list(slot_name="icons", slot_type=McpIcon, key_name="src", keyed=False)
-
         if self.title is not None and not isinstance(self.title, str):
             self.title = str(self.title)
+
+        self._normalize_inlined_as_list(slot_name="icons", slot_type=McpIcon, key_name="src", keyed=False)
 
         if self.websiteUrl is not None and not isinstance(self.websiteUrl, URI):
             self.websiteUrl = URI(self.websiteUrl)
@@ -1251,7 +1252,7 @@ class McpJSONRPCErrorResponse(YAMLRoot):
 
     error: Union[dict, McpError] = None
     jsonrpc: str = None
-    id: Optional[Union[str, int]] = None
+    identifier: Optional[Union[str, int]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.error):
@@ -1264,16 +1265,16 @@ class McpJSONRPCErrorResponse(YAMLRoot):
         if not isinstance(self.jsonrpc, str):
             self.jsonrpc = str(self.jsonrpc)
 
-        if self.id is not None and not isinstance(self.id, (str, int)):
-            value = self.id
+        if self.identifier is not None and not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         super().__post_init__(**kwargs)
 
@@ -1295,7 +1296,7 @@ class McpHeaderMismatchError(McpJSONRPCErrorResponse):
 
     error: Union[dict, McpHeaderMismatchErrorError] = None
     jsonrpc: str = None
-    id: Optional[Union[str, int]] = None
+    identifier: Optional[Union[str, int]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.error):
@@ -1308,16 +1309,16 @@ class McpHeaderMismatchError(McpJSONRPCErrorResponse):
         if not isinstance(self.jsonrpc, str):
             self.jsonrpc = str(self.jsonrpc)
 
-        if self.id is not None and not isinstance(self.id, (str, int)):
-            value = self.id
+        if self.identifier is not None and not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         super().__post_init__(**kwargs)
 
@@ -1358,23 +1359,23 @@ class McpJSONRPCResultResponse(YAMLRoot):
     class_name: ClassVar[str] = "McpJSONRPCResultResponse"
     class_model_uri: ClassVar[URIRef] = MCP.McpJSONRPCResultResponse
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     result: Union[dict, "McpResult"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -1401,23 +1402,23 @@ class McpCallToolResultResponse(McpJSONRPCResultResponse):
     class_name: ClassVar[str] = "McpCallToolResultResponse"
     class_model_uri: ClassVar[URIRef] = MCP.McpCallToolResultResponse
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     result: Union[dict, "McpInputRequiredResult", "McpCallToolResult"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -1452,23 +1453,23 @@ class McpCompleteResultResponse(McpJSONRPCResultResponse):
     class_name: ClassVar[str] = "McpCompleteResultResponse"
     class_model_uri: ClassVar[URIRef] = MCP.McpCompleteResultResponse
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     result: Union[dict, "McpCompleteResult"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -1495,23 +1496,23 @@ class McpDiscoverResultResponse(McpJSONRPCResultResponse):
     class_name: ClassVar[str] = "McpDiscoverResultResponse"
     class_model_uri: ClassVar[URIRef] = MCP.McpDiscoverResultResponse
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     result: Union[dict, "McpDiscoverResult"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -1538,23 +1539,23 @@ class McpGetPromptResultResponse(McpJSONRPCResultResponse):
     class_name: ClassVar[str] = "McpGetPromptResultResponse"
     class_model_uri: ClassVar[URIRef] = MCP.McpGetPromptResultResponse
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     result: Union[dict, "McpInputRequiredResult", "McpGetPromptResult"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -1593,11 +1594,11 @@ class McpLegacyTitledEnumSchema(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = MCP.McpLegacyTitledEnumSchema
 
     enum: Union[str, list[str]] = None
-    type: str = None
-    default: Optional[str] = None
+    kind: str = None
     description: Optional[str] = None
-    enumNames: Optional[Union[str, list[str]]] = empty_list()
     title: Optional[str] = None
+    default: Optional[str] = None
+    enumNames: Optional[Union[str, list[str]]] = empty_list()
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.enum):
@@ -1606,23 +1607,23 @@ class McpLegacyTitledEnumSchema(YAMLRoot):
             self.enum = [self.enum] if self.enum is not None else []
         self.enum = [v if isinstance(v, str) else str(v) for v in self.enum]
 
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, str):
-            self.type = str(self.type)
-
-        if self.default is not None and not isinstance(self.default, str):
-            self.default = str(self.default)
+        if self._is_empty(self.kind):
+            self.MissingRequiredField("kind")
+        if not isinstance(self.kind, str):
+            self.kind = str(self.kind)
 
         if self.description is not None and not isinstance(self.description, str):
             self.description = str(self.description)
 
+        if self.title is not None and not isinstance(self.title, str):
+            self.title = str(self.title)
+
+        if self.default is not None and not isinstance(self.default, str):
+            self.default = str(self.default)
+
         if not isinstance(self.enumNames, list):
             self.enumNames = [self.enumNames] if self.enumNames is not None else []
         self.enumNames = [v if isinstance(v, str) else str(v) for v in self.enumNames]
-
-        if self.title is not None and not isinstance(self.title, str):
-            self.title = str(self.title)
 
         super().__post_init__(**kwargs)
 
@@ -1639,23 +1640,23 @@ class McpListPromptsResultResponse(McpJSONRPCResultResponse):
     class_name: ClassVar[str] = "McpListPromptsResultResponse"
     class_model_uri: ClassVar[URIRef] = MCP.McpListPromptsResultResponse
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     result: Union[dict, "McpListPromptsResult"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -1682,23 +1683,23 @@ class McpListResourceTemplatesResultResponse(McpJSONRPCResultResponse):
     class_name: ClassVar[str] = "McpListResourceTemplatesResultResponse"
     class_model_uri: ClassVar[URIRef] = MCP.McpListResourceTemplatesResultResponse
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     result: Union[dict, "McpListResourceTemplatesResult"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -1725,23 +1726,23 @@ class McpListResourcesResultResponse(McpJSONRPCResultResponse):
     class_name: ClassVar[str] = "McpListResourcesResultResponse"
     class_model_uri: ClassVar[URIRef] = MCP.McpListResourcesResultResponse
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     result: Union[dict, "McpListResourcesResult"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -1846,23 +1847,23 @@ class McpListToolsResultResponse(McpJSONRPCResultResponse):
     class_name: ClassVar[str] = "McpListToolsResultResponse"
     class_model_uri: ClassVar[URIRef] = MCP.McpListToolsResultResponse
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     result: Union[dict, "McpListToolsResult"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -1962,7 +1963,7 @@ class McpMissingRequiredClientCapabilityError(McpJSONRPCErrorResponse):
 
     error: Union[dict, "McpMissingRequiredClientCapabilityErrorError"] = None
     jsonrpc: str = None
-    id: Optional[Union[str, int]] = None
+    identifier: Optional[Union[str, int]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.error):
@@ -1975,16 +1976,16 @@ class McpMissingRequiredClientCapabilityError(McpJSONRPCErrorResponse):
         if not isinstance(self.jsonrpc, str):
             self.jsonrpc = str(self.jsonrpc)
 
-        if self.id is not None and not isinstance(self.id, (str, int)):
-            value = self.id
+        if self.identifier is not None and not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         super().__post_init__(**kwargs)
 
@@ -2371,7 +2372,7 @@ class McpCancelledNotificationParams(McpNotificationParams):
 
     requestId: Union[str, int] = None
     _meta: Optional[Union[dict, McpNotificationMetaObject]] = None
-    reason: Optional[str] = None
+    reason_text: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.requestId):
@@ -2390,8 +2391,8 @@ class McpCancelledNotificationParams(McpNotificationParams):
         if self._meta is not None and not isinstance(self._meta, McpNotificationMetaObject):
             self._meta = McpNotificationMetaObject(**as_dict(self._meta))
 
-        if self.reason is not None and not isinstance(self.reason, str):
-            self.reason = str(self.reason)
+        if self.reason_text is not None and not isinstance(self.reason_text, str):
+            self.reason_text = str(self.reason_text)
 
         super().__post_init__(**kwargs)
 
@@ -2440,33 +2441,33 @@ class McpNumberSchema(YAMLRoot):
     class_name: ClassVar[str] = "McpNumberSchema"
     class_model_uri: ClassVar[URIRef] = MCP.McpNumberSchema
 
-    type: Union[str, "McpNumberSchemaType"] = None
-    default: Optional[float] = None
+    kind: Union[str, "McpNumberSchemaType"] = None
     description: Optional[str] = None
+    title: Optional[str] = None
+    default: Optional[float] = None
     maximum: Optional[float] = None
     minimum: Optional[float] = None
-    title: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, McpNumberSchemaType):
-            self.type = McpNumberSchemaType(self.type)
-
-        if self.default is not None and not isinstance(self.default, float):
-            self.default = float(self.default)
+        if self._is_empty(self.kind):
+            self.MissingRequiredField("kind")
+        if not isinstance(self.kind, McpNumberSchemaType):
+            self.kind = McpNumberSchemaType(self.kind)
 
         if self.description is not None and not isinstance(self.description, str):
             self.description = str(self.description)
+
+        if self.title is not None and not isinstance(self.title, str):
+            self.title = str(self.title)
+
+        if self.default is not None and not isinstance(self.default, float):
+            self.default = float(self.default)
 
         if self.maximum is not None and not isinstance(self.maximum, float):
             self.maximum = float(self.maximum)
 
         if self.minimum is not None and not isinstance(self.minimum, float):
             self.minimum = float(self.minimum)
-
-        if self.title is not None and not isinstance(self.title, str):
-            self.title = str(self.title)
 
         super().__post_init__(**kwargs)
 
@@ -2612,11 +2613,11 @@ class McpPrompt(McpBaseMetadata):
     class_model_uri: ClassVar[URIRef] = MCP.McpPrompt
 
     name: str = None
+    description: Optional[str] = None
+    title: Optional[str] = None
     _meta: Optional[Union[dict, McpMetaObject]] = None
     arguments: Optional[Union[Union[dict, "McpPromptArgument"], list[Union[dict, "McpPromptArgument"]]]] = empty_list()
-    description: Optional[str] = None
     icons: Optional[Union[Union[dict, McpIcon], list[Union[dict, McpIcon]]]] = empty_list()
-    title: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.name):
@@ -2624,18 +2625,18 @@ class McpPrompt(McpBaseMetadata):
         if not isinstance(self.name, str):
             self.name = str(self.name)
 
+        if self.description is not None and not isinstance(self.description, str):
+            self.description = str(self.description)
+
+        if self.title is not None and not isinstance(self.title, str):
+            self.title = str(self.title)
+
         if self._meta is not None and not isinstance(self._meta, McpMetaObject):
             self._meta = McpMetaObject()
 
         self._normalize_inlined_as_list(slot_name="arguments", slot_type=McpPromptArgument, key_name="name", keyed=False)
 
-        if self.description is not None and not isinstance(self.description, str):
-            self.description = str(self.description)
-
         self._normalize_inlined_as_list(slot_name="icons", slot_type=McpIcon, key_name="src", keyed=False)
-
-        if self.title is not None and not isinstance(self.title, str):
-            self.title = str(self.title)
 
         super().__post_init__(**kwargs)
 
@@ -2654,8 +2655,8 @@ class McpPromptArgument(McpBaseMetadata):
 
     name: str = None
     description: Optional[str] = None
-    required: Optional[Union[bool, Bool]] = None
     title: Optional[str] = None
+    required: Optional[Union[bool, Bool]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.name):
@@ -2666,11 +2667,11 @@ class McpPromptArgument(McpBaseMetadata):
         if self.description is not None and not isinstance(self.description, str):
             self.description = str(self.description)
 
-        if self.required is not None and not isinstance(self.required, Bool):
-            self.required = Bool(self.required)
-
         if self.title is not None and not isinstance(self.title, str):
             self.title = str(self.title)
+
+        if self.required is not None and not isinstance(self.required, Bool):
+            self.required = Bool(self.required)
 
         super().__post_init__(**kwargs)
 
@@ -2755,7 +2756,7 @@ class McpPromptReference(McpBaseMetadata):
     class_model_uri: ClassVar[URIRef] = MCP.McpPromptReference
 
     name: str = None
-    type: str = None
+    kind: str = None
     title: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
@@ -2764,10 +2765,10 @@ class McpPromptReference(McpBaseMetadata):
         if not isinstance(self.name, str):
             self.name = str(self.name)
 
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, str):
-            self.type = str(self.type)
+        if self._is_empty(self.kind):
+            self.MissingRequiredField("kind")
+        if not isinstance(self.kind, str):
+            self.kind = str(self.kind)
 
         if self.title is not None and not isinstance(self.title, str):
             self.title = str(self.title)
@@ -2787,23 +2788,23 @@ class McpReadResourceResultResponse(McpJSONRPCResultResponse):
     class_name: ClassVar[str] = "McpReadResourceResultResponse"
     class_model_uri: ClassVar[URIRef] = MCP.McpReadResourceResultResponse
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     result: Union[dict, "McpInputRequiredResult", "McpReadResourceResult"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -2865,24 +2866,24 @@ class McpJSONRPCRequest(McpRequest):
     class_name: ClassVar[str] = "McpJSONRPCRequest"
     class_model_uri: ClassVar[URIRef] = MCP.McpJSONRPCRequest
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     method: str = None
     params: Optional[Union[dict, McpJSONObject]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -2912,24 +2913,24 @@ class McpCallToolRequest(McpJSONRPCRequest):
     class_name: ClassVar[str] = "McpCallToolRequest"
     class_model_uri: ClassVar[URIRef] = MCP.McpCallToolRequest
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     method: str = None
     params: Union[dict, "McpCallToolRequestParams"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -2961,24 +2962,24 @@ class McpCompleteRequest(McpJSONRPCRequest):
     class_name: ClassVar[str] = "McpCompleteRequest"
     class_model_uri: ClassVar[URIRef] = MCP.McpCompleteRequest
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     method: str = None
     params: Union[dict, "McpCompleteRequestParams"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -3013,24 +3014,24 @@ class McpDiscoverRequest(McpJSONRPCRequest):
     class_name: ClassVar[str] = "McpDiscoverRequest"
     class_model_uri: ClassVar[URIRef] = MCP.McpDiscoverRequest
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     method: str = None
     params: Union[dict, "McpRequestParams"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -3062,24 +3063,24 @@ class McpGetPromptRequest(McpJSONRPCRequest):
     class_name: ClassVar[str] = "McpGetPromptRequest"
     class_model_uri: ClassVar[URIRef] = MCP.McpGetPromptRequest
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     method: str = None
     params: Union[dict, "McpGetPromptRequestParams"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -3111,24 +3112,24 @@ class McpPaginatedRequest(McpJSONRPCRequest):
     class_name: ClassVar[str] = "McpPaginatedRequest"
     class_model_uri: ClassVar[URIRef] = MCP.McpPaginatedRequest
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     method: str = None
     params: Union[dict, "McpPaginatedRequestParams"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -3160,24 +3161,24 @@ class McpListPromptsRequest(McpPaginatedRequest):
     class_name: ClassVar[str] = "McpListPromptsRequest"
     class_model_uri: ClassVar[URIRef] = MCP.McpListPromptsRequest
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     method: str = None
     params: Union[dict, "McpPaginatedRequestParams"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -3209,24 +3210,24 @@ class McpListResourceTemplatesRequest(McpPaginatedRequest):
     class_name: ClassVar[str] = "McpListResourceTemplatesRequest"
     class_model_uri: ClassVar[URIRef] = MCP.McpListResourceTemplatesRequest
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     method: str = None
     params: Union[dict, "McpPaginatedRequestParams"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -3258,24 +3259,24 @@ class McpListResourcesRequest(McpPaginatedRequest):
     class_name: ClassVar[str] = "McpListResourcesRequest"
     class_model_uri: ClassVar[URIRef] = MCP.McpListResourcesRequest
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     method: str = None
     params: Union[dict, "McpPaginatedRequestParams"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -3307,24 +3308,24 @@ class McpListToolsRequest(McpPaginatedRequest):
     class_name: ClassVar[str] = "McpListToolsRequest"
     class_model_uri: ClassVar[URIRef] = MCP.McpListToolsRequest
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     method: str = None
     params: Union[dict, "McpPaginatedRequestParams"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -3356,24 +3357,24 @@ class McpReadResourceRequest(McpJSONRPCRequest):
     class_name: ClassVar[str] = "McpReadResourceRequest"
     class_model_uri: ClassVar[URIRef] = MCP.McpReadResourceRequest
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     method: str = None
     params: Union[dict, "McpReadResourceRequestParams"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -3480,7 +3481,7 @@ class McpCompleteRequestParams(McpRequestParams):
     _meta: Union[dict, McpRequestMetaObject] = None
     argument: Union[dict, McpCompleteRequestParamsArgument] = None
     ref: Union[dict, McpPromptReference, "McpResourceTemplateReference"] = None
-    context: Optional[Union[dict, McpCompleteRequestParamsContext]] = None
+    context_info: Optional[Union[dict, McpCompleteRequestParamsContext]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self._meta):
@@ -3506,8 +3507,8 @@ class McpCompleteRequestParams(McpRequestParams):
             else:
                 raise ValueError(f"None of the candidate types Union[McpPromptReference, McpResourceTemplateReference] could be constructed from {value!r} for slot ref")
 
-        if self.context is not None and not isinstance(self.context, McpCompleteRequestParamsContext):
-            self.context = McpCompleteRequestParamsContext(**as_dict(self.context))
+        if self.context_info is not None and not isinstance(self.context_info, McpCompleteRequestParamsContext):
+            self.context_info = McpCompleteRequestParamsContext(**as_dict(self.context_info))
 
         super().__post_init__(**kwargs)
 
@@ -3555,22 +3556,22 @@ class McpCallToolRequestParams(McpInputResponseRequestParams):
     class_name: ClassVar[str] = "McpCallToolRequestParams"
     class_model_uri: ClassVar[URIRef] = MCP.McpCallToolRequestParams
 
-    _meta: Union[dict, McpRequestMetaObject] = None
     name: str = None
+    _meta: Union[dict, McpRequestMetaObject] = None
     arguments: Optional[Union[dict, McpJSONObject]] = None
     inputResponses: Optional[Union[dict, McpInputResponses]] = None
     requestState: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self._meta):
-            self.MissingRequiredField("_meta")
-        if not isinstance(self._meta, McpRequestMetaObject):
-            self._meta = McpRequestMetaObject(**as_dict(self._meta))
-
         if self._is_empty(self.name):
             self.MissingRequiredField("name")
         if not isinstance(self.name, str):
             self.name = str(self.name)
+
+        if self._is_empty(self._meta):
+            self.MissingRequiredField("_meta")
+        if not isinstance(self._meta, McpRequestMetaObject):
+            self._meta = McpRequestMetaObject(**as_dict(self._meta))
 
         if self.arguments is not None and not isinstance(self.arguments, McpJSONObject):
             self.arguments = McpJSONObject()
@@ -3596,22 +3597,22 @@ class McpGetPromptRequestParams(McpInputResponseRequestParams):
     class_name: ClassVar[str] = "McpGetPromptRequestParams"
     class_model_uri: ClassVar[URIRef] = MCP.McpGetPromptRequestParams
 
-    _meta: Union[dict, McpRequestMetaObject] = None
     name: str = None
+    _meta: Union[dict, McpRequestMetaObject] = None
     arguments: Optional[Union[dict, McpGetPromptRequestParamsArguments]] = None
     inputResponses: Optional[Union[dict, McpInputResponses]] = None
     requestState: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self._meta):
-            self.MissingRequiredField("_meta")
-        if not isinstance(self._meta, McpRequestMetaObject):
-            self._meta = McpRequestMetaObject(**as_dict(self._meta))
-
         if self._is_empty(self.name):
             self.MissingRequiredField("name")
         if not isinstance(self.name, str):
             self.name = str(self.name)
+
+        if self._is_empty(self._meta):
+            self.MissingRequiredField("_meta")
+        if not isinstance(self._meta, McpRequestMetaObject):
+            self._meta = McpRequestMetaObject(**as_dict(self._meta))
 
         if self.arguments is not None and not isinstance(self.arguments, McpGetPromptRequestParamsArguments):
             self.arguments = McpGetPromptRequestParamsArguments()
@@ -3666,13 +3667,13 @@ class McpResource(McpBaseMetadata):
 
     name: str = None
     uri: Union[str, URI] = None
+    description: Optional[str] = None
+    title: Optional[str] = None
     _meta: Optional[Union[dict, McpMetaObject]] = None
     annotations: Optional[Union[dict, McpAnnotations]] = None
-    description: Optional[str] = None
     icons: Optional[Union[Union[dict, McpIcon], list[Union[dict, McpIcon]]]] = empty_list()
     mimeType: Optional[str] = None
     size: Optional[int] = None
-    title: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.name):
@@ -3685,14 +3686,17 @@ class McpResource(McpBaseMetadata):
         if not isinstance(self.uri, URI):
             self.uri = URI(self.uri)
 
+        if self.description is not None and not isinstance(self.description, str):
+            self.description = str(self.description)
+
+        if self.title is not None and not isinstance(self.title, str):
+            self.title = str(self.title)
+
         if self._meta is not None and not isinstance(self._meta, McpMetaObject):
             self._meta = McpMetaObject()
 
         if self.annotations is not None and not isinstance(self.annotations, McpAnnotations):
             self.annotations = McpAnnotations(**as_dict(self.annotations))
-
-        if self.description is not None and not isinstance(self.description, str):
-            self.description = str(self.description)
 
         self._normalize_inlined_as_list(slot_name="icons", slot_type=McpIcon, key_name="src", keyed=False)
 
@@ -3701,9 +3705,6 @@ class McpResource(McpBaseMetadata):
 
         if self.size is not None and not isinstance(self.size, int):
             self.size = int(self.size)
-
-        if self.title is not None and not isinstance(self.title, str):
-            self.title = str(self.title)
 
         super().__post_init__(**kwargs)
 
@@ -3792,15 +3793,15 @@ class McpResourceLink(McpResource):
     class_model_uri: ClassVar[URIRef] = MCP.McpResourceLink
 
     name: str = None
-    type: str = None
+    kind: str = None
     uri: Union[str, URI] = None
+    description: Optional[str] = None
+    title: Optional[str] = None
     _meta: Optional[Union[dict, McpMetaObject]] = None
     annotations: Optional[Union[dict, McpAnnotations]] = None
-    description: Optional[str] = None
     icons: Optional[Union[Union[dict, McpIcon], list[Union[dict, McpIcon]]]] = empty_list()
     mimeType: Optional[str] = None
     size: Optional[int] = None
-    title: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.name):
@@ -3808,24 +3809,27 @@ class McpResourceLink(McpResource):
         if not isinstance(self.name, str):
             self.name = str(self.name)
 
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, str):
-            self.type = str(self.type)
+        if self._is_empty(self.kind):
+            self.MissingRequiredField("kind")
+        if not isinstance(self.kind, str):
+            self.kind = str(self.kind)
 
         if self._is_empty(self.uri):
             self.MissingRequiredField("uri")
         if not isinstance(self.uri, URI):
             self.uri = URI(self.uri)
 
+        if self.description is not None and not isinstance(self.description, str):
+            self.description = str(self.description)
+
+        if self.title is not None and not isinstance(self.title, str):
+            self.title = str(self.title)
+
         if self._meta is not None and not isinstance(self._meta, McpMetaObject):
             self._meta = McpMetaObject()
 
         if self.annotations is not None and not isinstance(self.annotations, McpAnnotations):
             self.annotations = McpAnnotations(**as_dict(self.annotations))
-
-        if self.description is not None and not isinstance(self.description, str):
-            self.description = str(self.description)
 
         self._normalize_inlined_as_list(slot_name="icons", slot_type=McpIcon, key_name="src", keyed=False)
 
@@ -3834,9 +3838,6 @@ class McpResourceLink(McpResource):
 
         if self.size is not None and not isinstance(self.size, int):
             self.size = int(self.size)
-
-        if self.title is not None and not isinstance(self.title, str):
-            self.title = str(self.title)
 
         super().__post_init__(**kwargs)
 
@@ -3956,12 +3957,12 @@ class McpResourceTemplate(McpBaseMetadata):
 
     name: str = None
     uriTemplate: Union[str, McpUriTemplate] = None
+    description: Optional[str] = None
+    title: Optional[str] = None
     _meta: Optional[Union[dict, McpMetaObject]] = None
     annotations: Optional[Union[dict, McpAnnotations]] = None
-    description: Optional[str] = None
     icons: Optional[Union[Union[dict, McpIcon], list[Union[dict, McpIcon]]]] = empty_list()
     mimeType: Optional[str] = None
-    title: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.name):
@@ -3974,22 +3975,22 @@ class McpResourceTemplate(McpBaseMetadata):
         if not isinstance(self.uriTemplate, McpUriTemplate):
             self.uriTemplate = McpUriTemplate(self.uriTemplate)
 
+        if self.description is not None and not isinstance(self.description, str):
+            self.description = str(self.description)
+
+        if self.title is not None and not isinstance(self.title, str):
+            self.title = str(self.title)
+
         if self._meta is not None and not isinstance(self._meta, McpMetaObject):
             self._meta = McpMetaObject()
 
         if self.annotations is not None and not isinstance(self.annotations, McpAnnotations):
             self.annotations = McpAnnotations(**as_dict(self.annotations))
 
-        if self.description is not None and not isinstance(self.description, str):
-            self.description = str(self.description)
-
         self._normalize_inlined_as_list(slot_name="icons", slot_type=McpIcon, key_name="src", keyed=False)
 
         if self.mimeType is not None and not isinstance(self.mimeType, str):
             self.mimeType = str(self.mimeType)
-
-        if self.title is not None and not isinstance(self.title, str):
-            self.title = str(self.title)
 
         super().__post_init__(**kwargs)
 
@@ -4006,14 +4007,14 @@ class McpResourceTemplateReference(YAMLRoot):
     class_name: ClassVar[str] = "McpResourceTemplateReference"
     class_model_uri: ClassVar[URIRef] = MCP.McpResourceTemplateReference
 
-    type: str = None
+    kind: str = None
     uri: Union[str, McpUriTemplate] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, str):
-            self.type = str(self.type)
+        if self._is_empty(self.kind):
+            self.MissingRequiredField("kind")
+        if not isinstance(self.kind, str):
+            self.kind = str(self.kind)
 
         if self._is_empty(self.uri):
             self.MissingRequiredField("uri")
@@ -4323,8 +4324,8 @@ class McpGetPromptResult(McpResult):
 
     messages: Union[Union[dict, McpPromptMessage], list[Union[dict, McpPromptMessage]]] = None
     resultType: str = None
-    _meta: Optional[Union[dict, "McpResultMetaObject"]] = None
     description: Optional[str] = None
+    _meta: Optional[Union[dict, "McpResultMetaObject"]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.messages):
@@ -4336,11 +4337,11 @@ class McpGetPromptResult(McpResult):
         if not isinstance(self.resultType, str):
             self.resultType = str(self.resultType)
 
-        if self._meta is not None and not isinstance(self._meta, McpResultMetaObject):
-            self._meta = McpResultMetaObject(**as_dict(self._meta))
-
         if self.description is not None and not isinstance(self.description, str):
             self.description = str(self.description)
+
+        if self._meta is not None and not isinstance(self._meta, McpResultMetaObject):
+            self._meta = McpResultMetaObject(**as_dict(self._meta))
 
         super().__post_init__(**kwargs)
 
@@ -4686,8 +4687,8 @@ class McpRoot(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = MCP.McpRoot
 
     uri: Union[str, URI] = None
-    _meta: Optional[Union[dict, McpMetaObject]] = None
     name: Optional[str] = None
+    _meta: Optional[Union[dict, McpMetaObject]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.uri):
@@ -4695,11 +4696,11 @@ class McpRoot(YAMLRoot):
         if not isinstance(self.uri, URI):
             self.uri = URI(self.uri)
 
-        if self._meta is not None and not isinstance(self._meta, McpMetaObject):
-            self._meta = McpMetaObject()
-
         if self.name is not None and not isinstance(self.name, str):
             self.name = str(self.name)
+
+        if self._meta is not None and not isinstance(self._meta, McpMetaObject):
+            self._meta = McpMetaObject()
 
         super().__post_init__(**kwargs)
 
@@ -5004,25 +5005,28 @@ class McpStringSchema(YAMLRoot):
     class_name: ClassVar[str] = "McpStringSchema"
     class_model_uri: ClassVar[URIRef] = MCP.McpStringSchema
 
-    type: str = None
-    default: Optional[str] = None
+    kind: str = None
     description: Optional[str] = None
+    title: Optional[str] = None
+    default: Optional[str] = None
     format: Optional[Union[str, "McpStringSchemaFormat"]] = None
     maxLength: Optional[int] = None
     minLength: Optional[int] = None
-    title: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, str):
-            self.type = str(self.type)
-
-        if self.default is not None and not isinstance(self.default, str):
-            self.default = str(self.default)
+        if self._is_empty(self.kind):
+            self.MissingRequiredField("kind")
+        if not isinstance(self.kind, str):
+            self.kind = str(self.kind)
 
         if self.description is not None and not isinstance(self.description, str):
             self.description = str(self.description)
+
+        if self.title is not None and not isinstance(self.title, str):
+            self.title = str(self.title)
+
+        if self.default is not None and not isinstance(self.default, str):
+            self.default = str(self.default)
 
         if self.format is not None and not isinstance(self.format, McpStringSchemaFormat):
             self.format = McpStringSchemaFormat(self.format)
@@ -5032,9 +5036,6 @@ class McpStringSchema(YAMLRoot):
 
         if self.minLength is not None and not isinstance(self.minLength, int):
             self.minLength = int(self.minLength)
-
-        if self.title is not None and not isinstance(self.title, str):
-            self.title = str(self.title)
 
         super().__post_init__(**kwargs)
 
@@ -5163,24 +5164,24 @@ class McpSubscriptionsListenRequest(McpJSONRPCRequest):
     class_name: ClassVar[str] = "McpSubscriptionsListenRequest"
     class_model_uri: ClassVar[URIRef] = MCP.McpSubscriptionsListenRequest
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     method: str = None
     params: Union[dict, "McpSubscriptionsListenRequestParams"] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -5311,23 +5312,23 @@ class McpSubscriptionsListenResultResponse(McpJSONRPCResultResponse):
     class_name: ClassVar[str] = "McpSubscriptionsListenResultResponse"
     class_model_uri: ClassVar[URIRef] = MCP.McpSubscriptionsListenResultResponse
 
-    id: Union[str, int] = None
+    identifier: Union[str, int] = None
     jsonrpc: str = None
     result: Union[dict, McpSubscriptionsListenResult] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, (str, int)):
-            value = self.id
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         if self._is_empty(self.jsonrpc):
             self.MissingRequiredField("jsonrpc")
@@ -5355,7 +5356,7 @@ class McpTextContent(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = MCP.McpTextContent
 
     text: str = None
-    type: str = None
+    kind: str = None
     _meta: Optional[Union[dict, McpMetaObject]] = None
     annotations: Optional[Union[dict, McpAnnotations]] = None
 
@@ -5365,10 +5366,10 @@ class McpTextContent(YAMLRoot):
         if not isinstance(self.text, str):
             self.text = str(self.text)
 
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, str):
-            self.type = str(self.type)
+        if self._is_empty(self.kind):
+            self.MissingRequiredField("kind")
+        if not isinstance(self.kind, str):
+            self.kind = str(self.kind)
 
         if self._meta is not None and not isinstance(self._meta, McpMetaObject):
             self._meta = McpMetaObject()
@@ -5429,12 +5430,12 @@ class McpTitledMultiSelectEnumSchema(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = MCP.McpTitledMultiSelectEnumSchema
 
     items: Union[dict, "McpTitledMultiSelectEnumSchemaItems"] = None
-    type: str = None
-    default: Optional[Union[str, list[str]]] = empty_list()
+    kind: str = None
     description: Optional[str] = None
+    title: Optional[str] = None
+    default: Optional[Union[str, list[str]]] = empty_list()
     maxItems: Optional[int] = None
     minItems: Optional[int] = None
-    title: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.items):
@@ -5442,26 +5443,26 @@ class McpTitledMultiSelectEnumSchema(YAMLRoot):
         if not isinstance(self.items, McpTitledMultiSelectEnumSchemaItems):
             self.items = McpTitledMultiSelectEnumSchemaItems(**as_dict(self.items))
 
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, str):
-            self.type = str(self.type)
+        if self._is_empty(self.kind):
+            self.MissingRequiredField("kind")
+        if not isinstance(self.kind, str):
+            self.kind = str(self.kind)
+
+        if self.description is not None and not isinstance(self.description, str):
+            self.description = str(self.description)
+
+        if self.title is not None and not isinstance(self.title, str):
+            self.title = str(self.title)
 
         if not isinstance(self.default, list):
             self.default = [self.default] if self.default is not None else []
         self.default = [v if isinstance(v, str) else str(v) for v in self.default]
-
-        if self.description is not None and not isinstance(self.description, str):
-            self.description = str(self.description)
 
         if self.maxItems is not None and not isinstance(self.maxItems, int):
             self.maxItems = int(self.maxItems)
 
         if self.minItems is not None and not isinstance(self.minItems, int):
             self.minItems = int(self.minItems)
-
-        if self.title is not None and not isinstance(self.title, str):
-            self.title = str(self.title)
 
         super().__post_init__(**kwargs)
 
@@ -5483,7 +5484,7 @@ class McpTitledMultiSelectEnumSchemaItems(YAMLRoot):
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.anyOf):
             self.MissingRequiredField("anyOf")
-        self._normalize_inlined_as_list(slot_name="anyOf", slot_type=McpTitledMultiSelectEnumSchemaItemsAnyOf, key_name="const", keyed=False)
+        self._normalize_inlined_as_list(slot_name="anyOf", slot_type=McpTitledMultiSelectEnumSchemaItemsAnyOf, key_name="title", keyed=False)
 
         super().__post_init__(**kwargs)
 
@@ -5500,19 +5501,19 @@ class McpTitledMultiSelectEnumSchemaItemsAnyOf(YAMLRoot):
     class_name: ClassVar[str] = "McpTitledMultiSelectEnumSchemaItemsAnyOf"
     class_model_uri: ClassVar[URIRef] = MCP.McpTitledMultiSelectEnumSchemaItemsAnyOf
 
-    const: str = None
     title: str = None
+    const: str = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.const):
-            self.MissingRequiredField("const")
-        if not isinstance(self.const, str):
-            self.const = str(self.const)
-
         if self._is_empty(self.title):
             self.MissingRequiredField("title")
         if not isinstance(self.title, str):
             self.title = str(self.title)
+
+        if self._is_empty(self.const):
+            self.MissingRequiredField("const")
+        if not isinstance(self.const, str):
+            self.const = str(self.const)
 
         super().__post_init__(**kwargs)
 
@@ -5530,29 +5531,29 @@ class McpTitledSingleSelectEnumSchema(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = MCP.McpTitledSingleSelectEnumSchema
 
     oneOf: Union[Union[dict, "McpTitledSingleSelectEnumSchemaOneOf"], list[Union[dict, "McpTitledSingleSelectEnumSchemaOneOf"]]] = None
-    type: str = None
-    default: Optional[str] = None
+    kind: str = None
     description: Optional[str] = None
     title: Optional[str] = None
+    default: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.oneOf):
             self.MissingRequiredField("oneOf")
-        self._normalize_inlined_as_list(slot_name="oneOf", slot_type=McpTitledSingleSelectEnumSchemaOneOf, key_name="const", keyed=False)
+        self._normalize_inlined_as_list(slot_name="oneOf", slot_type=McpTitledSingleSelectEnumSchemaOneOf, key_name="title", keyed=False)
 
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, str):
-            self.type = str(self.type)
-
-        if self.default is not None and not isinstance(self.default, str):
-            self.default = str(self.default)
+        if self._is_empty(self.kind):
+            self.MissingRequiredField("kind")
+        if not isinstance(self.kind, str):
+            self.kind = str(self.kind)
 
         if self.description is not None and not isinstance(self.description, str):
             self.description = str(self.description)
 
         if self.title is not None and not isinstance(self.title, str):
             self.title = str(self.title)
+
+        if self.default is not None and not isinstance(self.default, str):
+            self.default = str(self.default)
 
         super().__post_init__(**kwargs)
 
@@ -5569,19 +5570,19 @@ class McpTitledSingleSelectEnumSchemaOneOf(YAMLRoot):
     class_name: ClassVar[str] = "McpTitledSingleSelectEnumSchemaOneOf"
     class_model_uri: ClassVar[URIRef] = MCP.McpTitledSingleSelectEnumSchemaOneOf
 
-    const: str = None
     title: str = None
+    const: str = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.const):
-            self.MissingRequiredField("const")
-        if not isinstance(self.const, str):
-            self.const = str(self.const)
-
         if self._is_empty(self.title):
             self.MissingRequiredField("title")
         if not isinstance(self.title, str):
             self.title = str(self.title)
+
+        if self._is_empty(self.const):
+            self.MissingRequiredField("const")
+        if not isinstance(self.const, str):
+            self.const = str(self.const)
 
         super().__post_init__(**kwargs)
 
@@ -5598,25 +5599,31 @@ class McpTool(McpBaseMetadata):
     class_name: ClassVar[str] = "McpTool"
     class_model_uri: ClassVar[URIRef] = MCP.McpTool
 
-    inputSchema: Union[dict, "McpToolInputSchema"] = None
     name: str = None
+    inputSchema: Union[dict, "McpToolInputSchema"] = None
+    description: Optional[str] = None
+    title: Optional[str] = None
     _meta: Optional[Union[dict, McpMetaObject]] = None
     annotations: Optional[Union[dict, "McpToolAnnotations"]] = None
-    description: Optional[str] = None
     icons: Optional[Union[Union[dict, McpIcon], list[Union[dict, McpIcon]]]] = empty_list()
     outputSchema: Optional[Union[dict, "McpToolOutputSchema"]] = None
-    title: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
+        if self._is_empty(self.name):
+            self.MissingRequiredField("name")
+        if not isinstance(self.name, str):
+            self.name = str(self.name)
+
         if self._is_empty(self.inputSchema):
             self.MissingRequiredField("inputSchema")
         if not isinstance(self.inputSchema, McpToolInputSchema):
             self.inputSchema = McpToolInputSchema(**as_dict(self.inputSchema))
 
-        if self._is_empty(self.name):
-            self.MissingRequiredField("name")
-        if not isinstance(self.name, str):
-            self.name = str(self.name)
+        if self.description is not None and not isinstance(self.description, str):
+            self.description = str(self.description)
+
+        if self.title is not None and not isinstance(self.title, str):
+            self.title = str(self.title)
 
         if self._meta is not None and not isinstance(self._meta, McpMetaObject):
             self._meta = McpMetaObject()
@@ -5624,16 +5631,10 @@ class McpTool(McpBaseMetadata):
         if self.annotations is not None and not isinstance(self.annotations, McpToolAnnotations):
             self.annotations = McpToolAnnotations(**as_dict(self.annotations))
 
-        if self.description is not None and not isinstance(self.description, str):
-            self.description = str(self.description)
-
         self._normalize_inlined_as_list(slot_name="icons", slot_type=McpIcon, key_name="src", keyed=False)
 
         if self.outputSchema is not None and not isinstance(self.outputSchema, McpToolOutputSchema):
             self.outputSchema = McpToolOutputSchema(**as_dict(self.outputSchema))
-
-        if self.title is not None and not isinstance(self.title, str):
-            self.title = str(self.title)
 
         super().__post_init__(**kwargs)
 
@@ -5657,13 +5658,16 @@ class McpToolAnnotations(YAMLRoot):
     class_name: ClassVar[str] = "McpToolAnnotations"
     class_model_uri: ClassVar[URIRef] = MCP.McpToolAnnotations
 
+    title: Optional[str] = None
     destructiveHint: Optional[Union[bool, Bool]] = None
     idempotentHint: Optional[Union[bool, Bool]] = None
     openWorldHint: Optional[Union[bool, Bool]] = None
     readOnlyHint: Optional[Union[bool, Bool]] = None
-    title: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
+        if self.title is not None and not isinstance(self.title, str):
+            self.title = str(self.title)
+
         if self.destructiveHint is not None and not isinstance(self.destructiveHint, Bool):
             self.destructiveHint = Bool(self.destructiveHint)
 
@@ -5675,9 +5679,6 @@ class McpToolAnnotations(YAMLRoot):
 
         if self.readOnlyHint is not None and not isinstance(self.readOnlyHint, Bool):
             self.readOnlyHint = Bool(self.readOnlyHint)
-
-        if self.title is not None and not isinstance(self.title, str):
-            self.title = str(self.title)
 
         super().__post_init__(**kwargs)
 
@@ -5728,14 +5729,14 @@ class McpToolInputSchema(YAMLRoot):
     class_name: ClassVar[str] = "McpToolInputSchema"
     class_model_uri: ClassVar[URIRef] = MCP.McpToolInputSchema
 
-    type: str = None
+    kind: str = None
     schema_dialect: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, str):
-            self.type = str(self.type)
+        if self._is_empty(self.kind):
+            self.MissingRequiredField("kind")
+        if not isinstance(self.kind, str):
+            self.kind = str(self.kind)
 
         if self.schema_dialect is not None and not isinstance(self.schema_dialect, str):
             self.schema_dialect = str(self.schema_dialect)
@@ -5816,7 +5817,7 @@ class McpToolResultContent(YAMLRoot):
 
     content: Union[Union[dict, McpContentBlock], list[Union[dict, McpContentBlock]]] = None
     toolUseId: str = None
-    type: str = None
+    kind: str = None
     _meta: Optional[Union[dict, McpMetaObject]] = None
     isError: Optional[Union[bool, Bool]] = None
     structuredContent: Optional[Union[dict, McpJSONValue]] = None
@@ -5833,10 +5834,10 @@ class McpToolResultContent(YAMLRoot):
         if not isinstance(self.toolUseId, str):
             self.toolUseId = str(self.toolUseId)
 
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, str):
-            self.type = str(self.type)
+        if self._is_empty(self.kind):
+            self.MissingRequiredField("kind")
+        if not isinstance(self.kind, str):
+            self.kind = str(self.kind)
 
         if self._meta is not None and not isinstance(self._meta, McpMetaObject):
             self._meta = McpMetaObject()
@@ -5859,32 +5860,32 @@ class McpToolUseContent(YAMLRoot):
     class_name: ClassVar[str] = "McpToolUseContent"
     class_model_uri: ClassVar[URIRef] = MCP.McpToolUseContent
 
-    id: str = None
-    input: Union[dict, McpJSONObject] = None
     name: str = None
-    type: str = None
+    identifier: str = None
+    input: Union[dict, McpJSONObject] = None
+    kind: str = None
     _meta: Optional[Union[dict, McpMetaObject]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
-        if self._is_empty(self.id):
-            self.MissingRequiredField("id")
-        if not isinstance(self.id, str):
-            self.id = str(self.id)
+        if self._is_empty(self.name):
+            self.MissingRequiredField("name")
+        if not isinstance(self.name, str):
+            self.name = str(self.name)
+
+        if self._is_empty(self.identifier):
+            self.MissingRequiredField("identifier")
+        if not isinstance(self.identifier, str):
+            self.identifier = str(self.identifier)
 
         if self._is_empty(self.input):
             self.MissingRequiredField("input")
         if not isinstance(self.input, McpJSONObject):
             self.input = McpJSONObject()
 
-        if self._is_empty(self.name):
-            self.MissingRequiredField("name")
-        if not isinstance(self.name, str):
-            self.name = str(self.name)
-
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, str):
-            self.type = str(self.type)
+        if self._is_empty(self.kind):
+            self.MissingRequiredField("kind")
+        if not isinstance(self.kind, str):
+            self.kind = str(self.kind)
 
         if self._meta is not None and not isinstance(self._meta, McpMetaObject):
             self._meta = McpMetaObject()
@@ -5909,7 +5910,7 @@ class McpUnsupportedProtocolVersionError(McpJSONRPCErrorResponse):
 
     error: Union[dict, "McpUnsupportedProtocolVersionErrorError"] = None
     jsonrpc: str = None
-    id: Optional[Union[str, int]] = None
+    identifier: Optional[Union[str, int]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.error):
@@ -5922,16 +5923,16 @@ class McpUnsupportedProtocolVersionError(McpJSONRPCErrorResponse):
         if not isinstance(self.jsonrpc, str):
             self.jsonrpc = str(self.jsonrpc)
 
-        if self.id is not None and not isinstance(self.id, (str, int)):
-            value = self.id
+        if self.identifier is not None and not isinstance(self.identifier, (str, int)):
+            value = self.identifier
             for _coerce in (lambda: str(value), lambda: int(value)):
                 try:
-                    self.id = _coerce()
+                    self.identifier = _coerce()
                     break
                 except (ValueError, TypeError):
                     continue
             else:
-                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot id")
+                raise ValueError(f"None of the candidate types Union[str, int] could be constructed from {value!r} for slot identifier")
 
         super().__post_init__(**kwargs)
 
@@ -6009,12 +6010,12 @@ class McpUntitledMultiSelectEnumSchema(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = MCP.McpUntitledMultiSelectEnumSchema
 
     items: Union[dict, "McpUntitledMultiSelectEnumSchemaItems"] = None
-    type: str = None
-    default: Optional[Union[str, list[str]]] = empty_list()
+    kind: str = None
     description: Optional[str] = None
+    title: Optional[str] = None
+    default: Optional[Union[str, list[str]]] = empty_list()
     maxItems: Optional[int] = None
     minItems: Optional[int] = None
-    title: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.items):
@@ -6022,26 +6023,26 @@ class McpUntitledMultiSelectEnumSchema(YAMLRoot):
         if not isinstance(self.items, McpUntitledMultiSelectEnumSchemaItems):
             self.items = McpUntitledMultiSelectEnumSchemaItems(**as_dict(self.items))
 
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, str):
-            self.type = str(self.type)
+        if self._is_empty(self.kind):
+            self.MissingRequiredField("kind")
+        if not isinstance(self.kind, str):
+            self.kind = str(self.kind)
+
+        if self.description is not None and not isinstance(self.description, str):
+            self.description = str(self.description)
+
+        if self.title is not None and not isinstance(self.title, str):
+            self.title = str(self.title)
 
         if not isinstance(self.default, list):
             self.default = [self.default] if self.default is not None else []
         self.default = [v if isinstance(v, str) else str(v) for v in self.default]
-
-        if self.description is not None and not isinstance(self.description, str):
-            self.description = str(self.description)
 
         if self.maxItems is not None and not isinstance(self.maxItems, int):
             self.maxItems = int(self.maxItems)
 
         if self.minItems is not None and not isinstance(self.minItems, int):
             self.minItems = int(self.minItems)
-
-        if self.title is not None and not isinstance(self.title, str):
-            self.title = str(self.title)
 
         super().__post_init__(**kwargs)
 
@@ -6059,7 +6060,7 @@ class McpUntitledMultiSelectEnumSchemaItems(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = MCP.McpUntitledMultiSelectEnumSchemaItems
 
     enum: Union[str, list[str]] = None
-    type: str = None
+    kind: str = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.enum):
@@ -6068,10 +6069,10 @@ class McpUntitledMultiSelectEnumSchemaItems(YAMLRoot):
             self.enum = [self.enum] if self.enum is not None else []
         self.enum = [v if isinstance(v, str) else str(v) for v in self.enum]
 
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, str):
-            self.type = str(self.type)
+        if self._is_empty(self.kind):
+            self.MissingRequiredField("kind")
+        if not isinstance(self.kind, str):
+            self.kind = str(self.kind)
 
         super().__post_init__(**kwargs)
 
@@ -6089,10 +6090,10 @@ class McpUntitledSingleSelectEnumSchema(YAMLRoot):
     class_model_uri: ClassVar[URIRef] = MCP.McpUntitledSingleSelectEnumSchema
 
     enum: Union[str, list[str]] = None
-    type: str = None
-    default: Optional[str] = None
+    kind: str = None
     description: Optional[str] = None
     title: Optional[str] = None
+    default: Optional[str] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.enum):
@@ -6101,19 +6102,19 @@ class McpUntitledSingleSelectEnumSchema(YAMLRoot):
             self.enum = [self.enum] if self.enum is not None else []
         self.enum = [v if isinstance(v, str) else str(v) for v in self.enum]
 
-        if self._is_empty(self.type):
-            self.MissingRequiredField("type")
-        if not isinstance(self.type, str):
-            self.type = str(self.type)
-
-        if self.default is not None and not isinstance(self.default, str):
-            self.default = str(self.default)
+        if self._is_empty(self.kind):
+            self.MissingRequiredField("kind")
+        if not isinstance(self.kind, str):
+            self.kind = str(self.kind)
 
         if self.description is not None and not isinstance(self.description, str):
             self.description = str(self.description)
 
         if self.title is not None and not isinstance(self.title, str):
             self.title = str(self.title)
+
+        if self.default is not None and not isinstance(self.default, str):
+            self.default = str(self.default)
 
         super().__post_init__(**kwargs)
 
@@ -6252,8 +6253,23 @@ class McpToolChoiceMode(EnumDefinitionImpl):
 class slots:
     pass
 
-slots.mcpAnnotations__audience = Slot(uri=MCP.audience, name="mcpAnnotations__audience", curie=MCP.curie('audience'),
-                   model_uri=MCP.mcpAnnotations__audience, domain=None, range=Optional[Union[Union[str, "McpRole"], list[Union[str, "McpRole"]]]])
+slots.description = Slot(uri=SCHEMA.description, name="description", curie=SCHEMA.curie('description'),
+                   model_uri=MCP.description, domain=None, range=Optional[str])
+
+slots.name = Slot(uri=SCHEMA.name, name="name", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.name, domain=None, range=Optional[str])
+
+slots.title = Slot(uri=SCHEMA.name, name="title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.title, domain=None, range=Optional[str])
+
+slots.url = Slot(uri=SCHEMA.url, name="url", curie=SCHEMA.curie('url'),
+                   model_uri=MCP.url, domain=None, range=Optional[Union[str, URI]])
+
+slots.version = Slot(uri=SCHEMA.version, name="version", curie=SCHEMA.curie('version'),
+                   model_uri=MCP.version, domain=None, range=Optional[str])
+
+slots.mcpAnnotations__intended_audience = Slot(uri=MCP.intended_audience, name="mcpAnnotations__intended_audience", curie=MCP.curie('intended_audience'),
+                   model_uri=MCP.mcpAnnotations__intended_audience, domain=None, range=Optional[Union[Union[str, "McpRole"], list[Union[str, "McpRole"]]]])
 
 slots.mcpAnnotations__last_modified = Slot(uri=MCP.lastModified, name="mcpAnnotations__last_modified", curie=MCP.curie('lastModified'),
                    model_uri=MCP.mcpAnnotations__last_modified, domain=None, range=Optional[str])
@@ -6273,14 +6289,8 @@ slots.mcpAudioContent__data = Slot(uri=MCP.data, name="mcpAudioContent__data", c
 slots.mcpAudioContent__mime_type = Slot(uri=MCP.mimeType, name="mcpAudioContent__mime_type", curie=MCP.curie('mimeType'),
                    model_uri=MCP.mcpAudioContent__mime_type, domain=None, range=str)
 
-slots.mcpAudioContent__type = Slot(uri=MCP.type, name="mcpAudioContent__type", curie=MCP.curie('type'),
-                   model_uri=MCP.mcpAudioContent__type, domain=None, range=str)
-
-slots.mcpBaseMetadata__name = Slot(uri=MCP.name, name="mcpBaseMetadata__name", curie=MCP.curie('name'),
-                   model_uri=MCP.mcpBaseMetadata__name, domain=None, range=str)
-
-slots.mcpBaseMetadata__title = Slot(uri=MCP.title, name="mcpBaseMetadata__title", curie=MCP.curie('title'),
-                   model_uri=MCP.mcpBaseMetadata__title, domain=None, range=Optional[str])
+slots.mcpAudioContent__kind = Slot(uri=MCP.kind, name="mcpAudioContent__kind", curie=MCP.curie('kind'),
+                   model_uri=MCP.mcpAudioContent__kind, domain=None, range=str)
 
 slots.mcpBlobResourceContents__meta = Slot(uri=MCP._meta, name="mcpBlobResourceContents__meta", curie=MCP.curie('_meta'),
                    model_uri=MCP.mcpBlobResourceContents__meta, domain=None, range=Optional[Union[dict, McpMetaObject]])
@@ -6297,14 +6307,8 @@ slots.mcpBlobResourceContents__uri = Slot(uri=MCP.uri, name="mcpBlobResourceCont
 slots.mcpBooleanSchema__default = Slot(uri=MCP.default, name="mcpBooleanSchema__default", curie=MCP.curie('default'),
                    model_uri=MCP.mcpBooleanSchema__default, domain=None, range=Optional[Union[bool, Bool]])
 
-slots.mcpBooleanSchema__description = Slot(uri=MCP.description, name="mcpBooleanSchema__description", curie=MCP.curie('description'),
-                   model_uri=MCP.mcpBooleanSchema__description, domain=None, range=Optional[str])
-
-slots.mcpBooleanSchema__title = Slot(uri=MCP.title, name="mcpBooleanSchema__title", curie=MCP.curie('title'),
-                   model_uri=MCP.mcpBooleanSchema__title, domain=None, range=Optional[str])
-
-slots.mcpBooleanSchema__type = Slot(uri=MCP.type, name="mcpBooleanSchema__type", curie=MCP.curie('type'),
-                   model_uri=MCP.mcpBooleanSchema__type, domain=None, range=str)
+slots.mcpBooleanSchema__kind = Slot(uri=MCP.kind, name="mcpBooleanSchema__kind", curie=MCP.curie('kind'),
+                   model_uri=MCP.mcpBooleanSchema__kind, domain=None, range=str)
 
 slots.mcpCacheableResult__meta = Slot(uri=MCP._meta, name="mcpCacheableResult__meta", curie=MCP.curie('_meta'),
                    model_uri=MCP.mcpCacheableResult__meta, domain=None, range=Optional[Union[dict, McpResultMetaObject]])
@@ -6318,8 +6322,8 @@ slots.mcpCacheableResult__result_type = Slot(uri=MCP.resultType, name="mcpCachea
 slots.mcpCacheableResult__ttl_ms = Slot(uri=MCP.ttlMs, name="mcpCacheableResult__ttl_ms", curie=MCP.curie('ttlMs'),
                    model_uri=MCP.mcpCacheableResult__ttl_ms, domain=None, range=int)
 
-slots.mcpCallToolRequest__id = Slot(uri=MCP.id, name="mcpCallToolRequest__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpCallToolRequest__id, domain=None, range=Union[str, int])
+slots.mcpCallToolRequest__identifier = Slot(uri=MCP.identifier, name="mcpCallToolRequest__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpCallToolRequest__identifier, domain=None, range=Union[str, int])
 
 slots.mcpCallToolRequest__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpCallToolRequest__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpCallToolRequest__jsonrpc, domain=None, range=str)
@@ -6339,9 +6343,6 @@ slots.mcpCallToolRequestParams__arguments = Slot(uri=MCP.arguments, name="mcpCal
 slots.mcpCallToolRequestParams__input_responses = Slot(uri=MCP.inputResponses, name="mcpCallToolRequestParams__input_responses", curie=MCP.curie('inputResponses'),
                    model_uri=MCP.mcpCallToolRequestParams__input_responses, domain=None, range=Optional[Union[dict, McpInputResponses]])
 
-slots.mcpCallToolRequestParams__name = Slot(uri=MCP.name, name="mcpCallToolRequestParams__name", curie=MCP.curie('name'),
-                   model_uri=MCP.mcpCallToolRequestParams__name, domain=None, range=str)
-
 slots.mcpCallToolRequestParams__request_state = Slot(uri=MCP.requestState, name="mcpCallToolRequestParams__request_state", curie=MCP.curie('requestState'),
                    model_uri=MCP.mcpCallToolRequestParams__request_state, domain=None, range=Optional[str])
 
@@ -6360,8 +6361,8 @@ slots.mcpCallToolResult__result_type = Slot(uri=MCP.resultType, name="mcpCallToo
 slots.mcpCallToolResult__structured_content = Slot(uri=MCP.structuredContent, name="mcpCallToolResult__structured_content", curie=MCP.curie('structuredContent'),
                    model_uri=MCP.mcpCallToolResult__structured_content, domain=None, range=Optional[Union[dict, McpJSONValue]])
 
-slots.mcpCallToolResultResponse__id = Slot(uri=MCP.id, name="mcpCallToolResultResponse__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpCallToolResultResponse__id, domain=None, range=Union[str, int])
+slots.mcpCallToolResultResponse__identifier = Slot(uri=MCP.identifier, name="mcpCallToolResultResponse__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpCallToolResultResponse__identifier, domain=None, range=Union[str, int])
 
 slots.mcpCallToolResultResponse__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpCallToolResultResponse__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpCallToolResultResponse__jsonrpc, domain=None, range=str)
@@ -6381,8 +6382,8 @@ slots.mcpCancelledNotification__params = Slot(uri=MCP.params, name="mcpCancelled
 slots.mcpCancelledNotificationParams__meta = Slot(uri=MCP._meta, name="mcpCancelledNotificationParams__meta", curie=MCP.curie('_meta'),
                    model_uri=MCP.mcpCancelledNotificationParams__meta, domain=None, range=Optional[Union[dict, McpNotificationMetaObject]])
 
-slots.mcpCancelledNotificationParams__reason = Slot(uri=MCP.reason, name="mcpCancelledNotificationParams__reason", curie=MCP.curie('reason'),
-                   model_uri=MCP.mcpCancelledNotificationParams__reason, domain=None, range=Optional[str])
+slots.mcpCancelledNotificationParams__reason_text = Slot(uri=MCP.reason_text, name="mcpCancelledNotificationParams__reason_text", curie=MCP.curie('reason_text'),
+                   model_uri=MCP.mcpCancelledNotificationParams__reason_text, domain=None, range=Optional[str])
 
 slots.mcpCancelledNotificationParams__request_id = Slot(uri=MCP.requestId, name="mcpCancelledNotificationParams__request_id", curie=MCP.curie('requestId'),
                    model_uri=MCP.mcpCancelledNotificationParams__request_id, domain=None, range=Union[str, int])
@@ -6405,11 +6406,11 @@ slots.mcpClientCapabilities__sampling = Slot(uri=MCP.sampling, name="mcpClientCa
 slots.mcpClientCapabilitiesElicitation__form = Slot(uri=MCP.form, name="mcpClientCapabilitiesElicitation__form", curie=MCP.curie('form'),
                    model_uri=MCP.mcpClientCapabilitiesElicitation__form, domain=None, range=Optional[Union[dict, McpJSONObject]])
 
-slots.mcpClientCapabilitiesElicitation__url = Slot(uri=MCP.url, name="mcpClientCapabilitiesElicitation__url", curie=MCP.curie('url'),
-                   model_uri=MCP.mcpClientCapabilitiesElicitation__url, domain=None, range=Optional[Union[dict, McpJSONObject]])
+slots.mcpClientCapabilitiesElicitation__url_settings = Slot(uri=MCP.url_settings, name="mcpClientCapabilitiesElicitation__url_settings", curie=MCP.curie('url_settings'),
+                   model_uri=MCP.mcpClientCapabilitiesElicitation__url_settings, domain=None, range=Optional[Union[dict, McpJSONObject]])
 
-slots.mcpClientCapabilitiesSampling__context = Slot(uri=MCP.context, name="mcpClientCapabilitiesSampling__context", curie=MCP.curie('context'),
-                   model_uri=MCP.mcpClientCapabilitiesSampling__context, domain=None, range=Optional[Union[dict, McpJSONObject]])
+slots.mcpClientCapabilitiesSampling__context_info = Slot(uri=MCP.context_info, name="mcpClientCapabilitiesSampling__context_info", curie=MCP.curie('context_info'),
+                   model_uri=MCP.mcpClientCapabilitiesSampling__context_info, domain=None, range=Optional[Union[dict, McpJSONObject]])
 
 slots.mcpClientCapabilitiesSampling__tools = Slot(uri=MCP.tools, name="mcpClientCapabilitiesSampling__tools", curie=MCP.curie('tools'),
                    model_uri=MCP.mcpClientCapabilitiesSampling__tools, domain=None, range=Optional[Union[dict, McpJSONObject]])
@@ -6423,8 +6424,8 @@ slots.mcpClientNotification__method = Slot(uri=MCP.method, name="mcpClientNotifi
 slots.mcpClientNotification__params = Slot(uri=MCP.params, name="mcpClientNotification__params", curie=MCP.curie('params'),
                    model_uri=MCP.mcpClientNotification__params, domain=None, range=Union[dict, McpCancelledNotificationParams])
 
-slots.mcpCompleteRequest__id = Slot(uri=MCP.id, name="mcpCompleteRequest__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpCompleteRequest__id, domain=None, range=Union[str, int])
+slots.mcpCompleteRequest__identifier = Slot(uri=MCP.identifier, name="mcpCompleteRequest__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpCompleteRequest__identifier, domain=None, range=Union[str, int])
 
 slots.mcpCompleteRequest__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpCompleteRequest__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpCompleteRequest__jsonrpc, domain=None, range=str)
@@ -6441,14 +6442,11 @@ slots.mcpCompleteRequestParams__meta = Slot(uri=MCP._meta, name="mcpCompleteRequ
 slots.mcpCompleteRequestParams__argument = Slot(uri=MCP.argument, name="mcpCompleteRequestParams__argument", curie=MCP.curie('argument'),
                    model_uri=MCP.mcpCompleteRequestParams__argument, domain=None, range=Union[dict, McpCompleteRequestParamsArgument])
 
-slots.mcpCompleteRequestParams__context = Slot(uri=MCP.context, name="mcpCompleteRequestParams__context", curie=MCP.curie('context'),
-                   model_uri=MCP.mcpCompleteRequestParams__context, domain=None, range=Optional[Union[dict, McpCompleteRequestParamsContext]])
+slots.mcpCompleteRequestParams__context_info = Slot(uri=MCP.context_info, name="mcpCompleteRequestParams__context_info", curie=MCP.curie('context_info'),
+                   model_uri=MCP.mcpCompleteRequestParams__context_info, domain=None, range=Optional[Union[dict, McpCompleteRequestParamsContext]])
 
 slots.mcpCompleteRequestParams__ref = Slot(uri=MCP.ref, name="mcpCompleteRequestParams__ref", curie=MCP.curie('ref'),
                    model_uri=MCP.mcpCompleteRequestParams__ref, domain=None, range=Union[dict, McpPromptReference, McpResourceTemplateReference])
-
-slots.mcpCompleteRequestParamsArgument__name = Slot(uri=MCP.name, name="mcpCompleteRequestParamsArgument__name", curie=MCP.curie('name'),
-                   model_uri=MCP.mcpCompleteRequestParamsArgument__name, domain=None, range=str)
 
 slots.mcpCompleteRequestParamsArgument__value = Slot(uri=MCP.value, name="mcpCompleteRequestParamsArgument__value", curie=MCP.curie('value'),
                    model_uri=MCP.mcpCompleteRequestParamsArgument__value, domain=None, range=str)
@@ -6474,8 +6472,8 @@ slots.mcpCompleteResultCompletion__total = Slot(uri=MCP.total, name="mcpComplete
 slots.mcpCompleteResultCompletion__values = Slot(uri=MCP.values, name="mcpCompleteResultCompletion__values", curie=MCP.curie('values'),
                    model_uri=MCP.mcpCompleteResultCompletion__values, domain=None, range=Union[str, list[str]])
 
-slots.mcpCompleteResultResponse__id = Slot(uri=MCP.id, name="mcpCompleteResultResponse__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpCompleteResultResponse__id, domain=None, range=Union[str, int])
+slots.mcpCompleteResultResponse__identifier = Slot(uri=MCP.identifier, name="mcpCompleteResultResponse__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpCompleteResultResponse__identifier, domain=None, range=Union[str, int])
 
 slots.mcpCompleteResultResponse__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpCompleteResultResponse__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpCompleteResultResponse__jsonrpc, domain=None, range=str)
@@ -6534,8 +6532,8 @@ slots.mcpCreateMessageResult__role = Slot(uri=MCP.role, name="mcpCreateMessageRe
 slots.mcpCreateMessageResult__stop_reason = Slot(uri=MCP.stopReason, name="mcpCreateMessageResult__stop_reason", curie=MCP.curie('stopReason'),
                    model_uri=MCP.mcpCreateMessageResult__stop_reason, domain=None, range=Optional[str])
 
-slots.mcpDiscoverRequest__id = Slot(uri=MCP.id, name="mcpDiscoverRequest__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpDiscoverRequest__id, domain=None, range=Union[str, int])
+slots.mcpDiscoverRequest__identifier = Slot(uri=MCP.identifier, name="mcpDiscoverRequest__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpDiscoverRequest__identifier, domain=None, range=Union[str, int])
 
 slots.mcpDiscoverRequest__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpDiscoverRequest__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpDiscoverRequest__jsonrpc, domain=None, range=str)
@@ -6567,8 +6565,8 @@ slots.mcpDiscoverResult__supported_versions = Slot(uri=MCP.supportedVersions, na
 slots.mcpDiscoverResult__ttl_ms = Slot(uri=MCP.ttlMs, name="mcpDiscoverResult__ttl_ms", curie=MCP.curie('ttlMs'),
                    model_uri=MCP.mcpDiscoverResult__ttl_ms, domain=None, range=int)
 
-slots.mcpDiscoverResultResponse__id = Slot(uri=MCP.id, name="mcpDiscoverResultResponse__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpDiscoverResultResponse__id, domain=None, range=Union[str, int])
+slots.mcpDiscoverResultResponse__identifier = Slot(uri=MCP.identifier, name="mcpDiscoverResultResponse__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpDiscoverResultResponse__identifier, domain=None, range=Union[str, int])
 
 slots.mcpDiscoverResultResponse__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpDiscoverResultResponse__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpDiscoverResultResponse__jsonrpc, domain=None, range=str)
@@ -6597,20 +6595,17 @@ slots.mcpElicitRequestFormParamsRequestedSchema__schema_dialect = Slot(uri=MCP.s
 slots.mcpElicitRequestFormParamsRequestedSchema__properties = Slot(uri=MCP.properties, name="mcpElicitRequestFormParamsRequestedSchema__properties", curie=MCP.curie('properties'),
                    model_uri=MCP.mcpElicitRequestFormParamsRequestedSchema__properties, domain=None, range=Union[dict, McpElicitRequestFormParamsRequestedSchemaProperties])
 
-slots.mcpElicitRequestFormParamsRequestedSchema__required = Slot(uri=MCP.required, name="mcpElicitRequestFormParamsRequestedSchema__required", curie=MCP.curie('required'),
-                   model_uri=MCP.mcpElicitRequestFormParamsRequestedSchema__required, domain=None, range=Optional[Union[str, list[str]]])
+slots.mcpElicitRequestFormParamsRequestedSchema__required_names = Slot(uri=MCP.required_names, name="mcpElicitRequestFormParamsRequestedSchema__required_names", curie=MCP.curie('required_names'),
+                   model_uri=MCP.mcpElicitRequestFormParamsRequestedSchema__required_names, domain=None, range=Optional[Union[str, list[str]]])
 
-slots.mcpElicitRequestFormParamsRequestedSchema__type = Slot(uri=MCP.type, name="mcpElicitRequestFormParamsRequestedSchema__type", curie=MCP.curie('type'),
-                   model_uri=MCP.mcpElicitRequestFormParamsRequestedSchema__type, domain=None, range=str)
+slots.mcpElicitRequestFormParamsRequestedSchema__kind = Slot(uri=MCP.kind, name="mcpElicitRequestFormParamsRequestedSchema__kind", curie=MCP.curie('kind'),
+                   model_uri=MCP.mcpElicitRequestFormParamsRequestedSchema__kind, domain=None, range=str)
 
 slots.mcpElicitRequestURLParams__message = Slot(uri=MCP.message, name="mcpElicitRequestURLParams__message", curie=MCP.curie('message'),
                    model_uri=MCP.mcpElicitRequestURLParams__message, domain=None, range=str)
 
 slots.mcpElicitRequestURLParams__mode = Slot(uri=MCP.mode, name="mcpElicitRequestURLParams__mode", curie=MCP.curie('mode'),
                    model_uri=MCP.mcpElicitRequestURLParams__mode, domain=None, range=str)
-
-slots.mcpElicitRequestURLParams__url = Slot(uri=MCP.url, name="mcpElicitRequestURLParams__url", curie=MCP.curie('url'),
-                   model_uri=MCP.mcpElicitRequestURLParams__url, domain=None, range=Union[str, URI])
 
 slots.mcpElicitResult__action = Slot(uri=MCP.action, name="mcpElicitResult__action", curie=MCP.curie('action'),
                    model_uri=MCP.mcpElicitResult__action, domain=None, range=Union[str, "McpElicitResultAction"])
@@ -6624,11 +6619,11 @@ slots.mcpEmbeddedResource__meta = Slot(uri=MCP._meta, name="mcpEmbeddedResource_
 slots.mcpEmbeddedResource__annotations = Slot(uri=MCP.annotations, name="mcpEmbeddedResource__annotations", curie=MCP.curie('annotations'),
                    model_uri=MCP.mcpEmbeddedResource__annotations, domain=None, range=Optional[Union[dict, McpAnnotations]])
 
-slots.mcpEmbeddedResource__resource = Slot(uri=MCP.resource, name="mcpEmbeddedResource__resource", curie=MCP.curie('resource'),
-                   model_uri=MCP.mcpEmbeddedResource__resource, domain=None, range=Union[dict, McpTextResourceContents, McpBlobResourceContents])
+slots.mcpEmbeddedResource__resource_contents = Slot(uri=MCP.resource_contents, name="mcpEmbeddedResource__resource_contents", curie=MCP.curie('resource_contents'),
+                   model_uri=MCP.mcpEmbeddedResource__resource_contents, domain=None, range=Union[dict, McpTextResourceContents, McpBlobResourceContents])
 
-slots.mcpEmbeddedResource__type = Slot(uri=MCP.type, name="mcpEmbeddedResource__type", curie=MCP.curie('type'),
-                   model_uri=MCP.mcpEmbeddedResource__type, domain=None, range=str)
+slots.mcpEmbeddedResource__kind = Slot(uri=MCP.kind, name="mcpEmbeddedResource__kind", curie=MCP.curie('kind'),
+                   model_uri=MCP.mcpEmbeddedResource__kind, domain=None, range=str)
 
 slots.mcpError__code = Slot(uri=MCP.code, name="mcpError__code", curie=MCP.curie('code'),
                    model_uri=MCP.mcpError__code, domain=None, range=int)
@@ -6639,8 +6634,8 @@ slots.mcpError__data = Slot(uri=MCP.data, name="mcpError__data", curie=MCP.curie
 slots.mcpError__message = Slot(uri=MCP.message, name="mcpError__message", curie=MCP.curie('message'),
                    model_uri=MCP.mcpError__message, domain=None, range=str)
 
-slots.mcpGetPromptRequest__id = Slot(uri=MCP.id, name="mcpGetPromptRequest__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpGetPromptRequest__id, domain=None, range=Union[str, int])
+slots.mcpGetPromptRequest__identifier = Slot(uri=MCP.identifier, name="mcpGetPromptRequest__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpGetPromptRequest__identifier, domain=None, range=Union[str, int])
 
 slots.mcpGetPromptRequest__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpGetPromptRequest__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpGetPromptRequest__jsonrpc, domain=None, range=str)
@@ -6660,17 +6655,11 @@ slots.mcpGetPromptRequestParams__arguments = Slot(uri=MCP.arguments, name="mcpGe
 slots.mcpGetPromptRequestParams__input_responses = Slot(uri=MCP.inputResponses, name="mcpGetPromptRequestParams__input_responses", curie=MCP.curie('inputResponses'),
                    model_uri=MCP.mcpGetPromptRequestParams__input_responses, domain=None, range=Optional[Union[dict, McpInputResponses]])
 
-slots.mcpGetPromptRequestParams__name = Slot(uri=MCP.name, name="mcpGetPromptRequestParams__name", curie=MCP.curie('name'),
-                   model_uri=MCP.mcpGetPromptRequestParams__name, domain=None, range=str)
-
 slots.mcpGetPromptRequestParams__request_state = Slot(uri=MCP.requestState, name="mcpGetPromptRequestParams__request_state", curie=MCP.curie('requestState'),
                    model_uri=MCP.mcpGetPromptRequestParams__request_state, domain=None, range=Optional[str])
 
 slots.mcpGetPromptResult__meta = Slot(uri=MCP._meta, name="mcpGetPromptResult__meta", curie=MCP.curie('_meta'),
                    model_uri=MCP.mcpGetPromptResult__meta, domain=None, range=Optional[Union[dict, McpResultMetaObject]])
-
-slots.mcpGetPromptResult__description = Slot(uri=MCP.description, name="mcpGetPromptResult__description", curie=MCP.curie('description'),
-                   model_uri=MCP.mcpGetPromptResult__description, domain=None, range=Optional[str])
 
 slots.mcpGetPromptResult__messages = Slot(uri=MCP.messages, name="mcpGetPromptResult__messages", curie=MCP.curie('messages'),
                    model_uri=MCP.mcpGetPromptResult__messages, domain=None, range=Union[Union[dict, McpPromptMessage], list[Union[dict, McpPromptMessage]]])
@@ -6678,8 +6667,8 @@ slots.mcpGetPromptResult__messages = Slot(uri=MCP.messages, name="mcpGetPromptRe
 slots.mcpGetPromptResult__result_type = Slot(uri=MCP.resultType, name="mcpGetPromptResult__result_type", curie=MCP.curie('resultType'),
                    model_uri=MCP.mcpGetPromptResult__result_type, domain=None, range=str)
 
-slots.mcpGetPromptResultResponse__id = Slot(uri=MCP.id, name="mcpGetPromptResultResponse__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpGetPromptResultResponse__id, domain=None, range=Union[str, int])
+slots.mcpGetPromptResultResponse__identifier = Slot(uri=MCP.identifier, name="mcpGetPromptResultResponse__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpGetPromptResultResponse__identifier, domain=None, range=Union[str, int])
 
 slots.mcpGetPromptResultResponse__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpGetPromptResultResponse__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpGetPromptResultResponse__jsonrpc, domain=None, range=str)
@@ -6690,8 +6679,8 @@ slots.mcpGetPromptResultResponse__result = Slot(uri=MCP.result, name="mcpGetProm
 slots.mcpHeaderMismatchError__error = Slot(uri=MCP.error, name="mcpHeaderMismatchError__error", curie=MCP.curie('error'),
                    model_uri=MCP.mcpHeaderMismatchError__error, domain=None, range=Union[dict, McpHeaderMismatchErrorError])
 
-slots.mcpHeaderMismatchError__id = Slot(uri=MCP.id, name="mcpHeaderMismatchError__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpHeaderMismatchError__id, domain=None, range=Optional[Union[str, int]])
+slots.mcpHeaderMismatchError__identifier = Slot(uri=MCP.identifier, name="mcpHeaderMismatchError__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpHeaderMismatchError__identifier, domain=None, range=Optional[Union[str, int]])
 
 slots.mcpHeaderMismatchError__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpHeaderMismatchError__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpHeaderMismatchError__jsonrpc, domain=None, range=str)
@@ -6726,23 +6715,11 @@ slots.mcpImageContent__data = Slot(uri=MCP.data, name="mcpImageContent__data", c
 slots.mcpImageContent__mime_type = Slot(uri=MCP.mimeType, name="mcpImageContent__mime_type", curie=MCP.curie('mimeType'),
                    model_uri=MCP.mcpImageContent__mime_type, domain=None, range=str)
 
-slots.mcpImageContent__type = Slot(uri=MCP.type, name="mcpImageContent__type", curie=MCP.curie('type'),
-                   model_uri=MCP.mcpImageContent__type, domain=None, range=str)
-
-slots.mcpImplementation__description = Slot(uri=MCP.description, name="mcpImplementation__description", curie=MCP.curie('description'),
-                   model_uri=MCP.mcpImplementation__description, domain=None, range=Optional[str])
+slots.mcpImageContent__kind = Slot(uri=MCP.kind, name="mcpImageContent__kind", curie=MCP.curie('kind'),
+                   model_uri=MCP.mcpImageContent__kind, domain=None, range=str)
 
 slots.mcpImplementation__icons = Slot(uri=MCP.icons, name="mcpImplementation__icons", curie=MCP.curie('icons'),
                    model_uri=MCP.mcpImplementation__icons, domain=None, range=Optional[Union[Union[dict, McpIcon], list[Union[dict, McpIcon]]]])
-
-slots.mcpImplementation__name = Slot(uri=MCP.name, name="mcpImplementation__name", curie=MCP.curie('name'),
-                   model_uri=MCP.mcpImplementation__name, domain=None, range=str)
-
-slots.mcpImplementation__title = Slot(uri=MCP.title, name="mcpImplementation__title", curie=MCP.curie('title'),
-                   model_uri=MCP.mcpImplementation__title, domain=None, range=Optional[str])
-
-slots.mcpImplementation__version = Slot(uri=MCP.version, name="mcpImplementation__version", curie=MCP.curie('version'),
-                   model_uri=MCP.mcpImplementation__version, domain=None, range=str)
 
 slots.mcpImplementation__website_url = Slot(uri=MCP.websiteUrl, name="mcpImplementation__website_url", curie=MCP.curie('websiteUrl'),
                    model_uri=MCP.mcpImplementation__website_url, domain=None, range=Optional[Union[str, URI]])
@@ -6798,8 +6775,8 @@ slots.mcpInvalidRequestError__message = Slot(uri=MCP.message, name="mcpInvalidRe
 slots.mcpJSONRPCErrorResponse__error = Slot(uri=MCP.error, name="mcpJSONRPCErrorResponse__error", curie=MCP.curie('error'),
                    model_uri=MCP.mcpJSONRPCErrorResponse__error, domain=None, range=Union[dict, McpError])
 
-slots.mcpJSONRPCErrorResponse__id = Slot(uri=MCP.id, name="mcpJSONRPCErrorResponse__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpJSONRPCErrorResponse__id, domain=None, range=Optional[Union[str, int]])
+slots.mcpJSONRPCErrorResponse__identifier = Slot(uri=MCP.identifier, name="mcpJSONRPCErrorResponse__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpJSONRPCErrorResponse__identifier, domain=None, range=Optional[Union[str, int]])
 
 slots.mcpJSONRPCErrorResponse__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpJSONRPCErrorResponse__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpJSONRPCErrorResponse__jsonrpc, domain=None, range=str)
@@ -6813,8 +6790,8 @@ slots.mcpJSONRPCNotification__method = Slot(uri=MCP.method, name="mcpJSONRPCNoti
 slots.mcpJSONRPCNotification__params = Slot(uri=MCP.params, name="mcpJSONRPCNotification__params", curie=MCP.curie('params'),
                    model_uri=MCP.mcpJSONRPCNotification__params, domain=None, range=Optional[Union[dict, McpJSONObject]])
 
-slots.mcpJSONRPCRequest__id = Slot(uri=MCP.id, name="mcpJSONRPCRequest__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpJSONRPCRequest__id, domain=None, range=Union[str, int])
+slots.mcpJSONRPCRequest__identifier = Slot(uri=MCP.identifier, name="mcpJSONRPCRequest__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpJSONRPCRequest__identifier, domain=None, range=Union[str, int])
 
 slots.mcpJSONRPCRequest__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpJSONRPCRequest__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpJSONRPCRequest__jsonrpc, domain=None, range=str)
@@ -6825,8 +6802,8 @@ slots.mcpJSONRPCRequest__method = Slot(uri=MCP.method, name="mcpJSONRPCRequest__
 slots.mcpJSONRPCRequest__params = Slot(uri=MCP.params, name="mcpJSONRPCRequest__params", curie=MCP.curie('params'),
                    model_uri=MCP.mcpJSONRPCRequest__params, domain=None, range=Optional[Union[dict, McpJSONObject]])
 
-slots.mcpJSONRPCResultResponse__id = Slot(uri=MCP.id, name="mcpJSONRPCResultResponse__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpJSONRPCResultResponse__id, domain=None, range=Union[str, int])
+slots.mcpJSONRPCResultResponse__identifier = Slot(uri=MCP.identifier, name="mcpJSONRPCResultResponse__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpJSONRPCResultResponse__identifier, domain=None, range=Union[str, int])
 
 slots.mcpJSONRPCResultResponse__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpJSONRPCResultResponse__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpJSONRPCResultResponse__jsonrpc, domain=None, range=str)
@@ -6837,23 +6814,17 @@ slots.mcpJSONRPCResultResponse__result = Slot(uri=MCP.result, name="mcpJSONRPCRe
 slots.mcpLegacyTitledEnumSchema__default = Slot(uri=MCP.default, name="mcpLegacyTitledEnumSchema__default", curie=MCP.curie('default'),
                    model_uri=MCP.mcpLegacyTitledEnumSchema__default, domain=None, range=Optional[str])
 
-slots.mcpLegacyTitledEnumSchema__description = Slot(uri=MCP.description, name="mcpLegacyTitledEnumSchema__description", curie=MCP.curie('description'),
-                   model_uri=MCP.mcpLegacyTitledEnumSchema__description, domain=None, range=Optional[str])
-
 slots.mcpLegacyTitledEnumSchema__enum = Slot(uri=MCP.enum, name="mcpLegacyTitledEnumSchema__enum", curie=MCP.curie('enum'),
                    model_uri=MCP.mcpLegacyTitledEnumSchema__enum, domain=None, range=Union[str, list[str]])
 
 slots.mcpLegacyTitledEnumSchema__enum_names = Slot(uri=MCP.enumNames, name="mcpLegacyTitledEnumSchema__enum_names", curie=MCP.curie('enumNames'),
                    model_uri=MCP.mcpLegacyTitledEnumSchema__enum_names, domain=None, range=Optional[Union[str, list[str]]])
 
-slots.mcpLegacyTitledEnumSchema__title = Slot(uri=MCP.title, name="mcpLegacyTitledEnumSchema__title", curie=MCP.curie('title'),
-                   model_uri=MCP.mcpLegacyTitledEnumSchema__title, domain=None, range=Optional[str])
+slots.mcpLegacyTitledEnumSchema__kind = Slot(uri=MCP.kind, name="mcpLegacyTitledEnumSchema__kind", curie=MCP.curie('kind'),
+                   model_uri=MCP.mcpLegacyTitledEnumSchema__kind, domain=None, range=str)
 
-slots.mcpLegacyTitledEnumSchema__type = Slot(uri=MCP.type, name="mcpLegacyTitledEnumSchema__type", curie=MCP.curie('type'),
-                   model_uri=MCP.mcpLegacyTitledEnumSchema__type, domain=None, range=str)
-
-slots.mcpListPromptsRequest__id = Slot(uri=MCP.id, name="mcpListPromptsRequest__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpListPromptsRequest__id, domain=None, range=Union[str, int])
+slots.mcpListPromptsRequest__identifier = Slot(uri=MCP.identifier, name="mcpListPromptsRequest__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpListPromptsRequest__identifier, domain=None, range=Union[str, int])
 
 slots.mcpListPromptsRequest__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpListPromptsRequest__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpListPromptsRequest__jsonrpc, domain=None, range=str)
@@ -6882,8 +6853,8 @@ slots.mcpListPromptsResult__result_type = Slot(uri=MCP.resultType, name="mcpList
 slots.mcpListPromptsResult__ttl_ms = Slot(uri=MCP.ttlMs, name="mcpListPromptsResult__ttl_ms", curie=MCP.curie('ttlMs'),
                    model_uri=MCP.mcpListPromptsResult__ttl_ms, domain=None, range=int)
 
-slots.mcpListPromptsResultResponse__id = Slot(uri=MCP.id, name="mcpListPromptsResultResponse__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpListPromptsResultResponse__id, domain=None, range=Union[str, int])
+slots.mcpListPromptsResultResponse__identifier = Slot(uri=MCP.identifier, name="mcpListPromptsResultResponse__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpListPromptsResultResponse__identifier, domain=None, range=Union[str, int])
 
 slots.mcpListPromptsResultResponse__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpListPromptsResultResponse__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpListPromptsResultResponse__jsonrpc, domain=None, range=str)
@@ -6891,8 +6862,8 @@ slots.mcpListPromptsResultResponse__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpLis
 slots.mcpListPromptsResultResponse__result = Slot(uri=MCP.result, name="mcpListPromptsResultResponse__result", curie=MCP.curie('result'),
                    model_uri=MCP.mcpListPromptsResultResponse__result, domain=None, range=Union[dict, McpListPromptsResult])
 
-slots.mcpListResourceTemplatesRequest__id = Slot(uri=MCP.id, name="mcpListResourceTemplatesRequest__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpListResourceTemplatesRequest__id, domain=None, range=Union[str, int])
+slots.mcpListResourceTemplatesRequest__identifier = Slot(uri=MCP.identifier, name="mcpListResourceTemplatesRequest__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpListResourceTemplatesRequest__identifier, domain=None, range=Union[str, int])
 
 slots.mcpListResourceTemplatesRequest__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpListResourceTemplatesRequest__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpListResourceTemplatesRequest__jsonrpc, domain=None, range=str)
@@ -6921,8 +6892,8 @@ slots.mcpListResourceTemplatesResult__result_type = Slot(uri=MCP.resultType, nam
 slots.mcpListResourceTemplatesResult__ttl_ms = Slot(uri=MCP.ttlMs, name="mcpListResourceTemplatesResult__ttl_ms", curie=MCP.curie('ttlMs'),
                    model_uri=MCP.mcpListResourceTemplatesResult__ttl_ms, domain=None, range=int)
 
-slots.mcpListResourceTemplatesResultResponse__id = Slot(uri=MCP.id, name="mcpListResourceTemplatesResultResponse__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpListResourceTemplatesResultResponse__id, domain=None, range=Union[str, int])
+slots.mcpListResourceTemplatesResultResponse__identifier = Slot(uri=MCP.identifier, name="mcpListResourceTemplatesResultResponse__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpListResourceTemplatesResultResponse__identifier, domain=None, range=Union[str, int])
 
 slots.mcpListResourceTemplatesResultResponse__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpListResourceTemplatesResultResponse__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpListResourceTemplatesResultResponse__jsonrpc, domain=None, range=str)
@@ -6930,8 +6901,8 @@ slots.mcpListResourceTemplatesResultResponse__jsonrpc = Slot(uri=MCP.jsonrpc, na
 slots.mcpListResourceTemplatesResultResponse__result = Slot(uri=MCP.result, name="mcpListResourceTemplatesResultResponse__result", curie=MCP.curie('result'),
                    model_uri=MCP.mcpListResourceTemplatesResultResponse__result, domain=None, range=Union[dict, McpListResourceTemplatesResult])
 
-slots.mcpListResourcesRequest__id = Slot(uri=MCP.id, name="mcpListResourcesRequest__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpListResourcesRequest__id, domain=None, range=Union[str, int])
+slots.mcpListResourcesRequest__identifier = Slot(uri=MCP.identifier, name="mcpListResourcesRequest__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpListResourcesRequest__identifier, domain=None, range=Union[str, int])
 
 slots.mcpListResourcesRequest__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpListResourcesRequest__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpListResourcesRequest__jsonrpc, domain=None, range=str)
@@ -6960,8 +6931,8 @@ slots.mcpListResourcesResult__result_type = Slot(uri=MCP.resultType, name="mcpLi
 slots.mcpListResourcesResult__ttl_ms = Slot(uri=MCP.ttlMs, name="mcpListResourcesResult__ttl_ms", curie=MCP.curie('ttlMs'),
                    model_uri=MCP.mcpListResourcesResult__ttl_ms, domain=None, range=int)
 
-slots.mcpListResourcesResultResponse__id = Slot(uri=MCP.id, name="mcpListResourcesResultResponse__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpListResourcesResultResponse__id, domain=None, range=Union[str, int])
+slots.mcpListResourcesResultResponse__identifier = Slot(uri=MCP.identifier, name="mcpListResourcesResultResponse__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpListResourcesResultResponse__identifier, domain=None, range=Union[str, int])
 
 slots.mcpListResourcesResultResponse__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpListResourcesResultResponse__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpListResourcesResultResponse__jsonrpc, domain=None, range=str)
@@ -6981,8 +6952,8 @@ slots.mcpListRootsRequestParams__meta = Slot(uri=MCP._meta, name="mcpListRootsRe
 slots.mcpListRootsResult__roots = Slot(uri=MCP.roots, name="mcpListRootsResult__roots", curie=MCP.curie('roots'),
                    model_uri=MCP.mcpListRootsResult__roots, domain=None, range=Union[Union[dict, McpRoot], list[Union[dict, McpRoot]]])
 
-slots.mcpListToolsRequest__id = Slot(uri=MCP.id, name="mcpListToolsRequest__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpListToolsRequest__id, domain=None, range=Union[str, int])
+slots.mcpListToolsRequest__identifier = Slot(uri=MCP.identifier, name="mcpListToolsRequest__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpListToolsRequest__identifier, domain=None, range=Union[str, int])
 
 slots.mcpListToolsRequest__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpListToolsRequest__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpListToolsRequest__jsonrpc, domain=None, range=str)
@@ -7011,8 +6982,8 @@ slots.mcpListToolsResult__tools = Slot(uri=MCP.tools, name="mcpListToolsResult__
 slots.mcpListToolsResult__ttl_ms = Slot(uri=MCP.ttlMs, name="mcpListToolsResult__ttl_ms", curie=MCP.curie('ttlMs'),
                    model_uri=MCP.mcpListToolsResult__ttl_ms, domain=None, range=int)
 
-slots.mcpListToolsResultResponse__id = Slot(uri=MCP.id, name="mcpListToolsResultResponse__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpListToolsResultResponse__id, domain=None, range=Union[str, int])
+slots.mcpListToolsResultResponse__identifier = Slot(uri=MCP.identifier, name="mcpListToolsResultResponse__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpListToolsResultResponse__identifier, domain=None, range=Union[str, int])
 
 slots.mcpListToolsResultResponse__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpListToolsResultResponse__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpListToolsResultResponse__jsonrpc, domain=None, range=str)
@@ -7053,8 +7024,8 @@ slots.mcpMethodNotFoundError__message = Slot(uri=MCP.message, name="mcpMethodNot
 slots.mcpMissingRequiredClientCapabilityError__error = Slot(uri=MCP.error, name="mcpMissingRequiredClientCapabilityError__error", curie=MCP.curie('error'),
                    model_uri=MCP.mcpMissingRequiredClientCapabilityError__error, domain=None, range=Union[dict, McpMissingRequiredClientCapabilityErrorError])
 
-slots.mcpMissingRequiredClientCapabilityError__id = Slot(uri=MCP.id, name="mcpMissingRequiredClientCapabilityError__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpMissingRequiredClientCapabilityError__id, domain=None, range=Optional[Union[str, int]])
+slots.mcpMissingRequiredClientCapabilityError__identifier = Slot(uri=MCP.identifier, name="mcpMissingRequiredClientCapabilityError__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpMissingRequiredClientCapabilityError__identifier, domain=None, range=Optional[Union[str, int]])
 
 slots.mcpMissingRequiredClientCapabilityError__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpMissingRequiredClientCapabilityError__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpMissingRequiredClientCapabilityError__jsonrpc, domain=None, range=str)
@@ -7067,9 +7038,6 @@ slots.mcpMissingRequiredClientCapabilityErrorError__data = Slot(uri=MCP.data, na
 
 slots.mcpMissingRequiredClientCapabilityErrorErrorData__required_capabilities = Slot(uri=MCP.requiredCapabilities, name="mcpMissingRequiredClientCapabilityErrorErrorData__required_capabilities", curie=MCP.curie('requiredCapabilities'),
                    model_uri=MCP.mcpMissingRequiredClientCapabilityErrorErrorData__required_capabilities, domain=None, range=Union[dict, McpClientCapabilities])
-
-slots.mcpModelHint__name = Slot(uri=MCP.name, name="mcpModelHint__name", curie=MCP.curie('name'),
-                   model_uri=MCP.mcpModelHint__name, domain=None, range=Optional[str])
 
 slots.mcpModelPreferences__cost_priority = Slot(uri=MCP.costPriority, name="mcpModelPreferences__cost_priority", curie=MCP.curie('costPriority'),
                    model_uri=MCP.mcpModelPreferences__cost_priority, domain=None, range=Optional[float])
@@ -7098,23 +7066,17 @@ slots.mcpNotificationParams__meta = Slot(uri=MCP._meta, name="mcpNotificationPar
 slots.mcpNumberSchema__default = Slot(uri=MCP.default, name="mcpNumberSchema__default", curie=MCP.curie('default'),
                    model_uri=MCP.mcpNumberSchema__default, domain=None, range=Optional[float])
 
-slots.mcpNumberSchema__description = Slot(uri=MCP.description, name="mcpNumberSchema__description", curie=MCP.curie('description'),
-                   model_uri=MCP.mcpNumberSchema__description, domain=None, range=Optional[str])
-
 slots.mcpNumberSchema__maximum = Slot(uri=MCP.maximum, name="mcpNumberSchema__maximum", curie=MCP.curie('maximum'),
                    model_uri=MCP.mcpNumberSchema__maximum, domain=None, range=Optional[float])
 
 slots.mcpNumberSchema__minimum = Slot(uri=MCP.minimum, name="mcpNumberSchema__minimum", curie=MCP.curie('minimum'),
                    model_uri=MCP.mcpNumberSchema__minimum, domain=None, range=Optional[float])
 
-slots.mcpNumberSchema__title = Slot(uri=MCP.title, name="mcpNumberSchema__title", curie=MCP.curie('title'),
-                   model_uri=MCP.mcpNumberSchema__title, domain=None, range=Optional[str])
+slots.mcpNumberSchema__kind = Slot(uri=MCP.kind, name="mcpNumberSchema__kind", curie=MCP.curie('kind'),
+                   model_uri=MCP.mcpNumberSchema__kind, domain=None, range=Union[str, "McpNumberSchemaType"])
 
-slots.mcpNumberSchema__type = Slot(uri=MCP.type, name="mcpNumberSchema__type", curie=MCP.curie('type'),
-                   model_uri=MCP.mcpNumberSchema__type, domain=None, range=Union[str, "McpNumberSchemaType"])
-
-slots.mcpPaginatedRequest__id = Slot(uri=MCP.id, name="mcpPaginatedRequest__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpPaginatedRequest__id, domain=None, range=Union[str, int])
+slots.mcpPaginatedRequest__identifier = Slot(uri=MCP.identifier, name="mcpPaginatedRequest__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpPaginatedRequest__identifier, domain=None, range=Union[str, int])
 
 slots.mcpPaginatedRequest__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpPaginatedRequest__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpPaginatedRequest__jsonrpc, domain=None, range=str)
@@ -7179,29 +7141,11 @@ slots.mcpPrompt__meta = Slot(uri=MCP._meta, name="mcpPrompt__meta", curie=MCP.cu
 slots.mcpPrompt__arguments = Slot(uri=MCP.arguments, name="mcpPrompt__arguments", curie=MCP.curie('arguments'),
                    model_uri=MCP.mcpPrompt__arguments, domain=None, range=Optional[Union[Union[dict, McpPromptArgument], list[Union[dict, McpPromptArgument]]]])
 
-slots.mcpPrompt__description = Slot(uri=MCP.description, name="mcpPrompt__description", curie=MCP.curie('description'),
-                   model_uri=MCP.mcpPrompt__description, domain=None, range=Optional[str])
-
 slots.mcpPrompt__icons = Slot(uri=MCP.icons, name="mcpPrompt__icons", curie=MCP.curie('icons'),
                    model_uri=MCP.mcpPrompt__icons, domain=None, range=Optional[Union[Union[dict, McpIcon], list[Union[dict, McpIcon]]]])
 
-slots.mcpPrompt__name = Slot(uri=MCP.name, name="mcpPrompt__name", curie=MCP.curie('name'),
-                   model_uri=MCP.mcpPrompt__name, domain=None, range=str)
-
-slots.mcpPrompt__title = Slot(uri=MCP.title, name="mcpPrompt__title", curie=MCP.curie('title'),
-                   model_uri=MCP.mcpPrompt__title, domain=None, range=Optional[str])
-
-slots.mcpPromptArgument__description = Slot(uri=MCP.description, name="mcpPromptArgument__description", curie=MCP.curie('description'),
-                   model_uri=MCP.mcpPromptArgument__description, domain=None, range=Optional[str])
-
-slots.mcpPromptArgument__name = Slot(uri=MCP.name, name="mcpPromptArgument__name", curie=MCP.curie('name'),
-                   model_uri=MCP.mcpPromptArgument__name, domain=None, range=str)
-
-slots.mcpPromptArgument__required = Slot(uri=MCP.required, name="mcpPromptArgument__required", curie=MCP.curie('required'),
+slots.mcpPromptArgument__required = Slot(uri=SCHEMA.valueRequired, name="mcpPromptArgument__required", curie=SCHEMA.curie('valueRequired'),
                    model_uri=MCP.mcpPromptArgument__required, domain=None, range=Optional[Union[bool, Bool]])
-
-slots.mcpPromptArgument__title = Slot(uri=MCP.title, name="mcpPromptArgument__title", curie=MCP.curie('title'),
-                   model_uri=MCP.mcpPromptArgument__title, domain=None, range=Optional[str])
 
 slots.mcpPromptListChangedNotification__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpPromptListChangedNotification__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpPromptListChangedNotification__jsonrpc, domain=None, range=str)
@@ -7218,17 +7162,11 @@ slots.mcpPromptMessage__content = Slot(uri=MCP.content, name="mcpPromptMessage__
 slots.mcpPromptMessage__role = Slot(uri=MCP.role, name="mcpPromptMessage__role", curie=MCP.curie('role'),
                    model_uri=MCP.mcpPromptMessage__role, domain=None, range=Union[str, "McpRole"])
 
-slots.mcpPromptReference__name = Slot(uri=MCP.name, name="mcpPromptReference__name", curie=MCP.curie('name'),
-                   model_uri=MCP.mcpPromptReference__name, domain=None, range=str)
+slots.mcpPromptReference__kind = Slot(uri=MCP.kind, name="mcpPromptReference__kind", curie=MCP.curie('kind'),
+                   model_uri=MCP.mcpPromptReference__kind, domain=None, range=str)
 
-slots.mcpPromptReference__title = Slot(uri=MCP.title, name="mcpPromptReference__title", curie=MCP.curie('title'),
-                   model_uri=MCP.mcpPromptReference__title, domain=None, range=Optional[str])
-
-slots.mcpPromptReference__type = Slot(uri=MCP.type, name="mcpPromptReference__type", curie=MCP.curie('type'),
-                   model_uri=MCP.mcpPromptReference__type, domain=None, range=str)
-
-slots.mcpReadResourceRequest__id = Slot(uri=MCP.id, name="mcpReadResourceRequest__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpReadResourceRequest__id, domain=None, range=Union[str, int])
+slots.mcpReadResourceRequest__identifier = Slot(uri=MCP.identifier, name="mcpReadResourceRequest__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpReadResourceRequest__identifier, domain=None, range=Union[str, int])
 
 slots.mcpReadResourceRequest__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpReadResourceRequest__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpReadResourceRequest__jsonrpc, domain=None, range=str)
@@ -7266,8 +7204,8 @@ slots.mcpReadResourceResult__result_type = Slot(uri=MCP.resultType, name="mcpRea
 slots.mcpReadResourceResult__ttl_ms = Slot(uri=MCP.ttlMs, name="mcpReadResourceResult__ttl_ms", curie=MCP.curie('ttlMs'),
                    model_uri=MCP.mcpReadResourceResult__ttl_ms, domain=None, range=int)
 
-slots.mcpReadResourceResultResponse__id = Slot(uri=MCP.id, name="mcpReadResourceResultResponse__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpReadResourceResultResponse__id, domain=None, range=Union[str, int])
+slots.mcpReadResourceResultResponse__identifier = Slot(uri=MCP.identifier, name="mcpReadResourceResultResponse__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpReadResourceResultResponse__identifier, domain=None, range=Union[str, int])
 
 slots.mcpReadResourceResultResponse__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpReadResourceResultResponse__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpReadResourceResultResponse__jsonrpc, domain=None, range=str)
@@ -7305,23 +7243,14 @@ slots.mcpResource__meta = Slot(uri=MCP._meta, name="mcpResource__meta", curie=MC
 slots.mcpResource__annotations = Slot(uri=MCP.annotations, name="mcpResource__annotations", curie=MCP.curie('annotations'),
                    model_uri=MCP.mcpResource__annotations, domain=None, range=Optional[Union[dict, McpAnnotations]])
 
-slots.mcpResource__description = Slot(uri=MCP.description, name="mcpResource__description", curie=MCP.curie('description'),
-                   model_uri=MCP.mcpResource__description, domain=None, range=Optional[str])
-
 slots.mcpResource__icons = Slot(uri=MCP.icons, name="mcpResource__icons", curie=MCP.curie('icons'),
                    model_uri=MCP.mcpResource__icons, domain=None, range=Optional[Union[Union[dict, McpIcon], list[Union[dict, McpIcon]]]])
 
 slots.mcpResource__mime_type = Slot(uri=MCP.mimeType, name="mcpResource__mime_type", curie=MCP.curie('mimeType'),
                    model_uri=MCP.mcpResource__mime_type, domain=None, range=Optional[str])
 
-slots.mcpResource__name = Slot(uri=MCP.name, name="mcpResource__name", curie=MCP.curie('name'),
-                   model_uri=MCP.mcpResource__name, domain=None, range=str)
-
 slots.mcpResource__size = Slot(uri=MCP.size, name="mcpResource__size", curie=MCP.curie('size'),
                    model_uri=MCP.mcpResource__size, domain=None, range=Optional[int])
-
-slots.mcpResource__title = Slot(uri=MCP.title, name="mcpResource__title", curie=MCP.curie('title'),
-                   model_uri=MCP.mcpResource__title, domain=None, range=Optional[str])
 
 slots.mcpResource__uri = Slot(uri=MCP.uri, name="mcpResource__uri", curie=MCP.curie('uri'),
                    model_uri=MCP.mcpResource__uri, domain=None, range=Union[str, URI])
@@ -7341,26 +7270,17 @@ slots.mcpResourceLink__meta = Slot(uri=MCP._meta, name="mcpResourceLink__meta", 
 slots.mcpResourceLink__annotations = Slot(uri=MCP.annotations, name="mcpResourceLink__annotations", curie=MCP.curie('annotations'),
                    model_uri=MCP.mcpResourceLink__annotations, domain=None, range=Optional[Union[dict, McpAnnotations]])
 
-slots.mcpResourceLink__description = Slot(uri=MCP.description, name="mcpResourceLink__description", curie=MCP.curie('description'),
-                   model_uri=MCP.mcpResourceLink__description, domain=None, range=Optional[str])
-
 slots.mcpResourceLink__icons = Slot(uri=MCP.icons, name="mcpResourceLink__icons", curie=MCP.curie('icons'),
                    model_uri=MCP.mcpResourceLink__icons, domain=None, range=Optional[Union[Union[dict, McpIcon], list[Union[dict, McpIcon]]]])
 
 slots.mcpResourceLink__mime_type = Slot(uri=MCP.mimeType, name="mcpResourceLink__mime_type", curie=MCP.curie('mimeType'),
                    model_uri=MCP.mcpResourceLink__mime_type, domain=None, range=Optional[str])
 
-slots.mcpResourceLink__name = Slot(uri=MCP.name, name="mcpResourceLink__name", curie=MCP.curie('name'),
-                   model_uri=MCP.mcpResourceLink__name, domain=None, range=str)
-
 slots.mcpResourceLink__size = Slot(uri=MCP.size, name="mcpResourceLink__size", curie=MCP.curie('size'),
                    model_uri=MCP.mcpResourceLink__size, domain=None, range=Optional[int])
 
-slots.mcpResourceLink__title = Slot(uri=MCP.title, name="mcpResourceLink__title", curie=MCP.curie('title'),
-                   model_uri=MCP.mcpResourceLink__title, domain=None, range=Optional[str])
-
-slots.mcpResourceLink__type = Slot(uri=MCP.type, name="mcpResourceLink__type", curie=MCP.curie('type'),
-                   model_uri=MCP.mcpResourceLink__type, domain=None, range=str)
+slots.mcpResourceLink__kind = Slot(uri=MCP.kind, name="mcpResourceLink__kind", curie=MCP.curie('kind'),
+                   model_uri=MCP.mcpResourceLink__kind, domain=None, range=str)
 
 slots.mcpResourceLink__uri = Slot(uri=MCP.uri, name="mcpResourceLink__uri", curie=MCP.curie('uri'),
                    model_uri=MCP.mcpResourceLink__uri, domain=None, range=Union[str, URI])
@@ -7386,26 +7306,17 @@ slots.mcpResourceTemplate__meta = Slot(uri=MCP._meta, name="mcpResourceTemplate_
 slots.mcpResourceTemplate__annotations = Slot(uri=MCP.annotations, name="mcpResourceTemplate__annotations", curie=MCP.curie('annotations'),
                    model_uri=MCP.mcpResourceTemplate__annotations, domain=None, range=Optional[Union[dict, McpAnnotations]])
 
-slots.mcpResourceTemplate__description = Slot(uri=MCP.description, name="mcpResourceTemplate__description", curie=MCP.curie('description'),
-                   model_uri=MCP.mcpResourceTemplate__description, domain=None, range=Optional[str])
-
 slots.mcpResourceTemplate__icons = Slot(uri=MCP.icons, name="mcpResourceTemplate__icons", curie=MCP.curie('icons'),
                    model_uri=MCP.mcpResourceTemplate__icons, domain=None, range=Optional[Union[Union[dict, McpIcon], list[Union[dict, McpIcon]]]])
 
 slots.mcpResourceTemplate__mime_type = Slot(uri=MCP.mimeType, name="mcpResourceTemplate__mime_type", curie=MCP.curie('mimeType'),
                    model_uri=MCP.mcpResourceTemplate__mime_type, domain=None, range=Optional[str])
 
-slots.mcpResourceTemplate__name = Slot(uri=MCP.name, name="mcpResourceTemplate__name", curie=MCP.curie('name'),
-                   model_uri=MCP.mcpResourceTemplate__name, domain=None, range=str)
-
-slots.mcpResourceTemplate__title = Slot(uri=MCP.title, name="mcpResourceTemplate__title", curie=MCP.curie('title'),
-                   model_uri=MCP.mcpResourceTemplate__title, domain=None, range=Optional[str])
-
 slots.mcpResourceTemplate__uri_template = Slot(uri=MCP.uriTemplate, name="mcpResourceTemplate__uri_template", curie=MCP.curie('uriTemplate'),
                    model_uri=MCP.mcpResourceTemplate__uri_template, domain=None, range=Union[str, McpUriTemplate])
 
-slots.mcpResourceTemplateReference__type = Slot(uri=MCP.type, name="mcpResourceTemplateReference__type", curie=MCP.curie('type'),
-                   model_uri=MCP.mcpResourceTemplateReference__type, domain=None, range=str)
+slots.mcpResourceTemplateReference__kind = Slot(uri=MCP.kind, name="mcpResourceTemplateReference__kind", curie=MCP.curie('kind'),
+                   model_uri=MCP.mcpResourceTemplateReference__kind, domain=None, range=str)
 
 slots.mcpResourceTemplateReference__uri = Slot(uri=MCP.uri, name="mcpResourceTemplateReference__uri", curie=MCP.curie('uri'),
                    model_uri=MCP.mcpResourceTemplateReference__uri, domain=None, range=Union[str, McpUriTemplate])
@@ -7436,9 +7347,6 @@ slots.mcpResultMetaObject__mcp_server_info = Slot(uri=MCP.mcp_server_info, name=
 
 slots.mcpRoot__meta = Slot(uri=MCP._meta, name="mcpRoot__meta", curie=MCP.curie('_meta'),
                    model_uri=MCP.mcpRoot__meta, domain=None, range=Optional[Union[dict, McpMetaObject]])
-
-slots.mcpRoot__name = Slot(uri=MCP.name, name="mcpRoot__name", curie=MCP.curie('name'),
-                   model_uri=MCP.mcpRoot__name, domain=None, range=Optional[str])
 
 slots.mcpRoot__uri = Slot(uri=MCP.uri, name="mcpRoot__uri", curie=MCP.curie('uri'),
                    model_uri=MCP.mcpRoot__uri, domain=None, range=Union[str, URI])
@@ -7488,9 +7396,6 @@ slots.mcpServerCapabilitiesTools__list_changed = Slot(uri=MCP.listChanged, name=
 slots.mcpStringSchema__default = Slot(uri=MCP.default, name="mcpStringSchema__default", curie=MCP.curie('default'),
                    model_uri=MCP.mcpStringSchema__default, domain=None, range=Optional[str])
 
-slots.mcpStringSchema__description = Slot(uri=MCP.description, name="mcpStringSchema__description", curie=MCP.curie('description'),
-                   model_uri=MCP.mcpStringSchema__description, domain=None, range=Optional[str])
-
 slots.mcpStringSchema__format = Slot(uri=MCP.format, name="mcpStringSchema__format", curie=MCP.curie('format'),
                    model_uri=MCP.mcpStringSchema__format, domain=None, range=Optional[Union[str, "McpStringSchemaFormat"]])
 
@@ -7500,11 +7405,8 @@ slots.mcpStringSchema__max_length = Slot(uri=MCP.maxLength, name="mcpStringSchem
 slots.mcpStringSchema__min_length = Slot(uri=MCP.minLength, name="mcpStringSchema__min_length", curie=MCP.curie('minLength'),
                    model_uri=MCP.mcpStringSchema__min_length, domain=None, range=Optional[int])
 
-slots.mcpStringSchema__title = Slot(uri=MCP.title, name="mcpStringSchema__title", curie=MCP.curie('title'),
-                   model_uri=MCP.mcpStringSchema__title, domain=None, range=Optional[str])
-
-slots.mcpStringSchema__type = Slot(uri=MCP.type, name="mcpStringSchema__type", curie=MCP.curie('type'),
-                   model_uri=MCP.mcpStringSchema__type, domain=None, range=str)
+slots.mcpStringSchema__kind = Slot(uri=MCP.kind, name="mcpStringSchema__kind", curie=MCP.curie('kind'),
+                   model_uri=MCP.mcpStringSchema__kind, domain=None, range=str)
 
 slots.mcpSubscriptionFilter__prompts_list_changed = Slot(uri=MCP.promptsListChanged, name="mcpSubscriptionFilter__prompts_list_changed", curie=MCP.curie('promptsListChanged'),
                    model_uri=MCP.mcpSubscriptionFilter__prompts_list_changed, domain=None, range=Optional[Union[bool, Bool]])
@@ -7533,8 +7435,8 @@ slots.mcpSubscriptionsAcknowledgedNotificationParams__meta = Slot(uri=MCP._meta,
 slots.mcpSubscriptionsAcknowledgedNotificationParams__notifications = Slot(uri=MCP.notifications, name="mcpSubscriptionsAcknowledgedNotificationParams__notifications", curie=MCP.curie('notifications'),
                    model_uri=MCP.mcpSubscriptionsAcknowledgedNotificationParams__notifications, domain=None, range=Union[dict, McpSubscriptionFilter])
 
-slots.mcpSubscriptionsListenRequest__id = Slot(uri=MCP.id, name="mcpSubscriptionsListenRequest__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpSubscriptionsListenRequest__id, domain=None, range=Union[str, int])
+slots.mcpSubscriptionsListenRequest__identifier = Slot(uri=MCP.identifier, name="mcpSubscriptionsListenRequest__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpSubscriptionsListenRequest__identifier, domain=None, range=Union[str, int])
 
 slots.mcpSubscriptionsListenRequest__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpSubscriptionsListenRequest__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpSubscriptionsListenRequest__jsonrpc, domain=None, range=str)
@@ -7563,8 +7465,8 @@ slots.mcpSubscriptionsListenResultMetaObject__mcp_server_info = Slot(uri=MCP.mcp
 slots.mcpSubscriptionsListenResultMetaObject__mcp_subscription_id = Slot(uri=MCP.mcp_subscription_id, name="mcpSubscriptionsListenResultMetaObject__mcp_subscription_id", curie=MCP.curie('mcp_subscription_id'),
                    model_uri=MCP.mcpSubscriptionsListenResultMetaObject__mcp_subscription_id, domain=None, range=Union[str, int])
 
-slots.mcpSubscriptionsListenResultResponse__id = Slot(uri=MCP.id, name="mcpSubscriptionsListenResultResponse__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpSubscriptionsListenResultResponse__id, domain=None, range=Union[str, int])
+slots.mcpSubscriptionsListenResultResponse__identifier = Slot(uri=MCP.identifier, name="mcpSubscriptionsListenResultResponse__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpSubscriptionsListenResultResponse__identifier, domain=None, range=Union[str, int])
 
 slots.mcpSubscriptionsListenResultResponse__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpSubscriptionsListenResultResponse__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpSubscriptionsListenResultResponse__jsonrpc, domain=None, range=str)
@@ -7581,8 +7483,8 @@ slots.mcpTextContent__annotations = Slot(uri=MCP.annotations, name="mcpTextConte
 slots.mcpTextContent__text = Slot(uri=MCP.text, name="mcpTextContent__text", curie=MCP.curie('text'),
                    model_uri=MCP.mcpTextContent__text, domain=None, range=str)
 
-slots.mcpTextContent__type = Slot(uri=MCP.type, name="mcpTextContent__type", curie=MCP.curie('type'),
-                   model_uri=MCP.mcpTextContent__type, domain=None, range=str)
+slots.mcpTextContent__kind = Slot(uri=MCP.kind, name="mcpTextContent__kind", curie=MCP.curie('kind'),
+                   model_uri=MCP.mcpTextContent__kind, domain=None, range=str)
 
 slots.mcpTextResourceContents__meta = Slot(uri=MCP._meta, name="mcpTextResourceContents__meta", curie=MCP.curie('_meta'),
                    model_uri=MCP.mcpTextResourceContents__meta, domain=None, range=Optional[Union[dict, McpMetaObject]])
@@ -7599,9 +7501,6 @@ slots.mcpTextResourceContents__uri = Slot(uri=MCP.uri, name="mcpTextResourceCont
 slots.mcpTitledMultiSelectEnumSchema__default = Slot(uri=MCP.default, name="mcpTitledMultiSelectEnumSchema__default", curie=MCP.curie('default'),
                    model_uri=MCP.mcpTitledMultiSelectEnumSchema__default, domain=None, range=Optional[Union[str, list[str]]])
 
-slots.mcpTitledMultiSelectEnumSchema__description = Slot(uri=MCP.description, name="mcpTitledMultiSelectEnumSchema__description", curie=MCP.curie('description'),
-                   model_uri=MCP.mcpTitledMultiSelectEnumSchema__description, domain=None, range=Optional[str])
-
 slots.mcpTitledMultiSelectEnumSchema__items = Slot(uri=MCP.items, name="mcpTitledMultiSelectEnumSchema__items", curie=MCP.curie('items'),
                    model_uri=MCP.mcpTitledMultiSelectEnumSchema__items, domain=None, range=Union[dict, McpTitledMultiSelectEnumSchemaItems])
 
@@ -7611,11 +7510,8 @@ slots.mcpTitledMultiSelectEnumSchema__max_items = Slot(uri=MCP.maxItems, name="m
 slots.mcpTitledMultiSelectEnumSchema__min_items = Slot(uri=MCP.minItems, name="mcpTitledMultiSelectEnumSchema__min_items", curie=MCP.curie('minItems'),
                    model_uri=MCP.mcpTitledMultiSelectEnumSchema__min_items, domain=None, range=Optional[int])
 
-slots.mcpTitledMultiSelectEnumSchema__title = Slot(uri=MCP.title, name="mcpTitledMultiSelectEnumSchema__title", curie=MCP.curie('title'),
-                   model_uri=MCP.mcpTitledMultiSelectEnumSchema__title, domain=None, range=Optional[str])
-
-slots.mcpTitledMultiSelectEnumSchema__type = Slot(uri=MCP.type, name="mcpTitledMultiSelectEnumSchema__type", curie=MCP.curie('type'),
-                   model_uri=MCP.mcpTitledMultiSelectEnumSchema__type, domain=None, range=str)
+slots.mcpTitledMultiSelectEnumSchema__kind = Slot(uri=MCP.kind, name="mcpTitledMultiSelectEnumSchema__kind", curie=MCP.curie('kind'),
+                   model_uri=MCP.mcpTitledMultiSelectEnumSchema__kind, domain=None, range=str)
 
 slots.mcpTitledMultiSelectEnumSchemaItems__any_of = Slot(uri=MCP.anyOf, name="mcpTitledMultiSelectEnumSchemaItems__any_of", curie=MCP.curie('anyOf'),
                    model_uri=MCP.mcpTitledMultiSelectEnumSchemaItems__any_of, domain=None, range=Union[Union[dict, McpTitledMultiSelectEnumSchemaItemsAnyOf], list[Union[dict, McpTitledMultiSelectEnumSchemaItemsAnyOf]]])
@@ -7623,29 +7519,17 @@ slots.mcpTitledMultiSelectEnumSchemaItems__any_of = Slot(uri=MCP.anyOf, name="mc
 slots.mcpTitledMultiSelectEnumSchemaItemsAnyOf__const = Slot(uri=MCP.const, name="mcpTitledMultiSelectEnumSchemaItemsAnyOf__const", curie=MCP.curie('const'),
                    model_uri=MCP.mcpTitledMultiSelectEnumSchemaItemsAnyOf__const, domain=None, range=str)
 
-slots.mcpTitledMultiSelectEnumSchemaItemsAnyOf__title = Slot(uri=MCP.title, name="mcpTitledMultiSelectEnumSchemaItemsAnyOf__title", curie=MCP.curie('title'),
-                   model_uri=MCP.mcpTitledMultiSelectEnumSchemaItemsAnyOf__title, domain=None, range=str)
-
 slots.mcpTitledSingleSelectEnumSchema__default = Slot(uri=MCP.default, name="mcpTitledSingleSelectEnumSchema__default", curie=MCP.curie('default'),
                    model_uri=MCP.mcpTitledSingleSelectEnumSchema__default, domain=None, range=Optional[str])
-
-slots.mcpTitledSingleSelectEnumSchema__description = Slot(uri=MCP.description, name="mcpTitledSingleSelectEnumSchema__description", curie=MCP.curie('description'),
-                   model_uri=MCP.mcpTitledSingleSelectEnumSchema__description, domain=None, range=Optional[str])
 
 slots.mcpTitledSingleSelectEnumSchema__one_of = Slot(uri=MCP.oneOf, name="mcpTitledSingleSelectEnumSchema__one_of", curie=MCP.curie('oneOf'),
                    model_uri=MCP.mcpTitledSingleSelectEnumSchema__one_of, domain=None, range=Union[Union[dict, McpTitledSingleSelectEnumSchemaOneOf], list[Union[dict, McpTitledSingleSelectEnumSchemaOneOf]]])
 
-slots.mcpTitledSingleSelectEnumSchema__title = Slot(uri=MCP.title, name="mcpTitledSingleSelectEnumSchema__title", curie=MCP.curie('title'),
-                   model_uri=MCP.mcpTitledSingleSelectEnumSchema__title, domain=None, range=Optional[str])
-
-slots.mcpTitledSingleSelectEnumSchema__type = Slot(uri=MCP.type, name="mcpTitledSingleSelectEnumSchema__type", curie=MCP.curie('type'),
-                   model_uri=MCP.mcpTitledSingleSelectEnumSchema__type, domain=None, range=str)
+slots.mcpTitledSingleSelectEnumSchema__kind = Slot(uri=MCP.kind, name="mcpTitledSingleSelectEnumSchema__kind", curie=MCP.curie('kind'),
+                   model_uri=MCP.mcpTitledSingleSelectEnumSchema__kind, domain=None, range=str)
 
 slots.mcpTitledSingleSelectEnumSchemaOneOf__const = Slot(uri=MCP.const, name="mcpTitledSingleSelectEnumSchemaOneOf__const", curie=MCP.curie('const'),
                    model_uri=MCP.mcpTitledSingleSelectEnumSchemaOneOf__const, domain=None, range=str)
-
-slots.mcpTitledSingleSelectEnumSchemaOneOf__title = Slot(uri=MCP.title, name="mcpTitledSingleSelectEnumSchemaOneOf__title", curie=MCP.curie('title'),
-                   model_uri=MCP.mcpTitledSingleSelectEnumSchemaOneOf__title, domain=None, range=str)
 
 slots.mcpTool__meta = Slot(uri=MCP._meta, name="mcpTool__meta", curie=MCP.curie('_meta'),
                    model_uri=MCP.mcpTool__meta, domain=None, range=Optional[Union[dict, McpMetaObject]])
@@ -7653,23 +7537,14 @@ slots.mcpTool__meta = Slot(uri=MCP._meta, name="mcpTool__meta", curie=MCP.curie(
 slots.mcpTool__annotations = Slot(uri=MCP.annotations, name="mcpTool__annotations", curie=MCP.curie('annotations'),
                    model_uri=MCP.mcpTool__annotations, domain=None, range=Optional[Union[dict, McpToolAnnotations]])
 
-slots.mcpTool__description = Slot(uri=MCP.description, name="mcpTool__description", curie=MCP.curie('description'),
-                   model_uri=MCP.mcpTool__description, domain=None, range=Optional[str])
-
 slots.mcpTool__icons = Slot(uri=MCP.icons, name="mcpTool__icons", curie=MCP.curie('icons'),
                    model_uri=MCP.mcpTool__icons, domain=None, range=Optional[Union[Union[dict, McpIcon], list[Union[dict, McpIcon]]]])
 
 slots.mcpTool__input_schema = Slot(uri=MCP.inputSchema, name="mcpTool__input_schema", curie=MCP.curie('inputSchema'),
                    model_uri=MCP.mcpTool__input_schema, domain=None, range=Union[dict, McpToolInputSchema])
 
-slots.mcpTool__name = Slot(uri=MCP.name, name="mcpTool__name", curie=MCP.curie('name'),
-                   model_uri=MCP.mcpTool__name, domain=None, range=str)
-
 slots.mcpTool__output_schema = Slot(uri=MCP.outputSchema, name="mcpTool__output_schema", curie=MCP.curie('outputSchema'),
                    model_uri=MCP.mcpTool__output_schema, domain=None, range=Optional[Union[dict, McpToolOutputSchema]])
-
-slots.mcpTool__title = Slot(uri=MCP.title, name="mcpTool__title", curie=MCP.curie('title'),
-                   model_uri=MCP.mcpTool__title, domain=None, range=Optional[str])
 
 slots.mcpToolAnnotations__destructive_hint = Slot(uri=MCP.destructiveHint, name="mcpToolAnnotations__destructive_hint", curie=MCP.curie('destructiveHint'),
                    model_uri=MCP.mcpToolAnnotations__destructive_hint, domain=None, range=Optional[Union[bool, Bool]])
@@ -7683,17 +7558,14 @@ slots.mcpToolAnnotations__open_world_hint = Slot(uri=MCP.openWorldHint, name="mc
 slots.mcpToolAnnotations__read_only_hint = Slot(uri=MCP.readOnlyHint, name="mcpToolAnnotations__read_only_hint", curie=MCP.curie('readOnlyHint'),
                    model_uri=MCP.mcpToolAnnotations__read_only_hint, domain=None, range=Optional[Union[bool, Bool]])
 
-slots.mcpToolAnnotations__title = Slot(uri=MCP.title, name="mcpToolAnnotations__title", curie=MCP.curie('title'),
-                   model_uri=MCP.mcpToolAnnotations__title, domain=None, range=Optional[str])
-
 slots.mcpToolChoice__mode = Slot(uri=MCP.mode, name="mcpToolChoice__mode", curie=MCP.curie('mode'),
                    model_uri=MCP.mcpToolChoice__mode, domain=None, range=Optional[Union[str, "McpToolChoiceMode"]])
 
 slots.mcpToolInputSchema__schema_dialect = Slot(uri=MCP.schema_dialect, name="mcpToolInputSchema__schema_dialect", curie=MCP.curie('schema_dialect'),
                    model_uri=MCP.mcpToolInputSchema__schema_dialect, domain=None, range=Optional[str])
 
-slots.mcpToolInputSchema__type = Slot(uri=MCP.type, name="mcpToolInputSchema__type", curie=MCP.curie('type'),
-                   model_uri=MCP.mcpToolInputSchema__type, domain=None, range=str)
+slots.mcpToolInputSchema__kind = Slot(uri=MCP.kind, name="mcpToolInputSchema__kind", curie=MCP.curie('kind'),
+                   model_uri=MCP.mcpToolInputSchema__kind, domain=None, range=str)
 
 slots.mcpToolListChangedNotification__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpToolListChangedNotification__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpToolListChangedNotification__jsonrpc, domain=None, range=str)
@@ -7722,29 +7594,26 @@ slots.mcpToolResultContent__structured_content = Slot(uri=MCP.structuredContent,
 slots.mcpToolResultContent__tool_use_id = Slot(uri=MCP.toolUseId, name="mcpToolResultContent__tool_use_id", curie=MCP.curie('toolUseId'),
                    model_uri=MCP.mcpToolResultContent__tool_use_id, domain=None, range=str)
 
-slots.mcpToolResultContent__type = Slot(uri=MCP.type, name="mcpToolResultContent__type", curie=MCP.curie('type'),
-                   model_uri=MCP.mcpToolResultContent__type, domain=None, range=str)
+slots.mcpToolResultContent__kind = Slot(uri=MCP.kind, name="mcpToolResultContent__kind", curie=MCP.curie('kind'),
+                   model_uri=MCP.mcpToolResultContent__kind, domain=None, range=str)
 
 slots.mcpToolUseContent__meta = Slot(uri=MCP._meta, name="mcpToolUseContent__meta", curie=MCP.curie('_meta'),
                    model_uri=MCP.mcpToolUseContent__meta, domain=None, range=Optional[Union[dict, McpMetaObject]])
 
-slots.mcpToolUseContent__id = Slot(uri=MCP.id, name="mcpToolUseContent__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpToolUseContent__id, domain=None, range=str)
+slots.mcpToolUseContent__identifier = Slot(uri=MCP.identifier, name="mcpToolUseContent__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpToolUseContent__identifier, domain=None, range=str)
 
 slots.mcpToolUseContent__input = Slot(uri=MCP.input, name="mcpToolUseContent__input", curie=MCP.curie('input'),
                    model_uri=MCP.mcpToolUseContent__input, domain=None, range=Union[dict, McpJSONObject])
 
-slots.mcpToolUseContent__name = Slot(uri=MCP.name, name="mcpToolUseContent__name", curie=MCP.curie('name'),
-                   model_uri=MCP.mcpToolUseContent__name, domain=None, range=str)
-
-slots.mcpToolUseContent__type = Slot(uri=MCP.type, name="mcpToolUseContent__type", curie=MCP.curie('type'),
-                   model_uri=MCP.mcpToolUseContent__type, domain=None, range=str)
+slots.mcpToolUseContent__kind = Slot(uri=MCP.kind, name="mcpToolUseContent__kind", curie=MCP.curie('kind'),
+                   model_uri=MCP.mcpToolUseContent__kind, domain=None, range=str)
 
 slots.mcpUnsupportedProtocolVersionError__error = Slot(uri=MCP.error, name="mcpUnsupportedProtocolVersionError__error", curie=MCP.curie('error'),
                    model_uri=MCP.mcpUnsupportedProtocolVersionError__error, domain=None, range=Union[dict, McpUnsupportedProtocolVersionErrorError])
 
-slots.mcpUnsupportedProtocolVersionError__id = Slot(uri=MCP.id, name="mcpUnsupportedProtocolVersionError__id", curie=MCP.curie('id'),
-                   model_uri=MCP.mcpUnsupportedProtocolVersionError__id, domain=None, range=Optional[Union[str, int]])
+slots.mcpUnsupportedProtocolVersionError__identifier = Slot(uri=MCP.identifier, name="mcpUnsupportedProtocolVersionError__identifier", curie=MCP.curie('identifier'),
+                   model_uri=MCP.mcpUnsupportedProtocolVersionError__identifier, domain=None, range=Optional[Union[str, int]])
 
 slots.mcpUnsupportedProtocolVersionError__jsonrpc = Slot(uri=MCP.jsonrpc, name="mcpUnsupportedProtocolVersionError__jsonrpc", curie=MCP.curie('jsonrpc'),
                    model_uri=MCP.mcpUnsupportedProtocolVersionError__jsonrpc, domain=None, range=str)
@@ -7764,9 +7633,6 @@ slots.mcpUnsupportedProtocolVersionErrorErrorData__supported = Slot(uri=MCP.supp
 slots.mcpUntitledMultiSelectEnumSchema__default = Slot(uri=MCP.default, name="mcpUntitledMultiSelectEnumSchema__default", curie=MCP.curie('default'),
                    model_uri=MCP.mcpUntitledMultiSelectEnumSchema__default, domain=None, range=Optional[Union[str, list[str]]])
 
-slots.mcpUntitledMultiSelectEnumSchema__description = Slot(uri=MCP.description, name="mcpUntitledMultiSelectEnumSchema__description", curie=MCP.curie('description'),
-                   model_uri=MCP.mcpUntitledMultiSelectEnumSchema__description, domain=None, range=Optional[str])
-
 slots.mcpUntitledMultiSelectEnumSchema__items = Slot(uri=MCP.items, name="mcpUntitledMultiSelectEnumSchema__items", curie=MCP.curie('items'),
                    model_uri=MCP.mcpUntitledMultiSelectEnumSchema__items, domain=None, range=Union[dict, McpUntitledMultiSelectEnumSchemaItems])
 
@@ -7776,29 +7642,179 @@ slots.mcpUntitledMultiSelectEnumSchema__max_items = Slot(uri=MCP.maxItems, name=
 slots.mcpUntitledMultiSelectEnumSchema__min_items = Slot(uri=MCP.minItems, name="mcpUntitledMultiSelectEnumSchema__min_items", curie=MCP.curie('minItems'),
                    model_uri=MCP.mcpUntitledMultiSelectEnumSchema__min_items, domain=None, range=Optional[int])
 
-slots.mcpUntitledMultiSelectEnumSchema__title = Slot(uri=MCP.title, name="mcpUntitledMultiSelectEnumSchema__title", curie=MCP.curie('title'),
-                   model_uri=MCP.mcpUntitledMultiSelectEnumSchema__title, domain=None, range=Optional[str])
-
-slots.mcpUntitledMultiSelectEnumSchema__type = Slot(uri=MCP.type, name="mcpUntitledMultiSelectEnumSchema__type", curie=MCP.curie('type'),
-                   model_uri=MCP.mcpUntitledMultiSelectEnumSchema__type, domain=None, range=str)
+slots.mcpUntitledMultiSelectEnumSchema__kind = Slot(uri=MCP.kind, name="mcpUntitledMultiSelectEnumSchema__kind", curie=MCP.curie('kind'),
+                   model_uri=MCP.mcpUntitledMultiSelectEnumSchema__kind, domain=None, range=str)
 
 slots.mcpUntitledMultiSelectEnumSchemaItems__enum = Slot(uri=MCP.enum, name="mcpUntitledMultiSelectEnumSchemaItems__enum", curie=MCP.curie('enum'),
                    model_uri=MCP.mcpUntitledMultiSelectEnumSchemaItems__enum, domain=None, range=Union[str, list[str]])
 
-slots.mcpUntitledMultiSelectEnumSchemaItems__type = Slot(uri=MCP.type, name="mcpUntitledMultiSelectEnumSchemaItems__type", curie=MCP.curie('type'),
-                   model_uri=MCP.mcpUntitledMultiSelectEnumSchemaItems__type, domain=None, range=str)
+slots.mcpUntitledMultiSelectEnumSchemaItems__kind = Slot(uri=MCP.kind, name="mcpUntitledMultiSelectEnumSchemaItems__kind", curie=MCP.curie('kind'),
+                   model_uri=MCP.mcpUntitledMultiSelectEnumSchemaItems__kind, domain=None, range=str)
 
 slots.mcpUntitledSingleSelectEnumSchema__default = Slot(uri=MCP.default, name="mcpUntitledSingleSelectEnumSchema__default", curie=MCP.curie('default'),
                    model_uri=MCP.mcpUntitledSingleSelectEnumSchema__default, domain=None, range=Optional[str])
 
-slots.mcpUntitledSingleSelectEnumSchema__description = Slot(uri=MCP.description, name="mcpUntitledSingleSelectEnumSchema__description", curie=MCP.curie('description'),
-                   model_uri=MCP.mcpUntitledSingleSelectEnumSchema__description, domain=None, range=Optional[str])
-
 slots.mcpUntitledSingleSelectEnumSchema__enum = Slot(uri=MCP.enum, name="mcpUntitledSingleSelectEnumSchema__enum", curie=MCP.curie('enum'),
                    model_uri=MCP.mcpUntitledSingleSelectEnumSchema__enum, domain=None, range=Union[str, list[str]])
 
-slots.mcpUntitledSingleSelectEnumSchema__title = Slot(uri=MCP.title, name="mcpUntitledSingleSelectEnumSchema__title", curie=MCP.curie('title'),
-                   model_uri=MCP.mcpUntitledSingleSelectEnumSchema__title, domain=None, range=Optional[str])
+slots.mcpUntitledSingleSelectEnumSchema__kind = Slot(uri=MCP.kind, name="mcpUntitledSingleSelectEnumSchema__kind", curie=MCP.curie('kind'),
+                   model_uri=MCP.mcpUntitledSingleSelectEnumSchema__kind, domain=None, range=str)
 
-slots.mcpUntitledSingleSelectEnumSchema__type = Slot(uri=MCP.type, name="mcpUntitledSingleSelectEnumSchema__type", curie=MCP.curie('type'),
-                   model_uri=MCP.mcpUntitledSingleSelectEnumSchema__type, domain=None, range=str)
+slots.McpBaseMetadata_name = Slot(uri=SCHEMA.name, name="McpBaseMetadata_name", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpBaseMetadata_name, domain=McpBaseMetadata, range=str)
+
+slots.McpBaseMetadata_title = Slot(uri=SCHEMA.name, name="McpBaseMetadata_title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpBaseMetadata_title, domain=McpBaseMetadata, range=Optional[str])
+
+slots.McpBooleanSchema_description = Slot(uri=SCHEMA.description, name="McpBooleanSchema_description", curie=SCHEMA.curie('description'),
+                   model_uri=MCP.McpBooleanSchema_description, domain=McpBooleanSchema, range=Optional[str])
+
+slots.McpBooleanSchema_title = Slot(uri=SCHEMA.name, name="McpBooleanSchema_title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpBooleanSchema_title, domain=McpBooleanSchema, range=Optional[str])
+
+slots.McpCallToolRequestParams_name = Slot(uri=SCHEMA.name, name="McpCallToolRequestParams_name", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpCallToolRequestParams_name, domain=McpCallToolRequestParams, range=str)
+
+slots.McpCompleteRequestParamsArgument_name = Slot(uri=SCHEMA.name, name="McpCompleteRequestParamsArgument_name", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpCompleteRequestParamsArgument_name, domain=McpCompleteRequestParamsArgument, range=str)
+
+slots.McpElicitRequestURLParams_url = Slot(uri=SCHEMA.url, name="McpElicitRequestURLParams_url", curie=SCHEMA.curie('url'),
+                   model_uri=MCP.McpElicitRequestURLParams_url, domain=McpElicitRequestURLParams, range=Union[str, URI])
+
+slots.McpGetPromptRequestParams_name = Slot(uri=SCHEMA.name, name="McpGetPromptRequestParams_name", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpGetPromptRequestParams_name, domain=McpGetPromptRequestParams, range=str)
+
+slots.McpGetPromptResult_description = Slot(uri=SCHEMA.description, name="McpGetPromptResult_description", curie=SCHEMA.curie('description'),
+                   model_uri=MCP.McpGetPromptResult_description, domain=McpGetPromptResult, range=Optional[str])
+
+slots.McpImplementation_description = Slot(uri=SCHEMA.description, name="McpImplementation_description", curie=SCHEMA.curie('description'),
+                   model_uri=MCP.McpImplementation_description, domain=McpImplementation, range=Optional[str])
+
+slots.McpImplementation_name = Slot(uri=SCHEMA.name, name="McpImplementation_name", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpImplementation_name, domain=McpImplementation, range=str)
+
+slots.McpImplementation_title = Slot(uri=SCHEMA.name, name="McpImplementation_title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpImplementation_title, domain=McpImplementation, range=Optional[str])
+
+slots.McpImplementation_version = Slot(uri=SCHEMA.version, name="McpImplementation_version", curie=SCHEMA.curie('version'),
+                   model_uri=MCP.McpImplementation_version, domain=McpImplementation, range=str)
+
+slots.McpLegacyTitledEnumSchema_description = Slot(uri=SCHEMA.description, name="McpLegacyTitledEnumSchema_description", curie=SCHEMA.curie('description'),
+                   model_uri=MCP.McpLegacyTitledEnumSchema_description, domain=McpLegacyTitledEnumSchema, range=Optional[str])
+
+slots.McpLegacyTitledEnumSchema_title = Slot(uri=SCHEMA.name, name="McpLegacyTitledEnumSchema_title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpLegacyTitledEnumSchema_title, domain=McpLegacyTitledEnumSchema, range=Optional[str])
+
+slots.McpModelHint_name = Slot(uri=SCHEMA.name, name="McpModelHint_name", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpModelHint_name, domain=McpModelHint, range=Optional[str])
+
+slots.McpNumberSchema_description = Slot(uri=SCHEMA.description, name="McpNumberSchema_description", curie=SCHEMA.curie('description'),
+                   model_uri=MCP.McpNumberSchema_description, domain=McpNumberSchema, range=Optional[str])
+
+slots.McpNumberSchema_title = Slot(uri=SCHEMA.name, name="McpNumberSchema_title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpNumberSchema_title, domain=McpNumberSchema, range=Optional[str])
+
+slots.McpPrompt_description = Slot(uri=SCHEMA.description, name="McpPrompt_description", curie=SCHEMA.curie('description'),
+                   model_uri=MCP.McpPrompt_description, domain=McpPrompt, range=Optional[str])
+
+slots.McpPrompt_name = Slot(uri=SCHEMA.name, name="McpPrompt_name", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpPrompt_name, domain=McpPrompt, range=str)
+
+slots.McpPrompt_title = Slot(uri=SCHEMA.name, name="McpPrompt_title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpPrompt_title, domain=McpPrompt, range=Optional[str])
+
+slots.McpPromptArgument_description = Slot(uri=SCHEMA.description, name="McpPromptArgument_description", curie=SCHEMA.curie('description'),
+                   model_uri=MCP.McpPromptArgument_description, domain=McpPromptArgument, range=Optional[str])
+
+slots.McpPromptArgument_name = Slot(uri=SCHEMA.name, name="McpPromptArgument_name", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpPromptArgument_name, domain=McpPromptArgument, range=str)
+
+slots.McpPromptArgument_title = Slot(uri=SCHEMA.name, name="McpPromptArgument_title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpPromptArgument_title, domain=McpPromptArgument, range=Optional[str])
+
+slots.McpPromptReference_name = Slot(uri=SCHEMA.name, name="McpPromptReference_name", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpPromptReference_name, domain=McpPromptReference, range=str)
+
+slots.McpPromptReference_title = Slot(uri=SCHEMA.name, name="McpPromptReference_title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpPromptReference_title, domain=McpPromptReference, range=Optional[str])
+
+slots.McpResource_description = Slot(uri=SCHEMA.description, name="McpResource_description", curie=SCHEMA.curie('description'),
+                   model_uri=MCP.McpResource_description, domain=McpResource, range=Optional[str])
+
+slots.McpResource_name = Slot(uri=SCHEMA.name, name="McpResource_name", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpResource_name, domain=McpResource, range=str)
+
+slots.McpResource_title = Slot(uri=SCHEMA.name, name="McpResource_title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpResource_title, domain=McpResource, range=Optional[str])
+
+slots.McpResourceLink_description = Slot(uri=SCHEMA.description, name="McpResourceLink_description", curie=SCHEMA.curie('description'),
+                   model_uri=MCP.McpResourceLink_description, domain=McpResourceLink, range=Optional[str])
+
+slots.McpResourceLink_name = Slot(uri=SCHEMA.name, name="McpResourceLink_name", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpResourceLink_name, domain=McpResourceLink, range=str)
+
+slots.McpResourceLink_title = Slot(uri=SCHEMA.name, name="McpResourceLink_title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpResourceLink_title, domain=McpResourceLink, range=Optional[str])
+
+slots.McpResourceTemplate_description = Slot(uri=SCHEMA.description, name="McpResourceTemplate_description", curie=SCHEMA.curie('description'),
+                   model_uri=MCP.McpResourceTemplate_description, domain=McpResourceTemplate, range=Optional[str])
+
+slots.McpResourceTemplate_name = Slot(uri=SCHEMA.name, name="McpResourceTemplate_name", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpResourceTemplate_name, domain=McpResourceTemplate, range=str)
+
+slots.McpResourceTemplate_title = Slot(uri=SCHEMA.name, name="McpResourceTemplate_title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpResourceTemplate_title, domain=McpResourceTemplate, range=Optional[str])
+
+slots.McpRoot_name = Slot(uri=SCHEMA.name, name="McpRoot_name", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpRoot_name, domain=McpRoot, range=Optional[str])
+
+slots.McpStringSchema_description = Slot(uri=SCHEMA.description, name="McpStringSchema_description", curie=SCHEMA.curie('description'),
+                   model_uri=MCP.McpStringSchema_description, domain=McpStringSchema, range=Optional[str])
+
+slots.McpStringSchema_title = Slot(uri=SCHEMA.name, name="McpStringSchema_title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpStringSchema_title, domain=McpStringSchema, range=Optional[str])
+
+slots.McpTitledMultiSelectEnumSchema_description = Slot(uri=SCHEMA.description, name="McpTitledMultiSelectEnumSchema_description", curie=SCHEMA.curie('description'),
+                   model_uri=MCP.McpTitledMultiSelectEnumSchema_description, domain=McpTitledMultiSelectEnumSchema, range=Optional[str])
+
+slots.McpTitledMultiSelectEnumSchema_title = Slot(uri=SCHEMA.name, name="McpTitledMultiSelectEnumSchema_title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpTitledMultiSelectEnumSchema_title, domain=McpTitledMultiSelectEnumSchema, range=Optional[str])
+
+slots.McpTitledMultiSelectEnumSchemaItemsAnyOf_title = Slot(uri=SCHEMA.name, name="McpTitledMultiSelectEnumSchemaItemsAnyOf_title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpTitledMultiSelectEnumSchemaItemsAnyOf_title, domain=McpTitledMultiSelectEnumSchemaItemsAnyOf, range=str)
+
+slots.McpTitledSingleSelectEnumSchema_description = Slot(uri=SCHEMA.description, name="McpTitledSingleSelectEnumSchema_description", curie=SCHEMA.curie('description'),
+                   model_uri=MCP.McpTitledSingleSelectEnumSchema_description, domain=McpTitledSingleSelectEnumSchema, range=Optional[str])
+
+slots.McpTitledSingleSelectEnumSchema_title = Slot(uri=SCHEMA.name, name="McpTitledSingleSelectEnumSchema_title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpTitledSingleSelectEnumSchema_title, domain=McpTitledSingleSelectEnumSchema, range=Optional[str])
+
+slots.McpTitledSingleSelectEnumSchemaOneOf_title = Slot(uri=SCHEMA.name, name="McpTitledSingleSelectEnumSchemaOneOf_title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpTitledSingleSelectEnumSchemaOneOf_title, domain=McpTitledSingleSelectEnumSchemaOneOf, range=str)
+
+slots.McpTool_description = Slot(uri=SCHEMA.description, name="McpTool_description", curie=SCHEMA.curie('description'),
+                   model_uri=MCP.McpTool_description, domain=McpTool, range=Optional[str])
+
+slots.McpTool_name = Slot(uri=SCHEMA.name, name="McpTool_name", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpTool_name, domain=McpTool, range=str)
+
+slots.McpTool_title = Slot(uri=SCHEMA.name, name="McpTool_title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpTool_title, domain=McpTool, range=Optional[str])
+
+slots.McpToolAnnotations_title = Slot(uri=SCHEMA.name, name="McpToolAnnotations_title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpToolAnnotations_title, domain=McpToolAnnotations, range=Optional[str])
+
+slots.McpToolUseContent_name = Slot(uri=SCHEMA.name, name="McpToolUseContent_name", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpToolUseContent_name, domain=McpToolUseContent, range=str)
+
+slots.McpUntitledMultiSelectEnumSchema_description = Slot(uri=SCHEMA.description, name="McpUntitledMultiSelectEnumSchema_description", curie=SCHEMA.curie('description'),
+                   model_uri=MCP.McpUntitledMultiSelectEnumSchema_description, domain=McpUntitledMultiSelectEnumSchema, range=Optional[str])
+
+slots.McpUntitledMultiSelectEnumSchema_title = Slot(uri=SCHEMA.name, name="McpUntitledMultiSelectEnumSchema_title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpUntitledMultiSelectEnumSchema_title, domain=McpUntitledMultiSelectEnumSchema, range=Optional[str])
+
+slots.McpUntitledSingleSelectEnumSchema_description = Slot(uri=SCHEMA.description, name="McpUntitledSingleSelectEnumSchema_description", curie=SCHEMA.curie('description'),
+                   model_uri=MCP.McpUntitledSingleSelectEnumSchema_description, domain=McpUntitledSingleSelectEnumSchema, range=Optional[str])
+
+slots.McpUntitledSingleSelectEnumSchema_title = Slot(uri=SCHEMA.name, name="McpUntitledSingleSelectEnumSchema_title", curie=SCHEMA.curie('name'),
+                   model_uri=MCP.McpUntitledSingleSelectEnumSchema_title, domain=McpUntitledSingleSelectEnumSchema, range=Optional[str])

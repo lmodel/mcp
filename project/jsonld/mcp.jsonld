@@ -27,6 +27,10 @@
       "prefix_reference": "http://www.w3.org/2001/XMLSchema#"
     },
     {
+      "prefix_prefix": "schema",
+      "prefix_reference": "http://schema.org/"
+    },
+    {
       "prefix_prefix": "mcp_schema",
       "prefix_reference": "https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/2026-07-28/schema/2026-07-28/schema.json#/$defs/"
     }
@@ -859,11 +863,142 @@
   ],
   "slots": [
     {
-      "name": "mcpAnnotations__audience",
+      "name": "description",
+      "definition_uri": "https://w3id.org/lmodel/mcp/description",
+      "description": "A description for people to read.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/description"
+      ],
+      "slot_uri": "http://schema.org/description",
+      "owner": "McpUntitledSingleSelectEnumSchema",
+      "domain_of": [
+        "McpBooleanSchema",
+        "McpGetPromptResult",
+        "McpImplementation",
+        "McpLegacyTitledEnumSchema",
+        "McpNumberSchema",
+        "McpPrompt",
+        "McpPromptArgument",
+        "McpResource",
+        "McpResourceLink",
+        "McpResourceTemplate",
+        "McpStringSchema",
+        "McpTitledMultiSelectEnumSchema",
+        "McpTitledSingleSelectEnumSchema",
+        "McpTool",
+        "McpUntitledMultiSelectEnumSchema",
+        "McpUntitledSingleSelectEnumSchema"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "name",
+      "definition_uri": "https://w3id.org/lmodel/mcp/name",
+      "description": "The name a program uses to refer to the thing.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "slot_uri": "http://schema.org/name",
+      "owner": "McpToolUseContent",
+      "domain_of": [
+        "McpBaseMetadata",
+        "McpCallToolRequestParams",
+        "McpCompleteRequestParamsArgument",
+        "McpGetPromptRequestParams",
+        "McpImplementation",
+        "McpModelHint",
+        "McpPrompt",
+        "McpPromptArgument",
+        "McpPromptReference",
+        "McpResource",
+        "McpResourceLink",
+        "McpResourceTemplate",
+        "McpRoot",
+        "McpTool",
+        "McpToolUseContent"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "A name for people to read.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "slot_uri": "http://schema.org/name",
+      "owner": "McpUntitledSingleSelectEnumSchema",
+      "domain_of": [
+        "McpBaseMetadata",
+        "McpBooleanSchema",
+        "McpImplementation",
+        "McpLegacyTitledEnumSchema",
+        "McpNumberSchema",
+        "McpPrompt",
+        "McpPromptArgument",
+        "McpPromptReference",
+        "McpResource",
+        "McpResourceLink",
+        "McpResourceTemplate",
+        "McpStringSchema",
+        "McpTitledMultiSelectEnumSchema",
+        "McpTitledMultiSelectEnumSchemaItemsAnyOf",
+        "McpTitledSingleSelectEnumSchema",
+        "McpTitledSingleSelectEnumSchemaOneOf",
+        "McpTool",
+        "McpToolAnnotations",
+        "McpUntitledMultiSelectEnumSchema",
+        "McpUntitledSingleSelectEnumSchema"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "url",
+      "definition_uri": "https://w3id.org/lmodel/mcp/url",
+      "description": "A URL.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/url"
+      ],
+      "slot_uri": "http://schema.org/url",
+      "owner": "McpElicitRequestURLParams",
+      "domain_of": [
+        "McpElicitRequestURLParams"
+      ],
+      "range": "uri",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "version",
+      "definition_uri": "https://w3id.org/lmodel/mcp/version",
+      "description": "A version string.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/version"
+      ],
+      "slot_uri": "http://schema.org/version",
+      "owner": "McpImplementation",
+      "domain_of": [
+        "McpImplementation"
+      ],
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "mcpAnnotations__intended_audience",
       "description": "Describes who the intended audience of this object or data is.\n\nIt can include multiple entries to indicate content useful for multiple audiences (e.g., `[\"user\", \"assistant\"]`).",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/audience",
-      "alias": "audience",
+      "aliases": [
+        "audience"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/intended_audience",
+      "alias": "intended_audience",
       "owner": "McpAnnotations",
       "domain_of": [
         "McpAnnotations"
@@ -959,11 +1094,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpAudioContent__type",
+      "name": "mcpAudioContent__kind",
       "description": "The kind of object, always `audio`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/type",
-      "alias": "type",
+      "aliases": [
+        "type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
+      "alias": "kind",
       "owner": "McpAudioContent",
       "domain_of": [
         "McpAudioContent"
@@ -971,33 +1109,6 @@
       "range": "string",
       "required": true,
       "equals_string": "audio",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpBaseMetadata__name",
-      "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/name",
-      "alias": "name",
-      "owner": "McpBaseMetadata",
-      "domain_of": [
-        "McpBaseMetadata"
-      ],
-      "range": "string",
-      "required": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpBaseMetadata__title",
-      "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/title",
-      "alias": "title",
-      "owner": "McpBaseMetadata",
-      "domain_of": [
-        "McpBaseMetadata"
-      ],
-      "range": "string",
       "@type": "SlotDefinition"
     },
     {
@@ -1070,37 +1181,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpBooleanSchema__description",
-      "description": "A description of the field for the user.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/description",
-      "alias": "description",
-      "owner": "McpBooleanSchema",
-      "domain_of": [
-        "McpBooleanSchema"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpBooleanSchema__title",
-      "description": "A title for the field.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/title",
-      "alias": "title",
-      "owner": "McpBooleanSchema",
-      "domain_of": [
-        "McpBooleanSchema"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpBooleanSchema__type",
+      "name": "mcpBooleanSchema__kind",
       "description": "The kind of object, always `boolean`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/type",
-      "alias": "type",
+      "aliases": [
+        "type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
+      "alias": "kind",
       "owner": "McpBooleanSchema",
       "domain_of": [
         "McpBooleanSchema"
@@ -1169,11 +1257,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpCallToolRequest__id",
+      "name": "mcpCallToolRequest__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpCallToolRequest",
       "domain_of": [
         "McpCallToolRequest"
@@ -1285,20 +1376,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpCallToolRequestParams__name",
-      "description": "The name of the tool.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/name",
-      "alias": "name",
-      "owner": "McpCallToolRequestParams",
-      "domain_of": [
-        "McpCallToolRequestParams"
-      ],
-      "range": "string",
-      "required": true,
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpCallToolRequestParams__request_state",
       "description": "State the server handed out with an input-required result, sent back unchanged when the request is retried.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -1386,11 +1463,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpCallToolResultResponse__id",
+      "name": "mcpCallToolResultResponse__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpCallToolResultResponse",
       "domain_of": [
         "McpCallToolResultResponse"
@@ -1510,11 +1590,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpCancelledNotificationParams__reason",
+      "name": "mcpCancelledNotificationParams__reason_text",
       "description": "An optional string describing the reason for the cancellation. This MAY be logged or presented to the user.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/reason",
-      "alias": "reason",
+      "aliases": [
+        "reason"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/reason_text",
+      "alias": "reason_text",
       "owner": "McpCancelledNotificationParams",
       "domain_of": [
         "McpCancelledNotificationParams"
@@ -1637,11 +1720,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpClientCapabilitiesElicitation__url",
+      "name": "mcpClientCapabilitiesElicitation__url_settings",
       "description": "Settings for elicitation by URL.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/url",
-      "alias": "url",
+      "aliases": [
+        "url"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/url_settings",
+      "alias": "url_settings",
       "owner": "McpClientCapabilitiesElicitation",
       "domain_of": [
         "McpClientCapabilitiesElicitation"
@@ -1652,11 +1738,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpClientCapabilitiesSampling__context",
+      "name": "mcpClientCapabilitiesSampling__context_info",
       "description": "Whether the client supports context inclusion via `includeContext` parameter.\nIf not declared, servers SHOULD only use `includeContext: \"none\"` (or omit it).",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/context",
-      "alias": "context",
+      "aliases": [
+        "context"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/context_info",
+      "alias": "context_info",
       "owner": "McpClientCapabilitiesSampling",
       "domain_of": [
         "McpClientCapabilitiesSampling"
@@ -1728,11 +1817,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpCompleteRequest__id",
+      "name": "mcpCompleteRequest__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpCompleteRequest",
       "domain_of": [
         "McpCompleteRequest"
@@ -1830,11 +1922,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpCompleteRequestParams__context",
+      "name": "mcpCompleteRequestParams__context_info",
       "description": "Additional, optional context for completions",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/context",
-      "alias": "context",
+      "aliases": [
+        "context"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/context_info",
+      "alias": "context_info",
       "owner": "McpCompleteRequestParams",
       "domain_of": [
         "McpCompleteRequestParams"
@@ -1866,20 +1961,6 @@
           "@type": "AnonymousSlotExpression"
         }
       ],
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpCompleteRequestParamsArgument__name",
-      "description": "The name of the argument",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/name",
-      "alias": "name",
-      "owner": "McpCompleteRequestParamsArgument",
-      "domain_of": [
-        "McpCompleteRequestParamsArgument"
-      ],
-      "range": "string",
-      "required": true,
       "@type": "SlotDefinition"
     },
     {
@@ -1999,11 +2080,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpCompleteResultResponse__id",
+      "name": "mcpCompleteResultResponse__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpCompleteResultResponse",
       "domain_of": [
         "McpCompleteResultResponse"
@@ -2328,11 +2412,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpDiscoverRequest__id",
+      "name": "mcpDiscoverRequest__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpDiscoverRequest",
       "domain_of": [
         "McpDiscoverRequest"
@@ -2500,11 +2587,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpDiscoverResultResponse__id",
+      "name": "mcpDiscoverResultResponse__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpDiscoverResultResponse",
       "domain_of": [
         "McpDiscoverResultResponse"
@@ -2662,11 +2752,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpElicitRequestFormParamsRequestedSchema__required",
+      "name": "mcpElicitRequestFormParamsRequestedSchema__required_names",
       "description": "The names of the fields the user must fill in.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/required",
-      "alias": "required",
+      "aliases": [
+        "required"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/required_names",
+      "alias": "required_names",
       "owner": "McpElicitRequestFormParamsRequestedSchema",
       "domain_of": [
         "McpElicitRequestFormParamsRequestedSchema"
@@ -2676,11 +2769,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpElicitRequestFormParamsRequestedSchema__type",
+      "name": "mcpElicitRequestFormParamsRequestedSchema__kind",
       "description": "The kind of object, always `object`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/type",
-      "alias": "type",
+      "aliases": [
+        "type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
+      "alias": "kind",
       "owner": "McpElicitRequestFormParamsRequestedSchema",
       "domain_of": [
         "McpElicitRequestFormParamsRequestedSchema"
@@ -2717,20 +2813,6 @@
       "range": "string",
       "required": true,
       "equals_string": "url",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpElicitRequestURLParams__url",
-      "description": "The URL that the user should navigate to.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/url",
-      "alias": "url",
-      "owner": "McpElicitRequestURLParams",
-      "domain_of": [
-        "McpElicitRequestURLParams"
-      ],
-      "range": "uri",
-      "required": true,
       "@type": "SlotDefinition"
     },
     {
@@ -2793,11 +2875,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpEmbeddedResource__resource",
+      "name": "mcpEmbeddedResource__resource_contents",
       "description": "The resource's contents, as text or as binary data.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/resource",
-      "alias": "resource",
+      "aliases": [
+        "resource"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/resource_contents",
+      "alias": "resource_contents",
       "owner": "McpEmbeddedResource",
       "domain_of": [
         "McpEmbeddedResource"
@@ -2817,11 +2902,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpEmbeddedResource__type",
+      "name": "mcpEmbeddedResource__kind",
       "description": "The kind of object, always `resource`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/type",
-      "alias": "type",
+      "aliases": [
+        "type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
+      "alias": "kind",
       "owner": "McpEmbeddedResource",
       "domain_of": [
         "McpEmbeddedResource"
@@ -2875,11 +2963,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpGetPromptRequest__id",
+      "name": "mcpGetPromptRequest__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpGetPromptRequest",
       "domain_of": [
         "McpGetPromptRequest"
@@ -2991,20 +3082,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpGetPromptRequestParams__name",
-      "description": "The name of the prompt or prompt template.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/name",
-      "alias": "name",
-      "owner": "McpGetPromptRequestParams",
-      "domain_of": [
-        "McpGetPromptRequestParams"
-      ],
-      "range": "string",
-      "required": true,
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpGetPromptRequestParams__request_state",
       "description": "State the server handed out with an input-required result, sent back unchanged when the request is retried.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -3030,19 +3107,6 @@
       "range": "McpResultMetaObject",
       "inlined": true,
       "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpGetPromptResult__description",
-      "description": "An optional description for the prompt.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/description",
-      "alias": "description",
-      "owner": "McpGetPromptResult",
-      "domain_of": [
-        "McpGetPromptResult"
-      ],
-      "range": "string",
       "@type": "SlotDefinition"
     },
     {
@@ -3077,11 +3141,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpGetPromptResultResponse__id",
+      "name": "mcpGetPromptResultResponse__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpGetPromptResultResponse",
       "domain_of": [
         "McpGetPromptResultResponse"
@@ -3156,11 +3223,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpHeaderMismatchError__id",
+      "name": "mcpHeaderMismatchError__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpHeaderMismatchError",
       "domain_of": [
         "McpHeaderMismatchError"
@@ -3337,11 +3407,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpImageContent__type",
+      "name": "mcpImageContent__kind",
       "description": "The kind of object, always `image`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/type",
-      "alias": "type",
+      "aliases": [
+        "type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
+      "alias": "kind",
       "owner": "McpImageContent",
       "domain_of": [
         "McpImageContent"
@@ -3349,19 +3422,6 @@
       "range": "string",
       "required": true,
       "equals_string": "image",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpImplementation__description",
-      "description": "An optional human-readable description of what this implementation does.\n\nThis can be used by clients or servers to provide context about their purpose\nand capabilities. For example, a server might describe the types of resources\nor tools it provides, while a client might describe its intended use case.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/description",
-      "alias": "description",
-      "owner": "McpImplementation",
-      "domain_of": [
-        "McpImplementation"
-      ],
-      "range": "string",
       "@type": "SlotDefinition"
     },
     {
@@ -3378,47 +3438,6 @@
       "multivalued": true,
       "inlined": true,
       "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpImplementation__name",
-      "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/name",
-      "alias": "name",
-      "owner": "McpImplementation",
-      "domain_of": [
-        "McpImplementation"
-      ],
-      "range": "string",
-      "required": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpImplementation__title",
-      "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/title",
-      "alias": "title",
-      "owner": "McpImplementation",
-      "domain_of": [
-        "McpImplementation"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpImplementation__version",
-      "description": "The version of this implementation.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/version",
-      "alias": "version",
-      "owner": "McpImplementation",
-      "domain_of": [
-        "McpImplementation"
-      ],
-      "range": "string",
-      "required": true,
       "@type": "SlotDefinition"
     },
     {
@@ -3684,11 +3703,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpJSONRPCErrorResponse__id",
+      "name": "mcpJSONRPCErrorResponse__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpJSONRPCErrorResponse",
       "domain_of": [
         "McpJSONRPCErrorResponse"
@@ -3766,11 +3788,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpJSONRPCRequest__id",
+      "name": "mcpJSONRPCRequest__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpJSONRPCRequest",
       "domain_of": [
         "McpJSONRPCRequest"
@@ -3834,11 +3859,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpJSONRPCResultResponse__id",
+      "name": "mcpJSONRPCResultResponse__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpJSONRPCResultResponse",
       "domain_of": [
         "McpJSONRPCResultResponse"
@@ -3902,19 +3930,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpLegacyTitledEnumSchema__description",
-      "description": "A description of the field for the user.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/description",
-      "alias": "description",
-      "owner": "McpLegacyTitledEnumSchema",
-      "domain_of": [
-        "McpLegacyTitledEnumSchema"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpLegacyTitledEnumSchema__enum",
       "description": "The values the field offers.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -3944,24 +3959,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpLegacyTitledEnumSchema__title",
-      "description": "A title for the field.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/title",
-      "alias": "title",
-      "owner": "McpLegacyTitledEnumSchema",
-      "domain_of": [
-        "McpLegacyTitledEnumSchema"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpLegacyTitledEnumSchema__type",
+      "name": "mcpLegacyTitledEnumSchema__kind",
       "description": "The kind of object, always `string`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/type",
-      "alias": "type",
+      "aliases": [
+        "type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
+      "alias": "kind",
       "owner": "McpLegacyTitledEnumSchema",
       "domain_of": [
         "McpLegacyTitledEnumSchema"
@@ -3972,11 +3977,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpListPromptsRequest__id",
+      "name": "mcpListPromptsRequest__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpListPromptsRequest",
       "domain_of": [
         "McpListPromptsRequest"
@@ -4130,11 +4138,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpListPromptsResultResponse__id",
+      "name": "mcpListPromptsResultResponse__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpListPromptsResultResponse",
       "domain_of": [
         "McpListPromptsResultResponse"
@@ -4185,11 +4196,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpListResourceTemplatesRequest__id",
+      "name": "mcpListResourceTemplatesRequest__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpListResourceTemplatesRequest",
       "domain_of": [
         "McpListResourceTemplatesRequest"
@@ -4343,11 +4357,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpListResourceTemplatesResultResponse__id",
+      "name": "mcpListResourceTemplatesResultResponse__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpListResourceTemplatesResultResponse",
       "domain_of": [
         "McpListResourceTemplatesResultResponse"
@@ -4398,11 +4415,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpListResourcesRequest__id",
+      "name": "mcpListResourcesRequest__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpListResourcesRequest",
       "domain_of": [
         "McpListResourcesRequest"
@@ -4556,11 +4576,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpListResourcesResultResponse__id",
+      "name": "mcpListResourcesResultResponse__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpListResourcesResultResponse",
       "domain_of": [
         "McpListResourcesResultResponse"
@@ -4673,11 +4696,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpListToolsRequest__id",
+      "name": "mcpListToolsRequest__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpListToolsRequest",
       "domain_of": [
         "McpListToolsRequest"
@@ -4831,11 +4857,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpListToolsResultResponse__id",
+      "name": "mcpListToolsResultResponse__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpListToolsResultResponse",
       "domain_of": [
         "McpListToolsResultResponse"
@@ -5050,11 +5079,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpMissingRequiredClientCapabilityError__id",
+      "name": "mcpMissingRequiredClientCapabilityError__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpMissingRequiredClientCapabilityError",
       "domain_of": [
         "McpMissingRequiredClientCapabilityError"
@@ -5132,19 +5164,6 @@
       "required": true,
       "inlined": true,
       "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpModelHint__name",
-      "description": "A hint for a model name.\n\nThe client SHOULD treat this as a substring of a model name; for example:\n - `claude-3-5-sonnet` should match `claude-3-5-sonnet-20241022`\n - `sonnet` should match `claude-3-5-sonnet-20241022`, `claude-3-sonnet-20240229`, etc.\n - `claude` should match any Claude model\n\nThe client MAY also map the string to a different provider's model name or a different model family, as long as it fills a similar niche; for example:\n - `gemini-1.5-flash` could match `claude-3-haiku-20240307`",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/name",
-      "alias": "name",
-      "owner": "McpModelHint",
-      "domain_of": [
-        "McpModelHint"
-      ],
-      "range": "string",
       "@type": "SlotDefinition"
     },
     {
@@ -5292,19 +5311,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpNumberSchema__description",
-      "description": "A description of the field for the user.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/description",
-      "alias": "description",
-      "owner": "McpNumberSchema",
-      "domain_of": [
-        "McpNumberSchema"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpNumberSchema__maximum",
       "description": "The largest value the field accepts.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -5331,24 +5337,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpNumberSchema__title",
-      "description": "A title for the field.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/title",
-      "alias": "title",
-      "owner": "McpNumberSchema",
-      "domain_of": [
-        "McpNumberSchema"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpNumberSchema__type",
+      "name": "mcpNumberSchema__kind",
       "description": "The kind of value the field takes.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/type",
-      "alias": "type",
+      "aliases": [
+        "type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
+      "alias": "kind",
       "owner": "McpNumberSchema",
       "domain_of": [
         "McpNumberSchema"
@@ -5358,11 +5354,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpPaginatedRequest__id",
+      "name": "mcpPaginatedRequest__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpPaginatedRequest",
       "domain_of": [
         "McpPaginatedRequest"
@@ -5698,19 +5697,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpPrompt__description",
-      "description": "An optional description of what this prompt provides",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/description",
-      "alias": "description",
-      "owner": "McpPrompt",
-      "domain_of": [
-        "McpPrompt"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpPrompt__icons",
       "description": "Optional set of sized icons that the client can display in a user interface.\n\nClients that support rendering icons MUST support at least the following MIME types:\n- `image/png` - PNG images (safe, universal compatibility)\n- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)\n\nClients that support rendering icons SHOULD also support:\n- `image/svg+xml` - SVG images (scalable but requires security precautions)\n- `image/webp` - WebP images (modern, efficient format)",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -5727,83 +5713,19 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpPrompt__name",
-      "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/name",
-      "alias": "name",
-      "owner": "McpPrompt",
-      "domain_of": [
-        "McpPrompt"
-      ],
-      "range": "string",
-      "required": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpPrompt__title",
-      "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/title",
-      "alias": "title",
-      "owner": "McpPrompt",
-      "domain_of": [
-        "McpPrompt"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpPromptArgument__description",
-      "description": "A human-readable description of the argument.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/description",
-      "alias": "description",
-      "owner": "McpPromptArgument",
-      "domain_of": [
-        "McpPromptArgument"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpPromptArgument__name",
-      "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/name",
-      "alias": "name",
-      "owner": "McpPromptArgument",
-      "domain_of": [
-        "McpPromptArgument"
-      ],
-      "range": "string",
-      "required": true,
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpPromptArgument__required",
       "description": "Whether this argument must be provided.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/required",
+      "mappings": [
+        "http://schema.org/valueRequired"
+      ],
+      "slot_uri": "http://schema.org/valueRequired",
       "alias": "required",
       "owner": "McpPromptArgument",
       "domain_of": [
         "McpPromptArgument"
       ],
       "range": "boolean",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpPromptArgument__title",
-      "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/title",
-      "alias": "title",
-      "owner": "McpPromptArgument",
-      "domain_of": [
-        "McpPromptArgument"
-      ],
-      "range": "string",
       "@type": "SlotDefinition"
     },
     {
@@ -5882,38 +5804,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpPromptReference__name",
-      "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/name",
-      "alias": "name",
-      "owner": "McpPromptReference",
-      "domain_of": [
-        "McpPromptReference"
-      ],
-      "range": "string",
-      "required": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpPromptReference__title",
-      "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/title",
-      "alias": "title",
-      "owner": "McpPromptReference",
-      "domain_of": [
-        "McpPromptReference"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpPromptReference__type",
+      "name": "mcpPromptReference__kind",
       "description": "The kind of object, always `ref/prompt`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/type",
-      "alias": "type",
+      "aliases": [
+        "type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
+      "alias": "kind",
       "owner": "McpPromptReference",
       "domain_of": [
         "McpPromptReference"
@@ -5924,11 +5822,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpReadResourceRequest__id",
+      "name": "mcpReadResourceRequest__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpReadResourceRequest",
       "domain_of": [
         "McpReadResourceRequest"
@@ -6136,11 +6037,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpReadResourceResultResponse__id",
+      "name": "mcpReadResourceResultResponse__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpReadResourceResultResponse",
       "domain_of": [
         "McpReadResourceResultResponse"
@@ -6367,19 +6271,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpResource__description",
-      "description": "A description of what this resource represents.\n\nThis can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a \"hint\" to the model.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/description",
-      "alias": "description",
-      "owner": "McpResource",
-      "domain_of": [
-        "McpResource"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpResource__icons",
       "description": "Optional set of sized icons that the client can display in a user interface.\n\nClients that support rendering icons MUST support at least the following MIME types:\n- `image/png` - PNG images (safe, universal compatibility)\n- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)\n\nClients that support rendering icons SHOULD also support:\n- `image/svg+xml` - SVG images (scalable but requires security precautions)\n- `image/webp` - WebP images (modern, efficient format)",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -6409,20 +6300,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpResource__name",
-      "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/name",
-      "alias": "name",
-      "owner": "McpResource",
-      "domain_of": [
-        "McpResource"
-      ],
-      "range": "string",
-      "required": true,
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpResource__size",
       "description": "The size of the raw resource content, in bytes (i.e., before base64 encoding or any tokenization), if known.\n\nThis can be used by Hosts to display file sizes and estimate context window usage.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -6433,19 +6310,6 @@
         "McpResource"
       ],
       "range": "integer",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpResource__title",
-      "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/title",
-      "alias": "title",
-      "owner": "McpResource",
-      "domain_of": [
-        "McpResource"
-      ],
-      "range": "string",
       "@type": "SlotDefinition"
     },
     {
@@ -6535,19 +6399,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpResourceLink__description",
-      "description": "A description of what this resource represents.\n\nThis can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a \"hint\" to the model.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/description",
-      "alias": "description",
-      "owner": "McpResourceLink",
-      "domain_of": [
-        "McpResourceLink"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpResourceLink__icons",
       "description": "Optional set of sized icons that the client can display in a user interface.\n\nClients that support rendering icons MUST support at least the following MIME types:\n- `image/png` - PNG images (safe, universal compatibility)\n- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)\n\nClients that support rendering icons SHOULD also support:\n- `image/svg+xml` - SVG images (scalable but requires security precautions)\n- `image/webp` - WebP images (modern, efficient format)",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -6577,20 +6428,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpResourceLink__name",
-      "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/name",
-      "alias": "name",
-      "owner": "McpResourceLink",
-      "domain_of": [
-        "McpResourceLink"
-      ],
-      "range": "string",
-      "required": true,
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpResourceLink__size",
       "description": "The size of the raw resource content, in bytes (i.e., before base64 encoding or any tokenization), if known.\n\nThis can be used by Hosts to display file sizes and estimate context window usage.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -6604,24 +6441,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpResourceLink__title",
-      "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/title",
-      "alias": "title",
-      "owner": "McpResourceLink",
-      "domain_of": [
-        "McpResourceLink"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpResourceLink__type",
+      "name": "mcpResourceLink__kind",
       "description": "The kind of object, always `resource_link`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/type",
-      "alias": "type",
+      "aliases": [
+        "type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
+      "alias": "kind",
       "owner": "McpResourceLink",
       "domain_of": [
         "McpResourceLink"
@@ -6751,19 +6578,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpResourceTemplate__description",
-      "description": "A description of what this template is for.\n\nThis can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a \"hint\" to the model.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/description",
-      "alias": "description",
-      "owner": "McpResourceTemplate",
-      "domain_of": [
-        "McpResourceTemplate"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpResourceTemplate__icons",
       "description": "Optional set of sized icons that the client can display in a user interface.\n\nClients that support rendering icons MUST support at least the following MIME types:\n- `image/png` - PNG images (safe, universal compatibility)\n- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)\n\nClients that support rendering icons SHOULD also support:\n- `image/svg+xml` - SVG images (scalable but requires security precautions)\n- `image/webp` - WebP images (modern, efficient format)",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -6793,33 +6607,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpResourceTemplate__name",
-      "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/name",
-      "alias": "name",
-      "owner": "McpResourceTemplate",
-      "domain_of": [
-        "McpResourceTemplate"
-      ],
-      "range": "string",
-      "required": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpResourceTemplate__title",
-      "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/title",
-      "alias": "title",
-      "owner": "McpResourceTemplate",
-      "domain_of": [
-        "McpResourceTemplate"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpResourceTemplate__uri_template",
       "description": "A URI template (according to RFC 6570) that can be used to construct resource URIs.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -6834,11 +6621,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpResourceTemplateReference__type",
+      "name": "mcpResourceTemplateReference__kind",
       "description": "The kind of object, always `ref/resource`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/type",
-      "alias": "type",
+      "aliases": [
+        "type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
+      "alias": "kind",
       "owner": "McpResourceTemplateReference",
       "domain_of": [
         "McpResourceTemplateReference"
@@ -6997,19 +6787,6 @@
       "range": "McpMetaObject",
       "inlined": true,
       "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpRoot__name",
-      "description": "An optional name for the root. This can be used to provide a human-readable\nidentifier for the root, which may be useful for display purposes or for\nreferencing the root in other parts of the application.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/name",
-      "alias": "name",
-      "owner": "McpRoot",
-      "domain_of": [
-        "McpRoot"
-      ],
-      "range": "string",
       "@type": "SlotDefinition"
     },
     {
@@ -7268,19 +7045,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpStringSchema__description",
-      "description": "A description of the field for the user.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/description",
-      "alias": "description",
-      "owner": "McpStringSchema",
-      "domain_of": [
-        "McpStringSchema"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpStringSchema__format",
       "description": "The format the string must have.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -7320,24 +7084,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpStringSchema__title",
-      "description": "A title for the field.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/title",
-      "alias": "title",
-      "owner": "McpStringSchema",
-      "domain_of": [
-        "McpStringSchema"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpStringSchema__type",
+      "name": "mcpStringSchema__kind",
       "description": "The kind of object, always `string`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/type",
-      "alias": "type",
+      "aliases": [
+        "type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
+      "alias": "kind",
       "owner": "McpStringSchema",
       "domain_of": [
         "McpStringSchema"
@@ -7478,11 +7232,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpSubscriptionsListenRequest__id",
+      "name": "mcpSubscriptionsListenRequest__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpSubscriptionsListenRequest",
       "domain_of": [
         "McpSubscriptionsListenRequest"
@@ -7655,11 +7412,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpSubscriptionsListenResultResponse__id",
+      "name": "mcpSubscriptionsListenResultResponse__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpSubscriptionsListenResultResponse",
       "domain_of": [
         "McpSubscriptionsListenResultResponse"
@@ -7754,11 +7514,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpTextContent__type",
+      "name": "mcpTextContent__kind",
       "description": "The kind of object, always `text`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/type",
-      "alias": "type",
+      "aliases": [
+        "type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
+      "alias": "kind",
       "owner": "McpTextContent",
       "domain_of": [
         "McpTextContent"
@@ -7839,19 +7602,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpTitledMultiSelectEnumSchema__description",
-      "description": "Optional description for the enum field.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/description",
-      "alias": "description",
-      "owner": "McpTitledMultiSelectEnumSchema",
-      "domain_of": [
-        "McpTitledMultiSelectEnumSchema"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpTitledMultiSelectEnumSchema__items",
       "description": "Schema for array items with enum options and display labels.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -7894,24 +7644,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpTitledMultiSelectEnumSchema__title",
-      "description": "Optional title for the enum field.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/title",
-      "alias": "title",
-      "owner": "McpTitledMultiSelectEnumSchema",
-      "domain_of": [
-        "McpTitledMultiSelectEnumSchema"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpTitledMultiSelectEnumSchema__type",
+      "name": "mcpTitledMultiSelectEnumSchema__kind",
       "description": "The kind of object, always `array`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/type",
-      "alias": "type",
+      "aliases": [
+        "type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
+      "alias": "kind",
       "owner": "McpTitledMultiSelectEnumSchema",
       "domain_of": [
         "McpTitledMultiSelectEnumSchema"
@@ -7953,38 +7693,11 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpTitledMultiSelectEnumSchemaItemsAnyOf__title",
-      "description": "Display title for this option.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/title",
-      "alias": "title",
-      "owner": "McpTitledMultiSelectEnumSchemaItemsAnyOf",
-      "domain_of": [
-        "McpTitledMultiSelectEnumSchemaItemsAnyOf"
-      ],
-      "range": "string",
-      "required": true,
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpTitledSingleSelectEnumSchema__default",
       "description": "Optional default value.",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "slot_uri": "https://w3id.org/lmodel/mcp/default",
       "alias": "default",
-      "owner": "McpTitledSingleSelectEnumSchema",
-      "domain_of": [
-        "McpTitledSingleSelectEnumSchema"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpTitledSingleSelectEnumSchema__description",
-      "description": "Optional description for the enum field.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/description",
-      "alias": "description",
       "owner": "McpTitledSingleSelectEnumSchema",
       "domain_of": [
         "McpTitledSingleSelectEnumSchema"
@@ -8010,24 +7723,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpTitledSingleSelectEnumSchema__title",
-      "description": "Optional title for the enum field.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/title",
-      "alias": "title",
-      "owner": "McpTitledSingleSelectEnumSchema",
-      "domain_of": [
-        "McpTitledSingleSelectEnumSchema"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpTitledSingleSelectEnumSchema__type",
+      "name": "mcpTitledSingleSelectEnumSchema__kind",
       "description": "The kind of object, always `string`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/type",
-      "alias": "type",
+      "aliases": [
+        "type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
+      "alias": "kind",
       "owner": "McpTitledSingleSelectEnumSchema",
       "domain_of": [
         "McpTitledSingleSelectEnumSchema"
@@ -8043,20 +7746,6 @@
       "from_schema": "https://w3id.org/lmodel/mcp",
       "slot_uri": "https://w3id.org/lmodel/mcp/const",
       "alias": "const",
-      "owner": "McpTitledSingleSelectEnumSchemaOneOf",
-      "domain_of": [
-        "McpTitledSingleSelectEnumSchemaOneOf"
-      ],
-      "range": "string",
-      "required": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpTitledSingleSelectEnumSchemaOneOf__title",
-      "description": "Display label for this option.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/title",
-      "alias": "title",
       "owner": "McpTitledSingleSelectEnumSchemaOneOf",
       "domain_of": [
         "McpTitledSingleSelectEnumSchemaOneOf"
@@ -8096,19 +7785,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpTool__description",
-      "description": "A human-readable description of the tool.\n\nThis can be used by clients to improve the LLM's understanding of available tools. It can be thought of like a \"hint\" to the model.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/description",
-      "alias": "description",
-      "owner": "McpTool",
-      "domain_of": [
-        "McpTool"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpTool__icons",
       "description": "Optional set of sized icons that the client can display in a user interface.\n\nClients that support rendering icons MUST support at least the following MIME types:\n- `image/png` - PNG images (safe, universal compatibility)\n- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)\n\nClients that support rendering icons SHOULD also support:\n- `image/svg+xml` - SVG images (scalable but requires security precautions)\n- `image/webp` - WebP images (modern, efficient format)",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -8141,20 +7817,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpTool__name",
-      "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/name",
-      "alias": "name",
-      "owner": "McpTool",
-      "domain_of": [
-        "McpTool"
-      ],
-      "range": "string",
-      "required": true,
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpTool__output_schema",
       "description": "An optional JSON Schema object defining the structure of the tool's output returned in\nthe structuredContent field of a {@link CallToolResult}. This can be any valid JSON Schema 2020-12.\n\nDefaults to JSON Schema 2020-12 when no explicit `$schema` is provided.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -8167,19 +7829,6 @@
       "range": "McpToolOutputSchema",
       "inlined": true,
       "inlined_as_list": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpTool__title",
-      "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/title",
-      "alias": "title",
-      "owner": "McpTool",
-      "domain_of": [
-        "McpTool"
-      ],
-      "range": "string",
       "@type": "SlotDefinition"
     },
     {
@@ -8235,19 +7884,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpToolAnnotations__title",
-      "description": "A human-readable title for the tool.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/title",
-      "alias": "title",
-      "owner": "McpToolAnnotations",
-      "domain_of": [
-        "McpToolAnnotations"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpToolChoice__mode",
       "description": "Controls the tool use ability of the model:\n- `\"auto\"`: Model decides whether to use tools (default)\n- `\"required\"`: Model MUST use at least one tool before completing\n- `\"none\"`: Model MUST NOT use any tools",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -8277,11 +7913,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpToolInputSchema__type",
+      "name": "mcpToolInputSchema__kind",
       "description": "The kind of object, always `object`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/type",
-      "alias": "type",
+      "aliases": [
+        "type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
+      "alias": "kind",
       "owner": "McpToolInputSchema",
       "domain_of": [
         "McpToolInputSchema"
@@ -8427,11 +8066,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpToolResultContent__type",
+      "name": "mcpToolResultContent__kind",
       "description": "The kind of object, always `tool_result`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/type",
-      "alias": "type",
+      "aliases": [
+        "type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
+      "alias": "kind",
       "owner": "McpToolResultContent",
       "domain_of": [
         "McpToolResultContent"
@@ -8457,11 +8099,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpToolUseContent__id",
+      "name": "mcpToolUseContent__identifier",
       "description": "A unique identifier for this tool use.\n\nThis ID is used to match tool results to their corresponding tool uses.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpToolUseContent",
       "domain_of": [
         "McpToolUseContent"
@@ -8487,25 +8132,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpToolUseContent__name",
-      "description": "The name of the tool to call.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/name",
-      "alias": "name",
-      "owner": "McpToolUseContent",
-      "domain_of": [
-        "McpToolUseContent"
-      ],
-      "range": "string",
-      "required": true,
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpToolUseContent__type",
+      "name": "mcpToolUseContent__kind",
       "description": "The kind of object, always `tool_use`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/type",
-      "alias": "type",
+      "aliases": [
+        "type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
+      "alias": "kind",
       "owner": "McpToolUseContent",
       "domain_of": [
         "McpToolUseContent"
@@ -8532,11 +8166,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpUnsupportedProtocolVersionError__id",
+      "name": "mcpUnsupportedProtocolVersionError__identifier",
       "description": "A uniquely identifying ID for a request in JSON-RPC.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/id",
-      "alias": "id",
+      "aliases": [
+        "id"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/identifier",
+      "alias": "identifier",
       "owner": "McpUnsupportedProtocolVersionError",
       "domain_of": [
         "McpUnsupportedProtocolVersionError"
@@ -8644,19 +8281,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpUntitledMultiSelectEnumSchema__description",
-      "description": "Optional description for the enum field.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/description",
-      "alias": "description",
-      "owner": "McpUntitledMultiSelectEnumSchema",
-      "domain_of": [
-        "McpUntitledMultiSelectEnumSchema"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpUntitledMultiSelectEnumSchema__items",
       "description": "Schema for the array items.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -8699,24 +8323,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpUntitledMultiSelectEnumSchema__title",
-      "description": "Optional title for the enum field.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/title",
-      "alias": "title",
-      "owner": "McpUntitledMultiSelectEnumSchema",
-      "domain_of": [
-        "McpUntitledMultiSelectEnumSchema"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpUntitledMultiSelectEnumSchema__type",
+      "name": "mcpUntitledMultiSelectEnumSchema__kind",
       "description": "The kind of object, always `array`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/type",
-      "alias": "type",
+      "aliases": [
+        "type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
+      "alias": "kind",
       "owner": "McpUntitledMultiSelectEnumSchema",
       "domain_of": [
         "McpUntitledMultiSelectEnumSchema"
@@ -8742,11 +8356,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpUntitledMultiSelectEnumSchemaItems__type",
+      "name": "mcpUntitledMultiSelectEnumSchemaItems__kind",
       "description": "The kind of object, always `string`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/type",
-      "alias": "type",
+      "aliases": [
+        "type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
+      "alias": "kind",
       "owner": "McpUntitledMultiSelectEnumSchemaItems",
       "domain_of": [
         "McpUntitledMultiSelectEnumSchemaItems"
@@ -8770,19 +8387,6 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpUntitledSingleSelectEnumSchema__description",
-      "description": "Optional description for the enum field.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/description",
-      "alias": "description",
-      "owner": "McpUntitledSingleSelectEnumSchema",
-      "domain_of": [
-        "McpUntitledSingleSelectEnumSchema"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
       "name": "mcpUntitledSingleSelectEnumSchema__enum",
       "description": "Array of enum values to choose from.",
       "from_schema": "https://w3id.org/lmodel/mcp",
@@ -8798,24 +8402,14 @@
       "@type": "SlotDefinition"
     },
     {
-      "name": "mcpUntitledSingleSelectEnumSchema__title",
-      "description": "Optional title for the enum field.",
-      "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/title",
-      "alias": "title",
-      "owner": "McpUntitledSingleSelectEnumSchema",
-      "domain_of": [
-        "McpUntitledSingleSelectEnumSchema"
-      ],
-      "range": "string",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "mcpUntitledSingleSelectEnumSchema__type",
+      "name": "mcpUntitledSingleSelectEnumSchema__kind",
       "description": "The kind of object, always `string`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
-      "slot_uri": "https://w3id.org/lmodel/mcp/type",
-      "alias": "type",
+      "aliases": [
+        "type"
+      ],
+      "slot_uri": "https://w3id.org/lmodel/mcp/kind",
+      "alias": "kind",
       "owner": "McpUntitledSingleSelectEnumSchema",
       "domain_of": [
         "McpUntitledSingleSelectEnumSchema"
@@ -8823,6 +8417,1136 @@
       "range": "string",
       "required": true,
       "equals_string": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpBaseMetadata_name",
+      "definition_uri": "https://w3id.org/lmodel/mcp/name",
+      "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "name",
+      "domain": "McpBaseMetadata",
+      "slot_uri": "http://schema.org/name",
+      "alias": "name",
+      "owner": "McpBaseMetadata",
+      "domain_of": [
+        "McpBaseMetadata"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "name",
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpBaseMetadata_title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "title",
+      "domain": "McpBaseMetadata",
+      "slot_uri": "http://schema.org/name",
+      "alias": "title",
+      "owner": "McpBaseMetadata",
+      "domain_of": [
+        "McpBaseMetadata"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "title",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpBooleanSchema_description",
+      "definition_uri": "https://w3id.org/lmodel/mcp/description",
+      "description": "A description of the field for the user.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/description"
+      ],
+      "is_a": "description",
+      "domain": "McpBooleanSchema",
+      "slot_uri": "http://schema.org/description",
+      "alias": "description",
+      "owner": "McpBooleanSchema",
+      "domain_of": [
+        "McpBooleanSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "description",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpBooleanSchema_title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "A title for the field.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "title",
+      "domain": "McpBooleanSchema",
+      "slot_uri": "http://schema.org/name",
+      "alias": "title",
+      "owner": "McpBooleanSchema",
+      "domain_of": [
+        "McpBooleanSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "title",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpCallToolRequestParams_name",
+      "definition_uri": "https://w3id.org/lmodel/mcp/name",
+      "description": "The name of the tool.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "name",
+      "domain": "McpCallToolRequestParams",
+      "slot_uri": "http://schema.org/name",
+      "alias": "name",
+      "owner": "McpCallToolRequestParams",
+      "domain_of": [
+        "McpCallToolRequestParams"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "name",
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpCompleteRequestParamsArgument_name",
+      "definition_uri": "https://w3id.org/lmodel/mcp/name",
+      "description": "The name of the argument",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "name",
+      "domain": "McpCompleteRequestParamsArgument",
+      "slot_uri": "http://schema.org/name",
+      "alias": "name",
+      "owner": "McpCompleteRequestParamsArgument",
+      "domain_of": [
+        "McpCompleteRequestParamsArgument"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "name",
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpElicitRequestURLParams_url",
+      "definition_uri": "https://w3id.org/lmodel/mcp/url",
+      "description": "The URL that the user should navigate to.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/url"
+      ],
+      "is_a": "url",
+      "domain": "McpElicitRequestURLParams",
+      "slot_uri": "http://schema.org/url",
+      "alias": "url",
+      "owner": "McpElicitRequestURLParams",
+      "domain_of": [
+        "McpElicitRequestURLParams"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "url",
+      "range": "uri",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpGetPromptRequestParams_name",
+      "definition_uri": "https://w3id.org/lmodel/mcp/name",
+      "description": "The name of the prompt or prompt template.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "name",
+      "domain": "McpGetPromptRequestParams",
+      "slot_uri": "http://schema.org/name",
+      "alias": "name",
+      "owner": "McpGetPromptRequestParams",
+      "domain_of": [
+        "McpGetPromptRequestParams"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "name",
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpGetPromptResult_description",
+      "definition_uri": "https://w3id.org/lmodel/mcp/description",
+      "description": "An optional description for the prompt.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/description"
+      ],
+      "is_a": "description",
+      "domain": "McpGetPromptResult",
+      "slot_uri": "http://schema.org/description",
+      "alias": "description",
+      "owner": "McpGetPromptResult",
+      "domain_of": [
+        "McpGetPromptResult"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "description",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpImplementation_description",
+      "definition_uri": "https://w3id.org/lmodel/mcp/description",
+      "description": "An optional human-readable description of what this implementation does.\n\nThis can be used by clients or servers to provide context about their purpose\nand capabilities. For example, a server might describe the types of resources\nor tools it provides, while a client might describe its intended use case.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/description"
+      ],
+      "is_a": "description",
+      "domain": "McpImplementation",
+      "slot_uri": "http://schema.org/description",
+      "alias": "description",
+      "owner": "McpImplementation",
+      "domain_of": [
+        "McpImplementation"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "description",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpImplementation_name",
+      "definition_uri": "https://w3id.org/lmodel/mcp/name",
+      "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "McpBaseMetadata_name",
+      "domain": "McpImplementation",
+      "slot_uri": "http://schema.org/name",
+      "alias": "name",
+      "owner": "McpImplementation",
+      "domain_of": [
+        "McpImplementation"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "name",
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpImplementation_title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "McpBaseMetadata_title",
+      "domain": "McpImplementation",
+      "slot_uri": "http://schema.org/name",
+      "alias": "title",
+      "owner": "McpImplementation",
+      "domain_of": [
+        "McpImplementation"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "title",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpImplementation_version",
+      "definition_uri": "https://w3id.org/lmodel/mcp/version",
+      "description": "The version of this implementation.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/version"
+      ],
+      "is_a": "version",
+      "domain": "McpImplementation",
+      "slot_uri": "http://schema.org/version",
+      "alias": "version",
+      "owner": "McpImplementation",
+      "domain_of": [
+        "McpImplementation"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "version",
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpLegacyTitledEnumSchema_description",
+      "definition_uri": "https://w3id.org/lmodel/mcp/description",
+      "description": "A description of the field for the user.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/description"
+      ],
+      "is_a": "description",
+      "domain": "McpLegacyTitledEnumSchema",
+      "slot_uri": "http://schema.org/description",
+      "alias": "description",
+      "owner": "McpLegacyTitledEnumSchema",
+      "domain_of": [
+        "McpLegacyTitledEnumSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "description",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpLegacyTitledEnumSchema_title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "A title for the field.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "title",
+      "domain": "McpLegacyTitledEnumSchema",
+      "slot_uri": "http://schema.org/name",
+      "alias": "title",
+      "owner": "McpLegacyTitledEnumSchema",
+      "domain_of": [
+        "McpLegacyTitledEnumSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "title",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpModelHint_name",
+      "definition_uri": "https://w3id.org/lmodel/mcp/name",
+      "description": "A hint for a model name.\n\nThe client SHOULD treat this as a substring of a model name; for example:\n - `claude-3-5-sonnet` should match `claude-3-5-sonnet-20241022`\n - `sonnet` should match `claude-3-5-sonnet-20241022`, `claude-3-sonnet-20240229`, etc.\n - `claude` should match any Claude model\n\nThe client MAY also map the string to a different provider's model name or a different model family, as long as it fills a similar niche; for example:\n - `gemini-1.5-flash` could match `claude-3-haiku-20240307`",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "name",
+      "domain": "McpModelHint",
+      "slot_uri": "http://schema.org/name",
+      "alias": "name",
+      "owner": "McpModelHint",
+      "domain_of": [
+        "McpModelHint"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "name",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpNumberSchema_description",
+      "definition_uri": "https://w3id.org/lmodel/mcp/description",
+      "description": "A description of the field for the user.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/description"
+      ],
+      "is_a": "description",
+      "domain": "McpNumberSchema",
+      "slot_uri": "http://schema.org/description",
+      "alias": "description",
+      "owner": "McpNumberSchema",
+      "domain_of": [
+        "McpNumberSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "description",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpNumberSchema_title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "A title for the field.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "title",
+      "domain": "McpNumberSchema",
+      "slot_uri": "http://schema.org/name",
+      "alias": "title",
+      "owner": "McpNumberSchema",
+      "domain_of": [
+        "McpNumberSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "title",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpPrompt_description",
+      "definition_uri": "https://w3id.org/lmodel/mcp/description",
+      "description": "An optional description of what this prompt provides",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/description"
+      ],
+      "is_a": "description",
+      "domain": "McpPrompt",
+      "slot_uri": "http://schema.org/description",
+      "alias": "description",
+      "owner": "McpPrompt",
+      "domain_of": [
+        "McpPrompt"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "description",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpPrompt_name",
+      "definition_uri": "https://w3id.org/lmodel/mcp/name",
+      "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "McpBaseMetadata_name",
+      "domain": "McpPrompt",
+      "slot_uri": "http://schema.org/name",
+      "alias": "name",
+      "owner": "McpPrompt",
+      "domain_of": [
+        "McpPrompt"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "name",
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpPrompt_title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "McpBaseMetadata_title",
+      "domain": "McpPrompt",
+      "slot_uri": "http://schema.org/name",
+      "alias": "title",
+      "owner": "McpPrompt",
+      "domain_of": [
+        "McpPrompt"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "title",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpPromptArgument_description",
+      "definition_uri": "https://w3id.org/lmodel/mcp/description",
+      "description": "A human-readable description of the argument.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/description"
+      ],
+      "is_a": "description",
+      "domain": "McpPromptArgument",
+      "slot_uri": "http://schema.org/description",
+      "alias": "description",
+      "owner": "McpPromptArgument",
+      "domain_of": [
+        "McpPromptArgument"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "description",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpPromptArgument_name",
+      "definition_uri": "https://w3id.org/lmodel/mcp/name",
+      "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "McpBaseMetadata_name",
+      "domain": "McpPromptArgument",
+      "slot_uri": "http://schema.org/name",
+      "alias": "name",
+      "owner": "McpPromptArgument",
+      "domain_of": [
+        "McpPromptArgument"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "name",
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpPromptArgument_title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "McpBaseMetadata_title",
+      "domain": "McpPromptArgument",
+      "slot_uri": "http://schema.org/name",
+      "alias": "title",
+      "owner": "McpPromptArgument",
+      "domain_of": [
+        "McpPromptArgument"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "title",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpPromptReference_name",
+      "definition_uri": "https://w3id.org/lmodel/mcp/name",
+      "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "McpBaseMetadata_name",
+      "domain": "McpPromptReference",
+      "slot_uri": "http://schema.org/name",
+      "alias": "name",
+      "owner": "McpPromptReference",
+      "domain_of": [
+        "McpPromptReference"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "name",
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpPromptReference_title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "McpBaseMetadata_title",
+      "domain": "McpPromptReference",
+      "slot_uri": "http://schema.org/name",
+      "alias": "title",
+      "owner": "McpPromptReference",
+      "domain_of": [
+        "McpPromptReference"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "title",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpResource_description",
+      "definition_uri": "https://w3id.org/lmodel/mcp/description",
+      "description": "A description of what this resource represents.\n\nThis can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a \"hint\" to the model.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/description"
+      ],
+      "is_a": "description",
+      "domain": "McpResource",
+      "slot_uri": "http://schema.org/description",
+      "alias": "description",
+      "owner": "McpResource",
+      "domain_of": [
+        "McpResource"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "description",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpResource_name",
+      "definition_uri": "https://w3id.org/lmodel/mcp/name",
+      "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "McpBaseMetadata_name",
+      "domain": "McpResource",
+      "slot_uri": "http://schema.org/name",
+      "alias": "name",
+      "owner": "McpResource",
+      "domain_of": [
+        "McpResource"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "name",
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpResource_title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "McpBaseMetadata_title",
+      "domain": "McpResource",
+      "slot_uri": "http://schema.org/name",
+      "alias": "title",
+      "owner": "McpResource",
+      "domain_of": [
+        "McpResource"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "title",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpResourceLink_description",
+      "definition_uri": "https://w3id.org/lmodel/mcp/description",
+      "description": "A description of what this resource represents.\n\nThis can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a \"hint\" to the model.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/description"
+      ],
+      "is_a": "McpResource_description",
+      "domain": "McpResourceLink",
+      "slot_uri": "http://schema.org/description",
+      "alias": "description",
+      "owner": "McpResourceLink",
+      "domain_of": [
+        "McpResourceLink"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "description",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpResourceLink_name",
+      "definition_uri": "https://w3id.org/lmodel/mcp/name",
+      "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "McpResource_name",
+      "domain": "McpResourceLink",
+      "slot_uri": "http://schema.org/name",
+      "alias": "name",
+      "owner": "McpResourceLink",
+      "domain_of": [
+        "McpResourceLink"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "name",
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpResourceLink_title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "McpResource_title",
+      "domain": "McpResourceLink",
+      "slot_uri": "http://schema.org/name",
+      "alias": "title",
+      "owner": "McpResourceLink",
+      "domain_of": [
+        "McpResourceLink"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "title",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpResourceTemplate_description",
+      "definition_uri": "https://w3id.org/lmodel/mcp/description",
+      "description": "A description of what this template is for.\n\nThis can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a \"hint\" to the model.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/description"
+      ],
+      "is_a": "description",
+      "domain": "McpResourceTemplate",
+      "slot_uri": "http://schema.org/description",
+      "alias": "description",
+      "owner": "McpResourceTemplate",
+      "domain_of": [
+        "McpResourceTemplate"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "description",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpResourceTemplate_name",
+      "definition_uri": "https://w3id.org/lmodel/mcp/name",
+      "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "McpBaseMetadata_name",
+      "domain": "McpResourceTemplate",
+      "slot_uri": "http://schema.org/name",
+      "alias": "name",
+      "owner": "McpResourceTemplate",
+      "domain_of": [
+        "McpResourceTemplate"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "name",
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpResourceTemplate_title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "McpBaseMetadata_title",
+      "domain": "McpResourceTemplate",
+      "slot_uri": "http://schema.org/name",
+      "alias": "title",
+      "owner": "McpResourceTemplate",
+      "domain_of": [
+        "McpResourceTemplate"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "title",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpRoot_name",
+      "definition_uri": "https://w3id.org/lmodel/mcp/name",
+      "description": "An optional name for the root. This can be used to provide a human-readable\nidentifier for the root, which may be useful for display purposes or for\nreferencing the root in other parts of the application.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "name",
+      "domain": "McpRoot",
+      "slot_uri": "http://schema.org/name",
+      "alias": "name",
+      "owner": "McpRoot",
+      "domain_of": [
+        "McpRoot"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "name",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpStringSchema_description",
+      "definition_uri": "https://w3id.org/lmodel/mcp/description",
+      "description": "A description of the field for the user.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/description"
+      ],
+      "is_a": "description",
+      "domain": "McpStringSchema",
+      "slot_uri": "http://schema.org/description",
+      "alias": "description",
+      "owner": "McpStringSchema",
+      "domain_of": [
+        "McpStringSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "description",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpStringSchema_title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "A title for the field.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "title",
+      "domain": "McpStringSchema",
+      "slot_uri": "http://schema.org/name",
+      "alias": "title",
+      "owner": "McpStringSchema",
+      "domain_of": [
+        "McpStringSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "title",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpTitledMultiSelectEnumSchema_description",
+      "definition_uri": "https://w3id.org/lmodel/mcp/description",
+      "description": "Optional description for the enum field.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/description"
+      ],
+      "is_a": "description",
+      "domain": "McpTitledMultiSelectEnumSchema",
+      "slot_uri": "http://schema.org/description",
+      "alias": "description",
+      "owner": "McpTitledMultiSelectEnumSchema",
+      "domain_of": [
+        "McpTitledMultiSelectEnumSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "description",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpTitledMultiSelectEnumSchema_title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "Optional title for the enum field.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "title",
+      "domain": "McpTitledMultiSelectEnumSchema",
+      "slot_uri": "http://schema.org/name",
+      "alias": "title",
+      "owner": "McpTitledMultiSelectEnumSchema",
+      "domain_of": [
+        "McpTitledMultiSelectEnumSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "title",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpTitledMultiSelectEnumSchemaItemsAnyOf_title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "Display title for this option.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "title",
+      "domain": "McpTitledMultiSelectEnumSchemaItemsAnyOf",
+      "slot_uri": "http://schema.org/name",
+      "alias": "title",
+      "owner": "McpTitledMultiSelectEnumSchemaItemsAnyOf",
+      "domain_of": [
+        "McpTitledMultiSelectEnumSchemaItemsAnyOf"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "title",
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpTitledSingleSelectEnumSchema_description",
+      "definition_uri": "https://w3id.org/lmodel/mcp/description",
+      "description": "Optional description for the enum field.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/description"
+      ],
+      "is_a": "description",
+      "domain": "McpTitledSingleSelectEnumSchema",
+      "slot_uri": "http://schema.org/description",
+      "alias": "description",
+      "owner": "McpTitledSingleSelectEnumSchema",
+      "domain_of": [
+        "McpTitledSingleSelectEnumSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "description",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpTitledSingleSelectEnumSchema_title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "Optional title for the enum field.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "title",
+      "domain": "McpTitledSingleSelectEnumSchema",
+      "slot_uri": "http://schema.org/name",
+      "alias": "title",
+      "owner": "McpTitledSingleSelectEnumSchema",
+      "domain_of": [
+        "McpTitledSingleSelectEnumSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "title",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpTitledSingleSelectEnumSchemaOneOf_title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "Display label for this option.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "title",
+      "domain": "McpTitledSingleSelectEnumSchemaOneOf",
+      "slot_uri": "http://schema.org/name",
+      "alias": "title",
+      "owner": "McpTitledSingleSelectEnumSchemaOneOf",
+      "domain_of": [
+        "McpTitledSingleSelectEnumSchemaOneOf"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "title",
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpTool_description",
+      "definition_uri": "https://w3id.org/lmodel/mcp/description",
+      "description": "A human-readable description of the tool.\n\nThis can be used by clients to improve the LLM's understanding of available tools. It can be thought of like a \"hint\" to the model.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/description"
+      ],
+      "is_a": "description",
+      "domain": "McpTool",
+      "slot_uri": "http://schema.org/description",
+      "alias": "description",
+      "owner": "McpTool",
+      "domain_of": [
+        "McpTool"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "description",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpTool_name",
+      "definition_uri": "https://w3id.org/lmodel/mcp/name",
+      "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "McpBaseMetadata_name",
+      "domain": "McpTool",
+      "slot_uri": "http://schema.org/name",
+      "alias": "name",
+      "owner": "McpTool",
+      "domain_of": [
+        "McpTool"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "name",
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpTool_title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "McpBaseMetadata_title",
+      "domain": "McpTool",
+      "slot_uri": "http://schema.org/name",
+      "alias": "title",
+      "owner": "McpTool",
+      "domain_of": [
+        "McpTool"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "title",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpToolAnnotations_title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "A human-readable title for the tool.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "title",
+      "domain": "McpToolAnnotations",
+      "slot_uri": "http://schema.org/name",
+      "alias": "title",
+      "owner": "McpToolAnnotations",
+      "domain_of": [
+        "McpToolAnnotations"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "title",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpToolUseContent_name",
+      "definition_uri": "https://w3id.org/lmodel/mcp/name",
+      "description": "The name of the tool to call.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "name",
+      "domain": "McpToolUseContent",
+      "slot_uri": "http://schema.org/name",
+      "alias": "name",
+      "owner": "McpToolUseContent",
+      "domain_of": [
+        "McpToolUseContent"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "name",
+      "range": "string",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpUntitledMultiSelectEnumSchema_description",
+      "definition_uri": "https://w3id.org/lmodel/mcp/description",
+      "description": "Optional description for the enum field.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/description"
+      ],
+      "is_a": "description",
+      "domain": "McpUntitledMultiSelectEnumSchema",
+      "slot_uri": "http://schema.org/description",
+      "alias": "description",
+      "owner": "McpUntitledMultiSelectEnumSchema",
+      "domain_of": [
+        "McpUntitledMultiSelectEnumSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "description",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpUntitledMultiSelectEnumSchema_title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "Optional title for the enum field.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "title",
+      "domain": "McpUntitledMultiSelectEnumSchema",
+      "slot_uri": "http://schema.org/name",
+      "alias": "title",
+      "owner": "McpUntitledMultiSelectEnumSchema",
+      "domain_of": [
+        "McpUntitledMultiSelectEnumSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "title",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpUntitledSingleSelectEnumSchema_description",
+      "definition_uri": "https://w3id.org/lmodel/mcp/description",
+      "description": "Optional description for the enum field.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/description"
+      ],
+      "is_a": "description",
+      "domain": "McpUntitledSingleSelectEnumSchema",
+      "slot_uri": "http://schema.org/description",
+      "alias": "description",
+      "owner": "McpUntitledSingleSelectEnumSchema",
+      "domain_of": [
+        "McpUntitledSingleSelectEnumSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "description",
+      "range": "string",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "McpUntitledSingleSelectEnumSchema_title",
+      "definition_uri": "https://w3id.org/lmodel/mcp/title",
+      "description": "Optional title for the enum field.",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "mappings": [
+        "http://schema.org/name"
+      ],
+      "is_a": "title",
+      "domain": "McpUntitledSingleSelectEnumSchema",
+      "slot_uri": "http://schema.org/name",
+      "alias": "title",
+      "owner": "McpUntitledSingleSelectEnumSchema",
+      "domain_of": [
+        "McpUntitledSingleSelectEnumSchema"
+      ],
+      "is_usage_slot": true,
+      "usage_slot_name": "title",
+      "range": "string",
       "@type": "SlotDefinition"
     }
   ],
@@ -8839,15 +9563,18 @@
         "mcp_schema:Annotations"
       ],
       "slots": [
-        "mcpAnnotations__audience",
+        "mcpAnnotations__intended_audience",
         "mcpAnnotations__last_modified",
         "mcpAnnotations__priority"
       ],
       "slot_usage": {},
       "attributes": [
         {
-          "name": "audience",
+          "name": "intended_audience",
           "description": "Describes who the intended audience of this object or data is.\n\nIt can include multiple entries to indicate content useful for multiple audiences (e.g., `[\"user\", \"assistant\"]`).",
+          "aliases": [
+            "audience"
+          ],
           "range": "McpRole",
           "multivalued": true,
           "@type": "SlotDefinition"
@@ -8890,7 +9617,7 @@
         "mcpAudioContent__annotations",
         "mcpAudioContent__data",
         "mcpAudioContent__mime_type",
-        "mcpAudioContent__type"
+        "mcpAudioContent__kind"
       ],
       "slot_usage": {},
       "attributes": [
@@ -8922,8 +9649,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "type",
+          "name": "kind",
           "description": "The kind of object, always `audio`.",
+          "aliases": [
+            "type"
+          ],
           "required": true,
           "equals_string": "audio",
           "@type": "SlotDefinition"
@@ -8945,23 +9675,10 @@
         "mcp_schema:BaseMetadata"
       ],
       "slots": [
-        "mcpBaseMetadata__name",
-        "mcpBaseMetadata__title"
+        "McpBaseMetadata_name",
+        "McpBaseMetadata_title"
       ],
       "slot_usage": {},
-      "attributes": [
-        {
-          "name": "name",
-          "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
-          "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "title",
-          "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
-          "@type": "SlotDefinition"
-        }
-      ],
       "class_uri": "https://w3id.org/lmodel/mcp/McpBaseMetadata",
       "extra_slots": {
         "allowed": true,
@@ -9036,10 +9753,10 @@
         "mcp_schema:BooleanSchema"
       ],
       "slots": [
+        "McpBooleanSchema_description",
+        "McpBooleanSchema_title",
         "mcpBooleanSchema__default",
-        "mcpBooleanSchema__description",
-        "mcpBooleanSchema__title",
-        "mcpBooleanSchema__type"
+        "mcpBooleanSchema__kind"
       ],
       "slot_usage": {},
       "attributes": [
@@ -9050,18 +9767,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "description",
-          "description": "A description of the field for the user.",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "title",
-          "description": "A title for the field.",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "type",
+          "name": "kind",
           "description": "The kind of object, always `boolean`.",
+          "aliases": [
+            "type"
+          ],
           "required": true,
           "equals_string": "boolean",
           "@type": "SlotDefinition"
@@ -9143,7 +9853,7 @@
       ],
       "is_a": "McpJSONRPCRequest",
       "slots": [
-        "mcpCallToolRequest__id",
+        "mcpCallToolRequest__identifier",
         "mcpCallToolRequest__jsonrpc",
         "mcpCallToolRequest__method",
         "mcpCallToolRequest__params"
@@ -9151,8 +9861,11 @@
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -9208,10 +9921,10 @@
       ],
       "is_a": "McpInputResponseRequestParams",
       "slots": [
+        "McpCallToolRequestParams_name",
         "mcpCallToolRequestParams__meta",
         "mcpCallToolRequestParams__arguments",
         "mcpCallToolRequestParams__input_responses",
-        "mcpCallToolRequestParams__name",
         "mcpCallToolRequestParams__request_state"
       ],
       "slot_usage": {},
@@ -9235,12 +9948,6 @@
           "description": "A map of client responses to server-initiated requests.\nKeys correspond to the keys in the {@link InputRequests} map;\nvalues are the client's result for each request.",
           "alias": "inputResponses",
           "range": "McpInputResponses",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "name",
-          "description": "The name of the tool.",
-          "required": true,
           "@type": "SlotDefinition"
         },
         {
@@ -9336,15 +10043,18 @@
       ],
       "is_a": "McpJSONRPCResultResponse",
       "slots": [
-        "mcpCallToolResultResponse__id",
+        "mcpCallToolResultResponse__identifier",
         "mcpCallToolResultResponse__jsonrpc",
         "mcpCallToolResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -9451,7 +10161,7 @@
       "is_a": "McpNotificationParams",
       "slots": [
         "mcpCancelledNotificationParams__meta",
-        "mcpCancelledNotificationParams__reason",
+        "mcpCancelledNotificationParams__reason_text",
         "mcpCancelledNotificationParams__request_id"
       ],
       "slot_usage": {},
@@ -9464,8 +10174,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "reason",
+          "name": "reason_text",
           "description": "An optional string describing the reason for the cancellation. This MAY be logged or presented to the user.",
+          "aliases": [
+            "reason"
+          ],
           "@type": "SlotDefinition"
         },
         {
@@ -9564,7 +10277,7 @@
       ],
       "slots": [
         "mcpClientCapabilitiesElicitation__form",
-        "mcpClientCapabilitiesElicitation__url"
+        "mcpClientCapabilitiesElicitation__url_settings"
       ],
       "slot_usage": {},
       "attributes": [
@@ -9575,8 +10288,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "url",
+          "name": "url_settings",
           "description": "Settings for elicitation by URL.",
+          "aliases": [
+            "url"
+          ],
           "range": "McpJSONObject",
           "@type": "SlotDefinition"
         }
@@ -9663,14 +10379,17 @@
         "mcp_schema:ClientCapabilities/properties/sampling"
       ],
       "slots": [
-        "mcpClientCapabilitiesSampling__context",
+        "mcpClientCapabilitiesSampling__context_info",
         "mcpClientCapabilitiesSampling__tools"
       ],
       "slot_usage": {},
       "attributes": [
         {
-          "name": "context",
+          "name": "context_info",
           "description": "Whether the client supports context inclusion via `includeContext` parameter.\nIf not declared, servers SHOULD only use `includeContext: \"none\"` (or omit it).",
+          "aliases": [
+            "context"
+          ],
           "range": "McpJSONObject",
           "@type": "SlotDefinition"
         },
@@ -9825,7 +10544,7 @@
       ],
       "is_a": "McpJSONRPCRequest",
       "slots": [
-        "mcpCompleteRequest__id",
+        "mcpCompleteRequest__identifier",
         "mcpCompleteRequest__jsonrpc",
         "mcpCompleteRequest__method",
         "mcpCompleteRequest__params"
@@ -9833,8 +10552,11 @@
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -9892,7 +10614,7 @@
       "slots": [
         "mcpCompleteRequestParams__meta",
         "mcpCompleteRequestParams__argument",
-        "mcpCompleteRequestParams__context",
+        "mcpCompleteRequestParams__context_info",
         "mcpCompleteRequestParams__ref"
       ],
       "slot_usage": {},
@@ -9913,8 +10635,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "context",
+          "name": "context_info",
           "description": "Additional, optional context for completions",
+          "aliases": [
+            "context"
+          ],
           "range": "McpCompleteRequestParamsContext",
           "@type": "SlotDefinition"
         },
@@ -9954,17 +10679,11 @@
         "mcp_schema:CompleteRequestParams/properties/argument"
       ],
       "slots": [
-        "mcpCompleteRequestParamsArgument__name",
+        "McpCompleteRequestParamsArgument_name",
         "mcpCompleteRequestParamsArgument__value"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "name",
-          "description": "The name of the argument",
-          "required": true,
-          "@type": "SlotDefinition"
-        },
         {
           "name": "value",
           "description": "The value of the argument to use for completion matching.",
@@ -10139,15 +10858,18 @@
       ],
       "is_a": "McpJSONRPCResultResponse",
       "slots": [
-        "mcpCompleteResultResponse__id",
+        "mcpCompleteResultResponse__identifier",
         "mcpCompleteResultResponse__jsonrpc",
         "mcpCompleteResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -10469,7 +11191,7 @@
       ],
       "is_a": "McpJSONRPCRequest",
       "slots": [
-        "mcpDiscoverRequest__id",
+        "mcpDiscoverRequest__identifier",
         "mcpDiscoverRequest__jsonrpc",
         "mcpDiscoverRequest__method",
         "mcpDiscoverRequest__params"
@@ -10477,8 +11199,11 @@
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -10616,15 +11341,18 @@
       ],
       "is_a": "McpJSONRPCResultResponse",
       "slots": [
-        "mcpDiscoverResultResponse__id",
+        "mcpDiscoverResultResponse__identifier",
         "mcpDiscoverResultResponse__jsonrpc",
         "mcpDiscoverResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -10759,8 +11487,8 @@
       "slots": [
         "mcpElicitRequestFormParamsRequestedSchema__schema_dialect",
         "mcpElicitRequestFormParamsRequestedSchema__properties",
-        "mcpElicitRequestFormParamsRequestedSchema__required",
-        "mcpElicitRequestFormParamsRequestedSchema__type"
+        "mcpElicitRequestFormParamsRequestedSchema__required_names",
+        "mcpElicitRequestFormParamsRequestedSchema__kind"
       ],
       "slot_usage": {},
       "attributes": [
@@ -10780,14 +11508,20 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "required",
+          "name": "required_names",
           "description": "The names of the fields the user must fill in.",
+          "aliases": [
+            "required"
+          ],
           "multivalued": true,
           "@type": "SlotDefinition"
         },
         {
-          "name": "type",
+          "name": "kind",
           "description": "The kind of object, always `object`.",
+          "aliases": [
+            "type"
+          ],
           "required": true,
           "equals_string": "object",
           "@type": "SlotDefinition"
@@ -10863,9 +11597,9 @@
         "mcp_schema:ElicitRequestURLParams"
       ],
       "slots": [
+        "McpElicitRequestURLParams_url",
         "mcpElicitRequestURLParams__message",
-        "mcpElicitRequestURLParams__mode",
-        "mcpElicitRequestURLParams__url"
+        "mcpElicitRequestURLParams__mode"
       ],
       "slot_usage": {},
       "attributes": [
@@ -10880,13 +11614,6 @@
           "description": "The elicitation mode.",
           "required": true,
           "equals_string": "url",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "url",
-          "description": "The URL that the user should navigate to.",
-          "range": "uri",
-          "required": true,
           "@type": "SlotDefinition"
         }
       ],
@@ -10989,8 +11716,8 @@
       "slots": [
         "mcpEmbeddedResource__meta",
         "mcpEmbeddedResource__annotations",
-        "mcpEmbeddedResource__resource",
-        "mcpEmbeddedResource__type"
+        "mcpEmbeddedResource__resource_contents",
+        "mcpEmbeddedResource__kind"
       ],
       "slot_usage": {},
       "attributes": [
@@ -11008,8 +11735,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "resource",
+          "name": "resource_contents",
           "description": "The resource's contents, as text or as binary data.",
+          "aliases": [
+            "resource"
+          ],
           "required": true,
           "any_of": [
             {
@@ -11024,8 +11754,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "type",
+          "name": "kind",
           "description": "The kind of object, always `resource`.",
+          "aliases": [
+            "type"
+          ],
           "required": true,
           "equals_string": "resource",
           "@type": "SlotDefinition"
@@ -11158,7 +11891,7 @@
       ],
       "is_a": "McpJSONRPCRequest",
       "slots": [
-        "mcpGetPromptRequest__id",
+        "mcpGetPromptRequest__identifier",
         "mcpGetPromptRequest__jsonrpc",
         "mcpGetPromptRequest__method",
         "mcpGetPromptRequest__params"
@@ -11166,8 +11899,11 @@
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -11223,10 +11959,10 @@
       ],
       "is_a": "McpInputResponseRequestParams",
       "slots": [
+        "McpGetPromptRequestParams_name",
         "mcpGetPromptRequestParams__meta",
         "mcpGetPromptRequestParams__arguments",
         "mcpGetPromptRequestParams__input_responses",
-        "mcpGetPromptRequestParams__name",
         "mcpGetPromptRequestParams__request_state"
       ],
       "slot_usage": {},
@@ -11250,12 +11986,6 @@
           "description": "A map of client responses to server-initiated requests.\nKeys correspond to the keys in the {@link InputRequests} map;\nvalues are the client's result for each request.",
           "alias": "inputResponses",
           "range": "McpInputResponses",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "name",
-          "description": "The name of the prompt or prompt template.",
-          "required": true,
           "@type": "SlotDefinition"
         },
         {
@@ -11307,8 +12037,8 @@
       ],
       "is_a": "McpResult",
       "slots": [
+        "McpGetPromptResult_description",
         "mcpGetPromptResult__meta",
-        "mcpGetPromptResult__description",
         "mcpGetPromptResult__messages",
         "mcpGetPromptResult__result_type"
       ],
@@ -11319,11 +12049,6 @@
           "description": "Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.",
           "alias": "_meta",
           "range": "McpResultMetaObject",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "description",
-          "description": "An optional description for the prompt.",
           "@type": "SlotDefinition"
         },
         {
@@ -11363,15 +12088,18 @@
       ],
       "is_a": "McpJSONRPCResultResponse",
       "slots": [
-        "mcpGetPromptResultResponse__id",
+        "mcpGetPromptResultResponse__identifier",
         "mcpGetPromptResultResponse__jsonrpc",
         "mcpGetPromptResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -11430,7 +12158,7 @@
       "is_a": "McpJSONRPCErrorResponse",
       "slots": [
         "mcpHeaderMismatchError__error",
-        "mcpHeaderMismatchError__id",
+        "mcpHeaderMismatchError__identifier",
         "mcpHeaderMismatchError__jsonrpc"
       ],
       "slot_usage": {},
@@ -11443,8 +12171,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "any_of": [
             {
               "range": "string",
@@ -11604,7 +12335,7 @@
         "mcpImageContent__annotations",
         "mcpImageContent__data",
         "mcpImageContent__mime_type",
-        "mcpImageContent__type"
+        "mcpImageContent__kind"
       ],
       "slot_usage": {},
       "attributes": [
@@ -11636,8 +12367,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "type",
+          "name": "kind",
           "description": "The kind of object, always `image`.",
+          "aliases": [
+            "type"
+          ],
           "required": true,
           "equals_string": "image",
           "@type": "SlotDefinition"
@@ -11666,43 +12400,21 @@
         "McpIcons"
       ],
       "slots": [
-        "mcpImplementation__description",
+        "McpImplementation_description",
+        "McpImplementation_name",
+        "McpImplementation_title",
+        "McpImplementation_version",
         "mcpImplementation__icons",
-        "mcpImplementation__name",
-        "mcpImplementation__title",
-        "mcpImplementation__version",
         "mcpImplementation__website_url"
       ],
       "slot_usage": {},
       "attributes": [
-        {
-          "name": "description",
-          "description": "An optional human-readable description of what this implementation does.\n\nThis can be used by clients or servers to provide context about their purpose\nand capabilities. For example, a server might describe the types of resources\nor tools it provides, while a client might describe its intended use case.",
-          "@type": "SlotDefinition"
-        },
         {
           "name": "icons",
           "description": "Optional set of sized icons that the client can display in a user interface.\n\nClients that support rendering icons MUST support at least the following MIME types:\n- `image/png` - PNG images (safe, universal compatibility)\n- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)\n\nClients that support rendering icons SHOULD also support:\n- `image/svg+xml` - SVG images (scalable but requires security precautions)\n- `image/webp` - WebP images (modern, efficient format)",
           "range": "McpIcon",
           "multivalued": true,
           "inlined_as_list": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "name",
-          "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
-          "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "title",
-          "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "version",
-          "description": "The version of this implementation.",
-          "required": true,
           "@type": "SlotDefinition"
         },
         {
@@ -12100,7 +12812,7 @@
       ],
       "slots": [
         "mcpJSONRPCErrorResponse__error",
-        "mcpJSONRPCErrorResponse__id",
+        "mcpJSONRPCErrorResponse__identifier",
         "mcpJSONRPCErrorResponse__jsonrpc"
       ],
       "slot_usage": {},
@@ -12113,8 +12825,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "any_of": [
             {
               "range": "string",
@@ -12238,7 +12953,7 @@
       ],
       "is_a": "McpRequest",
       "slots": [
-        "mcpJSONRPCRequest__id",
+        "mcpJSONRPCRequest__identifier",
         "mcpJSONRPCRequest__jsonrpc",
         "mcpJSONRPCRequest__method",
         "mcpJSONRPCRequest__params"
@@ -12246,8 +12961,11 @@
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -12329,15 +13047,18 @@
         "mcp_schema:JSONRPCResultResponse"
       ],
       "slots": [
-        "mcpJSONRPCResultResponse__id",
+        "mcpJSONRPCResultResponse__identifier",
         "mcpJSONRPCResultResponse__jsonrpc",
         "mcpJSONRPCResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -12408,23 +13129,18 @@
         "mcp_schema:LegacyTitledEnumSchema"
       ],
       "slots": [
+        "McpLegacyTitledEnumSchema_description",
+        "McpLegacyTitledEnumSchema_title",
         "mcpLegacyTitledEnumSchema__default",
-        "mcpLegacyTitledEnumSchema__description",
         "mcpLegacyTitledEnumSchema__enum",
         "mcpLegacyTitledEnumSchema__enum_names",
-        "mcpLegacyTitledEnumSchema__title",
-        "mcpLegacyTitledEnumSchema__type"
+        "mcpLegacyTitledEnumSchema__kind"
       ],
       "slot_usage": {},
       "attributes": [
         {
           "name": "default",
           "description": "The value the field takes when the user gives none.",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "description",
-          "description": "A description of the field for the user.",
           "@type": "SlotDefinition"
         },
         {
@@ -12442,13 +13158,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "title",
-          "description": "A title for the field.",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "type",
+          "name": "kind",
           "description": "The kind of object, always `string`.",
+          "aliases": [
+            "type"
+          ],
           "required": true,
           "equals_string": "string",
           "@type": "SlotDefinition"
@@ -12474,7 +13188,7 @@
       ],
       "is_a": "McpPaginatedRequest",
       "slots": [
-        "mcpListPromptsRequest__id",
+        "mcpListPromptsRequest__identifier",
         "mcpListPromptsRequest__jsonrpc",
         "mcpListPromptsRequest__method",
         "mcpListPromptsRequest__params"
@@ -12482,8 +13196,11 @@
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -12618,15 +13335,18 @@
       ],
       "is_a": "McpJSONRPCResultResponse",
       "slots": [
-        "mcpListPromptsResultResponse__id",
+        "mcpListPromptsResultResponse__identifier",
         "mcpListPromptsResultResponse__jsonrpc",
         "mcpListPromptsResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -12675,7 +13395,7 @@
       ],
       "is_a": "McpPaginatedRequest",
       "slots": [
-        "mcpListResourceTemplatesRequest__id",
+        "mcpListResourceTemplatesRequest__identifier",
         "mcpListResourceTemplatesRequest__jsonrpc",
         "mcpListResourceTemplatesRequest__method",
         "mcpListResourceTemplatesRequest__params"
@@ -12683,8 +13403,11 @@
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -12820,15 +13543,18 @@
       ],
       "is_a": "McpJSONRPCResultResponse",
       "slots": [
-        "mcpListResourceTemplatesResultResponse__id",
+        "mcpListResourceTemplatesResultResponse__identifier",
         "mcpListResourceTemplatesResultResponse__jsonrpc",
         "mcpListResourceTemplatesResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -12877,7 +13603,7 @@
       ],
       "is_a": "McpPaginatedRequest",
       "slots": [
-        "mcpListResourcesRequest__id",
+        "mcpListResourcesRequest__identifier",
         "mcpListResourcesRequest__jsonrpc",
         "mcpListResourcesRequest__method",
         "mcpListResourcesRequest__params"
@@ -12885,8 +13611,11 @@
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -13021,15 +13750,18 @@
       ],
       "is_a": "McpJSONRPCResultResponse",
       "slots": [
-        "mcpListResourcesResultResponse__id",
+        "mcpListResourcesResultResponse__identifier",
         "mcpListResourcesResultResponse__jsonrpc",
         "mcpListResourcesResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -13180,7 +13912,7 @@
       ],
       "is_a": "McpPaginatedRequest",
       "slots": [
-        "mcpListToolsRequest__id",
+        "mcpListToolsRequest__identifier",
         "mcpListToolsRequest__jsonrpc",
         "mcpListToolsRequest__method",
         "mcpListToolsRequest__params"
@@ -13188,8 +13920,11 @@
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -13324,15 +14059,18 @@
       ],
       "is_a": "McpJSONRPCResultResponse",
       "slots": [
-        "mcpListToolsResultResponse__id",
+        "mcpListToolsResultResponse__identifier",
         "mcpListToolsResultResponse__jsonrpc",
         "mcpListToolsResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -13550,7 +14288,7 @@
       "is_a": "McpJSONRPCErrorResponse",
       "slots": [
         "mcpMissingRequiredClientCapabilityError__error",
-        "mcpMissingRequiredClientCapabilityError__id",
+        "mcpMissingRequiredClientCapabilityError__identifier",
         "mcpMissingRequiredClientCapabilityError__jsonrpc"
       ],
       "slot_usage": {},
@@ -13563,8 +14301,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "any_of": [
             {
               "range": "string",
@@ -13678,16 +14419,9 @@
         "mcp_schema:ModelHint"
       ],
       "slots": [
-        "mcpModelHint__name"
+        "McpModelHint_name"
       ],
       "slot_usage": {},
-      "attributes": [
-        {
-          "name": "name",
-          "description": "A hint for a model name.\n\nThe client SHOULD treat this as a substring of a model name; for example:\n - `claude-3-5-sonnet` should match `claude-3-5-sonnet-20241022`\n - `sonnet` should match `claude-3-5-sonnet-20241022`, `claude-3-sonnet-20240229`, etc.\n - `claude` should match any Claude model\n\nThe client MAY also map the string to a different provider's model name or a different model family, as long as it fills a similar niche; for example:\n - `gemini-1.5-flash` could match `claude-3-haiku-20240307`",
-          "@type": "SlotDefinition"
-        }
-      ],
       "class_uri": "https://w3id.org/lmodel/mcp/McpModelHint",
       "extra_slots": {
         "allowed": true,
@@ -13903,12 +14637,12 @@
         "mcp_schema:NumberSchema"
       ],
       "slots": [
+        "McpNumberSchema_description",
+        "McpNumberSchema_title",
         "mcpNumberSchema__default",
-        "mcpNumberSchema__description",
         "mcpNumberSchema__maximum",
         "mcpNumberSchema__minimum",
-        "mcpNumberSchema__title",
-        "mcpNumberSchema__type"
+        "mcpNumberSchema__kind"
       ],
       "slot_usage": {},
       "attributes": [
@@ -13916,11 +14650,6 @@
           "name": "default",
           "description": "The value the field takes when the user gives none.",
           "range": "float",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "description",
-          "description": "A description of the field for the user.",
           "@type": "SlotDefinition"
         },
         {
@@ -13936,13 +14665,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "title",
-          "description": "A title for the field.",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "type",
+          "name": "kind",
           "description": "The kind of value the field takes.",
+          "aliases": [
+            "type"
+          ],
           "range": "McpNumberSchemaType",
           "required": true,
           "@type": "SlotDefinition"
@@ -13965,7 +14692,7 @@
       ],
       "is_a": "McpJSONRPCRequest",
       "slots": [
-        "mcpPaginatedRequest__id",
+        "mcpPaginatedRequest__identifier",
         "mcpPaginatedRequest__jsonrpc",
         "mcpPaginatedRequest__method",
         "mcpPaginatedRequest__params"
@@ -13973,8 +14700,11 @@
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -14334,12 +15064,12 @@
         "McpIcons"
       ],
       "slots": [
+        "McpPrompt_description",
+        "McpPrompt_name",
+        "McpPrompt_title",
         "mcpPrompt__meta",
         "mcpPrompt__arguments",
-        "mcpPrompt__description",
-        "mcpPrompt__icons",
-        "mcpPrompt__name",
-        "mcpPrompt__title"
+        "mcpPrompt__icons"
       ],
       "slot_usage": {},
       "attributes": [
@@ -14359,27 +15089,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "description",
-          "description": "An optional description of what this prompt provides",
-          "@type": "SlotDefinition"
-        },
-        {
           "name": "icons",
           "description": "Optional set of sized icons that the client can display in a user interface.\n\nClients that support rendering icons MUST support at least the following MIME types:\n- `image/png` - PNG images (safe, universal compatibility)\n- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)\n\nClients that support rendering icons SHOULD also support:\n- `image/svg+xml` - SVG images (scalable but requires security precautions)\n- `image/webp` - WebP images (modern, efficient format)",
           "range": "McpIcon",
           "multivalued": true,
           "inlined_as_list": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "name",
-          "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
-          "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "title",
-          "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
           "@type": "SlotDefinition"
         }
       ],
@@ -14403,33 +15117,18 @@
       ],
       "is_a": "McpBaseMetadata",
       "slots": [
-        "mcpPromptArgument__description",
-        "mcpPromptArgument__name",
-        "mcpPromptArgument__required",
-        "mcpPromptArgument__title"
+        "McpPromptArgument_description",
+        "McpPromptArgument_name",
+        "McpPromptArgument_title",
+        "mcpPromptArgument__required"
       ],
       "slot_usage": {},
       "attributes": [
         {
-          "name": "description",
-          "description": "A human-readable description of the argument.",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "name",
-          "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
-          "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
           "name": "required",
           "description": "Whether this argument must be provided.",
+          "slot_uri": "schema:valueRequired",
           "range": "boolean",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "title",
-          "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
           "@type": "SlotDefinition"
         }
       ],
@@ -14539,26 +15238,18 @@
       ],
       "is_a": "McpBaseMetadata",
       "slots": [
-        "mcpPromptReference__name",
-        "mcpPromptReference__title",
-        "mcpPromptReference__type"
+        "McpPromptReference_name",
+        "McpPromptReference_title",
+        "mcpPromptReference__kind"
       ],
       "slot_usage": {},
       "attributes": [
         {
-          "name": "name",
-          "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
-          "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "title",
-          "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "type",
+          "name": "kind",
           "description": "The kind of object, always `ref/prompt`.",
+          "aliases": [
+            "type"
+          ],
           "required": true,
           "equals_string": "ref/prompt",
           "@type": "SlotDefinition"
@@ -14584,7 +15275,7 @@
       ],
       "is_a": "McpJSONRPCRequest",
       "slots": [
-        "mcpReadResourceRequest__id",
+        "mcpReadResourceRequest__identifier",
         "mcpReadResourceRequest__jsonrpc",
         "mcpReadResourceRequest__method",
         "mcpReadResourceRequest__params"
@@ -14592,8 +15283,11 @@
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -14786,15 +15480,18 @@
       ],
       "is_a": "McpJSONRPCResultResponse",
       "slots": [
-        "mcpReadResourceResultResponse__id",
+        "mcpReadResourceResultResponse__identifier",
         "mcpReadResourceResultResponse__jsonrpc",
         "mcpReadResourceResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -15003,14 +15700,14 @@
         "McpIcons"
       ],
       "slots": [
+        "McpResource_description",
+        "McpResource_name",
+        "McpResource_title",
         "mcpResource__meta",
         "mcpResource__annotations",
-        "mcpResource__description",
         "mcpResource__icons",
         "mcpResource__mime_type",
-        "mcpResource__name",
         "mcpResource__size",
-        "mcpResource__title",
         "mcpResource__uri"
       ],
       "slot_usage": {},
@@ -15029,11 +15726,6 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "description",
-          "description": "A description of what this resource represents.\n\nThis can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a \"hint\" to the model.",
-          "@type": "SlotDefinition"
-        },
-        {
           "name": "icons",
           "description": "Optional set of sized icons that the client can display in a user interface.\n\nClients that support rendering icons MUST support at least the following MIME types:\n- `image/png` - PNG images (safe, universal compatibility)\n- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)\n\nClients that support rendering icons SHOULD also support:\n- `image/svg+xml` - SVG images (scalable but requires security precautions)\n- `image/webp` - WebP images (modern, efficient format)",
           "range": "McpIcon",
@@ -15048,20 +15740,9 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "name",
-          "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
-          "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
           "name": "size",
           "description": "The size of the raw resource content, in bytes (i.e., before base64 encoding or any tokenization), if known.\n\nThis can be used by Hosts to display file sizes and estimate context window usage.",
           "range": "integer",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "title",
-          "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
           "@type": "SlotDefinition"
         },
         {
@@ -15135,15 +15816,15 @@
       ],
       "is_a": "McpResource",
       "slots": [
+        "McpResourceLink_description",
+        "McpResourceLink_name",
+        "McpResourceLink_title",
         "mcpResourceLink__meta",
         "mcpResourceLink__annotations",
-        "mcpResourceLink__description",
         "mcpResourceLink__icons",
         "mcpResourceLink__mime_type",
-        "mcpResourceLink__name",
         "mcpResourceLink__size",
-        "mcpResourceLink__title",
-        "mcpResourceLink__type",
+        "mcpResourceLink__kind",
         "mcpResourceLink__uri"
       ],
       "slot_usage": {},
@@ -15162,11 +15843,6 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "description",
-          "description": "A description of what this resource represents.\n\nThis can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a \"hint\" to the model.",
-          "@type": "SlotDefinition"
-        },
-        {
           "name": "icons",
           "description": "Optional set of sized icons that the client can display in a user interface.\n\nClients that support rendering icons MUST support at least the following MIME types:\n- `image/png` - PNG images (safe, universal compatibility)\n- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)\n\nClients that support rendering icons SHOULD also support:\n- `image/svg+xml` - SVG images (scalable but requires security precautions)\n- `image/webp` - WebP images (modern, efficient format)",
           "range": "McpIcon",
@@ -15181,25 +15857,17 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "name",
-          "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
-          "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
           "name": "size",
           "description": "The size of the raw resource content, in bytes (i.e., before base64 encoding or any tokenization), if known.\n\nThis can be used by Hosts to display file sizes and estimate context window usage.",
           "range": "integer",
           "@type": "SlotDefinition"
         },
         {
-          "name": "title",
-          "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "type",
+          "name": "kind",
           "description": "The kind of object, always `resource_link`.",
+          "aliases": [
+            "type"
+          ],
           "required": true,
           "equals_string": "resource_link",
           "@type": "SlotDefinition"
@@ -15320,13 +15988,13 @@
         "McpIcons"
       ],
       "slots": [
+        "McpResourceTemplate_description",
+        "McpResourceTemplate_name",
+        "McpResourceTemplate_title",
         "mcpResourceTemplate__meta",
         "mcpResourceTemplate__annotations",
-        "mcpResourceTemplate__description",
         "mcpResourceTemplate__icons",
         "mcpResourceTemplate__mime_type",
-        "mcpResourceTemplate__name",
-        "mcpResourceTemplate__title",
         "mcpResourceTemplate__uri_template"
       ],
       "slot_usage": {},
@@ -15345,11 +16013,6 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "description",
-          "description": "A description of what this template is for.\n\nThis can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a \"hint\" to the model.",
-          "@type": "SlotDefinition"
-        },
-        {
           "name": "icons",
           "description": "Optional set of sized icons that the client can display in a user interface.\n\nClients that support rendering icons MUST support at least the following MIME types:\n- `image/png` - PNG images (safe, universal compatibility)\n- `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)\n\nClients that support rendering icons SHOULD also support:\n- `image/svg+xml` - SVG images (scalable but requires security precautions)\n- `image/webp` - WebP images (modern, efficient format)",
           "range": "McpIcon",
@@ -15361,17 +16024,6 @@
           "name": "mime_type",
           "description": "The MIME type for all resources that match this template. This should only be included if all resources matching this template have the same type.",
           "alias": "mimeType",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "name",
-          "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
-          "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "title",
-          "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
           "@type": "SlotDefinition"
         },
         {
@@ -15402,14 +16054,17 @@
         "mcp_schema:ResourceTemplateReference"
       ],
       "slots": [
-        "mcpResourceTemplateReference__type",
+        "mcpResourceTemplateReference__kind",
         "mcpResourceTemplateReference__uri"
       ],
       "slot_usage": {},
       "attributes": [
         {
-          "name": "type",
+          "name": "kind",
           "description": "The kind of object, always `ref/resource`.",
+          "aliases": [
+            "type"
+          ],
           "required": true,
           "equals_string": "ref/resource",
           "@type": "SlotDefinition"
@@ -15602,8 +16257,8 @@
         "mcp_schema:Root"
       ],
       "slots": [
+        "McpRoot_name",
         "mcpRoot__meta",
-        "mcpRoot__name",
         "mcpRoot__uri"
       ],
       "slot_usage": {},
@@ -15613,11 +16268,6 @@
           "description": "Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.\n\nCertain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.\n\nValid keys have two segments:\n\n**Prefix:**\n- Optional \u2014 if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).\n- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).\n- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).\n- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.\n\n**Name:**\n- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).\n- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).",
           "alias": "_meta",
           "range": "McpMetaObject",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "name",
-          "description": "An optional name for the root. This can be used to provide a human-readable\nidentifier for the root, which may be useful for display purposes or for\nreferencing the root in other parts of the application.",
           "@type": "SlotDefinition"
         },
         {
@@ -16120,24 +16770,19 @@
         "mcp_schema:StringSchema"
       ],
       "slots": [
+        "McpStringSchema_description",
+        "McpStringSchema_title",
         "mcpStringSchema__default",
-        "mcpStringSchema__description",
         "mcpStringSchema__format",
         "mcpStringSchema__max_length",
         "mcpStringSchema__min_length",
-        "mcpStringSchema__title",
-        "mcpStringSchema__type"
+        "mcpStringSchema__kind"
       ],
       "slot_usage": {},
       "attributes": [
         {
           "name": "default",
           "description": "The value the field takes when the user gives none.",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "description",
-          "description": "A description of the field for the user.",
           "@type": "SlotDefinition"
         },
         {
@@ -16161,13 +16806,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "title",
-          "description": "A title for the field.",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "type",
+          "name": "kind",
           "description": "The kind of object, always `string`.",
+          "aliases": [
+            "type"
+          ],
           "required": true,
           "equals_string": "string",
           "@type": "SlotDefinition"
@@ -16336,7 +16979,7 @@
       ],
       "is_a": "McpJSONRPCRequest",
       "slots": [
-        "mcpSubscriptionsListenRequest__id",
+        "mcpSubscriptionsListenRequest__identifier",
         "mcpSubscriptionsListenRequest__jsonrpc",
         "mcpSubscriptionsListenRequest__method",
         "mcpSubscriptionsListenRequest__params"
@@ -16344,8 +16987,11 @@
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -16537,15 +17183,18 @@
       ],
       "is_a": "McpJSONRPCResultResponse",
       "slots": [
-        "mcpSubscriptionsListenResultResponse__id",
+        "mcpSubscriptionsListenResultResponse__identifier",
         "mcpSubscriptionsListenResultResponse__jsonrpc",
         "mcpSubscriptionsListenResultResponse__result"
       ],
       "slot_usage": {},
       "attributes": [
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "any_of": [
             {
@@ -16596,7 +17245,7 @@
         "mcpTextContent__meta",
         "mcpTextContent__annotations",
         "mcpTextContent__text",
-        "mcpTextContent__type"
+        "mcpTextContent__kind"
       ],
       "slot_usage": {},
       "attributes": [
@@ -16620,8 +17269,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "type",
+          "name": "kind",
           "description": "The kind of object, always `text`.",
+          "aliases": [
+            "type"
+          ],
           "required": true,
           "equals_string": "text",
           "@type": "SlotDefinition"
@@ -16700,13 +17352,13 @@
         "mcp_schema:TitledMultiSelectEnumSchema"
       ],
       "slots": [
+        "McpTitledMultiSelectEnumSchema_description",
+        "McpTitledMultiSelectEnumSchema_title",
         "mcpTitledMultiSelectEnumSchema__default",
-        "mcpTitledMultiSelectEnumSchema__description",
         "mcpTitledMultiSelectEnumSchema__items",
         "mcpTitledMultiSelectEnumSchema__max_items",
         "mcpTitledMultiSelectEnumSchema__min_items",
-        "mcpTitledMultiSelectEnumSchema__title",
-        "mcpTitledMultiSelectEnumSchema__type"
+        "mcpTitledMultiSelectEnumSchema__kind"
       ],
       "slot_usage": {},
       "attributes": [
@@ -16714,11 +17366,6 @@
           "name": "default",
           "description": "Optional default value.",
           "multivalued": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "description",
-          "description": "Optional description for the enum field.",
           "@type": "SlotDefinition"
         },
         {
@@ -16743,13 +17390,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "title",
-          "description": "Optional title for the enum field.",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "type",
+          "name": "kind",
           "description": "The kind of object, always `array`.",
+          "aliases": [
+            "type"
+          ],
           "required": true,
           "equals_string": "array",
           "@type": "SlotDefinition"
@@ -16808,20 +17453,14 @@
         "mcp_schema:TitledMultiSelectEnumSchema/properties/items/properties/anyOf/items"
       ],
       "slots": [
-        "mcpTitledMultiSelectEnumSchemaItemsAnyOf__const",
-        "mcpTitledMultiSelectEnumSchemaItemsAnyOf__title"
+        "McpTitledMultiSelectEnumSchemaItemsAnyOf_title",
+        "mcpTitledMultiSelectEnumSchemaItemsAnyOf__const"
       ],
       "slot_usage": {},
       "attributes": [
         {
           "name": "const",
           "description": "The constant enum value.",
-          "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "title",
-          "description": "Display title for this option.",
           "required": true,
           "@type": "SlotDefinition"
         }
@@ -16845,22 +17484,17 @@
         "mcp_schema:TitledSingleSelectEnumSchema"
       ],
       "slots": [
+        "McpTitledSingleSelectEnumSchema_description",
+        "McpTitledSingleSelectEnumSchema_title",
         "mcpTitledSingleSelectEnumSchema__default",
-        "mcpTitledSingleSelectEnumSchema__description",
         "mcpTitledSingleSelectEnumSchema__one_of",
-        "mcpTitledSingleSelectEnumSchema__title",
-        "mcpTitledSingleSelectEnumSchema__type"
+        "mcpTitledSingleSelectEnumSchema__kind"
       ],
       "slot_usage": {},
       "attributes": [
         {
           "name": "default",
           "description": "Optional default value.",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "description",
-          "description": "Optional description for the enum field.",
           "@type": "SlotDefinition"
         },
         {
@@ -16874,13 +17508,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "title",
-          "description": "Optional title for the enum field.",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "type",
+          "name": "kind",
           "description": "The kind of object, always `string`.",
+          "aliases": [
+            "type"
+          ],
           "required": true,
           "equals_string": "string",
           "@type": "SlotDefinition"
@@ -16905,20 +17537,14 @@
         "mcp_schema:TitledSingleSelectEnumSchema/properties/oneOf/items"
       ],
       "slots": [
-        "mcpTitledSingleSelectEnumSchemaOneOf__const",
-        "mcpTitledSingleSelectEnumSchemaOneOf__title"
+        "McpTitledSingleSelectEnumSchemaOneOf_title",
+        "mcpTitledSingleSelectEnumSchemaOneOf__const"
       ],
       "slot_usage": {},
       "attributes": [
         {
           "name": "const",
           "description": "The enum value.",
-          "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "title",
-          "description": "Display label for this option.",
           "required": true,
           "@type": "SlotDefinition"
         }
@@ -16946,14 +17572,14 @@
         "McpIcons"
       ],
       "slots": [
+        "McpTool_description",
+        "McpTool_name",
+        "McpTool_title",
         "mcpTool__meta",
         "mcpTool__annotations",
-        "mcpTool__description",
         "mcpTool__icons",
         "mcpTool__input_schema",
-        "mcpTool__name",
-        "mcpTool__output_schema",
-        "mcpTool__title"
+        "mcpTool__output_schema"
       ],
       "slot_usage": {},
       "attributes": [
@@ -16968,11 +17594,6 @@
           "name": "annotations",
           "description": "Optional additional tool information.\n\nDisplay name precedence order is: `title`, `annotations.title`, then `name`.",
           "range": "McpToolAnnotations",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "description",
-          "description": "A human-readable description of the tool.\n\nThis can be used by clients to improve the LLM's understanding of available tools. It can be thought of like a \"hint\" to the model.",
           "@type": "SlotDefinition"
         },
         {
@@ -16992,21 +17613,10 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "name",
-          "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
-          "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
           "name": "output_schema",
           "description": "An optional JSON Schema object defining the structure of the tool's output returned in\nthe structuredContent field of a {@link CallToolResult}. This can be any valid JSON Schema 2020-12.\n\nDefaults to JSON Schema 2020-12 when no explicit `$schema` is provided.",
           "alias": "outputSchema",
           "range": "McpToolOutputSchema",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "title",
-          "description": "Intended for UI and end-user contexts \u2014 optimized to be human-readable and easily understood,\neven by those unfamiliar with domain-specific terminology.\n\nIf not provided, the name should be used for display (except for {@link Tool},\nwhere `annotations.title` should be given precedence over using `name`,\nif present).",
           "@type": "SlotDefinition"
         }
       ],
@@ -17029,11 +17639,11 @@
         "mcp_schema:ToolAnnotations"
       ],
       "slots": [
+        "McpToolAnnotations_title",
         "mcpToolAnnotations__destructive_hint",
         "mcpToolAnnotations__idempotent_hint",
         "mcpToolAnnotations__open_world_hint",
-        "mcpToolAnnotations__read_only_hint",
-        "mcpToolAnnotations__title"
+        "mcpToolAnnotations__read_only_hint"
       ],
       "slot_usage": {},
       "attributes": [
@@ -17063,11 +17673,6 @@
           "description": "If true, the tool does not modify its environment.\n\nDefault: false",
           "alias": "readOnlyHint",
           "range": "boolean",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "title",
-          "description": "A human-readable title for the tool.",
           "@type": "SlotDefinition"
         }
       ],
@@ -17121,7 +17726,7 @@
       ],
       "slots": [
         "mcpToolInputSchema__schema_dialect",
-        "mcpToolInputSchema__type"
+        "mcpToolInputSchema__kind"
       ],
       "slot_usage": {},
       "attributes": [
@@ -17134,8 +17739,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "type",
+          "name": "kind",
           "description": "The kind of object, always `object`.",
+          "aliases": [
+            "type"
+          ],
           "required": true,
           "equals_string": "object",
           "@type": "SlotDefinition"
@@ -17244,7 +17852,7 @@
         "mcpToolResultContent__is_error",
         "mcpToolResultContent__structured_content",
         "mcpToolResultContent__tool_use_id",
-        "mcpToolResultContent__type"
+        "mcpToolResultContent__kind"
       ],
       "slot_usage": {},
       "attributes": [
@@ -17286,8 +17894,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "type",
+          "name": "kind",
           "description": "The kind of object, always `tool_result`.",
+          "aliases": [
+            "type"
+          ],
           "required": true,
           "equals_string": "tool_result",
           "@type": "SlotDefinition"
@@ -17312,11 +17923,11 @@
         "mcp_schema:ToolUseContent"
       ],
       "slots": [
+        "McpToolUseContent_name",
         "mcpToolUseContent__meta",
-        "mcpToolUseContent__id",
+        "mcpToolUseContent__identifier",
         "mcpToolUseContent__input",
-        "mcpToolUseContent__name",
-        "mcpToolUseContent__type"
+        "mcpToolUseContent__kind"
       ],
       "slot_usage": {},
       "attributes": [
@@ -17328,8 +17939,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A unique identifier for this tool use.\n\nThis ID is used to match tool results to their corresponding tool uses.",
+          "aliases": [
+            "id"
+          ],
           "required": true,
           "@type": "SlotDefinition"
         },
@@ -17341,14 +17955,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "name",
-          "description": "The name of the tool to call.",
-          "required": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "type",
+          "name": "kind",
           "description": "The kind of object, always `tool_use`.",
+          "aliases": [
+            "type"
+          ],
           "required": true,
           "equals_string": "tool_use",
           "@type": "SlotDefinition"
@@ -17375,7 +17986,7 @@
       "is_a": "McpJSONRPCErrorResponse",
       "slots": [
         "mcpUnsupportedProtocolVersionError__error",
-        "mcpUnsupportedProtocolVersionError__id",
+        "mcpUnsupportedProtocolVersionError__identifier",
         "mcpUnsupportedProtocolVersionError__jsonrpc"
       ],
       "slot_usage": {},
@@ -17388,8 +17999,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "id",
+          "name": "identifier",
           "description": "A uniquely identifying ID for a request in JSON-RPC.",
+          "aliases": [
+            "id"
+          ],
           "any_of": [
             {
               "range": "string",
@@ -17509,13 +18123,13 @@
         "mcp_schema:UntitledMultiSelectEnumSchema"
       ],
       "slots": [
+        "McpUntitledMultiSelectEnumSchema_description",
+        "McpUntitledMultiSelectEnumSchema_title",
         "mcpUntitledMultiSelectEnumSchema__default",
-        "mcpUntitledMultiSelectEnumSchema__description",
         "mcpUntitledMultiSelectEnumSchema__items",
         "mcpUntitledMultiSelectEnumSchema__max_items",
         "mcpUntitledMultiSelectEnumSchema__min_items",
-        "mcpUntitledMultiSelectEnumSchema__title",
-        "mcpUntitledMultiSelectEnumSchema__type"
+        "mcpUntitledMultiSelectEnumSchema__kind"
       ],
       "slot_usage": {},
       "attributes": [
@@ -17523,11 +18137,6 @@
           "name": "default",
           "description": "Optional default value.",
           "multivalued": true,
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "description",
-          "description": "Optional description for the enum field.",
           "@type": "SlotDefinition"
         },
         {
@@ -17552,13 +18161,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "title",
-          "description": "Optional title for the enum field.",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "type",
+          "name": "kind",
           "description": "The kind of object, always `array`.",
+          "aliases": [
+            "type"
+          ],
           "required": true,
           "equals_string": "array",
           "@type": "SlotDefinition"
@@ -17584,7 +18191,7 @@
       ],
       "slots": [
         "mcpUntitledMultiSelectEnumSchemaItems__enum",
-        "mcpUntitledMultiSelectEnumSchemaItems__type"
+        "mcpUntitledMultiSelectEnumSchemaItems__kind"
       ],
       "slot_usage": {},
       "attributes": [
@@ -17596,8 +18203,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "type",
+          "name": "kind",
           "description": "The kind of object, always `string`.",
+          "aliases": [
+            "type"
+          ],
           "required": true,
           "equals_string": "string",
           "@type": "SlotDefinition"
@@ -17622,22 +18232,17 @@
         "mcp_schema:UntitledSingleSelectEnumSchema"
       ],
       "slots": [
+        "McpUntitledSingleSelectEnumSchema_description",
+        "McpUntitledSingleSelectEnumSchema_title",
         "mcpUntitledSingleSelectEnumSchema__default",
-        "mcpUntitledSingleSelectEnumSchema__description",
         "mcpUntitledSingleSelectEnumSchema__enum",
-        "mcpUntitledSingleSelectEnumSchema__title",
-        "mcpUntitledSingleSelectEnumSchema__type"
+        "mcpUntitledSingleSelectEnumSchema__kind"
       ],
       "slot_usage": {},
       "attributes": [
         {
           "name": "default",
           "description": "Optional default value.",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "description",
-          "description": "Optional description for the enum field.",
           "@type": "SlotDefinition"
         },
         {
@@ -17648,13 +18253,11 @@
           "@type": "SlotDefinition"
         },
         {
-          "name": "title",
-          "description": "Optional title for the enum field.",
-          "@type": "SlotDefinition"
-        },
-        {
-          "name": "type",
+          "name": "kind",
           "description": "The kind of object, always `string`.",
+          "aliases": [
+            "type"
+          ],
           "required": true,
           "equals_string": "string",
           "@type": "SlotDefinition"
@@ -17670,8 +18273,8 @@
   ],
   "metamodel_version": "1.12.0",
   "source_file": "mcp.yaml",
-  "source_file_date": "2026-11-07T02:56:29",
-  "source_file_size": 208193,
+  "source_file_date": "2026-11-07T03:20:14",
+  "source_file_size": 212323,
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/mcp.context.jsonld",

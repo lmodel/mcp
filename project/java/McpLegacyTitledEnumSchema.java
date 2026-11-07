@@ -17,12 +17,12 @@ This interface will be removed in a future version.
 @EqualsAndHashCode(callSuper=false)
 public class McpLegacyTitledEnumSchema  {
 
-  private String default_;
   private String description;
+  private String title;
+  private String default_;
   private List<String> enum_;
   private List<String> enumNames;
-  private String title;
-  private String type;
+  private String kind;
 
 
 }

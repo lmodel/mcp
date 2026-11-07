@@ -17,7 +17,7 @@ import lombok.*;
 public class McpUntitledMultiSelectEnumSchemaItems  {
 
   private List<String> enum_;
-  private String type;
+  private String kind;
 
 
 }

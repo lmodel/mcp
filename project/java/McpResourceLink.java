@@ -18,7 +18,7 @@ Note: resource links returned by tools are not guaranteed to appear in the resul
 @EqualsAndHashCode(callSuper=false)
 public class McpResourceLink extends McpResource {
 
-  private String type;
+  private String kind;
 
 
 }

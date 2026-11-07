@@ -16,9 +16,9 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpElicitRequestURLParams  {
 
+  private URI url;
   private String message;
   private String mode;
-  private URI url;
 
 
 }

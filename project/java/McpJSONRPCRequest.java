@@ -16,7 +16,7 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpJSONRPCRequest extends McpRequest {
 
-  private String id;
+  private String identifier;
   private String jsonrpc;
 
 

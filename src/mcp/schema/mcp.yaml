@@ -18,6 +18,7 @@ prefixes:
   mcp: https://w3id.org/lmodel/mcp/
   linkml: https://w3id.org/linkml/
   xsd: http://www.w3.org/2001/XMLSchema#
+  schema: http://schema.org/
   mcp_schema: https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/2026-07-28/schema/2026-07-28/schema.json#/$defs/
 default_prefix: mcp
 default_range: string
@@ -152,6 +153,23 @@ types:
     description: A URI template, as RFC 6570 defines one.
     comments:
       - MCP gives such a string the format uri-template.
+slots:
+  description:
+    description: A description for people to read.
+    slot_uri: schema:description
+  name:
+    description: The name a program uses to refer to the thing.
+    slot_uri: schema:name
+  title:
+    description: A name for people to read.
+    slot_uri: schema:name
+  url:
+    description: A URL.
+    slot_uri: schema:url
+    range: uri
+  version:
+    description: A version string.
+    slot_uri: schema:version
 enums:
   McpCacheScope:
     description: The values MCP allows for `cacheScope`.
@@ -258,11 +276,13 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      audience:
+      intended_audience:
         description: |-
           Describes who the intended audience of this object or data is.
 
           It can include multiple entries to indicate content useful for multiple audiences (e.g., `["user", "assistant"]`).
+        aliases:
+          - audience
         multivalued: true
         range: McpRole
       last_modified:
@@ -324,8 +344,10 @@ classes:
           audio types.
         alias: mimeType
         required: true
-      type:
+      kind:
         description: The kind of object, always `audio`.
+        aliases:
+          - type
         equals_string: audio
         required: true
   McpBaseMetadata:
@@ -335,7 +357,10 @@ classes:
       - mcp_schema:BaseMetadata
     extra_slots:
       allowed: true
-    attributes:
+    slots:
+      - name
+      - title
+    slot_usage:
       name:
         description: Intended for programmatic or logical use, but used as a display name
           in past specs or fallback (if title isn't present).
@@ -396,16 +421,22 @@ classes:
       - mcp_schema:BooleanSchema
     extra_slots:
       allowed: true
-    attributes:
-      default:
-        description: The value the field takes when the user gives none.
-        range: boolean
+    slots:
+      - description
+      - title
+    slot_usage:
       description:
         description: A description of the field for the user.
       title:
         description: A title for the field.
-      type:
+    attributes:
+      default:
+        description: The value the field takes when the user gives none.
+        range: boolean
+      kind:
         description: The kind of object, always `boolean`.
+        aliases:
+          - type
         equals_string: boolean
         required: true
   McpCacheableResult:
@@ -471,8 +502,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -498,6 +531,12 @@ classes:
       - mcp_schema:CallToolRequestParams
     extra_slots:
       allowed: true
+    slots:
+      - name
+    slot_usage:
+      name:
+        description: The name of the tool.
+        required: true
     attributes:
       meta:
         description: Extends {@link MetaObject} with additional request-specific fields. All
@@ -515,9 +554,6 @@ classes:
           values are the client's result for each request.
         alias: inputResponses
         range: McpInputResponses
-      name:
-        description: The name of the tool.
-        required: true
       request_state:
         description: State the server handed out with an input-required result, sent back
           unchanged when the request is retried.
@@ -591,8 +627,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -651,9 +689,11 @@ classes:
           All key naming rules from `MetaObject` apply.
         alias: _meta
         range: McpNotificationMetaObject
-      reason:
+      reason_text:
         description: An optional string describing the reason for the cancellation. This MAY
           be logged or presented to the user.
+        aliases:
+          - reason
       request_id:
         description: |-
           The ID of the request to cancel.
@@ -708,8 +748,10 @@ classes:
       form:
         description: Settings for elicitation by form.
         range: McpJSONObject
-      url:
+      url_settings:
         description: Settings for elicitation by URL.
+        aliases:
+          - url
         range: McpJSONObject
   McpClientCapabilitiesExperimental:
     description: Experimental, non-standard capabilities that the client supports.
@@ -752,10 +794,12 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      context:
+      context_info:
         description: |-
           Whether the client supports context inclusion via `includeContext` parameter.
           If not declared, servers SHOULD only use `includeContext: "none"` (or omit it).
+        aliases:
+          - context
         range: McpJSONObject
       tools:
         description: Whether the client supports tool use via `tools` and `toolChoice` parameters.
@@ -823,8 +867,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -861,8 +907,10 @@ classes:
         description: The argument's information
         range: McpCompleteRequestParamsArgument
         required: true
-      context:
+      context_info:
         description: Additional, optional context for completions
+        aliases:
+          - context
         range: McpCompleteRequestParamsContext
       ref:
         description: 'What the completion is for: a prompt or a resource template.'
@@ -878,10 +926,13 @@ classes:
       - mcp_schema:CompleteRequestParams/properties/argument
     extra_slots:
       allowed: true
-    attributes:
+    slots:
+      - name
+    slot_usage:
       name:
         description: The name of the argument
         required: true
+    attributes:
       value:
         description: The value of the argument to use for completion matching.
         required: true
@@ -971,8 +1022,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -1164,8 +1217,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -1268,8 +1323,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -1345,11 +1402,15 @@ classes:
         description: The fields of the form, by name.
         range: McpElicitRequestFormParamsRequestedSchemaProperties
         required: true
-      required:
+      required_names:
         description: The names of the fields the user must fill in.
+        aliases:
+          - required
         multivalued: true
-      type:
+      kind:
         description: The kind of object, always `object`.
+        aliases:
+          - type
         equals_string: object
         required: true
   McpElicitRequestFormParamsRequestedSchemaProperties:
@@ -1382,6 +1443,12 @@ classes:
       - mcp_schema:ElicitRequestURLParams
     extra_slots:
       allowed: true
+    slots:
+      - url
+    slot_usage:
+      url:
+        description: The URL that the user should navigate to.
+        required: true
     attributes:
       message:
         description: The message to present to the user explaining why the interaction is
@@ -1390,10 +1457,6 @@ classes:
       mode:
         description: The elicitation mode.
         equals_string: url
-        required: true
-      url:
-        description: The URL that the user should navigate to.
-        range: uri
         required: true
   McpElicitResult:
     description: The result returned by the client for an {@link ElicitRequestelicitation/create}
@@ -1471,14 +1534,18 @@ classes:
       annotations:
         description: Optional annotations for the client.
         range: McpAnnotations
-      resource:
+      resource_contents:
         description: The resource's contents, as text or as binary data.
+        aliases:
+          - resource
         any_of:
           - range: McpTextResourceContents
           - range: McpBlobResourceContents
         required: true
-      type:
+      kind:
         description: The kind of object, always `resource`.
+        aliases:
+          - type
         equals_string: resource
         required: true
   McpEmptyResult:
@@ -1534,8 +1601,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -1561,6 +1630,12 @@ classes:
       - mcp_schema:GetPromptRequestParams
     extra_slots:
       allowed: true
+    slots:
+      - name
+    slot_usage:
+      name:
+        description: The name of the prompt or prompt template.
+        required: true
     attributes:
       meta:
         description: Extends {@link MetaObject} with additional request-specific fields. All
@@ -1578,9 +1653,6 @@ classes:
           values are the client's result for each request.
         alias: inputResponses
         range: McpInputResponses
-      name:
-        description: The name of the prompt or prompt template.
-        required: true
       request_state:
         description: State the server handed out with an input-required result, sent back
           unchanged when the request is retried.
@@ -1604,14 +1676,17 @@ classes:
       - mcp_schema:GetPromptResult
     extra_slots:
       allowed: true
+    slots:
+      - description
+    slot_usage:
+      description:
+        description: An optional description for the prompt.
     attributes:
       meta:
         description: Extends {@link MetaObject} with additional result-specific fields. All
           key naming rules from `MetaObject` apply.
         alias: _meta
         range: McpResultMetaObject
-      description:
-        description: An optional description for the prompt.
       messages:
         description: |-
           Describes a message returned as part of a prompt.
@@ -1644,8 +1719,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -1678,8 +1755,10 @@ classes:
         description: The error the request ended with.
         range: McpHeaderMismatchErrorError
         required: true
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -1804,8 +1883,10 @@ classes:
           image types.
         alias: mimeType
         required: true
-      type:
+      kind:
         description: The kind of object, always `image`.
+        aliases:
+          - type
         equals_string: image
         required: true
   McpImplementation:
@@ -1819,7 +1900,12 @@ classes:
       - mcp_schema:Implementation
     extra_slots:
       allowed: true
-    attributes:
+    slots:
+      - description
+      - name
+      - title
+      - version
+    slot_usage:
       description:
         description: |-
           An optional human-readable description of what this implementation does.
@@ -1827,20 +1913,6 @@ classes:
           This can be used by clients or servers to provide context about their purpose
           and capabilities. For example, a server might describe the types of resources
           or tools it provides, while a client might describe its intended use case.
-      icons:
-        description: |-
-          Optional set of sized icons that the client can display in a user interface.
-
-          Clients that support rendering icons MUST support at least the following MIME types:
-          - `image/png` - PNG images (safe, universal compatibility)
-          - `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)
-
-          Clients that support rendering icons SHOULD also support:
-          - `image/svg+xml` - SVG images (scalable but requires security precautions)
-          - `image/webp` - WebP images (modern, efficient format)
-        multivalued: true
-        range: McpIcon
-        inlined_as_list: true
       name:
         description: Intended for programmatic or logical use, but used as a display name
           in past specs or fallback (if title isn't present).
@@ -1856,6 +1928,21 @@ classes:
       version:
         description: The version of this implementation.
         required: true
+    attributes:
+      icons:
+        description: |-
+          Optional set of sized icons that the client can display in a user interface.
+
+          Clients that support rendering icons MUST support at least the following MIME types:
+          - `image/png` - PNG images (safe, universal compatibility)
+          - `image/jpeg` (and `image/jpg`) - JPEG images (safe, universal compatibility)
+
+          Clients that support rendering icons SHOULD also support:
+          - `image/svg+xml` - SVG images (scalable but requires security precautions)
+          - `image/webp` - WebP images (modern, efficient format)
+        multivalued: true
+        range: McpIcon
+        inlined_as_list: true
       website_url:
         description: An optional URL of the website for this implementation.
         alias: websiteUrl
@@ -2073,8 +2160,10 @@ classes:
         description: The error the request ended with.
         range: McpError
         required: true
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -2126,8 +2215,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -2162,8 +2253,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -2198,11 +2291,17 @@ classes:
       - mcp_schema:LegacyTitledEnumSchema
     extra_slots:
       allowed: true
+    slots:
+      - description
+      - title
+    slot_usage:
+      description:
+        description: A description of the field for the user.
+      title:
+        description: A title for the field.
     attributes:
       default:
         description: The value the field takes when the user gives none.
-      description:
-        description: A description of the field for the user.
       enum:
         description: The values the field offers.
         multivalued: true
@@ -2213,10 +2312,10 @@ classes:
           Non-standard according to JSON schema 2020-12.
         alias: enumNames
         multivalued: true
-      title:
-        description: A title for the field.
-      type:
+      kind:
         description: The kind of object, always `string`.
+        aliases:
+          - type
         equals_string: string
         required: true
   McpListPromptsRequest:
@@ -2230,8 +2329,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -2328,8 +2429,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -2353,8 +2456,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -2452,8 +2557,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -2477,8 +2584,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -2575,8 +2684,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -2669,8 +2780,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -2767,8 +2880,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -2899,8 +3014,10 @@ classes:
         description: The error the request ended with.
         range: McpMissingRequiredClientCapabilityErrorError
         required: true
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -2954,7 +3071,9 @@ classes:
       - mcp_schema:ModelHint
     extra_slots:
       allowed: true
-    attributes:
+    slots:
+      - name
+    slot_usage:
       name:
         description: |-
           A hint for a model name.
@@ -3097,22 +3216,28 @@ classes:
       - mcp_schema:NumberSchema
     extra_slots:
       allowed: true
+    slots:
+      - description
+      - title
+    slot_usage:
+      description:
+        description: A description of the field for the user.
+      title:
+        description: A title for the field.
     attributes:
       default:
         description: The value the field takes when the user gives none.
         range: float
-      description:
-        description: A description of the field for the user.
       maximum:
         description: The largest value the field accepts.
         range: float
       minimum:
         description: The smallest value the field accepts.
         range: float
-      title:
-        description: A title for the field.
-      type:
+      kind:
         description: The kind of value the field takes.
+        aliases:
+          - type
         range: McpNumberSchemaType
         required: true
   McpPaginatedRequest:
@@ -3123,8 +3248,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -3299,6 +3426,25 @@ classes:
       - mcp_schema:Prompt
     extra_slots:
       allowed: true
+    slots:
+      - description
+      - name
+      - title
+    slot_usage:
+      description:
+        description: An optional description of what this prompt provides
+      name:
+        description: Intended for programmatic or logical use, but used as a display name
+          in past specs or fallback (if title isn't present).
+        required: true
+      title:
+        description: |-
+          Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
+          even by those unfamiliar with domain-specific terminology.
+
+          If not provided, the name should be used for display (except for {@link Tool},
+          where `annotations.title` should be given precedence over using `name`,
+          if present).
     attributes:
       meta:
         description: |-
@@ -3324,8 +3470,6 @@ classes:
         multivalued: true
         range: McpPromptArgument
         inlined_as_list: true
-      description:
-        description: An optional description of what this prompt provides
       icons:
         description: |-
           Optional set of sized icons that the client can display in a user interface.
@@ -3340,18 +3484,6 @@ classes:
         multivalued: true
         range: McpIcon
         inlined_as_list: true
-      name:
-        description: Intended for programmatic or logical use, but used as a display name
-          in past specs or fallback (if title isn't present).
-        required: true
-      title:
-        description: |-
-          Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
-          even by those unfamiliar with domain-specific terminology.
-
-          If not provided, the name should be used for display (except for {@link Tool},
-          where `annotations.title` should be given precedence over using `name`,
-          if present).
   McpPromptArgument:
     description: Describes an argument that a prompt can accept.
     is_a: McpBaseMetadata
@@ -3361,16 +3493,17 @@ classes:
       - mcp_schema:PromptArgument
     extra_slots:
       allowed: true
-    attributes:
+    slots:
+      - description
+      - name
+      - title
+    slot_usage:
       description:
         description: A human-readable description of the argument.
       name:
         description: Intended for programmatic or logical use, but used as a display name
           in past specs or fallback (if title isn't present).
         required: true
-      required:
-        description: Whether this argument must be provided.
-        range: boolean
       title:
         description: |-
           Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
@@ -3379,6 +3512,11 @@ classes:
           If not provided, the name should be used for display (except for {@link Tool},
           where `annotations.title` should be given precedence over using `name`,
           if present).
+    attributes:
+      required:
+        description: Whether this argument must be provided.
+        slot_uri: schema:valueRequired
+        range: boolean
   McpPromptListChangedNotification:
     description: An optional notification from the server to the client, informing it that
       the list of prompts it offers has changed. This is only delivered on a {@link SubscriptionsListenRequestsubscriptions/listen}
@@ -3432,7 +3570,10 @@ classes:
       - mcp_schema:PromptReference
     extra_slots:
       allowed: true
-    attributes:
+    slots:
+      - name
+      - title
+    slot_usage:
       name:
         description: Intended for programmatic or logical use, but used as a display name
           in past specs or fallback (if title isn't present).
@@ -3445,8 +3586,11 @@ classes:
           If not provided, the name should be used for display (except for {@link Tool},
           where `annotations.title` should be given precedence over using `name`,
           if present).
-      type:
+    attributes:
+      kind:
         description: The kind of object, always `ref/prompt`.
+        aliases:
+          - type
         equals_string: ref/prompt
         required: true
   McpReadResourceRequest:
@@ -3459,8 +3603,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -3586,8 +3732,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -3709,6 +3857,28 @@ classes:
       - mcp_schema:Resource
     extra_slots:
       allowed: true
+    slots:
+      - description
+      - name
+      - title
+    slot_usage:
+      description:
+        description: |-
+          A description of what this resource represents.
+
+          This can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a "hint" to the model.
+      name:
+        description: Intended for programmatic or logical use, but used as a display name
+          in past specs or fallback (if title isn't present).
+        required: true
+      title:
+        description: |-
+          Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
+          even by those unfamiliar with domain-specific terminology.
+
+          If not provided, the name should be used for display (except for {@link Tool},
+          where `annotations.title` should be given precedence over using `name`,
+          if present).
     attributes:
       meta:
         description: |-
@@ -3732,11 +3902,6 @@ classes:
       annotations:
         description: Optional annotations for the client.
         range: McpAnnotations
-      description:
-        description: |-
-          A description of what this resource represents.
-
-          This can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a "hint" to the model.
       icons:
         description: |-
           Optional set of sized icons that the client can display in a user interface.
@@ -3754,24 +3919,12 @@ classes:
       mime_type:
         description: The MIME type of this resource, if known.
         alias: mimeType
-      name:
-        description: Intended for programmatic or logical use, but used as a display name
-          in past specs or fallback (if title isn't present).
-        required: true
       size:
         description: |-
           The size of the raw resource content, in bytes (i.e., before base64 encoding or any tokenization), if known.
 
           This can be used by Hosts to display file sizes and estimate context window usage.
         range: integer
-      title:
-        description: |-
-          Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
-          even by those unfamiliar with domain-specific terminology.
-
-          If not provided, the name should be used for display (except for {@link Tool},
-          where `annotations.title` should be given precedence over using `name`,
-          if present).
       uri:
         description: The URI of this resource.
         range: uri
@@ -3821,6 +3974,28 @@ classes:
       - mcp_schema:ResourceLink
     extra_slots:
       allowed: true
+    slots:
+      - description
+      - name
+      - title
+    slot_usage:
+      description:
+        description: |-
+          A description of what this resource represents.
+
+          This can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a "hint" to the model.
+      name:
+        description: Intended for programmatic or logical use, but used as a display name
+          in past specs or fallback (if title isn't present).
+        required: true
+      title:
+        description: |-
+          Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
+          even by those unfamiliar with domain-specific terminology.
+
+          If not provided, the name should be used for display (except for {@link Tool},
+          where `annotations.title` should be given precedence over using `name`,
+          if present).
     attributes:
       meta:
         description: |-
@@ -3844,11 +4019,6 @@ classes:
       annotations:
         description: Optional annotations for the client.
         range: McpAnnotations
-      description:
-        description: |-
-          A description of what this resource represents.
-
-          This can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a "hint" to the model.
       icons:
         description: |-
           Optional set of sized icons that the client can display in a user interface.
@@ -3866,26 +4036,16 @@ classes:
       mime_type:
         description: The MIME type of this resource, if known.
         alias: mimeType
-      name:
-        description: Intended for programmatic or logical use, but used as a display name
-          in past specs or fallback (if title isn't present).
-        required: true
       size:
         description: |-
           The size of the raw resource content, in bytes (i.e., before base64 encoding or any tokenization), if known.
 
           This can be used by Hosts to display file sizes and estimate context window usage.
         range: integer
-      title:
-        description: |-
-          Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
-          even by those unfamiliar with domain-specific terminology.
-
-          If not provided, the name should be used for display (except for {@link Tool},
-          where `annotations.title` should be given precedence over using `name`,
-          if present).
-      type:
+      kind:
         description: The kind of object, always `resource_link`.
+        aliases:
+          - type
         equals_string: resource_link
         required: true
       uri:
@@ -3946,6 +4106,28 @@ classes:
       - mcp_schema:ResourceTemplate
     extra_slots:
       allowed: true
+    slots:
+      - description
+      - name
+      - title
+    slot_usage:
+      description:
+        description: |-
+          A description of what this template is for.
+
+          This can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a "hint" to the model.
+      name:
+        description: Intended for programmatic or logical use, but used as a display name
+          in past specs or fallback (if title isn't present).
+        required: true
+      title:
+        description: |-
+          Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
+          even by those unfamiliar with domain-specific terminology.
+
+          If not provided, the name should be used for display (except for {@link Tool},
+          where `annotations.title` should be given precedence over using `name`,
+          if present).
     attributes:
       meta:
         description: |-
@@ -3969,11 +4151,6 @@ classes:
       annotations:
         description: Optional annotations for the client.
         range: McpAnnotations
-      description:
-        description: |-
-          A description of what this template is for.
-
-          This can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a "hint" to the model.
       icons:
         description: |-
           Optional set of sized icons that the client can display in a user interface.
@@ -3992,18 +4169,6 @@ classes:
         description: The MIME type for all resources that match this template. This should
           only be included if all resources matching this template have the same type.
         alias: mimeType
-      name:
-        description: Intended for programmatic or logical use, but used as a display name
-          in past specs or fallback (if title isn't present).
-        required: true
-      title:
-        description: |-
-          Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
-          even by those unfamiliar with domain-specific terminology.
-
-          If not provided, the name should be used for display (except for {@link Tool},
-          where `annotations.title` should be given precedence over using `name`,
-          if present).
       uri_template:
         description: A URI template (according to RFC 6570) that can be used to construct
           resource URIs.
@@ -4019,8 +4184,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      type:
+      kind:
         description: The kind of object, always `ref/resource`.
+        aliases:
+          - type
         equals_string: ref/resource
         required: true
       uri:
@@ -4132,6 +4299,14 @@ classes:
       - mcp_schema:Root
     extra_slots:
       allowed: true
+    slots:
+      - name
+    slot_usage:
+      name:
+        description: |-
+          An optional name for the root. This can be used to provide a human-readable
+          identifier for the root, which may be useful for display purposes or for
+          referencing the root in other parts of the application.
     attributes:
       meta:
         description: |-
@@ -4152,11 +4327,6 @@ classes:
           - Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
         alias: _meta
         range: McpMetaObject
-      name:
-        description: |-
-          An optional name for the root. This can be used to provide a human-readable
-          identifier for the root, which may be useful for display purposes or for
-          referencing the root in other parts of the application.
       uri:
         description: |-
           The URI identifying the root. This *must* start with `file://` for now.
@@ -4383,11 +4553,17 @@ classes:
       - mcp_schema:StringSchema
     extra_slots:
       allowed: true
+    slots:
+      - description
+      - title
+    slot_usage:
+      description:
+        description: A description of the field for the user.
+      title:
+        description: A title for the field.
     attributes:
       default:
         description: The value the field takes when the user gives none.
-      description:
-        description: A description of the field for the user.
       format:
         description: The format the string must have.
         range: McpStringSchemaFormat
@@ -4399,10 +4575,10 @@ classes:
         description: The fewest characters the field accepts.
         alias: minLength
         range: integer
-      title:
-        description: A title for the field.
-      type:
+      kind:
         description: The kind of object, always `string`.
+        aliases:
+          - type
         equals_string: string
         required: true
   McpSubscriptionFilter:
@@ -4507,8 +4683,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -4635,8 +4813,10 @@ classes:
     extra_slots:
       allowed: true
     attributes:
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -4688,8 +4868,10 @@ classes:
       text:
         description: The text content of the message.
         required: true
-      type:
+      kind:
         description: The kind of object, always `text`.
+        aliases:
+          - type
         equals_string: text
         required: true
   McpTextResourceContents:
@@ -4740,12 +4922,18 @@ classes:
       - mcp_schema:TitledMultiSelectEnumSchema
     extra_slots:
       allowed: true
+    slots:
+      - description
+      - title
+    slot_usage:
+      description:
+        description: Optional description for the enum field.
+      title:
+        description: Optional title for the enum field.
     attributes:
       default:
         description: Optional default value.
         multivalued: true
-      description:
-        description: Optional description for the enum field.
       items:
         description: Schema for array items with enum options and display labels.
         range: McpTitledMultiSelectEnumSchemaItems
@@ -4758,10 +4946,10 @@ classes:
         description: Minimum number of items to select.
         alias: minItems
         range: integer
-      title:
-        description: Optional title for the enum field.
-      type:
+      kind:
         description: The kind of object, always `array`.
+        aliases:
+          - type
         equals_string: array
         required: true
   McpTitledMultiSelectEnumSchemaItems:
@@ -4788,12 +4976,15 @@ classes:
       - mcp_schema:TitledMultiSelectEnumSchema/properties/items/properties/anyOf/items
     extra_slots:
       allowed: true
+    slots:
+      - title
+    slot_usage:
+      title:
+        description: Display title for this option.
+        required: true
     attributes:
       const:
         description: The constant enum value.
-        required: true
-      title:
-        description: Display title for this option.
         required: true
   McpTitledSingleSelectEnumSchema:
     description: Schema for single-selection enumeration with display titles for each option.
@@ -4803,11 +4994,17 @@ classes:
       - mcp_schema:TitledSingleSelectEnumSchema
     extra_slots:
       allowed: true
+    slots:
+      - description
+      - title
+    slot_usage:
+      description:
+        description: Optional description for the enum field.
+      title:
+        description: Optional title for the enum field.
     attributes:
       default:
         description: Optional default value.
-      description:
-        description: Optional description for the enum field.
       one_of:
         description: Array of enum options with values and display labels.
         alias: oneOf
@@ -4815,10 +5012,10 @@ classes:
         range: McpTitledSingleSelectEnumSchemaOneOf
         inlined_as_list: true
         required: true
-      title:
-        description: Optional title for the enum field.
-      type:
+      kind:
         description: The kind of object, always `string`.
+        aliases:
+          - type
         equals_string: string
         required: true
   McpTitledSingleSelectEnumSchemaOneOf:
@@ -4829,12 +5026,15 @@ classes:
       - mcp_schema:TitledSingleSelectEnumSchema/properties/oneOf/items
     extra_slots:
       allowed: true
+    slots:
+      - title
+    slot_usage:
+      title:
+        description: Display label for this option.
+        required: true
     attributes:
       const:
         description: The enum value.
-        required: true
-      title:
-        description: Display label for this option.
         required: true
   McpTool:
     description: Definition for a tool the client can call.
@@ -4847,6 +5047,28 @@ classes:
       - mcp_schema:Tool
     extra_slots:
       allowed: true
+    slots:
+      - description
+      - name
+      - title
+    slot_usage:
+      description:
+        description: |-
+          A human-readable description of the tool.
+
+          This can be used by clients to improve the LLM's understanding of available tools. It can be thought of like a "hint" to the model.
+      name:
+        description: Intended for programmatic or logical use, but used as a display name
+          in past specs or fallback (if title isn't present).
+        required: true
+      title:
+        description: |-
+          Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
+          even by those unfamiliar with domain-specific terminology.
+
+          If not provided, the name should be used for display (except for {@link Tool},
+          where `annotations.title` should be given precedence over using `name`,
+          if present).
     attributes:
       meta:
         description: |-
@@ -4873,11 +5095,6 @@ classes:
 
           Display name precedence order is: `title`, `annotations.title`, then `name`.
         range: McpToolAnnotations
-      description:
-        description: |-
-          A human-readable description of the tool.
-
-          This can be used by clients to improve the LLM's understanding of available tools. It can be thought of like a "hint" to the model.
       icons:
         description: |-
           Optional set of sized icons that the client can display in a user interface.
@@ -4911,10 +5128,6 @@ classes:
         alias: inputSchema
         range: McpToolInputSchema
         required: true
-      name:
-        description: Intended for programmatic or logical use, but used as a display name
-          in past specs or fallback (if title isn't present).
-        required: true
       output_schema:
         description: |-
           An optional JSON Schema object defining the structure of the tool's output returned in
@@ -4923,14 +5136,6 @@ classes:
           Defaults to JSON Schema 2020-12 when no explicit `$schema` is provided.
         alias: outputSchema
         range: McpToolOutputSchema
-      title:
-        description: |-
-          Intended for UI and end-user contexts — optimized to be human-readable and easily understood,
-          even by those unfamiliar with domain-specific terminology.
-
-          If not provided, the name should be used for display (except for {@link Tool},
-          where `annotations.title` should be given precedence over using `name`,
-          if present).
   McpToolAnnotations:
     description: |-
       Additional properties describing a {@link Tool} to clients.
@@ -4947,6 +5152,11 @@ classes:
       - mcp_schema:ToolAnnotations
     extra_slots:
       allowed: true
+    slots:
+      - title
+    slot_usage:
+      title:
+        description: A human-readable title for the tool.
     attributes:
       destructive_hint:
         description: |-
@@ -4985,8 +5195,6 @@ classes:
           Default: false
         alias: readOnlyHint
         range: boolean
-      title:
-        description: A human-readable title for the tool.
   McpToolChoice:
     description: Controls tool selection behavior for sampling requests.
     in_subset:
@@ -5030,8 +5238,10 @@ classes:
         description: The JSON Schema dialect the schema is written in.
         aliases:
           - $schema
-      type:
+      kind:
         description: The kind of object, always `object`.
+        aliases:
+          - type
         equals_string: object
         required: true
   McpToolListChangedNotification:
@@ -5122,8 +5332,10 @@ classes:
           This MUST match the ID from a previous {@link ToolUseContent}.
         alias: toolUseId
         required: true
-      type:
+      kind:
         description: The kind of object, always `tool_result`.
+        aliases:
+          - type
         equals_string: tool_result
         required: true
   McpToolUseContent:
@@ -5134,6 +5346,12 @@ classes:
       - mcp_schema:ToolUseContent
     extra_slots:
       allowed: true
+    slots:
+      - name
+    slot_usage:
+      name:
+        description: The name of the tool to call.
+        required: true
     attributes:
       meta:
         description: |-
@@ -5141,21 +5359,22 @@ classes:
           including tool uses in subsequent sampling requests to enable caching optimizations.
         alias: _meta
         range: McpMetaObject
-      id:
+      identifier:
         description: |-
           A unique identifier for this tool use.
 
           This ID is used to match tool results to their corresponding tool uses.
+        aliases:
+          - id
         required: true
       input:
         description: The arguments to pass to the tool, conforming to the tool's input schema.
         range: McpJSONObject
         required: true
-      name:
-        description: The name of the tool to call.
-        required: true
-      type:
+      kind:
         description: The kind of object, always `tool_use`.
+        aliases:
+          - type
         equals_string: tool_use
         required: true
   McpUnsupportedProtocolVersionError:
@@ -5176,8 +5395,10 @@ classes:
         description: The error the request ended with.
         range: McpUnsupportedProtocolVersionErrorError
         required: true
-      id:
+      identifier:
         description: A uniquely identifying ID for a request in JSON-RPC.
+        aliases:
+          - id
         any_of:
           - range: string
           - range: integer
@@ -5230,12 +5451,18 @@ classes:
       - mcp_schema:UntitledMultiSelectEnumSchema
     extra_slots:
       allowed: true
+    slots:
+      - description
+      - title
+    slot_usage:
+      description:
+        description: Optional description for the enum field.
+      title:
+        description: Optional title for the enum field.
     attributes:
       default:
         description: Optional default value.
         multivalued: true
-      description:
-        description: Optional description for the enum field.
       items:
         description: Schema for the array items.
         range: McpUntitledMultiSelectEnumSchemaItems
@@ -5248,10 +5475,10 @@ classes:
         description: Minimum number of items to select.
         alias: minItems
         range: integer
-      title:
-        description: Optional title for the enum field.
-      type:
+      kind:
         description: The kind of object, always `array`.
+        aliases:
+          - type
         equals_string: array
         required: true
   McpUntitledMultiSelectEnumSchemaItems:
@@ -5267,8 +5494,10 @@ classes:
         description: Array of enum values to choose from.
         multivalued: true
         required: true
-      type:
+      kind:
         description: The kind of object, always `string`.
+        aliases:
+          - type
         equals_string: string
         required: true
   McpUntitledSingleSelectEnumSchema:
@@ -5279,18 +5508,24 @@ classes:
       - mcp_schema:UntitledSingleSelectEnumSchema
     extra_slots:
       allowed: true
+    slots:
+      - description
+      - title
+    slot_usage:
+      description:
+        description: Optional description for the enum field.
+      title:
+        description: Optional title for the enum field.
     attributes:
       default:
         description: Optional default value.
-      description:
-        description: Optional description for the enum field.
       enum:
         description: Array of enum values to choose from.
         multivalued: true
         required: true
-      title:
-        description: Optional title for the enum field.
-      type:
+      kind:
         description: The kind of object, always `string`.
+        aliases:
+          - type
         equals_string: string
         required: true

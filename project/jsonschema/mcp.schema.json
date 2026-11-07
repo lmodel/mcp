@@ -4,7 +4,7 @@
             "additionalProperties": true,
             "description": "Optional annotations for the client. The client can use annotations to inform how objects are used or displayed",
             "properties": {
-                "audience": {
+                "intended_audience": {
                     "description": "Describes who the intended audience of this object or data is.\n\nIt can include multiple entries to indicate content useful for multiple audiences (e.g., `[\"user\", \"assistant\"]`).",
                     "items": {
                         "$ref": "#/$defs/McpRole"
@@ -64,20 +64,20 @@
                     "description": "The base64-encoded audio data.",
                     "type": "string"
                 },
-                "mimeType": {
-                    "description": "The MIME type of the audio. Different providers may support different audio types.",
-                    "type": "string"
-                },
-                "type": {
+                "kind": {
                     "const": "audio",
                     "description": "The kind of object, always `audio`.",
+                    "type": "string"
+                },
+                "mimeType": {
+                    "description": "The MIME type of the audio. Different providers may support different audio types.",
                     "type": "string"
                 }
             },
             "required": [
                 "data",
                 "mimeType",
-                "type"
+                "kind"
             ],
             "title": "McpAudioContent",
             "type": "object"
@@ -161,21 +161,21 @@
                         "null"
                     ]
                 },
+                "kind": {
+                    "const": "boolean",
+                    "description": "The kind of object, always `boolean`.",
+                    "type": "string"
+                },
                 "title": {
                     "description": "A title for the field.",
                     "type": [
                         "string",
                         "null"
                     ]
-                },
-                "type": {
-                    "const": "boolean",
-                    "description": "The kind of object, always `boolean`.",
-                    "type": "string"
                 }
             },
             "required": [
-                "type"
+                "kind"
             ],
             "title": "McpBooleanSchema",
             "type": "object"
@@ -230,7 +230,7 @@
             "additionalProperties": true,
             "description": "Used by the client to invoke a tool provided by the server.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -257,7 +257,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "method",
                 "params"
@@ -308,8 +308,8 @@
                 }
             },
             "required": [
-                "_meta",
-                "name"
+                "name",
+                "_meta"
             ],
             "title": "McpCallToolRequestParams",
             "type": "object"
@@ -370,7 +370,7 @@
             "additionalProperties": true,
             "description": "A successful response from the server for a {@link CallToolRequesttools/call} request.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -399,7 +399,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "result"
             ],
@@ -448,7 +448,7 @@
                     ],
                     "description": "Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply."
                 },
-                "reason": {
+                "reason_text": {
                     "description": "An optional string describing the reason for the cancellation. This MAY be logged or presented to the user.",
                     "type": [
                         "string",
@@ -551,7 +551,7 @@
                     ],
                     "description": "Settings for elicitation by form."
                 },
-                "url": {
+                "url_settings": {
                     "anyOf": [
                         {
                             "$ref": "#/$defs/McpJSONObject"
@@ -606,7 +606,7 @@
             "additionalProperties": true,
             "description": "Present if the client supports sampling from an LLM.",
             "properties": {
-                "context": {
+                "context_info": {
                     "anyOf": [
                         {
                             "$ref": "#/$defs/McpJSONObject"
@@ -797,7 +797,7 @@
             "additionalProperties": true,
             "description": "A request from the client to the server, to ask for completion options.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -824,7 +824,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "method",
                 "params"
@@ -844,7 +844,7 @@
                     "$ref": "#/$defs/McpCompleteRequestParamsArgument",
                     "description": "The argument's information"
                 },
-                "context": {
+                "context_info": {
                     "anyOf": [
                         {
                             "$ref": "#/$defs/McpCompleteRequestParamsContext"
@@ -993,7 +993,7 @@
             "additionalProperties": true,
             "description": "A successful response from the server for a {@link CompleteRequestcompletion/complete} request.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -1015,7 +1015,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "result"
             ],
@@ -1281,7 +1281,7 @@
             "additionalProperties": true,
             "description": "A request from the client asking the server to advertise its supported\nprotocol versions, capabilities, and other metadata. Servers **MUST**\nimplement `server/discover`. Clients **MAY** call it but are not required\nto \u2014 version negotiation can also happen inline via per-request `_meta`.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -1308,7 +1308,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "method",
                 "params"
@@ -1377,7 +1377,7 @@
             "additionalProperties": true,
             "description": "A successful response from the server for a {@link DiscoverRequestserver/discover} request.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -1399,7 +1399,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "result"
             ],
@@ -1459,11 +1459,16 @@
             "additionalProperties": true,
             "description": "A restricted subset of JSON Schema.\nOnly top-level properties are allowed, without nesting.",
             "properties": {
+                "kind": {
+                    "const": "object",
+                    "description": "The kind of object, always `object`.",
+                    "type": "string"
+                },
                 "properties": {
                     "$ref": "#/$defs/McpElicitRequestFormParamsRequestedSchemaProperties",
                     "description": "The fields of the form, by name."
                 },
-                "required": {
+                "required_names": {
                     "description": "The names of the fields the user must fill in.",
                     "items": {
                         "type": "string"
@@ -1479,16 +1484,11 @@
                         "string",
                         "null"
                     ]
-                },
-                "type": {
-                    "const": "object",
-                    "description": "The kind of object, always `object`.",
-                    "type": "string"
                 }
             },
             "required": [
                 "properties",
-                "type"
+                "kind"
             ],
             "title": "McpElicitRequestFormParamsRequestedSchema",
             "type": "object"
@@ -1556,9 +1556,9 @@
                 }
             },
             "required": [
+                "url",
                 "message",
-                "mode",
-                "url"
+                "mode"
             ],
             "title": "McpElicitRequestURLParams",
             "type": "object"
@@ -1652,7 +1652,12 @@
                     ],
                     "description": "Optional annotations for the client."
                 },
-                "resource": {
+                "kind": {
+                    "const": "resource",
+                    "description": "The kind of object, always `resource`.",
+                    "type": "string"
+                },
+                "resource_contents": {
                     "anyOf": [
                         {
                             "$ref": "#/$defs/McpTextResourceContents"
@@ -1662,16 +1667,11 @@
                         }
                     ],
                     "description": "The resource's contents, as text or as binary data."
-                },
-                "type": {
-                    "const": "resource",
-                    "description": "The kind of object, always `resource`.",
-                    "type": "string"
                 }
             },
             "required": [
-                "resource",
-                "type"
+                "resource_contents",
+                "kind"
             ],
             "title": "McpEmbeddedResource",
             "type": "object"
@@ -1795,7 +1795,7 @@
             "additionalProperties": true,
             "description": "Used by the client to get a prompt provided by the server.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -1822,7 +1822,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "method",
                 "params"
@@ -1873,8 +1873,8 @@
                 }
             },
             "required": [
-                "_meta",
-                "name"
+                "name",
+                "_meta"
             ],
             "title": "McpGetPromptRequestParams",
             "type": "object"
@@ -1935,7 +1935,7 @@
             "additionalProperties": true,
             "description": "A successful response from the server for a {@link GetPromptRequestprompts/get} request.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -1964,7 +1964,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "result"
             ],
@@ -1979,7 +1979,7 @@
                     "$ref": "#/$defs/McpHeaderMismatchErrorError",
                     "description": "The error the request ended with."
                 },
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -2139,20 +2139,20 @@
                     "description": "The base64-encoded image data.",
                     "type": "string"
                 },
-                "mimeType": {
-                    "description": "The MIME type of the image. Different providers may support different image types.",
-                    "type": "string"
-                },
-                "type": {
+                "kind": {
                     "const": "image",
                     "description": "The kind of object, always `image`.",
+                    "type": "string"
+                },
+                "mimeType": {
+                    "description": "The MIME type of the image. Different providers may support different image types.",
                     "type": "string"
                 }
             },
             "required": [
                 "data",
                 "mimeType",
-                "type"
+                "kind"
             ],
             "title": "McpImageContent",
             "type": "object"
@@ -2511,7 +2511,7 @@
                     "$ref": "#/$defs/McpError",
                     "description": "The error the request ended with."
                 },
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -2622,7 +2622,7 @@
             "additionalProperties": true,
             "description": "A request that expects a response.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -2655,7 +2655,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "method"
             ],
@@ -2694,7 +2694,7 @@
             "additionalProperties": true,
             "description": "A successful (non-error) response to a request.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -2716,7 +2716,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "result"
             ],
@@ -2770,22 +2770,22 @@
                         "null"
                     ]
                 },
+                "kind": {
+                    "const": "string",
+                    "description": "The kind of object, always `string`.",
+                    "type": "string"
+                },
                 "title": {
                     "description": "A title for the field.",
                     "type": [
                         "string",
                         "null"
                     ]
-                },
-                "type": {
-                    "const": "string",
-                    "description": "The kind of object, always `string`.",
-                    "type": "string"
                 }
             },
             "required": [
                 "enum",
-                "type"
+                "kind"
             ],
             "title": "McpLegacyTitledEnumSchema",
             "type": "object"
@@ -2794,7 +2794,7 @@
             "additionalProperties": true,
             "description": "Sent from the client to request a list of prompts and prompt templates the server has.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -2821,7 +2821,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "method",
                 "params"
@@ -2885,7 +2885,7 @@
             "additionalProperties": true,
             "description": "A successful response from the server for a {@link ListPromptsRequestprompts/list} request.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -2907,7 +2907,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "result"
             ],
@@ -2918,7 +2918,7 @@
             "additionalProperties": true,
             "description": "Sent from the client to request a list of resource templates the server has.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -2945,7 +2945,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "method",
                 "params"
@@ -3009,7 +3009,7 @@
             "additionalProperties": true,
             "description": "A successful response from the server for a {@link ListResourceTemplatesRequestresources/templates/list} request.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -3031,7 +3031,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "result"
             ],
@@ -3042,7 +3042,7 @@
             "additionalProperties": true,
             "description": "Sent from the client to request a list of resources the server has.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -3069,7 +3069,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "method",
                 "params"
@@ -3133,7 +3133,7 @@
             "additionalProperties": true,
             "description": "A successful response from the server for a {@link ListResourcesRequestresources/list} request.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -3155,7 +3155,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "result"
             ],
@@ -3230,7 +3230,7 @@
             "additionalProperties": true,
             "description": "Sent from the client to request a list of tools the server has.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -3257,7 +3257,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "method",
                 "params"
@@ -3321,7 +3321,7 @@
             "additionalProperties": true,
             "description": "A successful response from the server for a {@link ListToolsRequesttools/list} request.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -3343,7 +3343,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "result"
             ],
@@ -3476,7 +3476,7 @@
                     "$ref": "#/$defs/McpMissingRequiredClientCapabilityErrorError",
                     "description": "The error the request ended with."
                 },
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -3717,6 +3717,10 @@
                         "null"
                     ]
                 },
+                "kind": {
+                    "$ref": "#/$defs/McpNumberSchemaType",
+                    "description": "The kind of value the field takes."
+                },
                 "maximum": {
                     "description": "The largest value the field accepts.",
                     "type": [
@@ -3737,14 +3741,10 @@
                         "string",
                         "null"
                     ]
-                },
-                "type": {
-                    "$ref": "#/$defs/McpNumberSchemaType",
-                    "description": "The kind of value the field takes."
                 }
             },
             "required": [
-                "type"
+                "kind"
             ],
             "title": "McpNumberSchema",
             "type": "object"
@@ -3762,7 +3762,7 @@
             "additionalProperties": true,
             "description": "MCP's `PaginatedRequest`.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -3788,7 +3788,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "method",
                 "params"
@@ -4203,6 +4203,11 @@
             "additionalProperties": true,
             "description": "Identifies a prompt.",
             "properties": {
+                "kind": {
+                    "const": "ref/prompt",
+                    "description": "The kind of object, always `ref/prompt`.",
+                    "type": "string"
+                },
                 "name": {
                     "description": "Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).",
                     "type": "string"
@@ -4213,16 +4218,11 @@
                         "string",
                         "null"
                     ]
-                },
-                "type": {
-                    "const": "ref/prompt",
-                    "description": "The kind of object, always `ref/prompt`.",
-                    "type": "string"
                 }
             },
             "required": [
                 "name",
-                "type"
+                "kind"
             ],
             "title": "McpPromptReference",
             "type": "object"
@@ -4231,7 +4231,7 @@
             "additionalProperties": true,
             "description": "Sent from the client to the server, to read a specific resource URI.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -4258,7 +4258,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "method",
                 "params"
@@ -4361,7 +4361,7 @@
             "additionalProperties": true,
             "description": "A successful response from the server for a {@link ReadResourceRequestresources/read} request.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -4390,7 +4390,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "result"
             ],
@@ -4652,6 +4652,11 @@
                         "null"
                     ]
                 },
+                "kind": {
+                    "const": "resource_link",
+                    "description": "The kind of object, always `resource_link`.",
+                    "type": "string"
+                },
                 "mimeType": {
                     "description": "The MIME type of this resource, if known.",
                     "type": [
@@ -4677,11 +4682,6 @@
                         "null"
                     ]
                 },
-                "type": {
-                    "const": "resource_link",
-                    "description": "The kind of object, always `resource_link`.",
-                    "type": "string"
-                },
                 "uri": {
                     "description": "The URI of this resource.",
                     "format": "uri",
@@ -4690,7 +4690,7 @@
             },
             "required": [
                 "name",
-                "type",
+                "kind",
                 "uri"
             ],
             "title": "McpResourceLink",
@@ -4827,7 +4827,7 @@
             "additionalProperties": true,
             "description": "A reference to a resource or resource template definition.",
             "properties": {
-                "type": {
+                "kind": {
                     "const": "ref/resource",
                     "description": "The kind of object, always `ref/resource`.",
                     "type": "string"
@@ -4838,7 +4838,7 @@
                 }
             },
             "required": [
-                "type",
+                "kind",
                 "uri"
             ],
             "title": "McpResourceTemplateReference",
@@ -5537,6 +5537,11 @@
                     ],
                     "description": "The format the string must have."
                 },
+                "kind": {
+                    "const": "string",
+                    "description": "The kind of object, always `string`.",
+                    "type": "string"
+                },
                 "maxLength": {
                     "description": "The most characters the field accepts.",
                     "type": [
@@ -5557,15 +5562,10 @@
                         "string",
                         "null"
                     ]
-                },
-                "type": {
-                    "const": "string",
-                    "description": "The kind of object, always `string`.",
-                    "type": "string"
                 }
             },
             "required": [
-                "type"
+                "kind"
             ],
             "title": "McpStringSchema",
             "type": "object"
@@ -5677,7 +5677,7 @@
             "additionalProperties": true,
             "description": "Sent from the client to open a long-lived channel for receiving notifications\noutside the context of a specific request. Replaces the previous HTTP GET\nendpoint and ensures consistent behavior between HTTP and STDIO.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -5704,7 +5704,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "method",
                 "params"
@@ -5789,7 +5789,7 @@
             "additionalProperties": true,
             "description": "A successful response from the server for a {@link SubscriptionsListenRequestsubscriptions/listen}\nrequest, sent when the server tears the subscription down gracefully.",
             "properties": {
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -5811,7 +5811,7 @@
                 }
             },
             "required": [
-                "id",
+                "identifier",
                 "jsonrpc",
                 "result"
             ],
@@ -5844,19 +5844,19 @@
                     ],
                     "description": "Optional annotations for the client."
                 },
-                "text": {
-                    "description": "The text content of the message.",
-                    "type": "string"
-                },
-                "type": {
+                "kind": {
                     "const": "text",
                     "description": "The kind of object, always `text`.",
+                    "type": "string"
+                },
+                "text": {
+                    "description": "The text content of the message.",
                     "type": "string"
                 }
             },
             "required": [
                 "text",
-                "type"
+                "kind"
             ],
             "title": "McpTextContent",
             "type": "object"
@@ -5925,6 +5925,11 @@
                     "$ref": "#/$defs/McpTitledMultiSelectEnumSchemaItems",
                     "description": "Schema for array items with enum options and display labels."
                 },
+                "kind": {
+                    "const": "array",
+                    "description": "The kind of object, always `array`.",
+                    "type": "string"
+                },
                 "maxItems": {
                     "description": "Maximum number of items to select.",
                     "type": [
@@ -5945,16 +5950,11 @@
                         "string",
                         "null"
                     ]
-                },
-                "type": {
-                    "const": "array",
-                    "description": "The kind of object, always `array`.",
-                    "type": "string"
                 }
             },
             "required": [
                 "items",
-                "type"
+                "kind"
             ],
             "title": "McpTitledMultiSelectEnumSchema",
             "type": "object"
@@ -5991,8 +5991,8 @@
                 }
             },
             "required": [
-                "const",
-                "title"
+                "title",
+                "const"
             ],
             "title": "McpTitledMultiSelectEnumSchemaItemsAnyOf",
             "type": "object"
@@ -6015,6 +6015,11 @@
                         "null"
                     ]
                 },
+                "kind": {
+                    "const": "string",
+                    "description": "The kind of object, always `string`.",
+                    "type": "string"
+                },
                 "oneOf": {
                     "description": "Array of enum options with values and display labels.",
                     "items": {
@@ -6028,16 +6033,11 @@
                         "string",
                         "null"
                     ]
-                },
-                "type": {
-                    "const": "string",
-                    "description": "The kind of object, always `string`.",
-                    "type": "string"
                 }
             },
             "required": [
                 "oneOf",
-                "type"
+                "kind"
             ],
             "title": "McpTitledSingleSelectEnumSchema",
             "type": "object"
@@ -6056,8 +6056,8 @@
                 }
             },
             "required": [
-                "const",
-                "title"
+                "title",
+                "const"
             ],
             "title": "McpTitledSingleSelectEnumSchemaOneOf",
             "type": "object"
@@ -6133,8 +6133,8 @@
                 }
             },
             "required": [
-                "inputSchema",
-                "name"
+                "name",
+                "inputSchema"
             ],
             "title": "McpTool",
             "type": "object"
@@ -6215,21 +6215,21 @@
             "additionalProperties": true,
             "description": "A JSON Schema object defining the expected parameters for the tool.\n\nTool arguments are always JSON objects, so `type: \"object\"` is required at the root.\nBeyond that, any JSON Schema 2020-12 keyword may appear alongside `type` \u2014 including\ncomposition keywords (`oneOf`, `anyOf`, `allOf`, `not`), conditional keywords\n(`if`/`then`/`else`), reference keywords (`$ref`, `$defs`, `$anchor`), and any other\nstandard validation or annotation keywords.\n\nProperty schemas may carry an `x-mcp-header` annotation to mirror the\nargument value into an HTTP header on the Streamable HTTP transport. See\nthe Streamable HTTP transport specification for the validity and\nextraction rules.\n\nDefaults to JSON Schema 2020-12 when no explicit `$schema` is provided.",
             "properties": {
+                "kind": {
+                    "const": "object",
+                    "description": "The kind of object, always `object`.",
+                    "type": "string"
+                },
                 "schema_dialect": {
                     "description": "The JSON Schema dialect the schema is written in.",
                     "type": [
                         "string",
                         "null"
                     ]
-                },
-                "type": {
-                    "const": "object",
-                    "description": "The kind of object, always `object`.",
-                    "type": "string"
                 }
             },
             "required": [
-                "type"
+                "kind"
             ],
             "title": "McpToolInputSchema",
             "type": "object"
@@ -6311,6 +6311,11 @@
                         "null"
                     ]
                 },
+                "kind": {
+                    "const": "tool_result",
+                    "description": "The kind of object, always `tool_result`.",
+                    "type": "string"
+                },
                 "structuredContent": {
                     "anyOf": [
                         {
@@ -6325,17 +6330,12 @@
                 "toolUseId": {
                     "description": "The ID of the tool use this result corresponds to.\n\nThis MUST match the ID from a previous {@link ToolUseContent}.",
                     "type": "string"
-                },
-                "type": {
-                    "const": "tool_result",
-                    "description": "The kind of object, always `tool_result`.",
-                    "type": "string"
                 }
             },
             "required": [
                 "content",
                 "toolUseId",
-                "type"
+                "kind"
             ],
             "title": "McpToolResultContent",
             "type": "object"
@@ -6355,7 +6355,7 @@
                     ],
                     "description": "Optional metadata about the tool use. Clients SHOULD preserve this field when\nincluding tool uses in subsequent sampling requests to enable caching optimizations."
                 },
-                "id": {
+                "identifier": {
                     "description": "A unique identifier for this tool use.\n\nThis ID is used to match tool results to their corresponding tool uses.",
                     "type": "string"
                 },
@@ -6363,21 +6363,21 @@
                     "$ref": "#/$defs/McpJSONObject",
                     "description": "The arguments to pass to the tool, conforming to the tool's input schema."
                 },
-                "name": {
-                    "description": "The name of the tool to call.",
-                    "type": "string"
-                },
-                "type": {
+                "kind": {
                     "const": "tool_use",
                     "description": "The kind of object, always `tool_use`.",
+                    "type": "string"
+                },
+                "name": {
+                    "description": "The name of the tool to call.",
                     "type": "string"
                 }
             },
             "required": [
-                "id",
-                "input",
                 "name",
-                "type"
+                "identifier",
+                "input",
+                "kind"
             ],
             "title": "McpToolUseContent",
             "type": "object"
@@ -6390,7 +6390,7 @@
                     "$ref": "#/$defs/McpUnsupportedProtocolVersionErrorError",
                     "description": "The error the request ended with."
                 },
-                "id": {
+                "identifier": {
                     "anyOf": [
                         {
                             "type": "string"
@@ -6491,6 +6491,11 @@
                     "$ref": "#/$defs/McpUntitledMultiSelectEnumSchemaItems",
                     "description": "Schema for the array items."
                 },
+                "kind": {
+                    "const": "array",
+                    "description": "The kind of object, always `array`.",
+                    "type": "string"
+                },
                 "maxItems": {
                     "description": "Maximum number of items to select.",
                     "type": [
@@ -6511,16 +6516,11 @@
                         "string",
                         "null"
                     ]
-                },
-                "type": {
-                    "const": "array",
-                    "description": "The kind of object, always `array`.",
-                    "type": "string"
                 }
             },
             "required": [
                 "items",
-                "type"
+                "kind"
             ],
             "title": "McpUntitledMultiSelectEnumSchema",
             "type": "object"
@@ -6536,7 +6536,7 @@
                     },
                     "type": "array"
                 },
-                "type": {
+                "kind": {
                     "const": "string",
                     "description": "The kind of object, always `string`.",
                     "type": "string"
@@ -6544,7 +6544,7 @@
             },
             "required": [
                 "enum",
-                "type"
+                "kind"
             ],
             "title": "McpUntitledMultiSelectEnumSchemaItems",
             "type": "object"
@@ -6574,22 +6574,22 @@
                     },
                     "type": "array"
                 },
+                "kind": {
+                    "const": "string",
+                    "description": "The kind of object, always `string`.",
+                    "type": "string"
+                },
                 "title": {
                     "description": "Optional title for the enum field.",
                     "type": [
                         "string",
                         "null"
                     ]
-                },
-                "type": {
-                    "const": "string",
-                    "description": "The kind of object, always `string`.",
-                    "type": "string"
                 }
             },
             "required": [
                 "enum",
-                "type"
+                "kind"
             ],
             "title": "McpUntitledSingleSelectEnumSchema",
             "type": "object"

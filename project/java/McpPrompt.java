@@ -16,9 +16,9 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpPrompt extends McpBaseMetadata {
 
+  private String description;
   private McpMetaObject meta;
   private List<McpPromptArgument> arguments;
-  private String description;
   private List<McpIcon> icons;
 
 

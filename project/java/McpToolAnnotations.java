@@ -23,11 +23,11 @@ received from untrusted servers.
 @EqualsAndHashCode(callSuper=false)
 public class McpToolAnnotations  {
 
+  private String title;
   private Boolean destructiveHint;
   private Boolean idempotentHint;
   private Boolean openWorldHint;
   private Boolean readOnlyHint;
-  private String title;
 
 
 }

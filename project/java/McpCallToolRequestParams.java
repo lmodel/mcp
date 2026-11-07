@@ -16,8 +16,8 @@ import lombok.*;
 @EqualsAndHashCode(callSuper=false)
 public class McpCallToolRequestParams extends McpInputResponseRequestParams {
 
-  private McpJSONObject arguments;
   private String name;
+  private McpJSONObject arguments;
 
 
 }

@@ -17,7 +17,7 @@ import lombok.*;
 public class McpJSONRPCErrorResponse  {
 
   private McpError error;
-  private String id;
+  private String identifier;
   private String jsonrpc;
 
 

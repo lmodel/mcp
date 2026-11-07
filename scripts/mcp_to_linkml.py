@@ -19,7 +19,9 @@ copy of both under upstream/ and writes src/mcp/schema/mcp.yaml:
 
 A key that is no Python name, such as ``$schema`` or ``io.modelcontextprotocol/clientInfo``,
 goes under the attribute's ``aliases``, because gen-python writes an ``alias`` as an
-attribute name; scripts/mcp_meta.py gives such a key back when it writes MCP's form.
+attribute name. So does a key LOKF defines with another meaning, such as ``type`` or
+``id`` (SHARED_MEANING and OWN_NAMES below). scripts/mcp_meta.py gives each such key
+back when it writes MCP's form.
 Description text MCP leaves out is this project's, from DESCRIPTIONS below.
 
 Usage::
@@ -127,6 +129,70 @@ def snake(key: str) -> str:
     if key.startswith("io.modelcontextprotocol/"):
         return "mcp_" + snake(key.split("/", 1)[1])
     return re.sub(r"(?<=[a-z0-9])([A-Z])", r"_\1", key).lower()
+
+
+# Keys that LOKF also defines. Where MCP's meaning is LOKF's, the key is a slot of the
+# schema's own with the schema.org IRI LOKF gives it, shared by every class that has
+# the key, as lmodel/calm's name and description are; each class states its own
+# description of the key in slot_usage. Where the meaning differs, the attribute takes
+# a name of its own and lists MCP's key under aliases, so a composite with LOKF never
+# projects MCP's key under LOKF's IRI.
+SHARED_SLOTS = {
+    "name": {
+        "slot_uri": "schema:name",
+        "description": "The name a program uses to refer to the thing.",
+    },
+    "title": {
+        "slot_uri": "schema:name",
+        "description": "A name for people to read.",
+    },
+    "description": {
+        "slot_uri": "schema:description",
+        "description": "A description for people to read.",
+    },
+    "url": {
+        "slot_uri": "schema:url",
+        "range": "uri",
+        "description": "A URL.",
+    },
+    "version": {
+        "slot_uri": "schema:version",
+        "description": "A version string.",
+    },
+}
+OWN_NAMES = {
+    "type": "kind",
+    "id": "identifier",
+    "audience": "intended_audience",
+    "context": "context_info",
+    "reason": "reason_text",
+    "resource": "resource_contents",
+}
+
+
+def shared_slot(key: str, prop: dict) -> bool:
+    """Whether a property is one of SHARED_SLOTS: the key, as a plain string, or as a
+    URL where the slot's range is uri."""
+    if key not in SHARED_SLOTS or set(prop) - {"type", "description", "format"}:
+        return False
+    wanted = "uri" if SHARED_SLOTS[key].get("range") == "uri" else None
+    return prop.get("type") == "string" and prop.get("format") == wanted
+
+
+def lokf_naming(key: str, prop: dict) -> tuple[str, str | None]:
+    """The attribute's name and IRI for a key LOKF also defines with another meaning,
+    else (snake(key), None). A url that holds a capability's settings is not LOKF's url;
+    a required flag is schema:valueRequired, as LOKF's is, and a list of required names
+    is not LOKF's required."""
+    if key in OWN_NAMES:
+        return OWN_NAMES[key], None
+    if key == "url":
+        return "url_settings", None
+    if key == "required":
+        if prop.get("type") == "boolean":
+            return key, "schema:valueRequired"
+        return "required_names", None
+    return snake(key), None
 
 
 def subset_name(category: str) -> str:
@@ -350,6 +416,8 @@ class Converter:
             "exact_mappings",
             "any_of",
             "extra_slots",
+            "slots",
+            "slot_usage",
             "attributes",
         )
         return {k: element[k] for k in keys if k in element} | {
@@ -376,6 +444,13 @@ class Converter:
         required = set(node.get("required") or [])
         attributes = {}
         for key, prop in (node.get("properties") or {}).items():
+            if shared_slot(key, prop):
+                element.setdefault("slots", []).append(key)
+                usage = {"description": self.prop_text(key, prop, owner)}
+                if key in required:
+                    usage["required"] = True
+                element.setdefault("slot_usage", {})[key] = usage
+                continue
             attributes.update(
                 self.attribute(
                     key,
@@ -391,9 +466,11 @@ class Converter:
 
     def attribute(self, key, prop, required, cls_name, owner, pointer) -> dict:
         slot: dict = {"description": self.prop_text(key, prop, owner)}
-        name = snake(key)
+        name, iri = lokf_naming(key, prop)
+        if iri:
+            slot["slot_uri"] = iri
         if name != key:
-            if key.isidentifier():
+            if key.isidentifier() and key not in OWN_NAMES and key not in ("url", "required"):
                 slot["alias"] = key
             else:
                 slot["aliases"] = [key]
@@ -576,6 +653,7 @@ def header() -> dict:
             "mcp": "https://w3id.org/lmodel/mcp/",
             "linkml": "https://w3id.org/linkml/",
             "xsd": "http://www.w3.org/2001/XMLSchema#",
+            "schema": "http://schema.org/",
             MAPPING_PREFIX: MAPPING_BASE,
         },
         "default_prefix": "mcp",
@@ -611,6 +689,10 @@ def render() -> str:
     schema = header()
     schema["subsets"] = dict(sorted(converter.subsets.items()))
     schema["types"] = dict(sorted(converter.types.items()))
+    schema["slots"] = {
+        key: {k: v for k, v in sorted(SHARED_SLOTS[key].items(), key=lambda kv: kv[0] != "description")}
+        for key in sorted(SHARED_SLOTS)
+    }
     schema["enums"] = dict(sorted(converter.enums.items()))
     schema["classes"] = dict(sorted(converter.classes.items()))
     body = yaml.dump(

@@ -67,7 +67,7 @@ enum McpToolChoiceMode
 
 type McpAnnotations
   {
-    audience: [McpRole]
+    intendedAudience: [McpRole]
     lastModified: String
     priority: Float
   }
@@ -78,7 +78,7 @@ type McpAudioContent
     annotations: McpAnnotations
     data: McpBase64!
     mimeType: String!
-    type: String!
+    kind: String!
   }
 
 type McpBaseMetadata
@@ -97,10 +97,10 @@ type McpBlobResourceContents
 
 type McpBooleanSchema
   {
-    default: Boolean
     description: String
     title: String
-    type: String!
+    default: Boolean
+    kind: String!
   }
 
 type McpCacheableResult
@@ -113,7 +113,7 @@ type McpCacheableResult
 
 type McpCallToolRequest
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     method: String!
     params: McpCallToolRequestParams!
@@ -121,10 +121,10 @@ type McpCallToolRequest
 
 type McpCallToolRequestParams
   {
+    name: String!
     meta: McpRequestMetaObject!
     arguments: McpJSONObject
     inputResponses: McpInputResponses
-    name: String!
     requestState: String
   }
 
@@ -139,7 +139,7 @@ type McpCallToolResult
 
 type McpCallToolResultResponse
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     result: String!
   }
@@ -154,7 +154,7 @@ type McpCancelledNotification
 type McpCancelledNotificationParams
   {
     meta: McpNotificationMetaObject
-    reason: String
+    reasonText: String
     requestId: String!
   }
 
@@ -170,7 +170,7 @@ type McpClientCapabilities
 type McpClientCapabilitiesElicitation
   {
     form: McpJSONObject
-    url: McpJSONObject
+    urlSettings: McpJSONObject
   }
 
 type McpClientCapabilitiesExperimental
@@ -187,7 +187,7 @@ type McpClientCapabilitiesRoots
 
 type McpClientCapabilitiesSampling
   {
-    context: McpJSONObject
+    contextInfo: McpJSONObject
     tools: McpJSONObject
   }
 
@@ -210,7 +210,7 @@ type McpClientResult
 
 type McpCompleteRequest
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     method: String!
     params: McpCompleteRequestParams!
@@ -220,7 +220,7 @@ type McpCompleteRequestParams
   {
     meta: McpRequestMetaObject!
     argument: McpCompleteRequestParamsArgument!
-    context: McpCompleteRequestParamsContext
+    contextInfo: McpCompleteRequestParamsContext
     ref: String!
   }
 
@@ -255,7 +255,7 @@ type McpCompleteResultCompletion
 
 type McpCompleteResultResponse
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     result: McpCompleteResult!
   }
@@ -295,7 +295,7 @@ type McpCreateMessageResult
 
 type McpDiscoverRequest
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     method: String!
     params: McpRequestParams!
@@ -314,7 +314,7 @@ type McpDiscoverResult
 
 type McpDiscoverResultResponse
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     result: McpDiscoverResult!
   }
@@ -336,8 +336,8 @@ type McpElicitRequestFormParamsRequestedSchema
   {
     schemaDialect: String
     properties: McpElicitRequestFormParamsRequestedSchemaProperties!
-    required: [String]
-    type: String!
+    requiredNames: [String]
+    kind: String!
   }
 
 type McpElicitRequestFormParamsRequestedSchemaProperties
@@ -350,9 +350,9 @@ type McpElicitRequestParams
 
 type McpElicitRequestURLParams
   {
+    url: String!
     message: String!
     mode: String!
-    url: String!
   }
 
 type McpElicitResult
@@ -369,8 +369,8 @@ type McpEmbeddedResource
   {
     meta: McpMetaObject
     annotations: McpAnnotations
-    resource: String!
-    type: String!
+    resourceContents: String!
+    kind: String!
   }
 
 type McpEmptyResult
@@ -392,7 +392,7 @@ type McpError
 
 type McpGetPromptRequest
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     method: String!
     params: McpGetPromptRequestParams!
@@ -400,10 +400,10 @@ type McpGetPromptRequest
 
 type McpGetPromptRequestParams
   {
+    name: String!
     meta: McpRequestMetaObject!
     arguments: McpGetPromptRequestParamsArguments
     inputResponses: McpInputResponses
-    name: String!
     requestState: String
   }
 
@@ -413,15 +413,15 @@ type McpGetPromptRequestParamsArguments
 
 type McpGetPromptResult
   {
-    meta: McpResultMetaObject
     description: String
+    meta: McpResultMetaObject
     messages: [McpPromptMessage]!
     resultType: String!
   }
 
 type McpGetPromptResultResponse
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     result: String!
   }
@@ -429,7 +429,7 @@ type McpGetPromptResultResponse
 type McpHeaderMismatchError
   {
     error: McpHeaderMismatchErrorError!
-    id: String
+    identifier: String
     jsonrpc: String!
   }
 
@@ -459,16 +459,16 @@ type McpImageContent
     annotations: McpAnnotations
     data: McpBase64!
     mimeType: String!
-    type: String!
+    kind: String!
   }
 
 type McpImplementation implements McpIcons
   {
     description: String
-    icons: [McpIcon]
     name: String!
     title: String
     version: String!
+    icons: [McpIcon]
     websiteUrl: String
   }
 
@@ -531,7 +531,7 @@ type McpJSONObject
 type McpJSONRPCErrorResponse
   {
     error: McpError!
-    id: String
+    identifier: String
     jsonrpc: String!
   }
 
@@ -548,7 +548,7 @@ type McpJSONRPCNotification
 
 type McpJSONRPCRequest
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     method: String!
     params: McpJSONObject
@@ -560,7 +560,7 @@ type McpJSONRPCResponse
 
 type McpJSONRPCResultResponse
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     result: McpResult!
   }
@@ -569,17 +569,17 @@ scalar McpJSONValue
 
 type McpLegacyTitledEnumSchema
   {
-    default: String
     description: String
+    title: String
+    default: String
     enum: [String]!
     enumNames: [String]
-    title: String
-    type: String!
+    kind: String!
   }
 
 type McpListPromptsRequest
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     method: String!
     params: McpPaginatedRequestParams!
@@ -597,14 +597,14 @@ type McpListPromptsResult implements McpCacheableResult
 
 type McpListPromptsResultResponse
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     result: McpListPromptsResult!
   }
 
 type McpListResourcesRequest
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     method: String!
     params: McpPaginatedRequestParams!
@@ -622,14 +622,14 @@ type McpListResourcesResult implements McpCacheableResult
 
 type McpListResourcesResultResponse
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     result: McpListResourcesResult!
   }
 
 type McpListResourceTemplatesRequest
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     method: String!
     params: McpPaginatedRequestParams!
@@ -647,7 +647,7 @@ type McpListResourceTemplatesResult implements McpCacheableResult
 
 type McpListResourceTemplatesResultResponse
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     result: McpListResourceTemplatesResult!
   }
@@ -670,7 +670,7 @@ type McpListRootsResult
 
 type McpListToolsRequest
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     method: String!
     params: McpPaginatedRequestParams!
@@ -688,7 +688,7 @@ type McpListToolsResult implements McpCacheableResult
 
 type McpListToolsResultResponse
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     result: McpListToolsResult!
   }
@@ -722,7 +722,7 @@ type McpMethodNotFoundError
 type McpMissingRequiredClientCapabilityError
   {
     error: McpMissingRequiredClientCapabilityErrorError!
-    id: String
+    identifier: String
     jsonrpc: String!
   }
 
@@ -773,17 +773,17 @@ type McpNotificationParams
 
 type McpNumberSchema
   {
-    default: Float
     description: String
+    title: String
+    default: Float
     maximum: Float
     minimum: Float
-    title: String
-    type: McpNumberSchemaType!
+    kind: McpNumberSchemaType!
   }
 
 type McpPaginatedRequest
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     method: String!
     params: McpPaginatedRequestParams!
@@ -831,20 +831,20 @@ type McpProgressNotificationParams
 
 type McpPrompt implements McpIcons
   {
-    meta: McpMetaObject
-    arguments: [McpPromptArgument]
     description: String
-    icons: [McpIcon]
     name: String!
     title: String
+    meta: McpMetaObject
+    arguments: [McpPromptArgument]
+    icons: [McpIcon]
   }
 
 type McpPromptArgument
   {
     description: String
     name: String!
-    required: Boolean
     title: String
+    required: Boolean
   }
 
 type McpPromptListChangedNotification
@@ -864,12 +864,12 @@ type McpPromptReference
   {
     name: String!
     title: String
-    type: String!
+    kind: String!
   }
 
 type McpReadResourceRequest
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     method: String!
     params: McpReadResourceRequestParams!
@@ -894,7 +894,7 @@ type McpReadResourceResult
 
 type McpReadResourceResultResponse
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     result: String!
   }
@@ -921,14 +921,14 @@ type McpRequestParams
 
 type McpResource implements McpIcons
   {
+    description: String
+    name: String!
+    title: String
     meta: McpMetaObject
     annotations: McpAnnotations
-    description: String
     icons: [McpIcon]
     mimeType: String
-    name: String!
     size: Int
-    title: String
     uri: String!
   }
 
@@ -941,15 +941,15 @@ type McpResourceContents
 
 type McpResourceLink
   {
+    description: String
+    name: String!
+    title: String
     meta: McpMetaObject
     annotations: McpAnnotations
-    description: String
     icons: [McpIcon]
     mimeType: String
-    name: String!
     size: Int
-    title: String
-    type: String!
+    kind: String!
     uri: String!
   }
 
@@ -968,19 +968,19 @@ type McpResourceRequestParams
 
 type McpResourceTemplate implements McpIcons
   {
-    meta: McpMetaObject
-    annotations: McpAnnotations
     description: String
-    icons: [McpIcon]
-    mimeType: String
     name: String!
     title: String
+    meta: McpMetaObject
+    annotations: McpAnnotations
+    icons: [McpIcon]
+    mimeType: String
     uriTemplate: McpUriTemplate!
   }
 
 type McpResourceTemplateReference
   {
-    type: String!
+    kind: String!
     uri: McpUriTemplate!
   }
 
@@ -1010,8 +1010,8 @@ type McpResultMetaObject
 
 type McpRoot
   {
-    meta: McpMetaObject
     name: String
+    meta: McpMetaObject
     uri: String!
   }
 
@@ -1075,13 +1075,13 @@ type McpSingleSelectEnumSchema
 
 type McpStringSchema
   {
-    default: String
     description: String
+    title: String
+    default: String
     format: McpStringSchemaFormat
     maxLength: Int
     minLength: Int
-    title: String
-    type: String!
+    kind: String!
   }
 
 type McpSubscriptionFilter
@@ -1107,7 +1107,7 @@ type McpSubscriptionsAcknowledgedNotificationParams
 
 type McpSubscriptionsListenRequest
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     method: String!
     params: McpSubscriptionsListenRequestParams!
@@ -1133,7 +1133,7 @@ type McpSubscriptionsListenResultMetaObject
 
 type McpSubscriptionsListenResultResponse
   {
-    id: String!
+    identifier: String!
     jsonrpc: String!
     result: McpSubscriptionsListenResult!
   }
@@ -1143,7 +1143,7 @@ type McpTextContent
     meta: McpMetaObject
     annotations: McpAnnotations
     text: String!
-    type: String!
+    kind: String!
   }
 
 type McpTextResourceContents
@@ -1156,13 +1156,13 @@ type McpTextResourceContents
 
 type McpTitledMultiSelectEnumSchema
   {
-    default: [String]
     description: String
+    title: String
+    default: [String]
     items: McpTitledMultiSelectEnumSchemaItems!
     maxItems: Int
     minItems: Int
-    title: String
-    type: String!
+    kind: String!
   }
 
 type McpTitledMultiSelectEnumSchemaItems
@@ -1172,44 +1172,44 @@ type McpTitledMultiSelectEnumSchemaItems
 
 type McpTitledMultiSelectEnumSchemaItemsAnyOf
   {
-    const: String!
     title: String!
+    const: String!
   }
 
 type McpTitledSingleSelectEnumSchema
   {
-    default: String
     description: String
-    oneOf: [McpTitledSingleSelectEnumSchemaOneOf]!
     title: String
-    type: String!
+    default: String
+    oneOf: [McpTitledSingleSelectEnumSchemaOneOf]!
+    kind: String!
   }
 
 type McpTitledSingleSelectEnumSchemaOneOf
   {
-    const: String!
     title: String!
+    const: String!
   }
 
 type McpTool implements McpIcons
   {
+    description: String
+    name: String!
+    title: String
     meta: McpMetaObject
     annotations: McpToolAnnotations
-    description: String
     icons: [McpIcon]
     inputSchema: McpToolInputSchema!
-    name: String!
     outputSchema: McpToolOutputSchema
-    title: String
   }
 
 type McpToolAnnotations
   {
+    title: String
     destructiveHint: Boolean
     idempotentHint: Boolean
     openWorldHint: Boolean
     readOnlyHint: Boolean
-    title: String
   }
 
 type McpToolChoice
@@ -1220,7 +1220,7 @@ type McpToolChoice
 type McpToolInputSchema
   {
     schemaDialect: String
-    type: String!
+    kind: String!
   }
 
 type McpToolListChangedNotification
@@ -1242,22 +1242,22 @@ type McpToolResultContent
     isError: Boolean
     structuredContent: McpJSONValue
     toolUseId: String!
-    type: String!
+    kind: String!
   }
 
 type McpToolUseContent
   {
-    meta: McpMetaObject
-    id: String!
-    input: McpJSONObject!
     name: String!
-    type: String!
+    meta: McpMetaObject
+    identifier: String!
+    input: McpJSONObject!
+    kind: String!
   }
 
 type McpUnsupportedProtocolVersionError
   {
     error: McpUnsupportedProtocolVersionErrorError!
-    id: String
+    identifier: String
     jsonrpc: String!
   }
 
@@ -1276,26 +1276,26 @@ type McpUnsupportedProtocolVersionErrorErrorData
 
 type McpUntitledMultiSelectEnumSchema
   {
-    default: [String]
     description: String
+    title: String
+    default: [String]
     items: McpUntitledMultiSelectEnumSchemaItems!
     maxItems: Int
     minItems: Int
-    title: String
-    type: String!
+    kind: String!
   }
 
 type McpUntitledMultiSelectEnumSchemaItems
   {
     enum: [String]!
-    type: String!
+    kind: String!
   }
 
 type McpUntitledSingleSelectEnumSchema
   {
-    default: String
     description: String
-    enum: [String]!
     title: String
-    type: String!
+    default: String
+    enum: [String]!
+    kind: String!
   }

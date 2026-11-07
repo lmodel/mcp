@@ -19,8 +19,8 @@ public class McpElicitRequestFormParamsRequestedSchema  {
 
   private String schemaDialect;
   private McpElicitRequestFormParamsRequestedSchemaProperties properties;
-  private List<String> required;
-  private String type;
+  private List<String> requiredNames;
+  private String kind;
 
 
 }

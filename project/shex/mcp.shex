@@ -4,6 +4,7 @@ BASE <https://w3id.org/lmodel/mcp/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX linkml: <https://w3id.org/linkml/>
+PREFIX schema1: <http://schema.org/>
 
 
 <McpBase64> xsd:base64Binary
@@ -57,7 +58,7 @@ linkml:Jsonpath xsd:string
 linkml:Sparqlpath xsd:string
 
 <McpAnnotations> CLOSED {
-    (  $<McpAnnotations_tes> (  <audience> [ <https://w3id.org/lmodel/mcp/McpRole#assistant>
+    (  $<McpAnnotations_tes> (  <intended_audience> [ <https://w3id.org/lmodel/mcp/McpRole#assistant>
              <https://w3id.org/lmodel/mcp/McpRole#user> ] * ;
           <lastModified> @linkml:String ? ;
           <priority> @linkml:Float ?
@@ -71,7 +72,7 @@ linkml:Sparqlpath xsd:string
           <annotations> @<McpAnnotations> ? ;
           <data> @<McpBase64> ;
           <mimeType> @linkml:String ;
-          <type> @linkml:String
+          <kind> @linkml:String
        ) ;
        rdf:type [ <McpAudioContent> ] ?
     )
@@ -79,8 +80,8 @@ linkml:Sparqlpath xsd:string
 
 <McpBaseMetadata>  (
     CLOSED {
-       (  $<McpBaseMetadata_tes> (  <name> @linkml:String ;
-             <title> @linkml:String ?
+       (  $<McpBaseMetadata_tes> (  schema1:name @linkml:String ;
+             schema1:name @linkml:String ?
           ) ;
           rdf:type [ <McpBaseMetadata> ] ?
        )
@@ -101,10 +102,10 @@ linkml:Sparqlpath xsd:string
 }
 
 <McpBooleanSchema> CLOSED {
-    (  $<McpBooleanSchema_tes> (  <default> @linkml:Boolean ? ;
-          <description> @linkml:String ? ;
-          <title> @linkml:String ? ;
-          <type> @linkml:String
+    (  $<McpBooleanSchema_tes> (  schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ? ;
+          <default> @linkml:Boolean ? ;
+          <kind> @linkml:String
        ) ;
        rdf:type [ <McpBooleanSchema> ] ?
     )
@@ -128,7 +129,7 @@ linkml:Sparqlpath xsd:string
 <McpCallToolRequest> CLOSED {
     (  $<McpCallToolRequest_tes> (  &<McpJSONRPCRequest_tes> ;
           rdf:type [ <McpJSONRPCRequest> ] ? ;
-          <id> @linkml:String ;
+          <identifier> @linkml:String ;
           <jsonrpc> @linkml:String ;
           <method> @linkml:String ;
           <params> @<McpCallToolRequestParams>
@@ -140,10 +141,10 @@ linkml:Sparqlpath xsd:string
 <McpCallToolRequestParams> CLOSED {
     (  $<McpCallToolRequestParams_tes> (  &<McpInputResponseRequestParams_tes> ;
           rdf:type [ <McpInputResponseRequestParams> ] ? ;
+          schema1:name @linkml:String ;
           <_meta> @<McpRequestMetaObject> ;
           <arguments> @<McpJSONObject> ? ;
           <inputResponses> @<McpInputResponses> ? ;
-          <name> @linkml:String ;
           <requestState> @linkml:String ?
        ) ;
        rdf:type [ <McpCallToolRequestParams> ] ?
@@ -166,7 +167,7 @@ linkml:Sparqlpath xsd:string
 <McpCallToolResultResponse> CLOSED {
     (  $<McpCallToolResultResponse_tes> (  &<McpJSONRPCResultResponse_tes> ;
           rdf:type [ <McpJSONRPCResultResponse> ] ? ;
-          <id> @linkml:String ;
+          <identifier> @linkml:String ;
           <jsonrpc> @linkml:String ;
           <result> @linkml:String
        ) ;
@@ -191,7 +192,7 @@ linkml:Sparqlpath xsd:string
     (  $<McpCancelledNotificationParams_tes> (  &<McpNotificationParams_tes> ;
           rdf:type [ <McpNotificationParams> ] ? ;
           <_meta> @<McpNotificationMetaObject> ? ;
-          <reason> @linkml:String ? ;
+          <reason_text> @linkml:String ? ;
           <requestId> @linkml:String
        ) ;
        rdf:type [ <McpCancelledNotificationParams> ] ?
@@ -211,7 +212,7 @@ linkml:Sparqlpath xsd:string
 
 <McpClientCapabilitiesElicitation> CLOSED {
     (  $<McpClientCapabilitiesElicitation_tes> (  <form> @<McpJSONObject> ? ;
-          <url> @<McpJSONObject> ?
+          <url_settings> @<McpJSONObject> ?
        ) ;
        rdf:type [ <McpClientCapabilitiesElicitation> ] ?
     )
@@ -236,7 +237,7 @@ linkml:Sparqlpath xsd:string
 }
 
 <McpClientCapabilitiesSampling> CLOSED {
-    (  $<McpClientCapabilitiesSampling_tes> (  <context> @<McpJSONObject> ? ;
+    (  $<McpClientCapabilitiesSampling_tes> (  <context_info> @<McpJSONObject> ? ;
           <tools> @<McpJSONObject> ?
        ) ;
        rdf:type [ <McpClientCapabilitiesSampling> ] ?
@@ -271,7 +272,7 @@ linkml:Sparqlpath xsd:string
 <McpCompleteRequest> CLOSED {
     (  $<McpCompleteRequest_tes> (  &<McpJSONRPCRequest_tes> ;
           rdf:type [ <McpJSONRPCRequest> ] ? ;
-          <id> @linkml:String ;
+          <identifier> @linkml:String ;
           <jsonrpc> @linkml:String ;
           <method> @linkml:String ;
           <params> @<McpCompleteRequestParams>
@@ -285,7 +286,7 @@ linkml:Sparqlpath xsd:string
           rdf:type [ <McpRequestParams> ] ? ;
           <_meta> @<McpRequestMetaObject> ;
           <argument> @<McpCompleteRequestParamsArgument> ;
-          <context> @<McpCompleteRequestParamsContext> ? ;
+          <context_info> @<McpCompleteRequestParamsContext> ? ;
           <ref> @linkml:String
        ) ;
        rdf:type [ <McpCompleteRequestParams> ] ?
@@ -293,7 +294,7 @@ linkml:Sparqlpath xsd:string
 }
 
 <McpCompleteRequestParamsArgument> CLOSED {
-    (  $<McpCompleteRequestParamsArgument_tes> (  <name> @linkml:String ;
+    (  $<McpCompleteRequestParamsArgument_tes> (  schema1:name @linkml:String ;
           <value> @linkml:String
        ) ;
        rdf:type [ <McpCompleteRequestParamsArgument> ] ?
@@ -335,7 +336,7 @@ linkml:Sparqlpath xsd:string
 <McpCompleteResultResponse> CLOSED {
     (  $<McpCompleteResultResponse_tes> (  &<McpJSONRPCResultResponse_tes> ;
           rdf:type [ <McpJSONRPCResultResponse> ] ? ;
-          <id> @linkml:String ;
+          <identifier> @linkml:String ;
           <jsonrpc> @linkml:String ;
           <result> @<McpCompleteResult>
        ) ;
@@ -392,7 +393,7 @@ linkml:Sparqlpath xsd:string
 <McpDiscoverRequest> CLOSED {
     (  $<McpDiscoverRequest_tes> (  &<McpJSONRPCRequest_tes> ;
           rdf:type [ <McpJSONRPCRequest> ] ? ;
-          <id> @linkml:String ;
+          <identifier> @linkml:String ;
           <jsonrpc> @linkml:String ;
           <method> @linkml:String ;
           <params> @<McpRequestParams>
@@ -419,7 +420,7 @@ linkml:Sparqlpath xsd:string
 <McpDiscoverResultResponse> CLOSED {
     (  $<McpDiscoverResultResponse_tes> (  &<McpJSONRPCResultResponse_tes> ;
           rdf:type [ <McpJSONRPCResultResponse> ] ? ;
-          <id> @linkml:String ;
+          <identifier> @linkml:String ;
           <jsonrpc> @linkml:String ;
           <result> @<McpDiscoverResult>
        ) ;
@@ -447,8 +448,8 @@ linkml:Sparqlpath xsd:string
 <McpElicitRequestFormParamsRequestedSchema> CLOSED {
     (  $<McpElicitRequestFormParamsRequestedSchema_tes> (  <schema_dialect> @linkml:String ? ;
           <properties> @<McpElicitRequestFormParamsRequestedSchemaProperties> ;
-          <required> @linkml:String * ;
-          <type> @linkml:String
+          <required_names> @linkml:String * ;
+          <kind> @linkml:String
        ) ;
        rdf:type [ <McpElicitRequestFormParamsRequestedSchema> ] ?
     )
@@ -467,9 +468,9 @@ linkml:Sparqlpath xsd:string
 }
 
 <McpElicitRequestURLParams> CLOSED {
-    (  $<McpElicitRequestURLParams_tes> (  <message> @linkml:String ;
-          <mode> @linkml:String ;
-          <url> @linkml:Uri
+    (  $<McpElicitRequestURLParams_tes> (  schema1:url @linkml:Uri ;
+          <message> @linkml:String ;
+          <mode> @linkml:String
        ) ;
        rdf:type [ <McpElicitRequestURLParams> ] ?
     )
@@ -494,8 +495,8 @@ linkml:Sparqlpath xsd:string
 <McpEmbeddedResource> CLOSED {
     (  $<McpEmbeddedResource_tes> (  <_meta> @<McpMetaObject> ? ;
           <annotations> @<McpAnnotations> ? ;
-          <resource> @linkml:String ;
-          <type> @linkml:String
+          <resource_contents> @linkml:String ;
+          <kind> @linkml:String
        ) ;
        rdf:type [ <McpEmbeddedResource> ] ?
     )
@@ -533,7 +534,7 @@ linkml:Sparqlpath xsd:string
 <McpGetPromptRequest> CLOSED {
     (  $<McpGetPromptRequest_tes> (  &<McpJSONRPCRequest_tes> ;
           rdf:type [ <McpJSONRPCRequest> ] ? ;
-          <id> @linkml:String ;
+          <identifier> @linkml:String ;
           <jsonrpc> @linkml:String ;
           <method> @linkml:String ;
           <params> @<McpGetPromptRequestParams>
@@ -545,10 +546,10 @@ linkml:Sparqlpath xsd:string
 <McpGetPromptRequestParams> CLOSED {
     (  $<McpGetPromptRequestParams_tes> (  &<McpInputResponseRequestParams_tes> ;
           rdf:type [ <McpInputResponseRequestParams> ] ? ;
+          schema1:name @linkml:String ;
           <_meta> @<McpRequestMetaObject> ;
           <arguments> @<McpGetPromptRequestParamsArguments> ? ;
           <inputResponses> @<McpInputResponses> ? ;
-          <name> @linkml:String ;
           <requestState> @linkml:String ?
        ) ;
        rdf:type [ <McpGetPromptRequestParams> ] ?
@@ -564,8 +565,8 @@ linkml:Sparqlpath xsd:string
 <McpGetPromptResult> CLOSED {
     (  $<McpGetPromptResult_tes> (  &<McpResult_tes> ;
           rdf:type [ <McpResult> ] ? ;
+          schema1:description @linkml:String ? ;
           <_meta> @<McpResultMetaObject> ? ;
-          <description> @linkml:String ? ;
           <messages> @<McpPromptMessage> + ;
           <resultType> @linkml:String
        ) ;
@@ -576,7 +577,7 @@ linkml:Sparqlpath xsd:string
 <McpGetPromptResultResponse> CLOSED {
     (  $<McpGetPromptResultResponse_tes> (  &<McpJSONRPCResultResponse_tes> ;
           rdf:type [ <McpJSONRPCResultResponse> ] ? ;
-          <id> @linkml:String ;
+          <identifier> @linkml:String ;
           <jsonrpc> @linkml:String ;
           <result> @linkml:String
        ) ;
@@ -588,7 +589,7 @@ linkml:Sparqlpath xsd:string
     (  $<McpHeaderMismatchError_tes> (  &<McpJSONRPCErrorResponse_tes> ;
           rdf:type [ <McpJSONRPCErrorResponse> ] ? ;
           <error> @<McpHeaderMismatchErrorError> ;
-          <id> @linkml:String ? ;
+          <identifier> @linkml:String ? ;
           <jsonrpc> @linkml:String
        ) ;
        rdf:type [ <McpHeaderMismatchError> ] ?
@@ -625,7 +626,7 @@ linkml:Sparqlpath xsd:string
           <annotations> @<McpAnnotations> ? ;
           <data> @<McpBase64> ;
           <mimeType> @linkml:String ;
-          <type> @linkml:String
+          <kind> @linkml:String
        ) ;
        rdf:type [ <McpImageContent> ] ?
     )
@@ -636,11 +637,11 @@ linkml:Sparqlpath xsd:string
           rdf:type [ <McpBaseMetadata> ] ? ;
           &<McpIcons_tes> ;
           rdf:type [ <McpIcons> ] ? ;
-          <description> @linkml:String ? ;
+          schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ;
+          schema1:name @linkml:String ? ;
+          schema1:version @linkml:String ;
           <icons> @<McpIcon> * ;
-          <name> @linkml:String ;
-          <title> @linkml:String ? ;
-          <version> @linkml:String ;
           <websiteUrl> @linkml:Uri ?
        ) ;
        rdf:type [ <McpImplementation> ] ?
@@ -738,7 +739,7 @@ linkml:Sparqlpath xsd:string
 <McpJSONRPCErrorResponse>  (
     CLOSED {
        (  $<McpJSONRPCErrorResponse_tes> (  <error> @<McpError> ;
-             <id> @linkml:String ? ;
+             <identifier> @linkml:String ? ;
              <jsonrpc> @linkml:String
           ) ;
           rdf:type [ <McpJSONRPCErrorResponse> ] ?
@@ -771,7 +772,7 @@ linkml:Sparqlpath xsd:string
     CLOSED {
        (  $<McpJSONRPCRequest_tes> (  &<McpRequest_tes> ;
              rdf:type [ <McpRequest> ] ? ;
-             <id> @linkml:String ;
+             <identifier> @linkml:String ;
              <jsonrpc> @linkml:String ;
              <method> @linkml:String ;
              <params> @<McpJSONObject> ?
@@ -790,7 +791,7 @@ linkml:Sparqlpath xsd:string
 
 <McpJSONRPCResultResponse>  (
     CLOSED {
-       (  $<McpJSONRPCResultResponse_tes> (  <id> @linkml:String ;
+       (  $<McpJSONRPCResultResponse_tes> (  <identifier> @linkml:String ;
              <jsonrpc> @linkml:String ;
              <result> @<McpResult>
           ) ;
@@ -809,12 +810,12 @@ linkml:Sparqlpath xsd:string
 }
 
 <McpLegacyTitledEnumSchema> CLOSED {
-    (  $<McpLegacyTitledEnumSchema_tes> (  <default> @linkml:String ? ;
-          <description> @linkml:String ? ;
+    (  $<McpLegacyTitledEnumSchema_tes> (  schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ? ;
+          <default> @linkml:String ? ;
           <enum> @linkml:String + ;
           <enumNames> @linkml:String * ;
-          <title> @linkml:String ? ;
-          <type> @linkml:String
+          <kind> @linkml:String
        ) ;
        rdf:type [ <McpLegacyTitledEnumSchema> ] ?
     )
@@ -823,7 +824,7 @@ linkml:Sparqlpath xsd:string
 <McpListPromptsRequest> CLOSED {
     (  $<McpListPromptsRequest_tes> (  &<McpPaginatedRequest_tes> ;
           rdf:type [ <McpPaginatedRequest> ] ? ;
-          <id> @linkml:String ;
+          <identifier> @linkml:String ;
           <jsonrpc> @linkml:String ;
           <method> @linkml:String ;
           <params> @<McpPaginatedRequestParams>
@@ -851,7 +852,7 @@ linkml:Sparqlpath xsd:string
 <McpListPromptsResultResponse> CLOSED {
     (  $<McpListPromptsResultResponse_tes> (  &<McpJSONRPCResultResponse_tes> ;
           rdf:type [ <McpJSONRPCResultResponse> ] ? ;
-          <id> @linkml:String ;
+          <identifier> @linkml:String ;
           <jsonrpc> @linkml:String ;
           <result> @<McpListPromptsResult>
        ) ;
@@ -862,7 +863,7 @@ linkml:Sparqlpath xsd:string
 <McpListResourcesRequest> CLOSED {
     (  $<McpListResourcesRequest_tes> (  &<McpPaginatedRequest_tes> ;
           rdf:type [ <McpPaginatedRequest> ] ? ;
-          <id> @linkml:String ;
+          <identifier> @linkml:String ;
           <jsonrpc> @linkml:String ;
           <method> @linkml:String ;
           <params> @<McpPaginatedRequestParams>
@@ -890,7 +891,7 @@ linkml:Sparqlpath xsd:string
 <McpListResourcesResultResponse> CLOSED {
     (  $<McpListResourcesResultResponse_tes> (  &<McpJSONRPCResultResponse_tes> ;
           rdf:type [ <McpJSONRPCResultResponse> ] ? ;
-          <id> @linkml:String ;
+          <identifier> @linkml:String ;
           <jsonrpc> @linkml:String ;
           <result> @<McpListResourcesResult>
        ) ;
@@ -901,7 +902,7 @@ linkml:Sparqlpath xsd:string
 <McpListResourceTemplatesRequest> CLOSED {
     (  $<McpListResourceTemplatesRequest_tes> (  &<McpPaginatedRequest_tes> ;
           rdf:type [ <McpPaginatedRequest> ] ? ;
-          <id> @linkml:String ;
+          <identifier> @linkml:String ;
           <jsonrpc> @linkml:String ;
           <method> @linkml:String ;
           <params> @<McpPaginatedRequestParams>
@@ -929,7 +930,7 @@ linkml:Sparqlpath xsd:string
 <McpListResourceTemplatesResultResponse> CLOSED {
     (  $<McpListResourceTemplatesResultResponse_tes> (  &<McpJSONRPCResultResponse_tes> ;
           rdf:type [ <McpJSONRPCResultResponse> ] ? ;
-          <id> @linkml:String ;
+          <identifier> @linkml:String ;
           <jsonrpc> @linkml:String ;
           <result> @<McpListResourceTemplatesResult>
        ) ;
@@ -960,7 +961,7 @@ linkml:Sparqlpath xsd:string
 <McpListToolsRequest> CLOSED {
     (  $<McpListToolsRequest_tes> (  &<McpPaginatedRequest_tes> ;
           rdf:type [ <McpPaginatedRequest> ] ? ;
-          <id> @linkml:String ;
+          <identifier> @linkml:String ;
           <jsonrpc> @linkml:String ;
           <method> @linkml:String ;
           <params> @<McpPaginatedRequestParams>
@@ -988,7 +989,7 @@ linkml:Sparqlpath xsd:string
 <McpListToolsResultResponse> CLOSED {
     (  $<McpListToolsResultResponse_tes> (  &<McpJSONRPCResultResponse_tes> ;
           rdf:type [ <McpJSONRPCResultResponse> ] ? ;
-          <id> @linkml:String ;
+          <identifier> @linkml:String ;
           <jsonrpc> @linkml:String ;
           <result> @<McpListToolsResult>
        ) ;
@@ -1045,7 +1046,7 @@ linkml:Sparqlpath xsd:string
     (  $<McpMissingRequiredClientCapabilityError_tes> (  &<McpJSONRPCErrorResponse_tes> ;
           rdf:type [ <McpJSONRPCErrorResponse> ] ? ;
           <error> @<McpMissingRequiredClientCapabilityErrorError> ;
-          <id> @linkml:String ? ;
+          <identifier> @linkml:String ? ;
           <jsonrpc> @linkml:String
        ) ;
        rdf:type [ <McpMissingRequiredClientCapabilityError> ] ?
@@ -1069,7 +1070,7 @@ linkml:Sparqlpath xsd:string
 }
 
 <McpModelHint> CLOSED {
-    (  $<McpModelHint_tes> <name> @linkml:String ? ;
+    (  $<McpModelHint_tes> schema1:name @linkml:String ? ;
        rdf:type [ <McpModelHint> ] ?
     )
 }
@@ -1119,12 +1120,12 @@ linkml:Sparqlpath xsd:string
 )
 
 <McpNumberSchema> CLOSED {
-    (  $<McpNumberSchema_tes> (  <default> @linkml:Float ? ;
-          <description> @linkml:String ? ;
+    (  $<McpNumberSchema_tes> (  schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ? ;
+          <default> @linkml:Float ? ;
           <maximum> @linkml:Float ? ;
           <minimum> @linkml:Float ? ;
-          <title> @linkml:String ? ;
-          <type> [ <https://w3id.org/lmodel/mcp/McpNumberSchemaType#integer>
+          <kind> [ <https://w3id.org/lmodel/mcp/McpNumberSchemaType#integer>
              <https://w3id.org/lmodel/mcp/McpNumberSchemaType#number> ]
        ) ;
        rdf:type [ <McpNumberSchema> ] ?
@@ -1135,7 +1136,7 @@ linkml:Sparqlpath xsd:string
     CLOSED {
        (  $<McpPaginatedRequest_tes> (  &<McpJSONRPCRequest_tes> ;
              rdf:type [ <McpJSONRPCRequest> ] ? ;
-             <id> @linkml:String ;
+             <identifier> @linkml:String ;
              <jsonrpc> @linkml:String ;
              <method> @linkml:String ;
              <params> @<McpPaginatedRequestParams>
@@ -1214,12 +1215,12 @@ linkml:Sparqlpath xsd:string
           rdf:type [ <McpBaseMetadata> ] ? ;
           &<McpIcons_tes> ;
           rdf:type [ <McpIcons> ] ? ;
+          schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ;
+          schema1:name @linkml:String ? ;
           <_meta> @<McpMetaObject> ? ;
           <arguments> @<McpPromptArgument> * ;
-          <description> @linkml:String ? ;
-          <icons> @<McpIcon> * ;
-          <name> @linkml:String ;
-          <title> @linkml:String ?
+          <icons> @<McpIcon> *
        ) ;
        rdf:type [ <McpPrompt> ] ?
     )
@@ -1228,10 +1229,10 @@ linkml:Sparqlpath xsd:string
 <McpPromptArgument> CLOSED {
     (  $<McpPromptArgument_tes> (  &<McpBaseMetadata_tes> ;
           rdf:type [ <McpBaseMetadata> ] ? ;
-          <description> @linkml:String ? ;
-          <name> @linkml:String ;
-          <required> @linkml:Boolean ? ;
-          <title> @linkml:String ?
+          schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ;
+          schema1:name @linkml:String ? ;
+          schema1:valueRequired @linkml:Boolean ?
        ) ;
        rdf:type [ <McpPromptArgument> ] ?
     )
@@ -1259,9 +1260,9 @@ linkml:Sparqlpath xsd:string
 <McpPromptReference> CLOSED {
     (  $<McpPromptReference_tes> (  &<McpBaseMetadata_tes> ;
           rdf:type [ <McpBaseMetadata> ] ? ;
-          <name> @linkml:String ;
-          <title> @linkml:String ? ;
-          <type> @linkml:String
+          schema1:name @linkml:String ;
+          schema1:name @linkml:String ? ;
+          <kind> @linkml:String
        ) ;
        rdf:type [ <McpPromptReference> ] ?
     )
@@ -1270,7 +1271,7 @@ linkml:Sparqlpath xsd:string
 <McpReadResourceRequest> CLOSED {
     (  $<McpReadResourceRequest_tes> (  &<McpJSONRPCRequest_tes> ;
           rdf:type [ <McpJSONRPCRequest> ] ? ;
-          <id> @linkml:String ;
+          <identifier> @linkml:String ;
           <jsonrpc> @linkml:String ;
           <method> @linkml:String ;
           <params> @<McpReadResourceRequestParams>
@@ -1309,7 +1310,7 @@ linkml:Sparqlpath xsd:string
 <McpReadResourceResultResponse> CLOSED {
     (  $<McpReadResourceResultResponse_tes> (  &<McpJSONRPCResultResponse_tes> ;
           rdf:type [ <McpJSONRPCResultResponse> ] ? ;
-          <id> @linkml:String ;
+          <identifier> @linkml:String ;
           <jsonrpc> @linkml:String ;
           <result> @linkml:String
        ) ;
@@ -1359,14 +1360,14 @@ linkml:Sparqlpath xsd:string
              rdf:type [ <McpBaseMetadata> ] ? ;
              &<McpIcons_tes> ;
              rdf:type [ <McpIcons> ] ? ;
+             schema1:description @linkml:String ? ;
+             schema1:name @linkml:String ;
+             schema1:name @linkml:String ? ;
              <_meta> @<McpMetaObject> ? ;
              <annotations> @<McpAnnotations> ? ;
-             <description> @linkml:String ? ;
              <icons> @<McpIcon> * ;
              <mimeType> @linkml:String ? ;
-             <name> @linkml:String ;
              <size> @linkml:Integer ? ;
-             <title> @linkml:String ? ;
              <uri> @linkml:Uri
           ) ;
           rdf:type [ <McpResource> ] ?
@@ -1388,15 +1389,15 @@ linkml:Sparqlpath xsd:string
 <McpResourceLink> CLOSED {
     (  $<McpResourceLink_tes> (  &<McpResource_tes> ;
           rdf:type [ <McpResource> ] ? ;
+          schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ;
+          schema1:name @linkml:String ? ;
           <_meta> @<McpMetaObject> ? ;
           <annotations> @<McpAnnotations> ? ;
-          <description> @linkml:String ? ;
           <icons> @<McpIcon> * ;
           <mimeType> @linkml:String ? ;
-          <name> @linkml:String ;
           <size> @linkml:Integer ? ;
-          <title> @linkml:String ? ;
-          <type> @linkml:String ;
+          <kind> @linkml:String ;
           <uri> @linkml:Uri
        ) ;
        rdf:type [ <McpResourceLink> ] ?
@@ -1431,13 +1432,13 @@ linkml:Sparqlpath xsd:string
           rdf:type [ <McpBaseMetadata> ] ? ;
           &<McpIcons_tes> ;
           rdf:type [ <McpIcons> ] ? ;
+          schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ;
+          schema1:name @linkml:String ? ;
           <_meta> @<McpMetaObject> ? ;
           <annotations> @<McpAnnotations> ? ;
-          <description> @linkml:String ? ;
           <icons> @<McpIcon> * ;
           <mimeType> @linkml:String ? ;
-          <name> @linkml:String ;
-          <title> @linkml:String ? ;
           <uriTemplate> @<McpUriTemplate>
        ) ;
        rdf:type [ <McpResourceTemplate> ] ?
@@ -1445,7 +1446,7 @@ linkml:Sparqlpath xsd:string
 }
 
 <McpResourceTemplateReference> CLOSED {
-    (  $<McpResourceTemplateReference_tes> (  <type> @linkml:String ;
+    (  $<McpResourceTemplateReference_tes> (  <kind> @linkml:String ;
           <uri> @<McpUriTemplate>
        ) ;
        rdf:type [ <McpResourceTemplateReference> ] ?
@@ -1496,8 +1497,8 @@ linkml:Sparqlpath xsd:string
 )
 
 <McpRoot> CLOSED {
-    (  $<McpRoot_tes> (  <_meta> @<McpMetaObject> ? ;
-          <name> @linkml:String ? ;
+    (  $<McpRoot_tes> (  schema1:name @linkml:String ? ;
+          <_meta> @<McpMetaObject> ? ;
           <uri> @linkml:Uri
        ) ;
        rdf:type [ <McpRoot> ] ?
@@ -1585,16 +1586,16 @@ linkml:Sparqlpath xsd:string
 }
 
 <McpStringSchema> CLOSED {
-    (  $<McpStringSchema_tes> (  <default> @linkml:String ? ;
-          <description> @linkml:String ? ;
+    (  $<McpStringSchema_tes> (  schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ? ;
+          <default> @linkml:String ? ;
           <format> [ <https://w3id.org/lmodel/mcp/McpStringSchemaFormat#date>
              <https://w3id.org/lmodel/mcp/McpStringSchemaFormat#date-time>
              <https://w3id.org/lmodel/mcp/McpStringSchemaFormat#email> <https://w3id.org/lmodel/mcp/McpStringSchemaFormat#uri> ] ?
           ;
           <maxLength> @linkml:Integer ? ;
           <minLength> @linkml:Integer ? ;
-          <title> @linkml:String ? ;
-          <type> @linkml:String
+          <kind> @linkml:String
        ) ;
        rdf:type [ <McpStringSchema> ] ?
     )
@@ -1634,7 +1635,7 @@ linkml:Sparqlpath xsd:string
 <McpSubscriptionsListenRequest> CLOSED {
     (  $<McpSubscriptionsListenRequest_tes> (  &<McpJSONRPCRequest_tes> ;
           rdf:type [ <McpJSONRPCRequest> ] ? ;
-          <id> @linkml:String ;
+          <identifier> @linkml:String ;
           <jsonrpc> @linkml:String ;
           <method> @linkml:String ;
           <params> @<McpSubscriptionsListenRequestParams>
@@ -1676,7 +1677,7 @@ linkml:Sparqlpath xsd:string
 <McpSubscriptionsListenResultResponse> CLOSED {
     (  $<McpSubscriptionsListenResultResponse_tes> (  &<McpJSONRPCResultResponse_tes> ;
           rdf:type [ <McpJSONRPCResultResponse> ] ? ;
-          <id> @linkml:String ;
+          <identifier> @linkml:String ;
           <jsonrpc> @linkml:String ;
           <result> @<McpSubscriptionsListenResult>
        ) ;
@@ -1688,7 +1689,7 @@ linkml:Sparqlpath xsd:string
     (  $<McpTextContent_tes> (  <_meta> @<McpMetaObject> ? ;
           <annotations> @<McpAnnotations> ? ;
           <text> @linkml:String ;
-          <type> @linkml:String
+          <kind> @linkml:String
        ) ;
        rdf:type [ <McpTextContent> ] ?
     )
@@ -1707,13 +1708,13 @@ linkml:Sparqlpath xsd:string
 }
 
 <McpTitledMultiSelectEnumSchema> CLOSED {
-    (  $<McpTitledMultiSelectEnumSchema_tes> (  <default> @linkml:String * ;
-          <description> @linkml:String ? ;
+    (  $<McpTitledMultiSelectEnumSchema_tes> (  schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ? ;
+          <default> @linkml:String * ;
           <items> @<McpTitledMultiSelectEnumSchemaItems> ;
           <maxItems> @linkml:Integer ? ;
           <minItems> @linkml:Integer ? ;
-          <title> @linkml:String ? ;
-          <type> @linkml:String
+          <kind> @linkml:String
        ) ;
        rdf:type [ <McpTitledMultiSelectEnumSchema> ] ?
     )
@@ -1726,27 +1727,27 @@ linkml:Sparqlpath xsd:string
 }
 
 <McpTitledMultiSelectEnumSchemaItemsAnyOf> CLOSED {
-    (  $<McpTitledMultiSelectEnumSchemaItemsAnyOf_tes> (  <const> @linkml:String ;
-          <title> @linkml:String
+    (  $<McpTitledMultiSelectEnumSchemaItemsAnyOf_tes> (  schema1:name @linkml:String ;
+          <const> @linkml:String
        ) ;
        rdf:type [ <McpTitledMultiSelectEnumSchemaItemsAnyOf> ] ?
     )
 }
 
 <McpTitledSingleSelectEnumSchema> CLOSED {
-    (  $<McpTitledSingleSelectEnumSchema_tes> (  <default> @linkml:String ? ;
-          <description> @linkml:String ? ;
+    (  $<McpTitledSingleSelectEnumSchema_tes> (  schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ? ;
+          <default> @linkml:String ? ;
           <oneOf> @<McpTitledSingleSelectEnumSchemaOneOf> + ;
-          <title> @linkml:String ? ;
-          <type> @linkml:String
+          <kind> @linkml:String
        ) ;
        rdf:type [ <McpTitledSingleSelectEnumSchema> ] ?
     )
 }
 
 <McpTitledSingleSelectEnumSchemaOneOf> CLOSED {
-    (  $<McpTitledSingleSelectEnumSchemaOneOf_tes> (  <const> @linkml:String ;
-          <title> @linkml:String
+    (  $<McpTitledSingleSelectEnumSchemaOneOf_tes> (  schema1:name @linkml:String ;
+          <const> @linkml:String
        ) ;
        rdf:type [ <McpTitledSingleSelectEnumSchemaOneOf> ] ?
     )
@@ -1757,25 +1758,25 @@ linkml:Sparqlpath xsd:string
           rdf:type [ <McpBaseMetadata> ] ? ;
           &<McpIcons_tes> ;
           rdf:type [ <McpIcons> ] ? ;
+          schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ;
+          schema1:name @linkml:String ? ;
           <_meta> @<McpMetaObject> ? ;
           <annotations> @<McpToolAnnotations> ? ;
-          <description> @linkml:String ? ;
           <icons> @<McpIcon> * ;
           <inputSchema> @<McpToolInputSchema> ;
-          <name> @linkml:String ;
-          <outputSchema> @<McpToolOutputSchema> ? ;
-          <title> @linkml:String ?
+          <outputSchema> @<McpToolOutputSchema> ?
        ) ;
        rdf:type [ <McpTool> ] ?
     )
 }
 
 <McpToolAnnotations> CLOSED {
-    (  $<McpToolAnnotations_tes> (  <destructiveHint> @linkml:Boolean ? ;
+    (  $<McpToolAnnotations_tes> (  schema1:name @linkml:String ? ;
+          <destructiveHint> @linkml:Boolean ? ;
           <idempotentHint> @linkml:Boolean ? ;
           <openWorldHint> @linkml:Boolean ? ;
-          <readOnlyHint> @linkml:Boolean ? ;
-          <title> @linkml:String ?
+          <readOnlyHint> @linkml:Boolean ?
        ) ;
        rdf:type [ <McpToolAnnotations> ] ?
     )
@@ -1790,7 +1791,7 @@ linkml:Sparqlpath xsd:string
 
 <McpToolInputSchema> CLOSED {
     (  $<McpToolInputSchema_tes> (  <schema_dialect> @linkml:String ? ;
-          <type> @linkml:String
+          <kind> @linkml:String
        ) ;
        rdf:type [ <McpToolInputSchema> ] ?
     )
@@ -1819,18 +1820,18 @@ linkml:Sparqlpath xsd:string
           <isError> @linkml:Boolean ? ;
           <structuredContent> @<McpJSONValue> ? ;
           <toolUseId> @linkml:String ;
-          <type> @linkml:String
+          <kind> @linkml:String
        ) ;
        rdf:type [ <McpToolResultContent> ] ?
     )
 }
 
 <McpToolUseContent> CLOSED {
-    (  $<McpToolUseContent_tes> (  <_meta> @<McpMetaObject> ? ;
-          <id> @linkml:String ;
+    (  $<McpToolUseContent_tes> (  schema1:name @linkml:String ;
+          <_meta> @<McpMetaObject> ? ;
+          <identifier> @linkml:String ;
           <input> @<McpJSONObject> ;
-          <name> @linkml:String ;
-          <type> @linkml:String
+          <kind> @linkml:String
        ) ;
        rdf:type [ <McpToolUseContent> ] ?
     )
@@ -1840,7 +1841,7 @@ linkml:Sparqlpath xsd:string
     (  $<McpUnsupportedProtocolVersionError_tes> (  &<McpJSONRPCErrorResponse_tes> ;
           rdf:type [ <McpJSONRPCErrorResponse> ] ? ;
           <error> @<McpUnsupportedProtocolVersionErrorError> ;
-          <id> @linkml:String ? ;
+          <identifier> @linkml:String ? ;
           <jsonrpc> @linkml:String
        ) ;
        rdf:type [ <McpUnsupportedProtocolVersionError> ] ?
@@ -1866,13 +1867,13 @@ linkml:Sparqlpath xsd:string
 }
 
 <McpUntitledMultiSelectEnumSchema> CLOSED {
-    (  $<McpUntitledMultiSelectEnumSchema_tes> (  <default> @linkml:String * ;
-          <description> @linkml:String ? ;
+    (  $<McpUntitledMultiSelectEnumSchema_tes> (  schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ? ;
+          <default> @linkml:String * ;
           <items> @<McpUntitledMultiSelectEnumSchemaItems> ;
           <maxItems> @linkml:Integer ? ;
           <minItems> @linkml:Integer ? ;
-          <title> @linkml:String ? ;
-          <type> @linkml:String
+          <kind> @linkml:String
        ) ;
        rdf:type [ <McpUntitledMultiSelectEnumSchema> ] ?
     )
@@ -1880,18 +1881,18 @@ linkml:Sparqlpath xsd:string
 
 <McpUntitledMultiSelectEnumSchemaItems> CLOSED {
     (  $<McpUntitledMultiSelectEnumSchemaItems_tes> (  <enum> @linkml:String + ;
-          <type> @linkml:String
+          <kind> @linkml:String
        ) ;
        rdf:type [ <McpUntitledMultiSelectEnumSchemaItems> ] ?
     )
 }
 
 <McpUntitledSingleSelectEnumSchema> CLOSED {
-    (  $<McpUntitledSingleSelectEnumSchema_tes> (  <default> @linkml:String ? ;
-          <description> @linkml:String ? ;
+    (  $<McpUntitledSingleSelectEnumSchema_tes> (  schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ? ;
+          <default> @linkml:String ? ;
           <enum> @linkml:String + ;
-          <title> @linkml:String ? ;
-          <type> @linkml:String
+          <kind> @linkml:String
        ) ;
        rdf:type [ <McpUntitledSingleSelectEnumSchema> ] ?
     )

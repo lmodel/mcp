@@ -20,7 +20,7 @@ public class McpAudioContent  {
   private McpAnnotations annotations;
   private String data;
   private String mimeType;
-  private String type;
+  private String kind;
 
 
 }

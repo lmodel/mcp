@@ -1,1074 +1,1294 @@
--- # Class: HasMeta Description: Mixin for types that carry a _meta field.
+-- # Class: McpAnnotations Description: Optional annotations for the client. The client can use annotations to inform how objects are used or displayed
 --     * Slot: id
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: HasAnnotations Description: Mixin for types that carry annotations.
+--     * Slot: lastModified Description: The moment the resource was last modified, as an ISO 8601 formatted string.Should be an ISO 8601 formatted string (e.g., "2025-01-12T15:00:58Z").Examples: last activity timestamp in an open file, timestamp when the resourcewas attached, etc.
+--     * Slot: priority Description: Describes how important this data is for operating the server.A value of 1 means "most important," and indicates that the data iseffectively required, while 0 means "least important," and indicates thatthe data is entirely optional.
+-- # Class: McpAudioContent Description: Audio provided to or from an LLM.
 --     * Slot: id
+--     * Slot: type Description: The kind of object, always `audio`.
+--     * Slot: data Description: The base64-encoded audio data.
+--     * Slot: mimeType Description: The MIME type of the audio. Different providers may support different audio types.
+--     * Slot: _meta_id Description: Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.Valid keys have two segments:**Prefix:**- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.**Name:**- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
 --     * Slot: annotations_id Description: Optional annotations for the client.
--- # Class: HasIcons Description: Mixin for types that carry icons.
+-- # Class: McpBaseMetadata Description: Base interface for metadata with name (identifier) and title (display name) properties.
 --     * Slot: id
--- # Class: HasName Description: Mixin for types that carry name and title.
+--     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
+--     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood,even by those unfamiliar with domain-specific terminology.If not provided, the name should be used for display (except for {@link Tool},where `annotations.title` should be given precedence over using `name`,if present).
+-- # Class: McpBlobResourceContents Description: A resource's contents as binary data, given as base64 text.
 --     * Slot: id
---     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present).
---     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood.
--- # Class: Annotations Description: Optional annotations for the client. The client can use annotations to inform how objects are used or displayed.
+--     * Slot: blob Description: A base64-encoded string representing the binary data of the item.
+--     * Slot: mimeType Description: The MIME type of this resource, if known.
+--     * Slot: uri Description: The URI of this resource.
+--     * Slot: _meta_id Description: Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.Valid keys have two segments:**Prefix:**- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.**Name:**- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
+-- # Class: McpBooleanSchema Description: A field of an elicitation form that takes true or false.
 --     * Slot: id
---     * Slot: lastModified Description: The moment the resource was last modified, as an ISO 8601 formatted string.
---     * Slot: priority Description: How important this data is for operating the server. 1 means most important (required), 0 means least important (optional).
--- # Class: Error Description: A JSON-RPC error object.
+--     * Slot: description Description: A description of the field for the user.
+--     * Slot: title Description: A title for the field.
+--     * Slot: type Description: The kind of object, always `boolean`.
+--     * Slot: default Description: The value the field takes when the user gives none.
+-- # Class: McpCacheableResult Description: A result that supports a time-to-live (TTL) hint for client-side caching.
 --     * Slot: id
---     * Slot: code Description: The error type that occurred.
---     * Slot: message Description: A message string.
---     * Slot: data_id Description: Base64-encoded binary data.
--- # Class: InternalError Description: A JSON-RPC error indicating that an internal error occurred on the receiver (-32603).
---     * Slot: id
---     * Slot: code Description: The error type that occurred.
---     * Slot: message Description: A message string.
---     * Slot: data_id Description: Base64-encoded binary data.
--- # Class: InvalidParamsError Description: A JSON-RPC error indicating that the method parameters are invalid or malformed (-32602).
---     * Slot: id
---     * Slot: code Description: The error type that occurred.
---     * Slot: message Description: A message string.
---     * Slot: data_id Description: Base64-encoded binary data.
--- # Class: InvalidRequestError Description: A JSON-RPC error indicating that the request is not a valid request object (-32600).
---     * Slot: id
---     * Slot: code Description: The error type that occurred.
---     * Slot: message Description: A message string.
---     * Slot: data_id Description: Base64-encoded binary data.
--- # Class: MethodNotFoundError Description: A JSON-RPC error indicating that the requested method does not exist or is not available (-32601).
---     * Slot: id
---     * Slot: code Description: The error type that occurred.
---     * Slot: message Description: A message string.
---     * Slot: data_id Description: Base64-encoded binary data.
--- # Class: ParseError Description: A JSON-RPC error indicating that invalid JSON was received by the server (-32700).
---     * Slot: id
---     * Slot: code Description: The error type that occurred.
---     * Slot: message Description: A message string.
---     * Slot: data_id Description: Base64-encoded binary data.
--- # Class: URLElicitationRequiredError Description: A response indicating that additional information is required via URL elicitation.
+--     * Slot: cacheScope Description: Indicates the intended scope of the cached response, analogous to HTTP`Cache-Control: public` vs `Cache-Control: private`.- `"public"`: The response does not contain user-specific data. Any  client or intermediary (e.g., shared gateway, caching proxy) MAY cache  the response and serve it across authorization contexts.- `"private"`: The response MAY be cached and reused only within the  same authorization context. Caches MUST NOT be shared across  authorization contexts (e.g., a different access token requires a  different cache).
+--     * Slot: resultType Description: Indicates the type of the result, which allows the client to determinehow to parse the result object.Servers implementing this protocol version MUST include this field.For backward compatibility, when a client receives a result from aserver implementing an earlier protocol version (which does not include`resultType`), the client MUST treat the absent field as `"complete"`.
+--     * Slot: ttlMs Description: A hint from the server indicating how long (in milliseconds) theclient MAY cache this response before re-fetching. Semantics areanalogous to HTTP Cache-Control max-age.- If 0, The response SHOULD be considered immediately stale,  The client MAY re-fetch every time the result is needed.- If positive, the client SHOULD consider the result fresh for this many  milliseconds after receiving the response.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
+-- # Class: McpCallToolRequest Description: Used by the client to invoke a tool provided by the server.
 --     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: error_id Description: The error object.
--- # Class: Icon Description: An optionally-sized icon that can be displayed in a user interface.
---     * Slot: id
---     * Slot: src Description: A standard URI pointing to an icon resource.
---     * Slot: mimeType Description: The MIME type of a resource, if known.
---     * Slot: theme Description: Optional theme specifier for the icon.
---     * Slot: HasIcons_id Description: Autocreated FK slot
---     * Slot: Implementation_id Description: Autocreated FK slot
---     * Slot: ResourceLink_id Description: Autocreated FK slot
---     * Slot: Resource_id Description: Autocreated FK slot
---     * Slot: ResourceTemplate_id Description: Autocreated FK slot
---     * Slot: Prompt_id Description: Autocreated FK slot
---     * Slot: Tool_id Description: Autocreated FK slot
--- # Class: Implementation Description: Describes the MCP implementation.
---     * Slot: id
---     * Slot: version Description: The version of this implementation.
---     * Slot: description Description: A human-readable description.
---     * Slot: websiteUrl Description: An optional URL of the website for this implementation.
---     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present).
---     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood.
--- # Class: TextContent Description: Text provided to or from an LLM.
---     * Slot: id
---     * Slot: text Description: Text content.
---     * Slot: type Description: Type discriminator field.
---     * Slot: _meta_id Description: Optional metadata object.
---     * Slot: annotations_id Description: Optional annotations for the client.
--- # Class: ImageContent Description: An image provided to or from an LLM.
---     * Slot: id
---     * Slot: data Description: Base64-encoded binary data.
---     * Slot: mimeType Description: The MIME type of a resource, if known.
---     * Slot: type Description: Type discriminator field.
---     * Slot: _meta_id Description: Optional metadata object.
---     * Slot: annotations_id Description: Optional annotations for the client.
--- # Class: AudioContent Description: Audio provided to or from an LLM.
---     * Slot: id
---     * Slot: data Description: Base64-encoded binary data.
---     * Slot: mimeType Description: The MIME type of a resource, if known.
---     * Slot: type Description: Type discriminator field.
---     * Slot: _meta_id Description: Optional metadata object.
---     * Slot: annotations_id Description: Optional annotations for the client.
--- # Class: ContentBlock Description: Structured text content block.
---     * Slot: id
---     * Slot: type Description: Type discriminator field.
---     * Slot: text Description: Text content.
--- # Class: EmbeddedResource Description: The contents of a resource, embedded into a prompt or tool call result.
---     * Slot: id
---     * Slot: type Description: Type discriminator field.
---     * Slot: resource_id Description: The embedded resource contents (text or blob).
---     * Slot: _meta_id Description: Optional metadata object.
---     * Slot: annotations_id Description: Optional annotations for the client.
--- # Class: ResourceLink Description: A resource that the server is capable of reading, included in a prompt or tool call result.
---     * Slot: id
---     * Slot: uri Description: A resource URI.
---     * Slot: mimeType Description: The MIME type of a resource, if known.
---     * Slot: description Description: A human-readable description.
---     * Slot: size Description: The size of the raw resource content, in bytes.
---     * Slot: type Description: Type discriminator field.
---     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present).
---     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood.
---     * Slot: _meta_id Description: Optional metadata object.
---     * Slot: annotations_id Description: Optional annotations for the client.
--- # Class: ToolUseContent Description: A request from the assistant to call a tool.
---     * Slot: uid
---     * Slot: id Description: A unique identifier for this tool use.
---     * Slot: type Description: Type discriminator field.
---     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present).
---     * Slot: input_id Description: The arguments to pass to the tool.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: ToolResultContent Description: The result of a tool use, provided by the user back to the assistant.
---     * Slot: id
---     * Slot: type Description: Type discriminator field.
---     * Slot: toolUseId Description: The ID of the tool use this result corresponds to.
---     * Slot: isError Description: Whether the tool call ended in an error.
---     * Slot: structuredContent_id Description: An optional JSON object representing structured result of the tool call.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: ResourceContents Description: Generic resource contents.
---     * Slot: id
---     * Slot: uri Description: A resource URI.
---     * Slot: mimeType Description: The MIME type of a resource, if known.
---     * Slot: text Description: Text content.
---     * Slot: blob Description: A base64-encoded string representing binary data.
---     * Slot: ReadResourceResult_id Description: Autocreated FK slot
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: TextResourceContents Description: Text resource contents.
---     * Slot: id
---     * Slot: uri Description: A resource URI.
---     * Slot: mimeType Description: The MIME type of a resource, if known.
---     * Slot: text Description: Text content.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: BlobResourceContents Description: Blob resource contents.
---     * Slot: id
---     * Slot: uri Description: A resource URI.
---     * Slot: mimeType Description: The MIME type of a resource, if known.
---     * Slot: blob Description: A base64-encoded string representing binary data.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: Resource Description: A known resource that the server is capable of reading.
---     * Slot: id
---     * Slot: uri Description: A resource URI.
---     * Slot: mimeType Description: The MIME type of a resource, if known.
---     * Slot: description Description: A human-readable description.
---     * Slot: size Description: The size of the raw resource content, in bytes.
---     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present).
---     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood.
---     * Slot: ListResourcesResult_id Description: Autocreated FK slot
---     * Slot: _meta_id Description: Optional metadata object.
---     * Slot: annotations_id Description: Optional annotations for the client.
--- # Class: ResourceTemplate Description: A template description for resources available on the server.
---     * Slot: id
---     * Slot: uriTemplate Description: A URI template (RFC 6570) for constructing resource URIs.
---     * Slot: mimeType Description: The MIME type of a resource, if known.
---     * Slot: description Description: A human-readable description.
---     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present).
---     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood.
---     * Slot: ListResourceTemplatesResult_id Description: Autocreated FK slot
---     * Slot: _meta_id Description: Optional metadata object.
---     * Slot: annotations_id Description: Optional annotations for the client.
--- # Class: Root Description: Represents a root directory or file that the server can operate on.
---     * Slot: id
---     * Slot: uri Description: A resource URI.
---     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present).
---     * Slot: ListRootsResult_id Description: Autocreated FK slot
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: PromptArgument Description: Describes an argument that a prompt can accept.
---     * Slot: id
---     * Slot: description Description: A human-readable description.
---     * Slot: required Description: Whether this argument must be provided.
---     * Slot: required_field Description: Whether this argument must be provided.
---     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present).
---     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood.
---     * Slot: Prompt_id Description: Autocreated FK slot
--- # Class: Prompt Description: A prompt or prompt template that the server offers.
---     * Slot: id
---     * Slot: description Description: A human-readable description.
---     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present).
---     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood.
---     * Slot: ListPromptsResult_id Description: Autocreated FK slot
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: PromptMessage Description: Describes a message returned as part of a prompt.
---     * Slot: id
---     * Slot: role Description: The role of the sender or recipient.
---     * Slot: GetPromptResult_id Description: Autocreated FK slot
---     * Slot: content_id Description: The content of the prompt message.
--- # Class: PromptReference Description: Identifies a prompt.
---     * Slot: id
---     * Slot: type Description: Type discriminator field.
---     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present).
---     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood.
--- # Class: ResourceTemplateReference Description: A reference to a resource or resource template definition.
---     * Slot: id
---     * Slot: type Description: Type discriminator field.
---     * Slot: uri Description: A resource URI.
--- # Class: ToolAnnotations Description: Additional properties describing a Tool to clients. All properties are hints, not guarantees.
---     * Slot: id
---     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood.
---     * Slot: destructiveHint Description: If true, the tool may perform destructive updates.
---     * Slot: idempotentHint Description: If true, calling repeatedly with same arguments has no additional effect.
---     * Slot: openWorldHint Description: If true, tool may interact with an open world of external entities.
---     * Slot: readOnlyHint Description: If true, the tool does not modify its environment.
--- # Class: ToolChoice Description: Controls tool selection behavior for sampling requests.
---     * Slot: id
---     * Slot: mode Description: Controls the tool use ability of the model.
--- # Class: ToolExecution Description: Execution-related properties for a tool.
---     * Slot: id
---     * Slot: taskSupport Description: Whether this tool supports task-augmented execution.
--- # Class: MetaObject Description: Metadata object attached to protocol objects.
---     * Slot: id
---     * Slot: progressToken Description: The progress token which was given in the initial request, used to associate this notification with the request that is proceeding.
--- # Class: ArgumentMap Description: Argument object used in prompt and tool calls.
---     * Slot: id
---     * Slot: city Description: City value.
---     * Slot: location Description: Location value.
---     * Slot: language Description: Programming language value.
---     * Slot: framework Description: Framework value.
--- # Class: CompletionArgument Description: Argument descriptor for completion requests.
---     * Slot: id
---     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present).
---     * Slot: value Description: A value string.
--- # Class: CompletionContext Description: Additional context for completion requests.
---     * Slot: id
---     * Slot: arguments_id Description: Arguments for templating.
--- # Class: CompletionData Description: Completion result payload.
---     * Slot: id
---     * Slot: total Description: Total number of items to process (or total progress required), if known.
---     * Slot: hasMore Description: Indicates whether there are additional completion options.
--- # Class: EnumOption Description: Single enumerated option with a machine value and display title.
---     * Slot: id
---     * Slot: const Description: JSON Schema const value.
---     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood.
--- # Class: SchemaItems Description: JSON Schema items expression used by enum multi-select schemas.
---     * Slot: id
---     * Slot: type Description: Type discriminator field.
--- # Class: JsonSchema Description: Restricted JSON Schema object used in MCP payloads.
---     * Slot: id
---     * Slot: schemaUri Description: Optional JSON Schema dialect identifier.
---     * Slot: type Description: Type discriminator field.
---     * Slot: additionalProperties Description: JSON Schema additionalProperties flag.
---     * Slot: minimum Description: Minimum value constraint.
---     * Slot: maximum Description: Maximum value constraint.
---     * Slot: minLength Description: Minimum length constraint.
---     * Slot: maxLength Description: Maximum length constraint.
---     * Slot: format Description: String format constraint.
---     * Slot: description Description: A human-readable description.
---     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood.
---     * Slot: const Description: JSON Schema const value.
---     * Slot: default Description: Default value for a schema field.
---     * Slot: properties_id Description: JSON Schema properties map.
---     * Slot: items_id Description: JSON Schema items definition.
--- # Class: SchemaProperties Description: Named JSON Schema property map used by vendor fixtures.
---     * Slot: id
---     * Slot: name_id Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present).
---     * Slot: email_id Description: Email value.
---     * Slot: age_id Description: Age value.
---     * Slot: city_id Description: City value.
---     * Slot: location_id Description: Location value.
---     * Slot: a_id Description: JSON Schema property for key a.
---     * Slot: b_id Description: JSON Schema property for key b.
---     * Slot: temperature_id Description: Sampling temperature.
---     * Slot: conditions_id Description: Weather conditions description.
---     * Slot: humidity_id Description: Humidity percentage value.
--- # Class: ToolInput Description: Tool input payload.
---     * Slot: id
---     * Slot: city Description: City value.
---     * Slot: location Description: Location value.
--- # Class: StructuredContentData Description: Structured content object returned by tools.
---     * Slot: id
---     * Slot: temperature Description: Sampling temperature.
---     * Slot: conditions Description: Weather conditions description.
---     * Slot: humidity Description: Humidity percentage value.
--- # Class: LogDetails Description: Structured details attached to log data.
---     * Slot: id
---     * Slot: host Description: Host value.
---     * Slot: port Description: Port value.
--- # Class: LogData Description: Structured log data payload.
---     * Slot: id
---     * Slot: error Description: The error object.
---     * Slot: details_id Description: Nested log details object.
--- # Class: ErrorData Description: Structured JSON-RPC error data payload.
---     * Slot: id
---     * Slot: reason Description: An optional string describing the reason.
--- # Class: ElicitationContent Description: Form values returned by an elicitation.
---     * Slot: id
---     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present).
---     * Slot: email Description: Email value.
---     * Slot: age Description: Age value.
--- # Class: URLElicitation Description: URL-based elicitation request payload carried in error data.
---     * Slot: id
---     * Slot: mode Description: The elicitation mode.
---     * Slot: elicitationId Description: The ID of the elicitation.
---     * Slot: message Description: A message string.
---     * Slot: url Description: The URL that the user should navigate to.
---     * Slot: ErrorData_id Description: Autocreated FK slot
--- # Class: ElicitationCapability Description: Client elicitation capability.
---     * Slot: id
--- # Class: SamplingCapability Description: Client sampling capability.
---     * Slot: id
--- # Class: RootsCapability Description: Client roots capability.
---     * Slot: id
---     * Slot: listChanged Description: Whether notifications for list changes are supported.
--- # Class: PromptsCapability Description: Server prompts capability.
---     * Slot: id
---     * Slot: listChanged Description: Whether notifications for list changes are supported.
--- # Class: ResourcesCapability Description: Server resources capability.
---     * Slot: id
---     * Slot: listChanged Description: Whether notifications for list changes are supported.
---     * Slot: subscribe Description: Whether subscribing to resource updates is supported.
--- # Class: ToolsCapability Description: Server tools capability.
---     * Slot: id
---     * Slot: listChanged Description: Whether notifications for list changes are supported.
--- # Class: TaskRequestCapabilities Description: Task request capability map.
---     * Slot: id
---     * Slot: elicitation_id Description: Elicitation capability object.
---     * Slot: sampling_id Description: Sampling capability object.
---     * Slot: tools_id Description: The list of tools.
--- # Class: TasksCapability Description: Task capability object.
---     * Slot: id
---     * Slot: requests_id Description: Task request capabilities.
--- # Class: ExtensionsCapability Description: Server/client extension capability object.
---     * Slot: id
---     * Slot: apps_extension_id Description: Extension capability entry for app mime types.
--- # Class: ExtensionAppCapability Description: Extension payload for app mime type declarations.
---     * Slot: id
--- # Class: Tool Description: Definition for a tool the client can call.
---     * Slot: id
---     * Slot: description Description: A human-readable description.
---     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present).
---     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood.
---     * Slot: CreateMessageRequestParams_id Description: Autocreated FK slot
---     * Slot: ListToolsResult_id Description: Autocreated FK slot
---     * Slot: annotations_id Description: Optional additional tool information.
---     * Slot: execution_id Description: Execution-related properties for this tool.
---     * Slot: inputSchema_id Description: A JSON Schema object defining the expected parameters for the tool.
---     * Slot: outputSchema_id Description: An optional JSON Schema object defining the structure of the tool's output.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: ModelHint Description: Hints to use for model selection.
---     * Slot: id
---     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present).
---     * Slot: ModelPreferences_id Description: Autocreated FK slot
--- # Class: ModelPreferences Description: The server's preferences for model selection, requested of the client during sampling.
---     * Slot: id
---     * Slot: costPriority Description: How much to prioritize cost when selecting a model (0-1).
---     * Slot: intelligencePriority Description: How much to prioritize intelligence when selecting a model (0-1).
---     * Slot: speedPriority Description: How much to prioritize sampling speed when selecting a model (0-1).
--- # Class: SamplingMessage Description: Describes a message issued to or received from an LLM API.
---     * Slot: id
---     * Slot: role Description: The role of the sender or recipient.
---     * Slot: CreateMessageRequestParams_id Description: Autocreated FK slot
---     * Slot: content_id Description: The message content.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: Task Description: Data associated with a task.
---     * Slot: id
---     * Slot: taskId Description: The task identifier.
---     * Slot: status Description: Current task state.
---     * Slot: createdAt Description: ISO 8601 timestamp when the task was created.
---     * Slot: lastUpdatedAt Description: ISO 8601 timestamp when the task was last updated.
---     * Slot: ttl Description: Actual retention duration from creation in milliseconds, null for unlimited.
---     * Slot: statusMessage Description: Optional human-readable message describing the current task state.
---     * Slot: pollInterval Description: Suggested polling interval in milliseconds.
---     * Slot: ListTasksResult_id Description: Autocreated FK slot
--- # Class: TaskMetadata Description: Metadata for augmenting a request with task execution.
---     * Slot: id
---     * Slot: ttl Description: Actual retention duration from creation in milliseconds, null for unlimited.
--- # Class: RelatedTaskMetadata Description: Metadata for associating messages with a task.
---     * Slot: id
---     * Slot: taskId Description: The task identifier.
--- # Class: ClientCapabilities Description: Capabilities a client may support. Known capabilities are defined here, but this is not a closed set.
---     * Slot: id
---     * Slot: experimental Description: Experimental capability extensions.
---     * Slot: elicitation_id Description: Elicitation capability object.
---     * Slot: extensions_id Description: Implementation-specific extension capabilities.
---     * Slot: roots_id Description: The list of roots.
---     * Slot: sampling_id Description: Sampling capability object.
---     * Slot: tasks_id Description: The list of tasks.
--- # Class: ServerCapabilities Description: Capabilities that a server may support. Known capabilities are defined here, but this is not a closed set.
---     * Slot: id
---     * Slot: experimental Description: Experimental capability extensions.
---     * Slot: extensions_id Description: Implementation-specific extension capabilities.
---     * Slot: prompts_id Description: The list of prompts.
---     * Slot: resources_id Description: The list of resources.
---     * Slot: tools_id Description: The list of tools.
---     * Slot: tasks_id Description: The list of tasks.
--- # Class: StringSchema Description: String schema definition.
---     * Slot: id
---     * Slot: type Description: Type discriminator field.
---     * Slot: default Description: Default value for a schema field.
---     * Slot: default_value Description: Default value for a schema field.
---     * Slot: description Description: A human-readable description.
---     * Slot: format Description: String format constraint.
---     * Slot: minLength Description: Minimum length constraint.
---     * Slot: maxLength Description: Maximum length constraint.
---     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood.
--- # Class: NumberSchema Description: Number schema definition.
---     * Slot: id
---     * Slot: type Description: Type discriminator field.
---     * Slot: default Description: Default value for a schema field.
---     * Slot: default_value Description: Default value for a schema field.
---     * Slot: description Description: A human-readable description.
---     * Slot: minimum Description: Minimum value constraint.
---     * Slot: maximum Description: Maximum value constraint.
---     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood.
--- # Class: BooleanSchema Description: Boolean schema definition.
---     * Slot: id
---     * Slot: type Description: Type discriminator field.
---     * Slot: default Description: Default value for a schema field.
---     * Slot: default_value Description: Default boolean value.
---     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood.
---     * Slot: description Description: A human-readable description.
--- # Class: UntitledSingleSelectEnumSchema Description: Single-selection enum without display titles.
---     * Slot: id
---     * Slot: type Description: Type discriminator field.
---     * Slot: default Description: Default value for a schema field.
---     * Slot: default_value Description: Default value for a schema field.
---     * Slot: description Description: A human-readable description.
---     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood.
--- # Class: TitledSingleSelectEnumSchema Description: Single-selection enum with display titles for each option.
---     * Slot: id
---     * Slot: type Description: Type discriminator field.
---     * Slot: default Description: Default value for a schema field.
---     * Slot: default_value Description: Default value for a schema field.
---     * Slot: description Description: A human-readable description.
---     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood.
--- # Class: UntitledMultiSelectEnumSchema Description: Multi-selection enum without display titles.
---     * Slot: id
---     * Slot: type Description: Type discriminator field.
---     * Slot: default_value Description: Default value for a schema field.
---     * Slot: description Description: A human-readable description.
---     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood.
---     * Slot: minItems Description: Minimum number of items.
---     * Slot: maxItems Description: Maximum number of items.
---     * Slot: items_id Description: JSON Schema items definition.
--- # Class: TitledMultiSelectEnumSchema Description: Multi-selection enum with display titles for each option.
---     * Slot: id
---     * Slot: type Description: Type discriminator field.
---     * Slot: default_value Description: Default value for a schema field.
---     * Slot: description Description: A human-readable description.
---     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood.
---     * Slot: minItems Description: Minimum number of items.
---     * Slot: maxItems Description: Maximum number of items.
---     * Slot: items_id Description: JSON Schema items definition.
--- # Class: LegacyTitledEnumSchema Description: Legacy titled enum schema. Use TitledSingleSelectEnumSchema instead.
---     * Slot: id
---     * Slot: type Description: Type discriminator field.
---     * Slot: default Description: Default value for a schema field.
---     * Slot: default_value Description: Default value for a schema field.
---     * Slot: description Description: A human-readable description.
---     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood.
--- # Abstract Class: JSONRPCRequest Description: A request that expects a response.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
--- # Abstract Class: JSONRPCNotification Description: A notification which does not expect a response.
---     * Slot: id
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
--- # Abstract Class: JSONRPCResultResponse Description: A successful (non-error) response to a request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
--- # Class: JSONRPCErrorResponse Description: A response to a request that indicates an error occurred.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: error_id Description: The error object.
--- # Class: Result Description: Common result fields.
---     * Slot: id
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: CancelledNotificationParams Description: Parameters for a notifications/cancelled notification.
---     * Slot: id
---     * Slot: requestId Description: The ID of a request.
---     * Slot: reason Description: An optional string describing the reason.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: ProgressNotificationParams Description: Parameters for a notifications/progress notification.
---     * Slot: id
---     * Slot: progress Description: The progress thus far.
---     * Slot: progressToken Description: The progress token which was given in the initial request, used to associate this notification with the request that is proceeding.
---     * Slot: total Description: Total number of items to process (or total progress required), if known.
---     * Slot: message Description: A message string.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: ElicitationCompleteNotificationParams Description: Parameters for a notifications/elicitation/complete notification.
---     * Slot: id
---     * Slot: elicitationId Description: The ID of the elicitation.
--- # Class: LoggingMessageNotificationParams Description: Parameters for a notifications/message notification.
---     * Slot: id
---     * Slot: level Description: The severity of a log message.
---     * Slot: logger Description: An optional name of the logger issuing this message.
---     * Slot: data_id Description: The data to be logged.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: ResourceUpdatedNotificationParams Description: Parameters for a notifications/resources/updated notification.
---     * Slot: id
---     * Slot: uri Description: A resource URI.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: TaskStatusNotificationParams Description: Parameters for a notifications/tasks/status notification.
---     * Slot: id
---     * Slot: taskId Description: The task identifier.
---     * Slot: status Description: Current task state.
---     * Slot: createdAt Description: ISO 8601 timestamp when the task was created.
---     * Slot: lastUpdatedAt Description: ISO 8601 timestamp when the task was last updated.
---     * Slot: ttl Description: Actual retention duration from creation in milliseconds, null for unlimited.
---     * Slot: statusMessage Description: Optional human-readable message describing the current task state.
---     * Slot: pollInterval Description: Suggested polling interval in milliseconds.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: CancelledNotification Description: Notification to indicate that a previously-issued request is being cancelled.
---     * Slot: id
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
---     * Slot: params_id Description: JSON-RPC parameters payload.
--- # Class: InitializedNotification Description: Notification sent from the client to the server after initialization has finished.
---     * Slot: id
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
--- # Class: ProgressNotification Description: Out-of-band notification to inform the receiver of a progress update.
---     * Slot: id
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
---     * Slot: params_id Description: JSON-RPC parameters payload.
--- # Class: ResourceListChangedNotification Description: Notification that the list of resources the server can read from has changed.
---     * Slot: id
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
--- # Class: ResourceUpdatedNotification Description: Notification that a resource has changed and may need to be read again.
---     * Slot: id
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
---     * Slot: params_id Description: JSON-RPC parameters payload.
--- # Class: PromptListChangedNotification Description: Notification that the list of prompts the server offers has changed.
---     * Slot: id
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
--- # Class: ToolListChangedNotification Description: Notification that the list of tools the server offers has changed.
---     * Slot: id
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
--- # Class: RootsListChangedNotification Description: Notification from the client that the list of roots has changed.
---     * Slot: id
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
--- # Class: LoggingMessageNotification Description: Notification of a log message passed from server to client.
---     * Slot: id
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
---     * Slot: params_id Description: JSON-RPC parameters payload.
--- # Class: ElicitationCompleteNotification Description: Notification from the server that an out-of-band elicitation request completed.
---     * Slot: id
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
---     * Slot: params_id Description: JSON-RPC parameters payload.
--- # Class: TaskStatusNotification Description: Notification that a task's status has changed.
---     * Slot: id
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
---     * Slot: params_id Description: JSON-RPC parameters payload.
--- # Class: CallToolRequestParams Description: Parameters for a tools/call request.
---     * Slot: id
---     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present).
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The method's name, always `tools/call`.
+--     * Slot: params_id Description: Parameters for a `tools/call` request.
+-- # Class: McpCallToolRequestParams Description: Parameters for a `tools/call` request.
+--     * Slot: id
+--     * Slot: name Description: The name of the tool.
+--     * Slot: requestState Description: State the server returned with an input-required result, sent back unchanged when the request is retried.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.
 --     * Slot: arguments_id Description: Arguments to use for the tool call.
---     * Slot: task_id Description: If specified, the caller is requesting task-augmented execution.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: GetPromptRequestParams Description: Parameters for a prompts/get request.
+--     * Slot: inputResponses_id Description: A map of client responses to server-initiated requests.Keys correspond to the keys in the {@link InputRequests} map;values are the client's result for each request.
+-- # Class: McpCallToolResult Description: The result returned by the server for a {@link CallToolRequesttools/call} request.
 --     * Slot: id
---     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title is not present).
---     * Slot: arguments_id Description: Arguments to use for templating the prompt.
--- # Class: CompleteRequestParams Description: Parameters for a completion/complete request.
---     * Slot: id
---     * Slot: argument_id Description: The argument's information.
---     * Slot: context_id Description: Optional completion context.
---     * Slot: ref_id Description: A prompt or resource template reference.
--- # Class: ReadResourceRequestParams Description: Parameters for a resources/read request.
---     * Slot: id
---     * Slot: uri Description: A resource URI.
--- # Class: SubscribeRequestParams Description: Parameters for a resources/subscribe request.
---     * Slot: id
---     * Slot: uri Description: A resource URI.
--- # Class: UnsubscribeRequestParams Description: Parameters for a resources/unsubscribe request.
---     * Slot: id
---     * Slot: uri Description: A resource URI.
--- # Class: SetLevelRequestParams Description: Parameters for a logging/setLevel request.
---     * Slot: id
---     * Slot: level Description: The severity of a log message.
--- # Class: InitializeRequestParams Description: Parameters for an initialize request.
---     * Slot: id
---     * Slot: protocolVersion Description: The version of the Model Context Protocol.
---     * Slot: capabilities_id Description: Client capabilities.
---     * Slot: clientInfo_id Description: Information about the client implementation.
--- # Class: CreateMessageRequestParams Description: Parameters for a sampling/createMessage request.
---     * Slot: id
---     * Slot: maxTokens Description: The requested maximum number of tokens to sample.
---     * Slot: systemPrompt Description: An optional system prompt the server wants to use for sampling.
---     * Slot: temperature Description: Sampling temperature.
---     * Slot: includeContext Description: A request to include context from one or more MCP servers.
---     * Slot: modelPreferences_id Description: Model preferences for sampling.
---     * Slot: toolChoice_id Description: Controls how the model uses tools.
---     * Slot: task_id Description: If specified, task-augmented execution.
--- # Class: ElicitRequestFormParams Description: Parameters for a form-mode elicitation request.
---     * Slot: id
---     * Slot: message Description: A message string.
---     * Slot: mode Description: The elicitation mode.
---     * Slot: requestedSchema_id Description: A restricted subset of JSON Schema.
---     * Slot: task_id Description: If specified, task-augmented execution.
--- # Class: ElicitRequestURLParams Description: Parameters for a URL-mode elicitation request.
---     * Slot: id
---     * Slot: elicitationId Description: The ID of the elicitation.
---     * Slot: message Description: A message string.
---     * Slot: mode Description: The elicitation mode.
---     * Slot: url Description: The URL that the user should navigate to.
---     * Slot: task_id Description: If specified, task-augmented execution.
--- # Class: PaginatedRequestParams Description: Common params for paginated requests.
---     * Slot: id
---     * Slot: cursor Description: An opaque token representing the current pagination position. If provided, the server should return results starting after this cursor.
--- # Class: InitializeRequest Description: Request sent from the client to the server when it first connects, asking it to begin initialization.
+--     * Slot: isError Description: Whether the tool call ended in an error.If not set, this is assumed to be false (the call was successful).Any errors that originate from the tool SHOULD be reported inside the resultobject, with `isError` set to true, _not_ as an MCP protocol-level errorresponse. Otherwise, the LLM would not be able to see that an error occurredand self-correct.However, any errors in _finding_ the tool, an error indicating that theserver does not support tool calls, or any other exceptional conditions,should be reported as an MCP error response.
+--     * Slot: resultType Description: Indicates the type of the result, which allows the client to determinehow to parse the result object.Servers implementing this protocol version MUST include this field.For backward compatibility, when a client receives a result from aserver implementing an earlier protocol version (which does not include`resultType`), the client MUST treat the absent field as `"complete"`.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
+--     * Slot: structuredContent_id Description: An optional JSON value that represents the structured result of the tool call.This can be any JSON value (object, array, string, number, boolean, or null)that conforms to the tool's outputSchema if one is defined.
+-- # Class: McpCallToolResultResponse Description: A successful response from the server for a {@link CallToolRequesttools/call} request.
 --     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
---     * Slot: params_id Description: JSON-RPC parameters payload.
--- # Class: PingRequest Description: A ping, issued by either the server or the client, to check that the other party is still alive.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
--- # Class: ListResourcesRequest Description: Sent from the client to request a list of resources the server has.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
--- # Class: ListResourceTemplatesRequest Description: Sent from the client to request a list of resource templates the server has.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
--- # Class: ReadResourceRequest Description: Sent from the client to the server, to read a specific resource URI.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
---     * Slot: params_id Description: JSON-RPC parameters payload.
--- # Class: SubscribeRequest Description: Sent from the client to request resource update notifications.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
---     * Slot: params_id Description: JSON-RPC parameters payload.
--- # Class: UnsubscribeRequest Description: Sent from the client to cancel resource update notifications.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
---     * Slot: params_id Description: JSON-RPC parameters payload.
--- # Class: ListPromptsRequest Description: Sent from the client to request a list of prompts and prompt templates.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
--- # Class: GetPromptRequest Description: Used by the client to get a prompt provided by the server.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
---     * Slot: params_id Description: JSON-RPC parameters payload.
--- # Class: ListToolsRequest Description: Sent from the client to request a list of tools the server has.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
--- # Class: CallToolRequest Description: Used by the client to invoke a tool provided by the server.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
---     * Slot: params_id Description: JSON-RPC parameters payload.
--- # Class: CompleteRequest Description: A request from the client to the server, to ask for completion options.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
---     * Slot: params_id Description: JSON-RPC parameters payload.
--- # Class: SetLevelRequest Description: A request from the client to the server, to enable or adjust logging.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
---     * Slot: params_id Description: JSON-RPC parameters payload.
--- # Class: CreateMessageRequest Description: A request from the server to sample an LLM via the client.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
---     * Slot: params_id Description: JSON-RPC parameters payload.
--- # Class: ListRootsRequest Description: Sent from the server to request a list of root URIs from the client.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
--- # Class: ElicitRequest Description: A request from the server to elicit additional information from the user via the client.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
---     * Slot: params_id Description: JSON-RPC parameters payload.
--- # Class: ListTasksRequest Description: A request to retrieve a list of tasks.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
--- # Class: GetTaskRequest Description: A request to retrieve the state of a task.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
--- # Class: GetTaskPayloadRequest Description: A request to retrieve the result of a completed task.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
--- # Class: CancelTaskRequest Description: A request to cancel a task.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: method Description: The JSON-RPC method name.
--- # Class: InitializeResult Description: The result returned by the server for an initialize request.
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: result Description: What the request returned.
+-- # Class: McpCancelledNotification Description: This notification is sent by the client to indicate that it is cancelling a request it previously issued.On stdio, the server also sends this notification, solely to terminate a {@link SubscriptionsListenRequestsubscriptions/listen} stream: it references the ID of the `subscriptions/listen` request that opened the stream. Servers MUST NOT use this notification to cancel any other request.The request SHOULD still be in-flight, but due to communication latency, it is always possible that this notification MAY arrive after the request has already finished.This notification indicates that the result will be unused, so any associated processing SHOULD cease.
 --     * Slot: id
---     * Slot: protocolVersion Description: The version of the Model Context Protocol.
---     * Slot: instructions Description: Instructions describing how to use the server and its features.
---     * Slot: capabilities_id Description: Server capabilities.
---     * Slot: serverInfo_id Description: Information about the server implementation.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: CallToolResult Description: The result returned by the server for a tools/call request.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The method's name, always `notifications/cancelled`.
+--     * Slot: params_id Description: Parameters for a `notifications/cancelled` notification.
+-- # Class: McpCancelledNotificationParams Description: Parameters for a `notifications/cancelled` notification.
 --     * Slot: id
---     * Slot: isError Description: Whether the tool call ended in an error.
---     * Slot: structuredContent_id Description: An optional JSON object representing structured result of the tool call.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: CompleteResult Description: The result returned by the server for a completion/complete request.
+--     * Slot: reason Description: An optional string describing the reason for the cancellation. This MAY be logged or presented to the user.
+--     * Slot: requestId Description: The ID of the request to cancel.This MUST correspond to the ID of a request the client previously issued.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply.
+-- # Class: McpClientCapabilities Description: Capabilities a client may support. Known capabilities are defined here, in this schema, but this is not a closed set: any client can define its own, additional capabilities.
 --     * Slot: id
---     * Slot: completion_id Description: The completion result object.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: GetPromptResult Description: The result returned by the server for a prompts/get request.
+--     * Slot: elicitation_id Description: Present if the client supports elicitation from the server.
+--     * Slot: experimental_id Description: Experimental, non-standard capabilities that the client supports.
+--     * Slot: extensions_id Description: Optional MCP extensions that the client supports. Keys are extension identifiers(e.g., "io.modelcontextprotocol/oauth-client-credentials"), and values areper-extension settings objects. An empty object indicates support with no settings.Keys MUST follow the {@link MetaObject`_meta` key naming rules}, with amandatory prefix.
+--     * Slot: roots_id Description: Present if the client supports listing roots.
+--     * Slot: sampling_id Description: Present if the client supports sampling from an LLM.
+-- # Class: McpClientCapabilitiesElicitation Description: Present if the client supports elicitation from the server.
 --     * Slot: id
---     * Slot: description Description: A human-readable description.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: ListPromptsResult Description: The result returned by the server for a prompts/list request.
+--     * Slot: form_id Description: Settings for elicitation by form.
+--     * Slot: url_settings_id Description: Settings for elicitation by URL.
+-- # Class: McpClientCapabilitiesExperimental Description: Experimental, non-standard capabilities that the client supports.
 --     * Slot: id
---     * Slot: nextCursor Description: An opaque token representing the pagination position after the last returned result. If present, there may be more results available.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: ListResourcesResult Description: The result returned by the server for a resources/list request.
+-- # Class: McpClientCapabilitiesExtensions Description: Optional MCP extensions that the client supports. Keys are extension identifiers(e.g., "io.modelcontextprotocol/oauth-client-credentials"), and values areper-extension settings objects. An empty object indicates support with no settings.Keys MUST follow the {@link MetaObject`_meta` key naming rules}, with amandatory prefix.
 --     * Slot: id
---     * Slot: nextCursor Description: An opaque token representing the pagination position after the last returned result. If present, there may be more results available.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: ListResourceTemplatesResult Description: The result returned by the server for a resources/templates/list request.
+-- # Class: McpClientCapabilitiesRoots Description: Present if the client supports listing roots.
 --     * Slot: id
---     * Slot: nextCursor Description: An opaque token representing the pagination position after the last returned result. If present, there may be more results available.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: ReadResourceResult Description: The result returned by the server for a resources/read request.
+-- # Class: McpClientCapabilitiesSampling Description: Present if the client supports sampling from an LLM.
 --     * Slot: id
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: ListToolsResult Description: The result returned by the server for a tools/list request.
+--     * Slot: context_id Description: Whether the client supports context inclusion via `includeContext` parameter.If not declared, servers SHOULD only use `includeContext: "none"` (or omit it).
+--     * Slot: tools_id Description: Whether the client supports tool use via `tools` and `toolChoice` parameters.
+-- # Class: McpClientNotification Description: This notification is sent by the client to indicate that it is cancelling a request it previously issued.On stdio, the server also sends this notification, solely to terminate a {@link SubscriptionsListenRequestsubscriptions/listen} stream: it references the ID of the `subscriptions/listen` request that opened the stream. Servers MUST NOT use this notification to cancel any other request.The request SHOULD still be in-flight, but due to communication latency, it is always possible that this notification MAY arrive after the request has already finished.This notification indicates that the result will be unused, so any associated processing SHOULD cease.
 --     * Slot: id
---     * Slot: nextCursor Description: An opaque token representing the pagination position after the last returned result. If present, there may be more results available.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: ListRootsResult Description: The result returned by the client for a roots/list request.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The method's name, always `notifications/cancelled`.
+--     * Slot: params_id Description: Parameters for a `notifications/cancelled` notification.
+-- # Class: McpClientRequest Description: One of `DiscoverRequest`, `ListResourcesRequest`, `ListResourceTemplatesRequest`, `ReadResourceRequest`, `SubscriptionsListenRequest`, `ListPromptsRequest`, `GetPromptRequest`, `ListToolsRequest`, `CallToolRequest`, `CompleteRequest`.
 --     * Slot: id
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: CreateMessageResult Description: The result returned by the client for a sampling/createMessage request.
+-- # Class: McpClientResult Description: Common result fields.
 --     * Slot: id
+--     * Slot: resultType Description: Indicates the type of the result, which allows the client to determinehow to parse the result object.Servers implementing this protocol version MUST include this field.For backward compatibility, when a client receives a result from aserver implementing an earlier protocol version (which does not include`resultType`), the client MUST treat the absent field as `"complete"`.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
+-- # Class: McpCompleteRequest Description: A request from the client to the server, to ask for completion options.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The method's name, always `completion/complete`.
+--     * Slot: params_id Description: Parameters for a `completion/complete` request.
+-- # Class: McpCompleteRequestParams Description: Parameters for a `completion/complete` request.
+--     * Slot: id
+--     * Slot: ref Description: What the completion is for: a prompt or a resource template.
+--     * Slot: context_id Description: Additional, optional context for completions
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.
+--     * Slot: argument_id Description: The argument's information
+-- # Class: McpCompleteRequestParamsArgument Description: The argument's information
+--     * Slot: id
+--     * Slot: name Description: The name of the argument
+--     * Slot: value Description: The value of the argument to use for completion matching.
+-- # Class: McpCompleteRequestParamsContext Description: Additional, optional context for completions
+--     * Slot: id
+--     * Slot: arguments_id Description: Previously-resolved variables in a URI template or prompt.
+-- # Class: McpCompleteRequestParamsContextArguments Description: Previously-resolved variables in a URI template or prompt.
+--     * Slot: id
+-- # Class: McpCompleteResult Description: The result returned by the server for a {@link CompleteRequestcompletion/complete} request.
+--     * Slot: id
+--     * Slot: resultType Description: Indicates the type of the result, which allows the client to determinehow to parse the result object.Servers implementing this protocol version MUST include this field.For backward compatibility, when a client receives a result from aserver implementing an earlier protocol version (which does not include`resultType`), the client MUST treat the absent field as `"complete"`.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
+--     * Slot: completion_id Description: The completion values and whether more are available.
+-- # Class: McpCompleteResultCompletion Description: The object MCP's `CompleteResult` holds under `completion`.
+--     * Slot: id
+--     * Slot: hasMore Description: Indicates whether there are additional completion options beyond those provided in the current response, even if the exact total is unknown.
+--     * Slot: total Description: The total number of completion options available. This can exceed the number of values actually sent in the response.
+-- # Class: McpCompleteResultResponse Description: A successful response from the server for a {@link CompleteRequestcompletion/complete} request.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: result_id Description: The result returned by the server for a {@link CompleteRequestcompletion/complete} request.
+-- # Class: McpContentBlock Description: One of `TextContent`, `ImageContent`, `AudioContent`, `ResourceLink`, `EmbeddedResource`.
+--     * Slot: id
+--     * Slot: McpCallToolResult_id Description: Autocreated FK slot
+--     * Slot: McpToolResultContent_id Description: Autocreated FK slot
+-- # Class: McpCreateMessageRequest Description: A request from the server to sample an LLM via the client. The client has full discretion over which model to select. The client should also inform the user before beginning sampling, to allow them to inspect the request (human in the loop) and decide whether to approve it.
+--     * Slot: id
+--     * Slot: method Description: The method's name, always `sampling/createMessage`.
+--     * Slot: params_id Description: Parameters for a `sampling/createMessage` request.
+-- # Class: McpCreateMessageRequestParams Description: Parameters for a `sampling/createMessage` request.
+--     * Slot: id
+--     * Slot: includeContext Description: A request to include context from one or more MCP servers (including the caller), to be attached to the prompt.The client MAY ignore this request.Default is `"none"`. The values `"thisServer"` and `"allServers"` are deprecated (SEP-2596): servers SHOULDomit this field or use `"none"`, and SHOULD only use the deprecated values if the client declares{@link ClientCapabilities.sampling.context}.
+--     * Slot: maxTokens Description: The requested maximum number of tokens to sample (to prevent runaway completions).The client MAY choose to sample fewer tokens than the requested maximum.
+--     * Slot: systemPrompt Description: An optional system prompt the server wants to use for sampling. The client MAY modify or omit this prompt.
+--     * Slot: temperature Description: The sampling temperature the server asks the model to use.
+--     * Slot: metadata_id Description: Optional metadata to pass through to the LLM provider. The format of this metadata is provider-specific.
+--     * Slot: modelPreferences_id Description: The server's preferences for which model to select. The client MAY ignore these preferences.
+--     * Slot: toolChoice_id Description: Controls how the model uses tools.The client MUST return an error if this field is provided but {@link ClientCapabilities.sampling.tools} is not declared.Default is `{ mode: "auto" }`.
+-- # Class: McpCreateMessageResult Description: The result returned by the client for a {@link CreateMessageRequestsampling/createMessage} request.The client should inform the user before returning the sampled message, to allow themto inspect the response (human in the loop) and decide whether to allow the server to see it.
+--     * Slot: id
+--     * Slot: content Description: The content the message carries.
 --     * Slot: model Description: The name of the model that generated the message.
---     * Slot: role Description: The role of the sender or recipient.
---     * Slot: stopReason Description: The reason why sampling stopped, if known.
---     * Slot: content_id Description: The message content.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: ElicitResult Description: The result returned by the client for an elicitation/create request.
---     * Slot: id
---     * Slot: action Description: The user action in response to the elicitation.
---     * Slot: content_id Description: Structured content block of a message or result.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: CreateTaskResult Description: The result returned for a task-augmented request.
---     * Slot: id
---     * Slot: task_id Description: Task data.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: GetTaskPayloadResult Description: The result returned for a tasks/result request.
---     * Slot: id
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: ListTasksResult Description: The result returned for a tasks/list request.
---     * Slot: id
---     * Slot: nextCursor Description: An opaque token representing the pagination position after the last returned result. If present, there may be more results available.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: CancelTaskResult Description: The result returned for a tasks/cancel request.
---     * Slot: id
---     * Slot: taskId Description: The task identifier.
---     * Slot: status Description: Current task state.
---     * Slot: createdAt Description: ISO 8601 timestamp when the task was created.
---     * Slot: lastUpdatedAt Description: ISO 8601 timestamp when the task was last updated.
---     * Slot: ttl Description: Actual retention duration from creation in milliseconds, null for unlimited.
---     * Slot: statusMessage Description: Optional human-readable message describing the current task state.
---     * Slot: pollInterval Description: Suggested polling interval in milliseconds.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: GetTaskResult Description: The result returned for a tasks/get request.
---     * Slot: id
---     * Slot: taskId Description: The task identifier.
---     * Slot: status Description: Current task state.
---     * Slot: createdAt Description: ISO 8601 timestamp when the task was created.
---     * Slot: lastUpdatedAt Description: ISO 8601 timestamp when the task was last updated.
---     * Slot: ttl Description: Actual retention duration from creation in milliseconds, null for unlimited.
---     * Slot: statusMessage Description: Optional human-readable message describing the current task state.
---     * Slot: pollInterval Description: Suggested polling interval in milliseconds.
---     * Slot: _meta_id Description: Optional metadata object.
--- # Class: InitializeResultResponse Description: A successful response from the server for an initialize request.
+--     * Slot: role Description: The sender or recipient of messages and data in a conversation.
+--     * Slot: stopReason Description: The reason why sampling stopped, if known.Standard values:- `"endTurn"`: Natural end of the assistant's turn- `"stopSequence"`: A stop sequence was encountered- `"maxTokens"`: Maximum token limit was reached- `"toolUse"`: The model wants to use one or more toolsThis field is an open string to allow for provider-specific stop reasons.
+--     * Slot: _meta_id Description: Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.Valid keys have two segments:**Prefix:**- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.**Name:**- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
+-- # Class: McpDiscoverRequest Description: A request from the client asking the server to advertise its supportedprotocol versions, capabilities, and other metadata. Servers **MUST**implement `server/discover`. Clients **MAY** call it but are not requiredto — version negotiation can also happen inline via per-request `_meta`.
 --     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: CallToolResultResponse Description: A successful response from the server for a tools/call request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: CompleteResultResponse Description: A successful response from the server for a completion/complete request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: GetPromptResultResponse Description: A successful response from the server for a prompts/get request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: ListPromptsResultResponse Description: A successful response from the server for a prompts/list request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: ListResourcesResultResponse Description: A successful response from the server for a resources/list request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: ListResourceTemplatesResultResponse Description: A successful response from the server for a resources/templates/list request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: ReadResourceResultResponse Description: A successful response from the server for a resources/read request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: ListToolsResultResponse Description: A successful response from the server for a tools/list request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: ListRootsResultResponse Description: A successful response from the client for a roots/list request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: CreateMessageResultResponse Description: A successful response from the client for a sampling/createMessage request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: ElicitResultResponse Description: A successful response from the client for an elicitation/create request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: SetLevelResultResponse Description: A successful response from the server for a logging/setLevel request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: PingResultResponse Description: A successful response for a ping request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: SubscribeResultResponse Description: A successful response for a resources/subscribe request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: UnsubscribeResultResponse Description: A successful response for a resources/unsubscribe request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: CreateTaskResultResponse Description: A successful response for a task-augmented request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: GetTaskResultResponse Description: A successful response for a tasks/get request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: GetTaskPayloadResultResponse Description: A successful response for a tasks/result request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: CancelTaskResultResponse Description: A successful response for a tasks/cancel request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: ListTasksResultResponse Description: A successful response for a tasks/list request.
---     * Slot: uid
---     * Slot: id Description: Uniquely identifying ID for a JSON-RPC request.
---     * Slot: jsonrpc Description: JSON-RPC version string.
---     * Slot: result_id Description: JSON-RPC successful result payload.
--- # Class: ClientNotification Description: A union of all notifications that can be sent by a client.
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The method's name, always `server/discover`.
+--     * Slot: params_id Description: Common params for any request.
+-- # Class: McpDiscoverResult Description: The result returned by the server for a {@link DiscoverRequestserver/discover} request.
 --     * Slot: id
--- # Class: ClientRequest Description: A union of all requests that can be sent by a client.
+--     * Slot: cacheScope Description: Indicates the intended scope of the cached response, analogous to HTTP`Cache-Control: public` vs `Cache-Control: private`.- `"public"`: The response does not contain user-specific data. Any  client or intermediary (e.g., shared gateway, caching proxy) MAY cache  the response and serve it across authorization contexts.- `"private"`: The response MAY be cached and reused only within the  same authorization context. Caches MUST NOT be shared across  authorization contexts (e.g., a different access token requires a  different cache).
+--     * Slot: instructions Description: Natural-language guidance describing the server and its features.This can be used by clients to improve an LLM's understanding ofavailable tools (e.g., by including it in a system prompt). It shouldfocus on information that helps the model use the server effectivelyand should not duplicate information already in tool descriptions.
+--     * Slot: resultType Description: Indicates the type of the result, which allows the client to determinehow to parse the result object.Servers implementing this protocol version MUST include this field.For backward compatibility, when a client receives a result from aserver implementing an earlier protocol version (which does not include`resultType`), the client MUST treat the absent field as `"complete"`.
+--     * Slot: ttlMs Description: A hint from the server indicating how long (in milliseconds) theclient MAY cache this response before re-fetching. Semantics areanalogous to HTTP Cache-Control max-age.- If 0, The response SHOULD be considered immediately stale,  The client MAY re-fetch every time the result is needed.- If positive, the client SHOULD consider the result fresh for this many  milliseconds after receiving the response.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
+--     * Slot: capabilities_id Description: The capabilities of the server.
+-- # Class: McpDiscoverResultResponse Description: A successful response from the server for a {@link DiscoverRequestserver/discover} request.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: result_id Description: The result returned by the server for a {@link DiscoverRequestserver/discover} request.
+-- # Class: McpElicitRequest Description: A request from the server to elicit additional information from the user via the client.
 --     * Slot: id
--- # Class: ClientResult Description: A union of all result types that a client can return.
+--     * Slot: method Description: The method's name, always `elicitation/create`.
+--     * Slot: params_id Description: The parameters for a request to elicit additional information from the user via the client.
+-- # Class: McpElicitRequestFormParams Description: The parameters for a request to elicit non-sensitive information from the user via a form in the client.
 --     * Slot: id
--- # Class: ServerNotification Description: A union of all notifications that can be sent by a server.
+--     * Slot: message Description: The message to present to the user describing what information is being requested.
+--     * Slot: mode Description: The elicitation mode.
+--     * Slot: requestedSchema_id Description: A restricted subset of JSON Schema.Only top-level properties are allowed, without nesting.
+-- # Class: McpElicitRequestFormParamsRequestedSchema Description: A restricted subset of JSON Schema.Only top-level properties are allowed, without nesting.
 --     * Slot: id
--- # Class: ServerRequest Description: A union of all requests that can be sent by a server.
+--     * Slot: type Description: The kind of object, always `object`.
+--     * Slot: schema_dialect Description: The JSON Schema dialect the schema is written in.
+--     * Slot: properties_id Description: The fields of the form, by name.
+-- # Class: McpElicitRequestFormParamsRequestedSchemaProperties Description: The object MCP's `ElicitRequestFormParams` holds under `properties`.
 --     * Slot: id
--- # Class: ServerResult Description: A union of all result types that a server can return.
+-- # Class: McpElicitRequestParams Description: The parameters for a request to elicit additional information from the user via the client.
 --     * Slot: id
--- # Class: JSONRPCMessage Description: A union of all JSON-RPC message types (requests, notifications, and responses).
+-- # Class: McpElicitRequestURLParams Description: The parameters for a request to elicit information from the user via a URL in the client.
 --     * Slot: id
--- # Class: JSONRPCResponse Description: A union of all JSON-RPC response types.
+--     * Slot: url Description: The URL that the user should navigate to.
+--     * Slot: message Description: The message to present to the user explaining why the interaction is needed.
+--     * Slot: mode Description: The elicitation mode.
+-- # Class: McpElicitResult Description: The result returned by the client for an {@link ElicitRequestelicitation/create} request.
 --     * Slot: id
--- # Class: ElicitRequestParams Description: A union of all elicitation request parameter types.
+--     * Slot: action Description: The user action in response to the elicitation.- `"accept"`: User submitted the form/confirmed the action- `"decline"`: User explicitly declined the action- `"cancel"`: User dismissed without making an explicit choice
+--     * Slot: content_id Description: The submitted form data, only present when action is `"accept"` and mode was `"form"`.Contains values matching the requested schema.Omitted for out-of-band mode responses.
+-- # Class: McpElicitResultContent Description: The submitted form data, only present when action is `"accept"` and mode was `"form"`.Contains values matching the requested schema.Omitted for out-of-band mode responses.
 --     * Slot: id
--- # Class: EnumSchema Description: A union of all enum schema types.
+-- # Class: McpEmbeddedResource Description: The contents of a resource, embedded into a prompt or tool call result.It is up to the client how best to render embedded resources for the benefitof the LLM and/or the user.
 --     * Slot: id
--- # Class: SingleSelectEnumSchema Description: A union of single-select enum schema types.
+--     * Slot: resource Description: The resource's contents, as text or as binary data.
+--     * Slot: type Description: The kind of object, always `resource`.
+--     * Slot: _meta_id Description: Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.Valid keys have two segments:**Prefix:**- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.**Name:**- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
+--     * Slot: annotations_id Description: Optional annotations for the client.
+-- # Class: McpEmptyResult Description: Common result fields.
 --     * Slot: id
--- # Class: MultiSelectEnumSchema Description: A union of multi-select enum schema types.
+--     * Slot: resultType Description: Indicates the type of the result, which allows the client to determinehow to parse the result object.Servers implementing this protocol version MUST include this field.For backward compatibility, when a client receives a result from aserver implementing an earlier protocol version (which does not include`resultType`), the client MUST treat the absent field as `"complete"`.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
+-- # Class: McpEnumSchema Description: One of `UntitledSingleSelectEnumSchema`, `TitledSingleSelectEnumSchema`, `UntitledMultiSelectEnumSchema`, `TitledMultiSelectEnumSchema`, `LegacyTitledEnumSchema`.
 --     * Slot: id
--- # Class: PrimitiveSchemaDefinition Description: A union of all primitive schema definition types.
+-- # Class: McpError Description: The error a JSON-RPC error response carries: a code, a message and any data.
 --     * Slot: id
--- # Class: ContentBlockVariants Description: A union of all content block types. Maps to the vendor schema ContentBlock anyOf definition.
+--     * Slot: code Description: The error type that occurred.
+--     * Slot: message Description: A short description of the error. The message SHOULD be limited to a concise single sentence.
+--     * Slot: data_id Description: Additional information about the error. The value of this member is defined by the sender (e.g. detailed error information, nested errors etc.).
+-- # Class: McpGetPromptRequest Description: Used by the client to get a prompt provided by the server.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The method's name, always `prompts/get`.
+--     * Slot: params_id Description: Parameters for a `prompts/get` request.
+-- # Class: McpGetPromptRequestParams Description: Parameters for a `prompts/get` request.
 --     * Slot: id
--- # Class: SamplingMessageContentBlock Description: A union of content types valid in sampling messages.
+--     * Slot: name Description: The name of the prompt or prompt template.
+--     * Slot: requestState Description: State the server returned with an input-required result, sent back unchanged when the request is retried.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.
+--     * Slot: arguments_id Description: Arguments to use for templating the prompt.
+--     * Slot: inputResponses_id Description: A map of client responses to server-initiated requests.Keys correspond to the keys in the {@link InputRequests} map;values are the client's result for each request.
+-- # Class: McpGetPromptRequestParamsArguments Description: Arguments to use for templating the prompt.
 --     * Slot: id
--- # Class: Annotations_audience
---     * Slot: Annotations_id Description: Autocreated FK slot
---     * Slot: audience Description: Describes who the intended audience of this object or data is.
--- # Class: Icon_sizes
---     * Slot: Icon_id Description: Autocreated FK slot
---     * Slot: sizes Description: Optional array of strings specifying sizes (WxH format or "any").
--- # Class: ToolResultContent_content
---     * Slot: ToolResultContent_id Description: Autocreated FK slot
---     * Slot: content_id Description: The unstructured result content of the tool use.
--- # Class: CompletionData_values
---     * Slot: CompletionData_id Description: Autocreated FK slot
---     * Slot: values Description: An array of completion values.
--- # Class: SchemaItems_enum
---     * Slot: SchemaItems_id Description: Autocreated FK slot
---     * Slot: enum Description: Array of enum values.
--- # Class: SchemaItems_anyOf
---     * Slot: SchemaItems_id Description: Autocreated FK slot
---     * Slot: anyOf_id Description: JSON Schema anyOf entries.
--- # Class: JsonSchema_required_list
---     * Slot: JsonSchema_id Description: Autocreated FK slot
---     * Slot: required_list Description: JSON Schema required property list.
--- # Class: JsonSchema_oneOf
---     * Slot: JsonSchema_id Description: Autocreated FK slot
---     * Slot: oneOf_id Description: JSON Schema oneOf entries.
--- # Class: JsonSchema_anyOf
---     * Slot: JsonSchema_id Description: Autocreated FK slot
---     * Slot: anyOf_id Description: JSON Schema anyOf entries.
--- # Class: JsonSchema_enum
---     * Slot: JsonSchema_id Description: Autocreated FK slot
---     * Slot: enum Description: Array of enum values.
--- # Class: ExtensionAppCapability_mimeTypes
---     * Slot: ExtensionAppCapability_id Description: Autocreated FK slot
---     * Slot: mimeTypes Description: MIME types supported by an extension capability.
--- # Class: UntitledSingleSelectEnumSchema_enum
---     * Slot: UntitledSingleSelectEnumSchema_id Description: Autocreated FK slot
---     * Slot: enum Description: Array of enum values.
--- # Class: UntitledSingleSelectEnumSchema_enum_values
---     * Slot: UntitledSingleSelectEnumSchema_id Description: Autocreated FK slot
---     * Slot: enum_values Description: Array of enum values.
--- # Class: TitledSingleSelectEnumSchema_oneOf
---     * Slot: TitledSingleSelectEnumSchema_id Description: Autocreated FK slot
---     * Slot: oneOf_id Description: JSON Schema oneOf entries.
--- # Class: UntitledMultiSelectEnumSchema_default
---     * Slot: UntitledMultiSelectEnumSchema_id Description: Autocreated FK slot
---     * Slot: default Description: Default value for a schema field.
--- # Class: TitledMultiSelectEnumSchema_default
---     * Slot: TitledMultiSelectEnumSchema_id Description: Autocreated FK slot
---     * Slot: default Description: Default value for a schema field.
--- # Class: LegacyTitledEnumSchema_enum
---     * Slot: LegacyTitledEnumSchema_id Description: Autocreated FK slot
---     * Slot: enum Description: Array of enum values.
--- # Class: LegacyTitledEnumSchema_enum_values
---     * Slot: LegacyTitledEnumSchema_id Description: Autocreated FK slot
---     * Slot: enum_values Description: Array of enum values.
--- # Class: LegacyTitledEnumSchema_enumNames
---     * Slot: LegacyTitledEnumSchema_id Description: Autocreated FK slot
---     * Slot: enumNames Description: Display names for enum values (legacy).
--- # Class: CreateMessageRequestParams_stopSequences
---     * Slot: CreateMessageRequestParams_id Description: Autocreated FK slot
---     * Slot: stopSequences Description: Stop sequences for sampling.
--- # Class: CallToolResult_content
---     * Slot: CallToolResult_id Description: Autocreated FK slot
---     * Slot: content_id Description: A list of content objects that represent the result.
+-- # Class: McpGetPromptResult Description: The result returned by the server for a {@link GetPromptRequestprompts/get} request.
+--     * Slot: id
+--     * Slot: description Description: An optional description for the prompt.
+--     * Slot: resultType Description: Indicates the type of the result, which allows the client to determinehow to parse the result object.Servers implementing this protocol version MUST include this field.For backward compatibility, when a client receives a result from aserver implementing an earlier protocol version (which does not include`resultType`), the client MUST treat the absent field as `"complete"`.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
+-- # Class: McpGetPromptResultResponse Description: A successful response from the server for a {@link GetPromptRequestprompts/get} request.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: result Description: What the request returned.
+-- # Class: McpHeaderMismatchError Description: Returned when a server rejects a request because the values in the HTTPheaders do not match the corresponding values in the request body, orbecause required headers are missing or malformed. For HTTP, the responsestatus code MUST be `400 Bad Request`.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: error_id Description: The error the request ended with.
+-- # Class: McpHeaderMismatchErrorError Description: MCP's `Error`, with the code this error carries.
+--     * Slot: id
+--     * Slot: code Description: The error code, always `-32020`.
+--     * Slot: message Description: A short description of the error. The message SHOULD be limited to a concise single sentence.
+--     * Slot: data_id Description: Additional information about the error. The value of this member is defined by the sender (e.g. detailed error information, nested errors etc.).
+-- # Class: McpIcon Description: An optionally-sized icon that can be displayed in a user interface.
+--     * Slot: id
+--     * Slot: mimeType Description: Optional MIME type override if the source MIME type is missing or generic.For example: `"image/png"`, `"image/jpeg"`, or `"image/svg+xml"`.
+--     * Slot: src Description: A standard URI pointing to an icon resource. May be an HTTP/HTTPS URL or a`data:` URI with Base64-encoded image data.Consumers SHOULD take steps to ensure URLs serving icons are from thesame domain as the client/server or a trusted domain.Consumers SHOULD take appropriate precautions when consuming SVGs as they can containexecutable JavaScript.
+--     * Slot: theme Description: Optional specifier for the theme this icon is designed for. `"light"` indicatesthe icon is designed to be used with a light background, and `"dark"` indicatesthe icon is designed to be used with a dark background.If not provided, the client should assume the icon can be used with any theme.
+--     * Slot: McpIcons_id Description: Autocreated FK slot
+--     * Slot: McpImplementation_id Description: Autocreated FK slot
+--     * Slot: McpPrompt_id Description: Autocreated FK slot
+--     * Slot: McpResource_id Description: Autocreated FK slot
+--     * Slot: McpResourceLink_id Description: Autocreated FK slot
+--     * Slot: McpResourceTemplate_id Description: Autocreated FK slot
+--     * Slot: McpTool_id Description: Autocreated FK slot
+-- # Class: McpIcons Description: Base interface to add `icons` property.
+--     * Slot: id
+-- # Class: McpImageContent Description: An image provided to or from an LLM.
+--     * Slot: id
+--     * Slot: type Description: The kind of object, always `image`.
+--     * Slot: data Description: The base64-encoded image data.
+--     * Slot: mimeType Description: The MIME type of the image. Different providers may support different image types.
+--     * Slot: _meta_id Description: Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.Valid keys have two segments:**Prefix:**- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.**Name:**- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
+--     * Slot: annotations_id Description: Optional annotations for the client.
+-- # Class: McpImplementation Description: Describes the MCP implementation.
+--     * Slot: id
+--     * Slot: description Description: An optional human-readable description of what this implementation does.This can be used by clients or servers to provide context about their purposeand capabilities. For example, a server might describe the types of resourcesor tools it provides, while a client might describe its intended use case.
+--     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
+--     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood,even by those unfamiliar with domain-specific terminology.If not provided, the name should be used for display (except for {@link Tool},where `annotations.title` should be given precedence over using `name`,if present).
+--     * Slot: version Description: The version of this implementation.
+--     * Slot: websiteUrl Description: An optional URL of the website for this implementation.
+-- # Class: McpInputRequest Description: One of `CreateMessageRequest`, `ListRootsRequest`, `ElicitRequest`.
+--     * Slot: id
+-- # Class: McpInputRequests Description: A map of server-initiated requests that the client must fulfill.Keys are server-assigned identifiers; values are the request objects.
+--     * Slot: id
+-- # Class: McpInputRequiredResult Description: An InputRequiredResult sent by the server to indicate that additional input is neededbefore the request can be completed.At least one of `inputRequests` or `requestState` MUST be present.
+--     * Slot: id
+--     * Slot: requestState Description: State for the client to send back unchanged when it retries the request.
+--     * Slot: resultType Description: Indicates the type of the result, which allows the client to determinehow to parse the result object.Servers implementing this protocol version MUST include this field.For backward compatibility, when a client receives a result from aserver implementing an earlier protocol version (which does not include`resultType`), the client MUST treat the absent field as `"complete"`.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
+--     * Slot: inputRequests_id Description: A map of server-initiated requests that the client must fulfill.Keys are server-assigned identifiers; values are the request objects.
+-- # Class: McpInputResponse Description: One of `CreateMessageResult`, `ListRootsResult`, `ElicitResult`.
+--     * Slot: id
+-- # Class: McpInputResponseRequestParams Description: Parameters a client request may carry: its responses to an input-required result's requests, and the state the server returned.
+--     * Slot: id
+--     * Slot: requestState Description: State the server returned with an input-required result, sent back unchanged when the request is retried.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.
+--     * Slot: inputResponses_id Description: A map of client responses to server-initiated requests.Keys correspond to the keys in the {@link InputRequests} map;values are the client's result for each request.
+-- # Class: McpInputResponses Description: A map of client responses to server-initiated requests.Keys correspond to the keys in the {@link InputRequests} map;values are the client's result for each request.
+--     * Slot: id
+-- # Class: McpInternalError Description: A JSON-RPC error indicating that an internal error occurred on the receiver. This error is returned when the receiver encounters an unexpected condition that prevents it from fulfilling the request.
+--     * Slot: id
+--     * Slot: code Description: The error type that occurred.
+--     * Slot: message Description: A short description of the error. The message SHOULD be limited to a concise single sentence.
+--     * Slot: data_id Description: Additional information about the error. The value of this member is defined by the sender (e.g. detailed error information, nested errors etc.).
+-- # Class: McpInvalidParamsError Description: A JSON-RPC error indicating that the method parameters are invalid or malformed.In MCP, this error is returned in various contexts when request parameters fail validation:- **Tools**: Unknown tool name or invalid tool arguments- **Prompts**: Unknown prompt name or missing required arguments- **Pagination**: Invalid or expired cursor values- **Logging**: Invalid log level- **Elicitation**: Server requests an elicitation mode not declared in client capabilities- **Sampling**: Missing tool result or tool results mixed with other content
+--     * Slot: id
+--     * Slot: code Description: The error type that occurred.
+--     * Slot: message Description: A short description of the error. The message SHOULD be limited to a concise single sentence.
+--     * Slot: data_id Description: Additional information about the error. The value of this member is defined by the sender (e.g. detailed error information, nested errors etc.).
+-- # Class: McpInvalidRequestError Description: A JSON-RPC error indicating that the request is not a valid request object. This error is returned when the message structure does not conform to the JSON-RPC 2.0 specification requirements for a request (e.g., missing required fields like `jsonrpc` or `method`, or using invalid types for these fields).
+--     * Slot: id
+--     * Slot: code Description: The error type that occurred.
+--     * Slot: message Description: A short description of the error. The message SHOULD be limited to a concise single sentence.
+--     * Slot: data_id Description: Additional information about the error. The value of this member is defined by the sender (e.g. detailed error information, nested errors etc.).
+-- # Class: McpJSONObject Description: A JSON object, whose values are JSON values.
+--     * Slot: id
+-- # Class: McpJSONRPCErrorResponse Description: A response to a request that indicates an error occurred.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: error_id Description: The error the request ended with.
+-- # Class: McpJSONRPCMessage Description: Refers to any valid JSON-RPC object that can be decoded off the wire, or encoded to be sent.
+--     * Slot: id
+-- # Class: McpJSONRPCNotification Description: A notification which does not expect a response.
+--     * Slot: id
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The name of the method.
+--     * Slot: params_id Description: The parameters the message carries.
+-- # Class: McpJSONRPCRequest Description: A request that expects a response.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The name of the method.
+--     * Slot: params_id Description: The parameters the message carries.
+-- # Class: McpJSONRPCResponse Description: A response to a request, containing either the result or error.
+--     * Slot: id
+-- # Class: McpJSONRPCResultResponse Description: A successful (non-error) response to a request.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: result_id Description: Common result fields.
+-- # Class: McpJSONValue Description: Any JSON value: a string, a number, a boolean, null, an object or an array.
+--     * Slot: id
+-- # Class: McpLegacyTitledEnumSchema Description: Use {@link TitledSingleSelectEnumSchema} instead.This interface will be removed in a future version.
+--     * Slot: id
+--     * Slot: description Description: A description of the field for the user.
+--     * Slot: title Description: A title for the field.
+--     * Slot: type Description: The kind of object, always `string`.
+--     * Slot: default Description: The value the field takes when the user gives none.
+-- # Class: McpListPromptsRequest Description: Sent from the client to request a list of prompts and prompt templates the server has.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The method's name, always `prompts/list`.
+--     * Slot: params_id Description: Common params for paginated requests.
+-- # Class: McpListPromptsResult Description: The result returned by the server for a {@link ListPromptsRequestprompts/list} request.
+--     * Slot: id
+--     * Slot: cacheScope Description: Indicates the intended scope of the cached response, analogous to HTTP`Cache-Control: public` vs `Cache-Control: private`.- `"public"`: The response does not contain user-specific data. Any  client or intermediary (e.g., shared gateway, caching proxy) MAY cache  the response and serve it across authorization contexts.- `"private"`: The response MAY be cached and reused only within the  same authorization context. Caches MUST NOT be shared across  authorization contexts (e.g., a different access token requires a  different cache).
+--     * Slot: nextCursor Description: An opaque token representing the pagination position after the last returned result.If present, there may be more results available.
+--     * Slot: resultType Description: Indicates the type of the result, which allows the client to determinehow to parse the result object.Servers implementing this protocol version MUST include this field.For backward compatibility, when a client receives a result from aserver implementing an earlier protocol version (which does not include`resultType`), the client MUST treat the absent field as `"complete"`.
+--     * Slot: ttlMs Description: A hint from the server indicating how long (in milliseconds) theclient MAY cache this response before re-fetching. Semantics areanalogous to HTTP Cache-Control max-age.- If 0, The response SHOULD be considered immediately stale,  The client MAY re-fetch every time the result is needed.- If positive, the client SHOULD consider the result fresh for this many  milliseconds after receiving the response.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
+-- # Class: McpListPromptsResultResponse Description: A successful response from the server for a {@link ListPromptsRequestprompts/list} request.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: result_id Description: The result returned by the server for a {@link ListPromptsRequestprompts/list} request.
+-- # Class: McpListResourceTemplatesRequest Description: Sent from the client to request a list of resource templates the server has.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The method's name, always `resources/templates/list`.
+--     * Slot: params_id Description: Common params for paginated requests.
+-- # Class: McpListResourceTemplatesResult Description: The result returned by the server for a {@link ListResourceTemplatesRequestresources/templates/list} request.
+--     * Slot: id
+--     * Slot: cacheScope Description: Indicates the intended scope of the cached response, analogous to HTTP`Cache-Control: public` vs `Cache-Control: private`.- `"public"`: The response does not contain user-specific data. Any  client or intermediary (e.g., shared gateway, caching proxy) MAY cache  the response and serve it across authorization contexts.- `"private"`: The response MAY be cached and reused only within the  same authorization context. Caches MUST NOT be shared across  authorization contexts (e.g., a different access token requires a  different cache).
+--     * Slot: nextCursor Description: An opaque token representing the pagination position after the last returned result.If present, there may be more results available.
+--     * Slot: resultType Description: Indicates the type of the result, which allows the client to determinehow to parse the result object.Servers implementing this protocol version MUST include this field.For backward compatibility, when a client receives a result from aserver implementing an earlier protocol version (which does not include`resultType`), the client MUST treat the absent field as `"complete"`.
+--     * Slot: ttlMs Description: A hint from the server indicating how long (in milliseconds) theclient MAY cache this response before re-fetching. Semantics areanalogous to HTTP Cache-Control max-age.- If 0, The response SHOULD be considered immediately stale,  The client MAY re-fetch every time the result is needed.- If positive, the client SHOULD consider the result fresh for this many  milliseconds after receiving the response.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
+-- # Class: McpListResourceTemplatesResultResponse Description: A successful response from the server for a {@link ListResourceTemplatesRequestresources/templates/list} request.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: result_id Description: The result returned by the server for a {@link ListResourceTemplatesRequestresources/templates/list} request.
+-- # Class: McpListResourcesRequest Description: Sent from the client to request a list of resources the server has.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The method's name, always `resources/list`.
+--     * Slot: params_id Description: Common params for paginated requests.
+-- # Class: McpListResourcesResult Description: The result returned by the server for a {@link ListResourcesRequestresources/list} request.
+--     * Slot: id
+--     * Slot: cacheScope Description: Indicates the intended scope of the cached response, analogous to HTTP`Cache-Control: public` vs `Cache-Control: private`.- `"public"`: The response does not contain user-specific data. Any  client or intermediary (e.g., shared gateway, caching proxy) MAY cache  the response and serve it across authorization contexts.- `"private"`: The response MAY be cached and reused only within the  same authorization context. Caches MUST NOT be shared across  authorization contexts (e.g., a different access token requires a  different cache).
+--     * Slot: nextCursor Description: An opaque token representing the pagination position after the last returned result.If present, there may be more results available.
+--     * Slot: resultType Description: Indicates the type of the result, which allows the client to determinehow to parse the result object.Servers implementing this protocol version MUST include this field.For backward compatibility, when a client receives a result from aserver implementing an earlier protocol version (which does not include`resultType`), the client MUST treat the absent field as `"complete"`.
+--     * Slot: ttlMs Description: A hint from the server indicating how long (in milliseconds) theclient MAY cache this response before re-fetching. Semantics areanalogous to HTTP Cache-Control max-age.- If 0, The response SHOULD be considered immediately stale,  The client MAY re-fetch every time the result is needed.- If positive, the client SHOULD consider the result fresh for this many  milliseconds after receiving the response.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
+-- # Class: McpListResourcesResultResponse Description: A successful response from the server for a {@link ListResourcesRequestresources/list} request.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: result_id Description: The result returned by the server for a {@link ListResourcesRequestresources/list} request.
+-- # Class: McpListRootsRequest Description: Sent from the server to request a list of root URIs from the client. Roots allowservers to ask for specific directories or files to operate on. A common examplefor roots is providing a set of repositories or directories a server should operateon.This request is typically used when the server needs to understand the file systemstructure or access specific locations that the client has permission to read from.
+--     * Slot: id
+--     * Slot: method Description: The method's name, always `roots/list`.
+--     * Slot: params_id Description: The parameters the message carries.
+-- # Class: McpListRootsRequestParams Description: The object MCP's `ListRootsRequest` holds under `params`.
+--     * Slot: id
+--     * Slot: _meta_id Description: Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.Valid keys have two segments:**Prefix:**- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.**Name:**- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
+-- # Class: McpListRootsResult Description: The result returned by the client for a {@link ListRootsRequestroots/list} request.This result contains an array of {@link Root} objects, each representing a root directoryor file that the server can operate on.
+--     * Slot: id
+-- # Class: McpListToolsRequest Description: Sent from the client to request a list of tools the server has.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The method's name, always `tools/list`.
+--     * Slot: params_id Description: Common params for paginated requests.
+-- # Class: McpListToolsResult Description: The result returned by the server for a {@link ListToolsRequesttools/list} request.
+--     * Slot: id
+--     * Slot: cacheScope Description: Indicates the intended scope of the cached response, analogous to HTTP`Cache-Control: public` vs `Cache-Control: private`.- `"public"`: The response does not contain user-specific data. Any  client or intermediary (e.g., shared gateway, caching proxy) MAY cache  the response and serve it across authorization contexts.- `"private"`: The response MAY be cached and reused only within the  same authorization context. Caches MUST NOT be shared across  authorization contexts (e.g., a different access token requires a  different cache).
+--     * Slot: nextCursor Description: An opaque token representing the pagination position after the last returned result.If present, there may be more results available.
+--     * Slot: resultType Description: Indicates the type of the result, which allows the client to determinehow to parse the result object.Servers implementing this protocol version MUST include this field.For backward compatibility, when a client receives a result from aserver implementing an earlier protocol version (which does not include`resultType`), the client MUST treat the absent field as `"complete"`.
+--     * Slot: ttlMs Description: A hint from the server indicating how long (in milliseconds) theclient MAY cache this response before re-fetching. Semantics areanalogous to HTTP Cache-Control max-age.- If 0, The response SHOULD be considered immediately stale,  The client MAY re-fetch every time the result is needed.- If positive, the client SHOULD consider the result fresh for this many  milliseconds after receiving the response.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
+-- # Class: McpListToolsResultResponse Description: A successful response from the server for a {@link ListToolsRequesttools/list} request.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: result_id Description: The result returned by the server for a {@link ListToolsRequesttools/list} request.
+-- # Class: McpLoggingMessageNotification Description: JSONRPCNotification of a log message passed from server to client. The client opts in by setting `"io.modelcontextprotocol/logLevel"` in a request's `_meta`.
+--     * Slot: id
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The method's name, always `notifications/message`.
+--     * Slot: params_id Description: Parameters for a `notifications/message` notification.
+-- # Class: McpLoggingMessageNotificationParams Description: Parameters for a `notifications/message` notification.
+--     * Slot: id
+--     * Slot: level Description: The severity of this log message.
+--     * Slot: logger Description: An optional name of the logger issuing this message.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply.
+--     * Slot: data_id Description: The data to be logged, such as a string message or an object. Any JSON serializable type is allowed here.
+-- # Class: McpMetaObject Description: Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.Valid keys have two segments:**Prefix:**- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.**Name:**- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
+--     * Slot: id
+-- # Class: McpMethodNotFoundError Description: A JSON-RPC error indicating that the requested method does not exist or is not available.In MCP, a server returns this error when a client invokes a method the server does not implement — either a genuinely unknown method, or one gated behind a server capability the server did not advertise (e.g., calling `prompts/list` when the `prompts` capability was not advertised).A request that requires a client capability the client did not declare is signalled instead by {@link MissingRequiredClientCapabilityError} (`-32021`).
+--     * Slot: id
+--     * Slot: code Description: The error type that occurred.
+--     * Slot: message Description: A short description of the error. The message SHOULD be limited to a concise single sentence.
+--     * Slot: data_id Description: Additional information about the error. The value of this member is defined by the sender (e.g. detailed error information, nested errors etc.).
+-- # Class: McpMissingRequiredClientCapabilityError Description: Returned when processing a request requires a capability the client did notdeclare in `clientCapabilities`. For HTTP, the response status code MUST be`400 Bad Request`.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: error_id Description: The error the request ended with.
+-- # Class: McpMissingRequiredClientCapabilityErrorError Description: MCP's `Error`, with the code and data this error carries.
+--     * Slot: id
+--     * Slot: code Description: The error code, always `-32021`.
+--     * Slot: message Description: A short description of the error. The message SHOULD be limited to a concise single sentence.
+--     * Slot: data_id Description: Details of the error.
+-- # Class: McpMissingRequiredClientCapabilityErrorErrorData Description: The object MCP's `MissingRequiredClientCapabilityError` holds under `data`.
+--     * Slot: id
+--     * Slot: requiredCapabilities_id Description: The capabilities the server requires from the client to process this request.
+-- # Class: McpModelHint Description: Hints to use for model selection.Keys not declared here are currently left unspecified by the spec and are upto the client to interpret.
+--     * Slot: id
+--     * Slot: name Description: A hint for a model name.The client SHOULD treat this as a substring of a model name; for example: - `claude-3-5-sonnet` should match `claude-3-5-sonnet-20241022` - `sonnet` should match `claude-3-5-sonnet-20241022`, `claude-3-sonnet-20240229`, etc. - `claude` should match any Claude modelThe client MAY also map the string to a different provider's model name or a different model family, as long as it fills a similar niche; for example: - `gemini-1.5-flash` could match `claude-3-haiku-20240307`
+--     * Slot: McpModelPreferences_id Description: Autocreated FK slot
+-- # Class: McpModelPreferences Description: The server's preferences for model selection, requested of the client during sampling.Because LLMs can vary along multiple dimensions, choosing the "best" model israrely straightforward.  Different models excel in different areas—some arefaster but less capable, others are more capable but more expensive, and soon. This interface allows servers to express their priorities across multipledimensions to help clients make an appropriate selection for their use case.These preferences are always advisory. The client MAY ignore them. It is alsoup to the client to decide how to interpret these preferences and how tobalance them against other considerations.
+--     * Slot: id
+--     * Slot: costPriority Description: How much to prioritize cost when selecting a model. A value of 0 means costis not important, while a value of 1 means cost is the most importantfactor.
+--     * Slot: intelligencePriority Description: How much to prioritize intelligence and capabilities when selecting amodel. A value of 0 means intelligence is not important, while a value of 1means intelligence is the most important factor.
+--     * Slot: speedPriority Description: How much to prioritize sampling speed (latency) when selecting a model. Avalue of 0 means speed is not important, while a value of 1 means speed isthe most important factor.
+-- # Class: McpMultiSelectEnumSchema Description: One of `UntitledMultiSelectEnumSchema`, `TitledMultiSelectEnumSchema`.
+--     * Slot: id
+-- # Class: McpNotification Description: The method and the parameters a notification carries.
+--     * Slot: id
+--     * Slot: method Description: The name of the method.
+--     * Slot: params_id Description: The parameters the message carries.
+-- # Class: McpNotificationMetaObject Description: Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply.
+--     * Slot: id
+--     * Slot: mcp_subscription_id Description: Identifies the subscription stream a notification was delivered on. Theserver MUST include this key on every notification delivered via a{@link SubscriptionsListenRequestsubscriptions/listen} stream, so theclient can correlate the notification with the originating subscription.The key is absent on notifications not delivered via a subscriptionstream (e.g. progress notifications for an in-flight request), which iswhy it is optional here.The value is the JSON-RPC ID of the `subscriptions/listen` request thatopened the stream.
+-- # Class: McpNotificationParams Description: Common params for any notification.
+--     * Slot: id
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply.
+-- # Class: McpNumberSchema Description: A field of an elicitation form that takes a number or an integer.
+--     * Slot: id
+--     * Slot: description Description: A description of the field for the user.
+--     * Slot: title Description: A title for the field.
+--     * Slot: type Description: The kind of value the field takes.
+--     * Slot: default Description: The value the field takes when the user gives none.
+--     * Slot: maximum Description: The largest value the field accepts.
+--     * Slot: minimum Description: The smallest value the field accepts.
+-- # Class: McpPaginatedRequest Description: A request for a list that the server returns a page at a time.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The name of the method.
+--     * Slot: params_id Description: Common params for paginated requests.
+-- # Class: McpPaginatedRequestParams Description: Common params for paginated requests.
+--     * Slot: id
+--     * Slot: cursor Description: An opaque token representing the current pagination position.If provided, the server should return results starting after this cursor.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.
+-- # Class: McpPaginatedResult Description: A result that holds a page of a list, and the cursor of the next page.
+--     * Slot: id
+--     * Slot: nextCursor Description: An opaque token representing the pagination position after the last returned result.If present, there may be more results available.
+--     * Slot: resultType Description: Indicates the type of the result, which allows the client to determinehow to parse the result object.Servers implementing this protocol version MUST include this field.For backward compatibility, when a client receives a result from aserver implementing an earlier protocol version (which does not include`resultType`), the client MUST treat the absent field as `"complete"`.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
+-- # Class: McpParseError Description: A JSON-RPC error indicating that invalid JSON was received by the server. This error is returned when the server cannot parse the JSON text of a message.
+--     * Slot: id
+--     * Slot: code Description: The error type that occurred.
+--     * Slot: message Description: A short description of the error. The message SHOULD be limited to a concise single sentence.
+--     * Slot: data_id Description: Additional information about the error. The value of this member is defined by the sender (e.g. detailed error information, nested errors etc.).
+-- # Class: McpPrimitiveSchemaDefinition Description: Restricted schema definitions that only allow primitive typeswithout nested objects or arrays.
+--     * Slot: id
+-- # Class: McpProgressNotification Description: An out-of-band notification used to inform the receiver of a progress update for a long-running request.
+--     * Slot: id
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The method's name, always `notifications/progress`.
+--     * Slot: params_id Description: Parameters for a {@link ProgressNotificationnotifications/progress} notification.
+-- # Class: McpProgressNotificationParams Description: Parameters for a {@link ProgressNotificationnotifications/progress} notification.
+--     * Slot: id
+--     * Slot: message Description: An optional message describing the current progress.
+--     * Slot: progress Description: The progress thus far. This should increase every time progress is made, even if the total is unknown.
+--     * Slot: progressToken Description: The progress token which was given in the initial request, used to associate this notification with the request that is proceeding.
+--     * Slot: total Description: Total number of items to process (or total progress required), if known.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply.
+-- # Class: McpPrompt Description: A prompt or prompt template that the server offers.
+--     * Slot: id
+--     * Slot: description Description: An optional description of what this prompt provides
+--     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
+--     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood,even by those unfamiliar with domain-specific terminology.If not provided, the name should be used for display (except for {@link Tool},where `annotations.title` should be given precedence over using `name`,if present).
+--     * Slot: McpListPromptsResult_id Description: Autocreated FK slot
+--     * Slot: _meta_id Description: Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.Valid keys have two segments:**Prefix:**- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.**Name:**- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
+-- # Class: McpPromptArgument Description: Describes an argument that a prompt can accept.
+--     * Slot: id
+--     * Slot: description Description: A human-readable description of the argument.
+--     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
+--     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood,even by those unfamiliar with domain-specific terminology.If not provided, the name should be used for display (except for {@link Tool},where `annotations.title` should be given precedence over using `name`,if present).
+--     * Slot: required Description: Whether this argument must be provided.
+--     * Slot: McpPrompt_id Description: Autocreated FK slot
+-- # Class: McpPromptListChangedNotification Description: An optional notification from the server to the client, informing it that the list of prompts it offers has changed. This is only delivered on a {@link SubscriptionsListenRequestsubscriptions/listen} stream when the client requested it via the `promptsListChanged` filter field.
+--     * Slot: id
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The method's name, always `notifications/prompts/list_changed`.
+--     * Slot: params_id Description: Common params for any notification.
+-- # Class: McpPromptMessage Description: Describes a message returned as part of a prompt.This is similar to {@link SamplingMessage}, but also supports the embedding ofresources from the MCP server.
+--     * Slot: id
+--     * Slot: role Description: The sender or recipient of messages and data in a conversation.
+--     * Slot: McpGetPromptResult_id Description: Autocreated FK slot
+--     * Slot: content_id Description: The content the message carries.
+-- # Class: McpPromptReference Description: Identifies a prompt.
+--     * Slot: id
+--     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
+--     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood,even by those unfamiliar with domain-specific terminology.If not provided, the name should be used for display (except for {@link Tool},where `annotations.title` should be given precedence over using `name`,if present).
+--     * Slot: type Description: The kind of object, always `ref/prompt`.
+-- # Class: McpReadResourceRequest Description: Sent from the client to the server, to read a specific resource URI.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The method's name, always `resources/read`.
+--     * Slot: params_id Description: Parameters for a `resources/read` request.
+-- # Class: McpReadResourceRequestParams Description: Parameters for a `resources/read` request.
+--     * Slot: id
+--     * Slot: requestState Description: State the server returned with an input-required result, sent back unchanged when the request is retried.
+--     * Slot: uri Description: The URI of the resource. The URI can use any protocol; it is up to the server how to interpret it.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.
+--     * Slot: inputResponses_id Description: A map of client responses to server-initiated requests.Keys correspond to the keys in the {@link InputRequests} map;values are the client's result for each request.
+-- # Class: McpReadResourceResult Description: The result returned by the server for a {@link ReadResourceRequestresources/read} request.
+--     * Slot: id
+--     * Slot: cacheScope Description: Indicates the intended scope of the cached response, analogous to HTTP`Cache-Control: public` vs `Cache-Control: private`.- `"public"`: The response does not contain user-specific data. Any  client or intermediary (e.g., shared gateway, caching proxy) MAY cache  the response and serve it across authorization contexts.- `"private"`: The response MAY be cached and reused only within the  same authorization context. Caches MUST NOT be shared across  authorization contexts (e.g., a different access token requires a  different cache).
+--     * Slot: resultType Description: Indicates the type of the result, which allows the client to determinehow to parse the result object.Servers implementing this protocol version MUST include this field.For backward compatibility, when a client receives a result from aserver implementing an earlier protocol version (which does not include`resultType`), the client MUST treat the absent field as `"complete"`.
+--     * Slot: ttlMs Description: A hint from the server indicating how long (in milliseconds) theclient MAY cache this response before re-fetching. Semantics areanalogous to HTTP Cache-Control max-age.- If 0, The response SHOULD be considered immediately stale,  The client MAY re-fetch every time the result is needed.- If positive, the client SHOULD consider the result fresh for this many  milliseconds after receiving the response.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
+-- # Class: McpReadResourceResultResponse Description: A successful response from the server for a {@link ReadResourceRequestresources/read} request.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: result Description: What the request returned.
+-- # Class: McpRequest Description: The method and the parameters a request carries.
+--     * Slot: id
+--     * Slot: method Description: The name of the method.
+--     * Slot: params_id Description: The parameters the message carries.
+-- # Class: McpRequestMetaObject Description: Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.
+--     * Slot: id
+--     * Slot: mcp_log_level Description: The desired log level for this request. Optional.If absent, the server MUST NOT send any {@link LoggingMessageNotificationnotifications/message}notifications for this request. The client opts in to log messages byexplicitly setting a level. Replaces the former `logging/setLevel` RPC.
+--     * Slot: mcp_protocol_version Description: The MCP Protocol Version being used for this request. Required.For the HTTP transport, this value MUST match the `MCP-Protocol-Version`header; otherwise the server MUST return a `400 Bad Request`. If theserver does not support the requested version, it MUST return an{@link UnsupportedProtocolVersionError}.
+--     * Slot: progressToken Description: If specified, the caller is requesting out-of-band progress notifications for this request (as represented by {@link ProgressNotificationnotifications/progress}). The value of this parameter is an opaque token that will be attached to any subsequent notifications. The receiver is not obligated to provide these notifications.
+--     * Slot: mcp_client_capabilities_id Description: The client's capabilities for this specific request. Required.Capabilities are declared per-request rather than once at initialization;an empty object means the client supports no optional capabilities.Servers MUST NOT infer capabilities from prior requests.
+--     * Slot: mcp_client_info_id Description: Identifies the client software making the request. Clients SHOULDinclude this field on every request unless specifically configured notto do so.The {@link Implementation} schema requires `name` and `version`; otherfields are optional.The value is self-reported by the client and is not verified by theprotocol. It is intended for display, logging, and debugging. ServersSHOULD NOT use it to change their behavior, and SHOULD NOT rely on it forsecurity decisions.
+-- # Class: McpRequestParams Description: Common params for any request.
+--     * Slot: id
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.
+-- # Class: McpResource Description: A known resource that the server is capable of reading.
+--     * Slot: id
+--     * Slot: description Description: A description of what this resource represents.This can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a "hint" to the model.
+--     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
+--     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood,even by those unfamiliar with domain-specific terminology.If not provided, the name should be used for display (except for {@link Tool},where `annotations.title` should be given precedence over using `name`,if present).
+--     * Slot: mimeType Description: The MIME type of this resource, if known.
+--     * Slot: size Description: The size of the raw resource content, in bytes (i.e., before base64 encoding or any tokenization), if known.This can be used by Hosts to display file sizes and estimate context window usage.
+--     * Slot: uri Description: The URI of this resource.
+--     * Slot: McpListResourcesResult_id Description: Autocreated FK slot
+--     * Slot: _meta_id Description: Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.Valid keys have two segments:**Prefix:**- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.**Name:**- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
+--     * Slot: annotations_id Description: Optional annotations for the client.
+-- # Class: McpResourceContents Description: The contents of a specific resource or sub-resource.
+--     * Slot: id
+--     * Slot: mimeType Description: The MIME type of this resource, if known.
+--     * Slot: uri Description: The URI of this resource.
+--     * Slot: _meta_id Description: Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.Valid keys have two segments:**Prefix:**- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.**Name:**- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
+-- # Class: McpResourceLink Description: A resource that the server is capable of reading, included in a prompt or tool call result.Note: resource links returned by tools are not guaranteed to appear in the results of {@link ListResourcesRequestresources/list} requests.
+--     * Slot: id
+--     * Slot: description Description: A description of what this resource represents.This can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a "hint" to the model.
+--     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
+--     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood,even by those unfamiliar with domain-specific terminology.If not provided, the name should be used for display (except for {@link Tool},where `annotations.title` should be given precedence over using `name`,if present).
+--     * Slot: type Description: The kind of object, always `resource_link`.
+--     * Slot: mimeType Description: The MIME type of this resource, if known.
+--     * Slot: size Description: The size of the raw resource content, in bytes (i.e., before base64 encoding or any tokenization), if known.This can be used by Hosts to display file sizes and estimate context window usage.
+--     * Slot: uri Description: The URI of this resource.
+--     * Slot: _meta_id Description: Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.Valid keys have two segments:**Prefix:**- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.**Name:**- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
+--     * Slot: annotations_id Description: Optional annotations for the client.
+-- # Class: McpResourceListChangedNotification Description: An optional notification from the server to the client, informing it that the list of resources it can read from has changed. This is only delivered on a {@link SubscriptionsListenRequestsubscriptions/listen} stream when the client requested it via the `resourcesListChanged` filter field.
+--     * Slot: id
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The method's name, always `notifications/resources/list_changed`.
+--     * Slot: params_id Description: Common params for any notification.
+-- # Class: McpResourceRequestParams Description: Common params for resource-related requests.
+--     * Slot: id
+--     * Slot: uri Description: The URI of the resource. The URI can use any protocol; it is up to the server how to interpret it.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.
+-- # Class: McpResourceTemplate Description: A template description for resources available on the server.
+--     * Slot: id
+--     * Slot: description Description: A description of what this template is for.This can be used by clients to improve the LLM's understanding of available resources. It can be thought of like a "hint" to the model.
+--     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
+--     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood,even by those unfamiliar with domain-specific terminology.If not provided, the name should be used for display (except for {@link Tool},where `annotations.title` should be given precedence over using `name`,if present).
+--     * Slot: mimeType Description: The MIME type for all resources that match this template. This should only be included if all resources matching this template have the same type.
+--     * Slot: uriTemplate Description: A URI template (according to RFC 6570) that can be used to construct resource URIs.
+--     * Slot: McpListResourceTemplatesResult_id Description: Autocreated FK slot
+--     * Slot: _meta_id Description: Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.Valid keys have two segments:**Prefix:**- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.**Name:**- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
+--     * Slot: annotations_id Description: Optional annotations for the client.
+-- # Class: McpResourceTemplateReference Description: A reference to a resource or resource template definition.
+--     * Slot: id
+--     * Slot: type Description: The kind of object, always `ref/resource`.
+--     * Slot: uri Description: The URI or URI template of the resource.
+-- # Class: McpResourceUpdatedNotification Description: A notification from the server to the client, informing it that a resource has changed and may need to be read again. This is only sent for resources the client opted in to via the `resourceSubscriptions` field of a {@link SubscriptionsListenRequestsubscriptions/listen} request.
+--     * Slot: id
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The method's name, always `notifications/resources/updated`.
+--     * Slot: params_id Description: Parameters for a `notifications/resources/updated` notification.
+-- # Class: McpResourceUpdatedNotificationParams Description: Parameters for a `notifications/resources/updated` notification.
+--     * Slot: id
+--     * Slot: uri Description: The URI of the resource that has been updated. This might be a sub-resource of the one that the client actually subscribed to.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply.
+-- # Class: McpResult Description: Common result fields.
+--     * Slot: id
+--     * Slot: resultType Description: Indicates the type of the result, which allows the client to determinehow to parse the result object.Servers implementing this protocol version MUST include this field.For backward compatibility, when a client receives a result from aserver implementing an earlier protocol version (which does not include`resultType`), the client MUST treat the absent field as `"complete"`.
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
+-- # Class: McpResultMetaObject Description: Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.
+--     * Slot: id
+--     * Slot: mcp_server_info_id Description: Identifies the server software producing the response. Servers SHOULDinclude this field on every response unless specifically configured notto do so.The {@link Implementation} schema requires `name` and `version`; otherfields are optional.The value is self-reported by the server and is not verified by theprotocol. It is intended for display, logging, and debugging. ClientsSHOULD NOT use it to change their behavior, and SHOULD NOT rely on it forsecurity decisions.
+-- # Class: McpRoot Description: Represents a root directory or file that the server can operate on.
+--     * Slot: id
+--     * Slot: name Description: An optional name for the root. This can be used to provide a human-readableidentifier for the root, which may be useful for display purposes or forreferencing the root in other parts of the application.
+--     * Slot: uri Description: The URI identifying the root. This *must* start with `file://` for now.This restriction may be relaxed in future versions of the protocol to allowother URI schemes.
+--     * Slot: McpListRootsResult_id Description: Autocreated FK slot
+--     * Slot: _meta_id Description: Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.Valid keys have two segments:**Prefix:**- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.**Name:**- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
+-- # Class: McpSamplingMessage Description: Describes a message issued to or received from an LLM API.
+--     * Slot: id
+--     * Slot: content Description: The content the message carries.
+--     * Slot: role Description: The sender or recipient of messages and data in a conversation.
+--     * Slot: McpCreateMessageRequestParams_id Description: Autocreated FK slot
+--     * Slot: _meta_id Description: Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.Valid keys have two segments:**Prefix:**- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.**Name:**- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
+-- # Class: McpSamplingMessageContentBlock Description: One of `TextContent`, `ImageContent`, `AudioContent`, `ToolUseContent`, `ToolResultContent`.
+--     * Slot: id
+-- # Class: McpServerCapabilities Description: Capabilities that a server may support. Known capabilities are defined here, in this schema, but this is not a closed set: any server can define its own, additional capabilities.
+--     * Slot: id
+--     * Slot: completions_id Description: Present if the server supports argument autocompletion suggestions.
+--     * Slot: experimental_id Description: Experimental, non-standard capabilities that the server supports.
+--     * Slot: extensions_id Description: Optional MCP extensions that the server supports. Keys are extension identifiers(e.g., "io.modelcontextprotocol/tasks"), and values are per-extension settingsobjects. An empty object indicates support with no settings.Keys MUST follow the {@link MetaObject`_meta` key naming rules}, with amandatory prefix.
+--     * Slot: logging_id Description: Present if the server supports sending log messages to the client.
+--     * Slot: prompts_id Description: Present if the server offers any prompt templates.
+--     * Slot: resources_id Description: Present if the server offers any resources to read.
+--     * Slot: tools_id Description: Present if the server offers any tools to call.
+-- # Class: McpServerCapabilitiesExperimental Description: Experimental, non-standard capabilities that the server supports.
+--     * Slot: id
+-- # Class: McpServerCapabilitiesExtensions Description: Optional MCP extensions that the server supports. Keys are extension identifiers(e.g., "io.modelcontextprotocol/tasks"), and values are per-extension settingsobjects. An empty object indicates support with no settings.Keys MUST follow the {@link MetaObject`_meta` key naming rules}, with amandatory prefix.
+--     * Slot: id
+-- # Class: McpServerCapabilitiesPrompts Description: Present if the server offers any prompt templates.
+--     * Slot: id
+--     * Slot: listChanged Description: Whether this server supports notifications for changes to the prompt list.
+-- # Class: McpServerCapabilitiesResources Description: Present if the server offers any resources to read.
+--     * Slot: id
+--     * Slot: listChanged Description: Whether this server supports notifications for changes to the resource list.
+--     * Slot: subscribe Description: Whether this server supports subscribing to resource updates.
+-- # Class: McpServerCapabilitiesTools Description: Present if the server offers any tools to call.
+--     * Slot: id
+--     * Slot: listChanged Description: Whether this server supports notifications for changes to the tool list.
+-- # Class: McpServerNotification Description: One of `CancelledNotification`, `ProgressNotification`, `ResourceListChangedNotification`, `SubscriptionsAcknowledgedNotification`, `ResourceUpdatedNotification`, `PromptListChangedNotification`, `ToolListChangedNotification`, `LoggingMessageNotification`.
+--     * Slot: id
+-- # Class: McpServerResult Description: One of `Result`, `InputRequiredResult`, `DiscoverResult`, `ListResourcesResult`, `ListResourceTemplatesResult`, `ReadResourceResult`, `SubscriptionsListenResult`, `ListPromptsResult`, `GetPromptResult`, `ListToolsResult`, `CallToolResult`, `CompleteResult`.
+--     * Slot: id
+-- # Class: McpSingleSelectEnumSchema Description: One of `UntitledSingleSelectEnumSchema`, `TitledSingleSelectEnumSchema`.
+--     * Slot: id
+-- # Class: McpStringSchema Description: A field of an elicitation form that takes text.
+--     * Slot: id
+--     * Slot: description Description: A description of the field for the user.
+--     * Slot: title Description: A title for the field.
+--     * Slot: type Description: The kind of object, always `string`.
+--     * Slot: default Description: The value the field takes when the user gives none.
+--     * Slot: format Description: The format the string must have.
+--     * Slot: maxLength Description: The most characters the field accepts.
+--     * Slot: minLength Description: The fewest characters the field accepts.
+-- # Class: McpSubscriptionFilter Description: The set of notification types a client may opt in to on a{@link SubscriptionsListenRequestsubscriptions/listen} request.Each notification type is **opt-in**; the server **MUST NOT** sendnotification types the client has not explicitly requested here.
+--     * Slot: id
+--     * Slot: promptsListChanged Description: If true, receive {@link PromptListChangedNotificationnotifications/prompts/list_changed}.
+--     * Slot: resourcesListChanged Description: If true, receive {@link ResourceListChangedNotificationnotifications/resources/list_changed}.
+--     * Slot: toolsListChanged Description: If true, receive {@link ToolListChangedNotificationnotifications/tools/list_changed}.
+-- # Class: McpSubscriptionsAcknowledgedNotification Description: Sent by the server to acknowledge that a{@link SubscriptionsListenRequestsubscriptions/listen} subscription has beenestablished and to report which notification types it agreed to honor.This notification MUST be the first message the server sends carrying thesubscription's ID in `io.modelcontextprotocol/subscriptionId`. The server MUSTNOT send any notification on the subscription before acknowledging it. Onstdio, where every subscription shares one channel, this ordering is definedper subscription ID and not per channel: messages belonging to othersubscriptions MAY be interleaved before it.
+--     * Slot: id
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The method's name, always `notifications/subscriptions/acknowledged`.
+--     * Slot: params_id Description: Parameters for a {@link SubscriptionsAcknowledgedNotificationnotifications/subscriptions/acknowledged} notification.
+-- # Class: McpSubscriptionsAcknowledgedNotificationParams Description: Parameters for a {@link SubscriptionsAcknowledgedNotificationnotifications/subscriptions/acknowledged} notification.
+--     * Slot: id
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional notification-specific fields. All key naming rules from `MetaObject` apply.
+--     * Slot: notifications_id Description: The subset of requested notification types the server agreed to honor.Only includes notification types the server actually supports; if theclient requested an unsupported type (e.g., `promptsListChanged` whenthe server has no prompts), it is omitted from this set.
+-- # Class: McpSubscriptionsListenRequest Description: Sent from the client to open a long-lived channel for receiving notificationsoutside the context of a specific request. Replaces the previous HTTP GETendpoint and ensures consistent behavior between HTTP and STDIO.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The method's name, always `subscriptions/listen`.
+--     * Slot: params_id Description: Parameters for a {@link SubscriptionsListenRequestsubscriptions/listen} request.
+-- # Class: McpSubscriptionsListenRequestParams Description: Parameters for a {@link SubscriptionsListenRequestsubscriptions/listen} request.
+--     * Slot: id
+--     * Slot: _meta_id Description: Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.
+--     * Slot: notifications_id Description: The notifications the client opts in to on this stream. The server**MUST NOT** send notification types the client has not explicitlyrequested.
+-- # Class: McpSubscriptionsListenResult Description: The response to a {@link SubscriptionsListenRequestsubscriptions/listen}request, signalling that the subscription has ended gracefully (for example,during server shutdown). Because the listen stream is long-lived, this resultis sent only when the server tears the subscription down; an abrupt transportclose carries no response. The result body is otherwise empty.
+--     * Slot: id
+--     * Slot: resultType Description: Indicates the type of the result, which allows the client to determinehow to parse the result object.Servers implementing this protocol version MUST include this field.For backward compatibility, when a client receives a result from aserver implementing an earlier protocol version (which does not include`resultType`), the client MUST treat the absent field as `"complete"`.
+--     * Slot: _meta_id Description: Extends {@link ResultMetaObject} with the subscription-stream identifier carried by a{@link SubscriptionsListenResult}. All key naming rules from `MetaObject` apply.
+-- # Class: McpSubscriptionsListenResultMetaObject Description: Extends {@link ResultMetaObject} with the subscription-stream identifier carried by a{@link SubscriptionsListenResult}. All key naming rules from `MetaObject` apply.
+--     * Slot: id
+--     * Slot: mcp_subscription_id Description: Identifies the subscription stream this response closes, so the client cancorrelate it with the originating subscription — mirroring the same key onthe stream's notifications. The value is the JSON-RPC ID of the`subscriptions/listen` request that opened the stream (and equals thisresponse's `id`).
+--     * Slot: mcp_server_info_id Description: Identifies the server software producing the response. Servers SHOULDinclude this field on every response unless specifically configured notto do so.The {@link Implementation} schema requires `name` and `version`; otherfields are optional.The value is self-reported by the server and is not verified by theprotocol. It is intended for display, logging, and debugging. ClientsSHOULD NOT use it to change their behavior, and SHOULD NOT rely on it forsecurity decisions.
+-- # Class: McpSubscriptionsListenResultResponse Description: A successful response from the server for a {@link SubscriptionsListenRequestsubscriptions/listen}request, sent when the server tears the subscription down gracefully.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: result_id Description: The response to a {@link SubscriptionsListenRequestsubscriptions/listen}request, signalling that the subscription has ended gracefully (for example,during server shutdown). Because the listen stream is long-lived, this resultis sent only when the server tears the subscription down; an abrupt transportclose carries no response. The result body is otherwise empty.
+-- # Class: McpTextContent Description: Text provided to or from an LLM.
+--     * Slot: id
+--     * Slot: type Description: The kind of object, always `text`.
+--     * Slot: text Description: The text content of the message.
+--     * Slot: _meta_id Description: Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.Valid keys have two segments:**Prefix:**- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.**Name:**- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
+--     * Slot: annotations_id Description: Optional annotations for the client.
+-- # Class: McpTextResourceContents Description: A resource's contents as text.
+--     * Slot: id
+--     * Slot: mimeType Description: The MIME type of this resource, if known.
+--     * Slot: text Description: The text of the item. This must only be set if the item can actually be represented as text (not binary data).
+--     * Slot: uri Description: The URI of this resource.
+--     * Slot: _meta_id Description: Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.Valid keys have two segments:**Prefix:**- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.**Name:**- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
+-- # Class: McpTitledMultiSelectEnumSchema Description: Schema for multiple-selection enumeration with display titles for each option.
+--     * Slot: id
+--     * Slot: description Description: Optional description for the enum field.
+--     * Slot: title Description: Optional title for the enum field.
+--     * Slot: type Description: The kind of object, always `array`.
+--     * Slot: maxItems Description: Maximum number of items to select.
+--     * Slot: minItems Description: Minimum number of items to select.
+--     * Slot: items_id Description: Schema for array items with enum options and display labels.
+-- # Class: McpTitledMultiSelectEnumSchemaItems Description: Schema for array items with enum options and display labels.
+--     * Slot: id
+-- # Class: McpTitledMultiSelectEnumSchemaItemsAnyOf Description: The object MCP's `TitledMultiSelectEnumSchema` holds under `anyOf`.
+--     * Slot: id
+--     * Slot: title Description: Display title for this option.
+--     * Slot: const Description: The constant enum value.
+--     * Slot: McpTitledMultiSelectEnumSchemaItems_id Description: Autocreated FK slot
+-- # Class: McpTitledSingleSelectEnumSchema Description: Schema for single-selection enumeration with display titles for each option.
+--     * Slot: id
+--     * Slot: description Description: Optional description for the enum field.
+--     * Slot: title Description: Optional title for the enum field.
+--     * Slot: type Description: The kind of object, always `string`.
+--     * Slot: default Description: Optional default value.
+-- # Class: McpTitledSingleSelectEnumSchemaOneOf Description: The object MCP's `TitledSingleSelectEnumSchema` holds under `oneOf`.
+--     * Slot: id
+--     * Slot: title Description: Display label for this option.
+--     * Slot: const Description: The enum value.
+--     * Slot: McpTitledSingleSelectEnumSchema_id Description: Autocreated FK slot
+-- # Class: McpTool Description: Definition for a tool the client can call.
+--     * Slot: id
+--     * Slot: description Description: A human-readable description of the tool.This can be used by clients to improve the LLM's understanding of available tools. It can be thought of like a "hint" to the model.
+--     * Slot: name Description: Intended for programmatic or logical use, but used as a display name in past specs or fallback (if title isn't present).
+--     * Slot: title Description: Intended for UI and end-user contexts — optimized to be human-readable and easily understood,even by those unfamiliar with domain-specific terminology.If not provided, the name should be used for display (except for {@link Tool},where `annotations.title` should be given precedence over using `name`,if present).
+--     * Slot: McpCreateMessageRequestParams_id Description: Autocreated FK slot
+--     * Slot: McpListToolsResult_id Description: Autocreated FK slot
+--     * Slot: _meta_id Description: Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.Certain key names are reserved by MCP for protocol-level metadata; implementations MUST NOT make assumptions about values at these keys. Additionally, specific schema definitions may reserve particular names for purpose-specific metadata, as declared in those definitions.Valid keys have two segments:**Prefix:**- Optional — if specified, MUST be a series of _labels_ separated by dots (`.`), followed by a slash (`/`).- Labels MUST start with a letter and end with a letter or digit. Interior characters may be letters, digits, or hyphens (`-`).- Implementations SHOULD use reverse DNS notation (e.g., `com.example/` rather than `example.com/`).- Any prefix where the second label is `modelcontextprotocol` or `mcp` is **reserved** for MCP use. For example: `io.modelcontextprotocol/`, `dev.mcp/`, `org.modelcontextprotocol.api/`, and `com.mcp.tools/` are all reserved. However, `com.example.mcp/` is NOT reserved, as the second label is `example`.**Name:**- Unless empty, MUST start and end with an alphanumeric character (`[a-z0-9A-Z]`).- Interior characters may be alphanumeric, hyphens (`-`), underscores (`_`), or dots (`.`).
+--     * Slot: annotations_id Description: Optional additional tool information.Display name precedence order is: `title`, `annotations.title`, then `name`.
+--     * Slot: inputSchema_id Description: A JSON Schema object defining the expected parameters for the tool.Tool arguments are always JSON objects, so `type: "object"` is required at the root.Beyond that, any JSON Schema 2020-12 keyword may appear alongside `type` — includingcomposition keywords (`oneOf`, `anyOf`, `allOf`, `not`), conditional keywords(`if`/`then`/`else`), reference keywords (`$ref`, `$defs`, `$anchor`), and any otherstandard validation or annotation keywords.Property schemas may carry an `x-mcp-header` annotation to mirror theargument value into an HTTP header on the Streamable HTTP transport. Seethe Streamable HTTP transport specification for the validity andextraction rules.Defaults to JSON Schema 2020-12 when no explicit `$schema` is provided.
+--     * Slot: outputSchema_id Description: An optional JSON Schema object defining the structure of the tool's output returned inthe structuredContent field of a {@link CallToolResult}. This can be any valid JSON Schema 2020-12.Defaults to JSON Schema 2020-12 when no explicit `$schema` is provided.
+-- # Class: McpToolAnnotations Description: Additional properties describing a {@link Tool} to clients.NOTE: all properties in `ToolAnnotations` are **hints**.They are not guaranteed to provide a faithful description oftool behavior (including descriptive properties like `title`).Clients should never make tool use decisions based on `ToolAnnotations`received from untrusted servers.
+--     * Slot: id
+--     * Slot: title Description: A human-readable title for the tool.
+--     * Slot: destructiveHint Description: If true, the tool may perform destructive updates to its environment.If false, the tool performs only additive updates.(This property is meaningful only when `readOnlyHint == false`)Default: true
+--     * Slot: idempotentHint Description: If true, calling the tool repeatedly with the same argumentswill have no additional effect on its environment.(This property is meaningful only when `readOnlyHint == false`)Default: false
+--     * Slot: openWorldHint Description: If true, this tool may interact with an "open world" of externalentities. If false, the tool's domain of interaction is closed.For example, the world of a web search tool is open, whereas thatof a memory tool is not.Default: true
+--     * Slot: readOnlyHint Description: If true, the tool does not modify its environment.Default: false
+-- # Class: McpToolChoice Description: Controls tool selection behavior for sampling requests.
+--     * Slot: id
+--     * Slot: mode Description: Controls the tool use ability of the model:- `"auto"`: Model decides whether to use tools (default)- `"required"`: Model MUST use at least one tool before completing- `"none"`: Model MUST NOT use any tools
+-- # Class: McpToolInputSchema Description: A JSON Schema object defining the expected parameters for the tool.Tool arguments are always JSON objects, so `type: "object"` is required at the root.Beyond that, any JSON Schema 2020-12 keyword may appear alongside `type` — includingcomposition keywords (`oneOf`, `anyOf`, `allOf`, `not`), conditional keywords(`if`/`then`/`else`), reference keywords (`$ref`, `$defs`, `$anchor`), and any otherstandard validation or annotation keywords.Property schemas may carry an `x-mcp-header` annotation to mirror theargument value into an HTTP header on the Streamable HTTP transport. Seethe Streamable HTTP transport specification for the validity andextraction rules.Defaults to JSON Schema 2020-12 when no explicit `$schema` is provided.
+--     * Slot: id
+--     * Slot: type Description: The kind of object, always `object`.
+--     * Slot: schema_dialect Description: The JSON Schema dialect the schema is written in.
+-- # Class: McpToolListChangedNotification Description: An optional notification from the server to the client, informing it that the list of tools it offers has changed. This is only delivered on a {@link SubscriptionsListenRequestsubscriptions/listen} stream when the client requested it via the `toolsListChanged` filter field.
+--     * Slot: id
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: method Description: The method's name, always `notifications/tools/list_changed`.
+--     * Slot: params_id Description: Common params for any notification.
+-- # Class: McpToolOutputSchema Description: An optional JSON Schema object defining the structure of the tool's output returned inthe structuredContent field of a {@link CallToolResult}. This can be any valid JSON Schema 2020-12.Defaults to JSON Schema 2020-12 when no explicit `$schema` is provided.
+--     * Slot: id
+--     * Slot: schema_dialect Description: The JSON Schema dialect the schema is written in.
+-- # Class: McpToolResultContent Description: The result of a tool use, provided by the user back to the assistant.
+--     * Slot: id
+--     * Slot: type Description: The kind of object, always `tool_result`.
+--     * Slot: isError Description: Whether the tool use resulted in an error.If true, the content typically describes the error that occurred.Default: false
+--     * Slot: toolUseId Description: The ID of the tool use this result corresponds to.This MUST match the ID from a previous {@link ToolUseContent}.
+--     * Slot: _meta_id Description: Optional metadata about the tool result. Clients SHOULD preserve this field whenincluding tool results in subsequent sampling requests to enable caching optimizations.
+--     * Slot: structuredContent_id Description: An optional structured result value.This can be any JSON value (object, array, string, number, boolean, or null).If the tool defined an {@link Tool.outputSchema}, this SHOULD conform to that schema.
+-- # Class: McpToolUseContent Description: A request from the assistant to call a tool.
+--     * Slot: uid
+--     * Slot: id Description: A unique identifier for this tool use.This ID is used to match tool results to their corresponding tool uses.
+--     * Slot: name Description: The name of the tool to call.
+--     * Slot: type Description: The kind of object, always `tool_use`.
+--     * Slot: _meta_id Description: Optional metadata about the tool use. Clients SHOULD preserve this field whenincluding tool uses in subsequent sampling requests to enable caching optimizations.
+--     * Slot: input_id Description: The arguments to pass to the tool, conforming to the tool's input schema.
+-- # Class: McpUnsupportedProtocolVersionError Description: Returned when the request's protocol version is unknown to the server orunsupported (e.g., a known experimental or draft version the server haschosen not to implement). For HTTP, the response status code MUST be`400 Bad Request`.
+--     * Slot: uid
+--     * Slot: id Description: A uniquely identifying ID for a request in JSON-RPC.
+--     * Slot: jsonrpc Description: The JSON-RPC version, always `2.0`.
+--     * Slot: error_id Description: The error the request ended with.
+-- # Class: McpUnsupportedProtocolVersionErrorError Description: MCP's `Error`, with the code and data this error carries.
+--     * Slot: id
+--     * Slot: code Description: The error code, always `-32022`.
+--     * Slot: message Description: A short description of the error. The message SHOULD be limited to a concise single sentence.
+--     * Slot: data_id Description: Details of the error.
+-- # Class: McpUnsupportedProtocolVersionErrorErrorData Description: The object MCP's `UnsupportedProtocolVersionError` holds under `data`.
+--     * Slot: id
+--     * Slot: requested Description: The protocol version that was requested by the client.
+-- # Class: McpUntitledMultiSelectEnumSchema Description: Schema for multiple-selection enumeration without display titles for options.
+--     * Slot: id
+--     * Slot: description Description: Optional description for the enum field.
+--     * Slot: title Description: Optional title for the enum field.
+--     * Slot: type Description: The kind of object, always `array`.
+--     * Slot: maxItems Description: Maximum number of items to select.
+--     * Slot: minItems Description: Minimum number of items to select.
+--     * Slot: items_id Description: Schema for the array items.
+-- # Class: McpUntitledMultiSelectEnumSchemaItems Description: Schema for the array items.
+--     * Slot: id
+--     * Slot: type Description: The kind of object, always `string`.
+-- # Class: McpUntitledSingleSelectEnumSchema Description: Schema for single-selection enumeration without display titles for options.
+--     * Slot: id
+--     * Slot: description Description: Optional description for the enum field.
+--     * Slot: title Description: Optional title for the enum field.
+--     * Slot: type Description: The kind of object, always `string`.
+--     * Slot: default Description: Optional default value.
+-- # Class: McpAnnotations_audience
+--     * Slot: McpAnnotations_id Description: Autocreated FK slot
+--     * Slot: audience Description: Describes who the intended audience of this object or data is.It can include multiple entries to indicate content useful for multiple audiences (e.g., `["user", "assistant"]`).
+-- # Class: McpCompleteResultCompletion_values
+--     * Slot: McpCompleteResultCompletion_id Description: Autocreated FK slot
+--     * Slot: values Description: An array of completion values. Must not exceed 100 items.
+-- # Class: McpCreateMessageRequestParams_stopSequences
+--     * Slot: McpCreateMessageRequestParams_id Description: Autocreated FK slot
+--     * Slot: stopSequences Description: Sequences at which the model should stop generating.
+-- # Class: McpDiscoverResult_supportedVersions
+--     * Slot: McpDiscoverResult_id Description: Autocreated FK slot
+--     * Slot: supportedVersions Description: MCP Protocol Versions this server supports. The client should choose aversion from this list for use in subsequent requests.
+-- # Class: McpElicitRequestFormParamsRequestedSchema_required_names
+--     * Slot: McpElicitRequestFormParamsRequestedSchema_id Description: Autocreated FK slot
+--     * Slot: required_names Description: The names of the fields the user must fill in.
+-- # Class: McpIcon_sizes
+--     * Slot: McpIcon_id Description: Autocreated FK slot
+--     * Slot: sizes Description: Optional array of strings that specify sizes at which the icon can be used.Each string should be in WxH format (e.g., `"48x48"`, `"96x96"`) or `"any"` for scalable formats like SVG.If not provided, the client should assume that the icon can be used at any size.
+-- # Class: McpLegacyTitledEnumSchema_enum
+--     * Slot: McpLegacyTitledEnumSchema_id Description: Autocreated FK slot
+--     * Slot: enum Description: The values the field offers.
+-- # Class: McpLegacyTitledEnumSchema_enumNames
+--     * Slot: McpLegacyTitledEnumSchema_id Description: Autocreated FK slot
+--     * Slot: enumNames Description: (Legacy) Display names for enum values.Non-standard according to JSON schema 2020-12.
+-- # Class: McpReadResourceResult_contents
+--     * Slot: McpReadResourceResult_id Description: Autocreated FK slot
+--     * Slot: contents Description: The contents of the resource that was read.
+-- # Class: McpSubscriptionFilter_resourceSubscriptions
+--     * Slot: McpSubscriptionFilter_id Description: Autocreated FK slot
+--     * Slot: resourceSubscriptions Description: Subscribe to {@link ResourceUpdatedNotificationnotifications/resources/updated} for these resource URIs.Replaces the former `resources/subscribe` RPC.
+-- # Class: McpTitledMultiSelectEnumSchema_default
+--     * Slot: McpTitledMultiSelectEnumSchema_id Description: Autocreated FK slot
+--     * Slot: default Description: Optional default value.
+-- # Class: McpUnsupportedProtocolVersionErrorErrorData_supported
+--     * Slot: McpUnsupportedProtocolVersionErrorErrorData_id Description: Autocreated FK slot
+--     * Slot: supported Description: Protocol versions the server supports. The client should choose amutually supported version from this list and retry.
+-- # Class: McpUntitledMultiSelectEnumSchema_default
+--     * Slot: McpUntitledMultiSelectEnumSchema_id Description: Autocreated FK slot
+--     * Slot: default Description: Optional default value.
+-- # Class: McpUntitledMultiSelectEnumSchemaItems_enum
+--     * Slot: McpUntitledMultiSelectEnumSchemaItems_id Description: Autocreated FK slot
+--     * Slot: enum Description: Array of enum values to choose from.
+-- # Class: McpUntitledSingleSelectEnumSchema_enum
+--     * Slot: McpUntitledSingleSelectEnumSchema_id Description: Autocreated FK slot
+--     * Slot: enum Description: Array of enum values to choose from.
 
-CREATE TABLE "HasIcons" (
-	id INTEGER NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_HasIcons_id" ON "HasIcons" (id);
-
-CREATE TABLE "HasName" (
-	id INTEGER NOT NULL,
-	name TEXT,
-	title TEXT,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_HasName_id" ON "HasName" (id);
-
-CREATE TABLE "Annotations" (
+CREATE TABLE "McpAnnotations" (
 	id INTEGER NOT NULL,
 	"lastModified" TEXT,
 	priority FLOAT,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_Annotations_id" ON "Annotations" (id);
+CREATE INDEX "ix_McpAnnotations_id" ON "McpAnnotations" (id);
 
-CREATE TABLE "Implementation" (
+CREATE TABLE "McpBaseMetadata" (
 	id INTEGER NOT NULL,
-	version TEXT NOT NULL,
+	name TEXT NOT NULL,
+	title TEXT,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpBaseMetadata_id" ON "McpBaseMetadata" (id);
+
+CREATE TABLE "McpBooleanSchema" (
+	id INTEGER NOT NULL,
 	description TEXT,
-	"websiteUrl" TEXT,
-	name TEXT NOT NULL,
 	title TEXT,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_Implementation_id" ON "Implementation" (id);
-
-CREATE TABLE "ContentBlock" (
-	id INTEGER NOT NULL,
-	type TEXT,
-	text TEXT,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ContentBlock_id" ON "ContentBlock" (id);
-
-CREATE TABLE "PromptReference" (
-	id INTEGER NOT NULL,
 	type TEXT NOT NULL,
-	name TEXT NOT NULL,
-	title TEXT,
+	"default" BOOLEAN,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_PromptReference_id" ON "PromptReference" (id);
+CREATE INDEX "ix_McpBooleanSchema_id" ON "McpBooleanSchema" (id);
 
-CREATE TABLE "ResourceTemplateReference" (
+CREATE TABLE "McpCallToolResultResponse" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	result TEXT NOT NULL,
+	PRIMARY KEY (uid)
+);
+CREATE INDEX "ix_McpCallToolResultResponse_uid" ON "McpCallToolResultResponse" (uid);
+
+CREATE TABLE "McpClientCapabilitiesExperimental" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpClientCapabilitiesExperimental_id" ON "McpClientCapabilitiesExperimental" (id);
+
+CREATE TABLE "McpClientCapabilitiesExtensions" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpClientCapabilitiesExtensions_id" ON "McpClientCapabilitiesExtensions" (id);
+
+CREATE TABLE "McpClientCapabilitiesRoots" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpClientCapabilitiesRoots_id" ON "McpClientCapabilitiesRoots" (id);
+
+CREATE TABLE "McpClientRequest" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpClientRequest_id" ON "McpClientRequest" (id);
+
+CREATE TABLE "McpCompleteRequestParamsArgument" (
+	id INTEGER NOT NULL,
+	name TEXT NOT NULL,
+	value TEXT NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpCompleteRequestParamsArgument_id" ON "McpCompleteRequestParamsArgument" (id);
+
+CREATE TABLE "McpCompleteRequestParamsContextArguments" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpCompleteRequestParamsContextArguments_id" ON "McpCompleteRequestParamsContextArguments" (id);
+
+CREATE TABLE "McpCompleteResultCompletion" (
+	id INTEGER NOT NULL,
+	"hasMore" BOOLEAN,
+	total INTEGER,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpCompleteResultCompletion_id" ON "McpCompleteResultCompletion" (id);
+
+CREATE TABLE "McpElicitRequestFormParamsRequestedSchemaProperties" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpElicitRequestFormParamsRequestedSchemaProperties_id" ON "McpElicitRequestFormParamsRequestedSchemaProperties" (id);
+
+CREATE TABLE "McpElicitRequestParams" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpElicitRequestParams_id" ON "McpElicitRequestParams" (id);
+
+CREATE TABLE "McpElicitRequestURLParams" (
+	id INTEGER NOT NULL,
+	url TEXT NOT NULL,
+	message TEXT NOT NULL,
+	mode TEXT NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpElicitRequestURLParams_id" ON "McpElicitRequestURLParams" (id);
+
+CREATE TABLE "McpElicitResultContent" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpElicitResultContent_id" ON "McpElicitResultContent" (id);
+
+CREATE TABLE "McpEnumSchema" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpEnumSchema_id" ON "McpEnumSchema" (id);
+
+CREATE TABLE "McpGetPromptRequestParamsArguments" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpGetPromptRequestParamsArguments_id" ON "McpGetPromptRequestParamsArguments" (id);
+
+CREATE TABLE "McpGetPromptResultResponse" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	result TEXT NOT NULL,
+	PRIMARY KEY (uid)
+);
+CREATE INDEX "ix_McpGetPromptResultResponse_uid" ON "McpGetPromptResultResponse" (uid);
+
+CREATE TABLE "McpIcons" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpIcons_id" ON "McpIcons" (id);
+
+CREATE TABLE "McpImplementation" (
+	id INTEGER NOT NULL,
+	description TEXT,
+	name TEXT NOT NULL,
+	title TEXT,
+	version TEXT NOT NULL,
+	"websiteUrl" TEXT,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpImplementation_id" ON "McpImplementation" (id);
+
+CREATE TABLE "McpInputRequest" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpInputRequest_id" ON "McpInputRequest" (id);
+
+CREATE TABLE "McpInputRequests" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpInputRequests_id" ON "McpInputRequests" (id);
+
+CREATE TABLE "McpInputResponse" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpInputResponse_id" ON "McpInputResponse" (id);
+
+CREATE TABLE "McpInputResponses" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpInputResponses_id" ON "McpInputResponses" (id);
+
+CREATE TABLE "McpJSONObject" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpJSONObject_id" ON "McpJSONObject" (id);
+
+CREATE TABLE "McpJSONRPCMessage" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpJSONRPCMessage_id" ON "McpJSONRPCMessage" (id);
+
+CREATE TABLE "McpJSONRPCResponse" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpJSONRPCResponse_id" ON "McpJSONRPCResponse" (id);
+
+CREATE TABLE "McpJSONValue" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpJSONValue_id" ON "McpJSONValue" (id);
+
+CREATE TABLE "McpLegacyTitledEnumSchema" (
+	id INTEGER NOT NULL,
+	description TEXT,
+	title TEXT,
+	type TEXT NOT NULL,
+	"default" TEXT,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpLegacyTitledEnumSchema_id" ON "McpLegacyTitledEnumSchema" (id);
+
+CREATE TABLE "McpListRootsResult" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpListRootsResult_id" ON "McpListRootsResult" (id);
+
+CREATE TABLE "McpMetaObject" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpMetaObject_id" ON "McpMetaObject" (id);
+
+CREATE TABLE "McpModelPreferences" (
+	id INTEGER NOT NULL,
+	"costPriority" FLOAT,
+	"intelligencePriority" FLOAT,
+	"speedPriority" FLOAT,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpModelPreferences_id" ON "McpModelPreferences" (id);
+
+CREATE TABLE "McpMultiSelectEnumSchema" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpMultiSelectEnumSchema_id" ON "McpMultiSelectEnumSchema" (id);
+
+CREATE TABLE "McpNotificationMetaObject" (
+	id INTEGER NOT NULL,
+	mcp_subscription_id TEXT,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpNotificationMetaObject_id" ON "McpNotificationMetaObject" (id);
+
+CREATE TABLE "McpNumberSchema" (
+	id INTEGER NOT NULL,
+	description TEXT,
+	title TEXT,
+	type VARCHAR(7) NOT NULL,
+	"default" FLOAT,
+	maximum FLOAT,
+	minimum FLOAT,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpNumberSchema_id" ON "McpNumberSchema" (id);
+
+CREATE TABLE "McpPrimitiveSchemaDefinition" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpPrimitiveSchemaDefinition_id" ON "McpPrimitiveSchemaDefinition" (id);
+
+CREATE TABLE "McpPromptReference" (
+	id INTEGER NOT NULL,
+	name TEXT NOT NULL,
+	title TEXT,
+	type TEXT NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpPromptReference_id" ON "McpPromptReference" (id);
+
+CREATE TABLE "McpReadResourceResultResponse" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	result TEXT NOT NULL,
+	PRIMARY KEY (uid)
+);
+CREATE INDEX "ix_McpReadResourceResultResponse_uid" ON "McpReadResourceResultResponse" (uid);
+
+CREATE TABLE "McpResourceTemplateReference" (
 	id INTEGER NOT NULL,
 	type TEXT NOT NULL,
 	uri TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_ResourceTemplateReference_id" ON "ResourceTemplateReference" (id);
+CREATE INDEX "ix_McpResourceTemplateReference_id" ON "McpResourceTemplateReference" (id);
 
-CREATE TABLE "ToolAnnotations" (
+CREATE TABLE "McpSamplingMessageContentBlock" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpSamplingMessageContentBlock_id" ON "McpSamplingMessageContentBlock" (id);
+
+CREATE TABLE "McpServerCapabilitiesExperimental" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpServerCapabilitiesExperimental_id" ON "McpServerCapabilitiesExperimental" (id);
+
+CREATE TABLE "McpServerCapabilitiesExtensions" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpServerCapabilitiesExtensions_id" ON "McpServerCapabilitiesExtensions" (id);
+
+CREATE TABLE "McpServerCapabilitiesPrompts" (
+	id INTEGER NOT NULL,
+	"listChanged" BOOLEAN,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpServerCapabilitiesPrompts_id" ON "McpServerCapabilitiesPrompts" (id);
+
+CREATE TABLE "McpServerCapabilitiesResources" (
+	id INTEGER NOT NULL,
+	"listChanged" BOOLEAN,
+	subscribe BOOLEAN,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpServerCapabilitiesResources_id" ON "McpServerCapabilitiesResources" (id);
+
+CREATE TABLE "McpServerCapabilitiesTools" (
+	id INTEGER NOT NULL,
+	"listChanged" BOOLEAN,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpServerCapabilitiesTools_id" ON "McpServerCapabilitiesTools" (id);
+
+CREATE TABLE "McpServerNotification" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpServerNotification_id" ON "McpServerNotification" (id);
+
+CREATE TABLE "McpServerResult" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpServerResult_id" ON "McpServerResult" (id);
+
+CREATE TABLE "McpSingleSelectEnumSchema" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpSingleSelectEnumSchema_id" ON "McpSingleSelectEnumSchema" (id);
+
+CREATE TABLE "McpStringSchema" (
+	id INTEGER NOT NULL,
+	description TEXT,
+	title TEXT,
+	type TEXT NOT NULL,
+	"default" TEXT,
+	format VARCHAR(9),
+	"maxLength" INTEGER,
+	"minLength" INTEGER,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpStringSchema_id" ON "McpStringSchema" (id);
+
+CREATE TABLE "McpSubscriptionFilter" (
+	id INTEGER NOT NULL,
+	"promptsListChanged" BOOLEAN,
+	"resourcesListChanged" BOOLEAN,
+	"toolsListChanged" BOOLEAN,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpSubscriptionFilter_id" ON "McpSubscriptionFilter" (id);
+
+CREATE TABLE "McpTitledMultiSelectEnumSchemaItems" (
+	id INTEGER NOT NULL,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpTitledMultiSelectEnumSchemaItems_id" ON "McpTitledMultiSelectEnumSchemaItems" (id);
+
+CREATE TABLE "McpTitledSingleSelectEnumSchema" (
+	id INTEGER NOT NULL,
+	description TEXT,
+	title TEXT,
+	type TEXT NOT NULL,
+	"default" TEXT,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpTitledSingleSelectEnumSchema_id" ON "McpTitledSingleSelectEnumSchema" (id);
+
+CREATE TABLE "McpToolAnnotations" (
 	id INTEGER NOT NULL,
 	title TEXT,
 	"destructiveHint" BOOLEAN,
@@ -1077,1998 +1297,1504 @@ CREATE TABLE "ToolAnnotations" (
 	"readOnlyHint" BOOLEAN,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_ToolAnnotations_id" ON "ToolAnnotations" (id);
+CREATE INDEX "ix_McpToolAnnotations_id" ON "McpToolAnnotations" (id);
 
-CREATE TABLE "ToolChoice" (
+CREATE TABLE "McpToolChoice" (
 	id INTEGER NOT NULL,
 	mode VARCHAR(8),
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_ToolChoice_id" ON "ToolChoice" (id);
+CREATE INDEX "ix_McpToolChoice_id" ON "McpToolChoice" (id);
 
-CREATE TABLE "ToolExecution" (
+CREATE TABLE "McpToolInputSchema" (
 	id INTEGER NOT NULL,
-	"taskSupport" VARCHAR(9),
+	type TEXT NOT NULL,
+	schema_dialect TEXT,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_ToolExecution_id" ON "ToolExecution" (id);
+CREATE INDEX "ix_McpToolInputSchema_id" ON "McpToolInputSchema" (id);
 
-CREATE TABLE "MetaObject" (
+CREATE TABLE "McpToolOutputSchema" (
 	id INTEGER NOT NULL,
-	"progressToken" TEXT,
+	schema_dialect TEXT,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_MetaObject_id" ON "MetaObject" (id);
+CREATE INDEX "ix_McpToolOutputSchema_id" ON "McpToolOutputSchema" (id);
 
-CREATE TABLE "ArgumentMap" (
+CREATE TABLE "McpUnsupportedProtocolVersionErrorErrorData" (
 	id INTEGER NOT NULL,
-	city TEXT,
-	location TEXT,
-	language TEXT,
-	framework TEXT,
+	requested TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_ArgumentMap_id" ON "ArgumentMap" (id);
+CREATE INDEX "ix_McpUnsupportedProtocolVersionErrorErrorData_id" ON "McpUnsupportedProtocolVersionErrorErrorData" (id);
 
-CREATE TABLE "CompletionArgument" (
+CREATE TABLE "McpUntitledMultiSelectEnumSchemaItems" (
 	id INTEGER NOT NULL,
-	name TEXT NOT NULL,
-	value TEXT NOT NULL,
+	type TEXT NOT NULL,
 	PRIMARY KEY (id)
 );
-CREATE INDEX "ix_CompletionArgument_id" ON "CompletionArgument" (id);
+CREATE INDEX "ix_McpUntitledMultiSelectEnumSchemaItems_id" ON "McpUntitledMultiSelectEnumSchemaItems" (id);
 
-CREATE TABLE "CompletionData" (
+CREATE TABLE "McpUntitledSingleSelectEnumSchema" (
 	id INTEGER NOT NULL,
-	total FLOAT,
-	"hasMore" BOOLEAN,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_CompletionData_id" ON "CompletionData" (id);
-
-CREATE TABLE "EnumOption" (
-	id INTEGER NOT NULL,
-	const TEXT NOT NULL,
-	title TEXT,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_EnumOption_id" ON "EnumOption" (id);
-
-CREATE TABLE "SchemaItems" (
-	id INTEGER NOT NULL,
-	type TEXT,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_SchemaItems_id" ON "SchemaItems" (id);
-
-CREATE TABLE "JsonSchema" (
-	id INTEGER NOT NULL,
-	"schemaUri" TEXT,
-	type TEXT,
-	"additionalProperties" BOOLEAN,
-	minimum INTEGER,
-	maximum INTEGER,
-	"minLength" INTEGER,
-	"maxLength" INTEGER,
-	format VARCHAR(9),
 	description TEXT,
 	title TEXT,
-	const TEXT,
+	type TEXT NOT NULL,
 	"default" TEXT,
-	properties_id INTEGER,
-	items_id INTEGER,
+	PRIMARY KEY (id)
+);
+CREATE INDEX "ix_McpUntitledSingleSelectEnumSchema_id" ON "McpUntitledSingleSelectEnumSchema" (id);
+
+CREATE TABLE "McpAudioContent" (
+	id INTEGER NOT NULL,
+	type TEXT NOT NULL,
+	data TEXT NOT NULL,
+	"mimeType" TEXT NOT NULL,
+	_meta_id INTEGER,
+	annotations_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY(properties_id) REFERENCES "SchemaProperties" (id),
-	FOREIGN KEY(items_id) REFERENCES "SchemaItems" (id)
+	FOREIGN KEY(_meta_id) REFERENCES "McpMetaObject" (id),
+	FOREIGN KEY(annotations_id) REFERENCES "McpAnnotations" (id)
 );
-CREATE INDEX "ix_JsonSchema_id" ON "JsonSchema" (id);
+CREATE INDEX "ix_McpAudioContent_id" ON "McpAudioContent" (id);
 
-CREATE TABLE "SchemaProperties" (
+CREATE TABLE "McpBlobResourceContents" (
 	id INTEGER NOT NULL,
-	name_id INTEGER,
-	email_id INTEGER,
-	age_id INTEGER,
-	city_id INTEGER,
-	location_id INTEGER,
-	a_id INTEGER,
-	b_id INTEGER,
-	temperature_id INTEGER,
-	conditions_id INTEGER,
-	humidity_id INTEGER,
+	blob TEXT NOT NULL,
+	"mimeType" TEXT,
+	uri TEXT NOT NULL,
+	_meta_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY(name_id) REFERENCES "JsonSchema" (id),
-	FOREIGN KEY(email_id) REFERENCES "JsonSchema" (id),
-	FOREIGN KEY(age_id) REFERENCES "JsonSchema" (id),
-	FOREIGN KEY(city_id) REFERENCES "JsonSchema" (id),
-	FOREIGN KEY(location_id) REFERENCES "JsonSchema" (id),
-	FOREIGN KEY(a_id) REFERENCES "JsonSchema" (id),
-	FOREIGN KEY(b_id) REFERENCES "JsonSchema" (id),
-	FOREIGN KEY(temperature_id) REFERENCES "JsonSchema" (id),
-	FOREIGN KEY(conditions_id) REFERENCES "JsonSchema" (id),
-	FOREIGN KEY(humidity_id) REFERENCES "JsonSchema" (id)
+	FOREIGN KEY(_meta_id) REFERENCES "McpMetaObject" (id)
 );
-CREATE INDEX "ix_SchemaProperties_id" ON "SchemaProperties" (id);
+CREATE INDEX "ix_McpBlobResourceContents_id" ON "McpBlobResourceContents" (id);
 
-CREATE TABLE "ToolInput" (
-	id INTEGER NOT NULL,
-	city TEXT,
-	location TEXT,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ToolInput_id" ON "ToolInput" (id);
-
-CREATE TABLE "StructuredContentData" (
-	id INTEGER NOT NULL,
-	temperature FLOAT,
-	conditions TEXT,
-	humidity FLOAT,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_StructuredContentData_id" ON "StructuredContentData" (id);
-
-CREATE TABLE "LogDetails" (
-	id INTEGER NOT NULL,
-	host TEXT,
-	port INTEGER,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_LogDetails_id" ON "LogDetails" (id);
-
-CREATE TABLE "ErrorData" (
+CREATE TABLE "McpCancelledNotificationParams" (
 	id INTEGER NOT NULL,
 	reason TEXT,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ErrorData_id" ON "ErrorData" (id);
-
-CREATE TABLE "ElicitationContent" (
-	id INTEGER NOT NULL,
-	name TEXT,
-	email TEXT,
-	age INTEGER,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ElicitationContent_id" ON "ElicitationContent" (id);
-
-CREATE TABLE "ElicitationCapability" (
-	id INTEGER NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ElicitationCapability_id" ON "ElicitationCapability" (id);
-
-CREATE TABLE "SamplingCapability" (
-	id INTEGER NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_SamplingCapability_id" ON "SamplingCapability" (id);
-
-CREATE TABLE "RootsCapability" (
-	id INTEGER NOT NULL,
-	"listChanged" BOOLEAN,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_RootsCapability_id" ON "RootsCapability" (id);
-
-CREATE TABLE "PromptsCapability" (
-	id INTEGER NOT NULL,
-	"listChanged" BOOLEAN,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_PromptsCapability_id" ON "PromptsCapability" (id);
-
-CREATE TABLE "ResourcesCapability" (
-	id INTEGER NOT NULL,
-	"listChanged" BOOLEAN,
-	subscribe BOOLEAN,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ResourcesCapability_id" ON "ResourcesCapability" (id);
-
-CREATE TABLE "ToolsCapability" (
-	id INTEGER NOT NULL,
-	"listChanged" BOOLEAN,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ToolsCapability_id" ON "ToolsCapability" (id);
-
-CREATE TABLE "ExtensionAppCapability" (
-	id INTEGER NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ExtensionAppCapability_id" ON "ExtensionAppCapability" (id);
-
-CREATE TABLE "ModelPreferences" (
-	id INTEGER NOT NULL,
-	"costPriority" FLOAT,
-	"intelligencePriority" FLOAT,
-	"speedPriority" FLOAT,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ModelPreferences_id" ON "ModelPreferences" (id);
-
-CREATE TABLE "TaskMetadata" (
-	id INTEGER NOT NULL,
-	ttl INTEGER,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_TaskMetadata_id" ON "TaskMetadata" (id);
-
-CREATE TABLE "RelatedTaskMetadata" (
-	id INTEGER NOT NULL,
-	"taskId" TEXT NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_RelatedTaskMetadata_id" ON "RelatedTaskMetadata" (id);
-
-CREATE TABLE "StringSchema" (
-	id INTEGER NOT NULL,
-	type TEXT NOT NULL,
-	"default" TEXT,
-	default_value TEXT,
-	description TEXT,
-	format VARCHAR(9),
-	"minLength" INTEGER,
-	"maxLength" INTEGER,
-	title TEXT,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_StringSchema_id" ON "StringSchema" (id);
-
-CREATE TABLE "NumberSchema" (
-	id INTEGER NOT NULL,
-	type TEXT NOT NULL,
-	"default" INTEGER,
-	default_value TEXT,
-	description TEXT,
-	minimum INTEGER,
-	maximum INTEGER,
-	title TEXT,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_NumberSchema_id" ON "NumberSchema" (id);
-
-CREATE TABLE "BooleanSchema" (
-	id INTEGER NOT NULL,
-	type TEXT NOT NULL,
-	"default" BOOLEAN,
-	default_value BOOLEAN,
-	title TEXT,
-	description TEXT,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_BooleanSchema_id" ON "BooleanSchema" (id);
-
-CREATE TABLE "UntitledSingleSelectEnumSchema" (
-	id INTEGER NOT NULL,
-	type TEXT NOT NULL,
-	"default" TEXT,
-	default_value TEXT,
-	description TEXT,
-	title TEXT,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_UntitledSingleSelectEnumSchema_id" ON "UntitledSingleSelectEnumSchema" (id);
-
-CREATE TABLE "TitledSingleSelectEnumSchema" (
-	id INTEGER NOT NULL,
-	type TEXT NOT NULL,
-	"default" TEXT,
-	default_value TEXT,
-	description TEXT,
-	title TEXT,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_TitledSingleSelectEnumSchema_id" ON "TitledSingleSelectEnumSchema" (id);
-
-CREATE TABLE "LegacyTitledEnumSchema" (
-	id INTEGER NOT NULL,
-	type TEXT NOT NULL,
-	"default" TEXT,
-	default_value TEXT,
-	description TEXT,
-	title TEXT,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_LegacyTitledEnumSchema_id" ON "LegacyTitledEnumSchema" (id);
-
-CREATE TABLE "JSONRPCRequest" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	PRIMARY KEY (uid)
-);
-CREATE INDEX "ix_JSONRPCRequest_uid" ON "JSONRPCRequest" (uid);
-
-CREATE TABLE "JSONRPCNotification" (
-	id INTEGER NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_JSONRPCNotification_id" ON "JSONRPCNotification" (id);
-
-CREATE TABLE "JSONRPCResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	PRIMARY KEY (uid)
-);
-CREATE INDEX "ix_JSONRPCResultResponse_uid" ON "JSONRPCResultResponse" (uid);
-
-CREATE TABLE "ElicitationCompleteNotificationParams" (
-	id INTEGER NOT NULL,
-	"elicitationId" TEXT NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ElicitationCompleteNotificationParams_id" ON "ElicitationCompleteNotificationParams" (id);
-
-CREATE TABLE "InitializedNotification" (
-	id INTEGER NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_InitializedNotification_id" ON "InitializedNotification" (id);
-
-CREATE TABLE "ResourceListChangedNotification" (
-	id INTEGER NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ResourceListChangedNotification_id" ON "ResourceListChangedNotification" (id);
-
-CREATE TABLE "PromptListChangedNotification" (
-	id INTEGER NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_PromptListChangedNotification_id" ON "PromptListChangedNotification" (id);
-
-CREATE TABLE "ToolListChangedNotification" (
-	id INTEGER NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ToolListChangedNotification_id" ON "ToolListChangedNotification" (id);
-
-CREATE TABLE "RootsListChangedNotification" (
-	id INTEGER NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_RootsListChangedNotification_id" ON "RootsListChangedNotification" (id);
-
-CREATE TABLE "ReadResourceRequestParams" (
-	id INTEGER NOT NULL,
-	uri TEXT NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ReadResourceRequestParams_id" ON "ReadResourceRequestParams" (id);
-
-CREATE TABLE "SubscribeRequestParams" (
-	id INTEGER NOT NULL,
-	uri TEXT NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_SubscribeRequestParams_id" ON "SubscribeRequestParams" (id);
-
-CREATE TABLE "UnsubscribeRequestParams" (
-	id INTEGER NOT NULL,
-	uri TEXT NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_UnsubscribeRequestParams_id" ON "UnsubscribeRequestParams" (id);
-
-CREATE TABLE "SetLevelRequestParams" (
-	id INTEGER NOT NULL,
-	level VARCHAR(9) NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_SetLevelRequestParams_id" ON "SetLevelRequestParams" (id);
-
-CREATE TABLE "PaginatedRequestParams" (
-	id INTEGER NOT NULL,
-	cursor TEXT,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_PaginatedRequestParams_id" ON "PaginatedRequestParams" (id);
-
-CREATE TABLE "PingRequest" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	PRIMARY KEY (uid)
-);
-CREATE INDEX "ix_PingRequest_uid" ON "PingRequest" (uid);
-
-CREATE TABLE "ListResourcesRequest" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	PRIMARY KEY (uid)
-);
-CREATE INDEX "ix_ListResourcesRequest_uid" ON "ListResourcesRequest" (uid);
-
-CREATE TABLE "ListResourceTemplatesRequest" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	PRIMARY KEY (uid)
-);
-CREATE INDEX "ix_ListResourceTemplatesRequest_uid" ON "ListResourceTemplatesRequest" (uid);
-
-CREATE TABLE "ListPromptsRequest" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	PRIMARY KEY (uid)
-);
-CREATE INDEX "ix_ListPromptsRequest_uid" ON "ListPromptsRequest" (uid);
-
-CREATE TABLE "ListToolsRequest" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	PRIMARY KEY (uid)
-);
-CREATE INDEX "ix_ListToolsRequest_uid" ON "ListToolsRequest" (uid);
-
-CREATE TABLE "ListRootsRequest" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	PRIMARY KEY (uid)
-);
-CREATE INDEX "ix_ListRootsRequest_uid" ON "ListRootsRequest" (uid);
-
-CREATE TABLE "ListTasksRequest" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	PRIMARY KEY (uid)
-);
-CREATE INDEX "ix_ListTasksRequest_uid" ON "ListTasksRequest" (uid);
-
-CREATE TABLE "GetTaskRequest" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	PRIMARY KEY (uid)
-);
-CREATE INDEX "ix_GetTaskRequest_uid" ON "GetTaskRequest" (uid);
-
-CREATE TABLE "GetTaskPayloadRequest" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	PRIMARY KEY (uid)
-);
-CREATE INDEX "ix_GetTaskPayloadRequest_uid" ON "GetTaskPayloadRequest" (uid);
-
-CREATE TABLE "CancelTaskRequest" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	PRIMARY KEY (uid)
-);
-CREATE INDEX "ix_CancelTaskRequest_uid" ON "CancelTaskRequest" (uid);
-
-CREATE TABLE "ClientNotification" (
-	id INTEGER NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ClientNotification_id" ON "ClientNotification" (id);
-
-CREATE TABLE "ClientRequest" (
-	id INTEGER NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ClientRequest_id" ON "ClientRequest" (id);
-
-CREATE TABLE "ClientResult" (
-	id INTEGER NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ClientResult_id" ON "ClientResult" (id);
-
-CREATE TABLE "ServerNotification" (
-	id INTEGER NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ServerNotification_id" ON "ServerNotification" (id);
-
-CREATE TABLE "ServerRequest" (
-	id INTEGER NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ServerRequest_id" ON "ServerRequest" (id);
-
-CREATE TABLE "ServerResult" (
-	id INTEGER NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ServerResult_id" ON "ServerResult" (id);
-
-CREATE TABLE "JSONRPCMessage" (
-	id INTEGER NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_JSONRPCMessage_id" ON "JSONRPCMessage" (id);
-
-CREATE TABLE "JSONRPCResponse" (
-	id INTEGER NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_JSONRPCResponse_id" ON "JSONRPCResponse" (id);
-
-CREATE TABLE "ElicitRequestParams" (
-	id INTEGER NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ElicitRequestParams_id" ON "ElicitRequestParams" (id);
-
-CREATE TABLE "EnumSchema" (
-	id INTEGER NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_EnumSchema_id" ON "EnumSchema" (id);
-
-CREATE TABLE "SingleSelectEnumSchema" (
-	id INTEGER NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_SingleSelectEnumSchema_id" ON "SingleSelectEnumSchema" (id);
-
-CREATE TABLE "MultiSelectEnumSchema" (
-	id INTEGER NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_MultiSelectEnumSchema_id" ON "MultiSelectEnumSchema" (id);
-
-CREATE TABLE "PrimitiveSchemaDefinition" (
-	id INTEGER NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_PrimitiveSchemaDefinition_id" ON "PrimitiveSchemaDefinition" (id);
-
-CREATE TABLE "ContentBlockVariants" (
-	id INTEGER NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_ContentBlockVariants_id" ON "ContentBlockVariants" (id);
-
-CREATE TABLE "SamplingMessageContentBlock" (
-	id INTEGER NOT NULL,
-	PRIMARY KEY (id)
-);
-CREATE INDEX "ix_SamplingMessageContentBlock_id" ON "SamplingMessageContentBlock" (id);
-
-CREATE TABLE "HasMeta" (
-	id INTEGER NOT NULL,
+	"requestId" TEXT NOT NULL,
 	_meta_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
+	FOREIGN KEY(_meta_id) REFERENCES "McpNotificationMetaObject" (id)
 );
-CREATE INDEX "ix_HasMeta_id" ON "HasMeta" (id);
+CREATE INDEX "ix_McpCancelledNotificationParams_id" ON "McpCancelledNotificationParams" (id);
 
-CREATE TABLE "HasAnnotations" (
+CREATE TABLE "McpClientCapabilitiesElicitation" (
 	id INTEGER NOT NULL,
-	annotations_id INTEGER,
+	form_id INTEGER,
+	url_settings_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY(annotations_id) REFERENCES "Annotations" (id)
+	FOREIGN KEY(form_id) REFERENCES "McpJSONObject" (id),
+	FOREIGN KEY(url_settings_id) REFERENCES "McpJSONObject" (id)
 );
-CREATE INDEX "ix_HasAnnotations_id" ON "HasAnnotations" (id);
+CREATE INDEX "ix_McpClientCapabilitiesElicitation_id" ON "McpClientCapabilitiesElicitation" (id);
 
-CREATE TABLE "Error" (
+CREATE TABLE "McpClientCapabilitiesSampling" (
 	id INTEGER NOT NULL,
-	code INTEGER NOT NULL,
-	message TEXT NOT NULL,
-	data_id INTEGER,
+	context_id INTEGER,
+	tools_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY(data_id) REFERENCES "ErrorData" (id)
+	FOREIGN KEY(context_id) REFERENCES "McpJSONObject" (id),
+	FOREIGN KEY(tools_id) REFERENCES "McpJSONObject" (id)
 );
-CREATE INDEX "ix_Error_id" ON "Error" (id);
+CREATE INDEX "ix_McpClientCapabilitiesSampling_id" ON "McpClientCapabilitiesSampling" (id);
 
-CREATE TABLE "InternalError" (
-	id INTEGER NOT NULL,
-	code INTEGER NOT NULL,
-	message TEXT NOT NULL,
-	data_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(data_id) REFERENCES "ErrorData" (id)
-);
-CREATE INDEX "ix_InternalError_id" ON "InternalError" (id);
-
-CREATE TABLE "InvalidParamsError" (
-	id INTEGER NOT NULL,
-	code INTEGER NOT NULL,
-	message TEXT NOT NULL,
-	data_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(data_id) REFERENCES "ErrorData" (id)
-);
-CREATE INDEX "ix_InvalidParamsError_id" ON "InvalidParamsError" (id);
-
-CREATE TABLE "InvalidRequestError" (
-	id INTEGER NOT NULL,
-	code INTEGER NOT NULL,
-	message TEXT NOT NULL,
-	data_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(data_id) REFERENCES "ErrorData" (id)
-);
-CREATE INDEX "ix_InvalidRequestError_id" ON "InvalidRequestError" (id);
-
-CREATE TABLE "MethodNotFoundError" (
-	id INTEGER NOT NULL,
-	code INTEGER NOT NULL,
-	message TEXT NOT NULL,
-	data_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(data_id) REFERENCES "ErrorData" (id)
-);
-CREATE INDEX "ix_MethodNotFoundError_id" ON "MethodNotFoundError" (id);
-
-CREATE TABLE "ParseError" (
-	id INTEGER NOT NULL,
-	code INTEGER NOT NULL,
-	message TEXT NOT NULL,
-	data_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(data_id) REFERENCES "ErrorData" (id)
-);
-CREATE INDEX "ix_ParseError_id" ON "ParseError" (id);
-
-CREATE TABLE "TextContent" (
-	id INTEGER NOT NULL,
-	text TEXT NOT NULL,
-	type TEXT NOT NULL,
-	_meta_id INTEGER,
-	annotations_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id),
-	FOREIGN KEY(annotations_id) REFERENCES "Annotations" (id)
-);
-CREATE INDEX "ix_TextContent_id" ON "TextContent" (id);
-
-CREATE TABLE "ImageContent" (
-	id INTEGER NOT NULL,
-	data TEXT NOT NULL,
-	"mimeType" TEXT NOT NULL,
-	type TEXT NOT NULL,
-	_meta_id INTEGER,
-	annotations_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id),
-	FOREIGN KEY(annotations_id) REFERENCES "Annotations" (id)
-);
-CREATE INDEX "ix_ImageContent_id" ON "ImageContent" (id);
-
-CREATE TABLE "AudioContent" (
-	id INTEGER NOT NULL,
-	data TEXT NOT NULL,
-	"mimeType" TEXT NOT NULL,
-	type TEXT NOT NULL,
-	_meta_id INTEGER,
-	annotations_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id),
-	FOREIGN KEY(annotations_id) REFERENCES "Annotations" (id)
-);
-CREATE INDEX "ix_AudioContent_id" ON "AudioContent" (id);
-
-CREATE TABLE "ResourceLink" (
-	id INTEGER NOT NULL,
-	uri TEXT NOT NULL,
-	"mimeType" TEXT,
-	description TEXT,
-	size INTEGER,
-	type TEXT NOT NULL,
-	name TEXT NOT NULL,
-	title TEXT,
-	_meta_id INTEGER,
-	annotations_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id),
-	FOREIGN KEY(annotations_id) REFERENCES "Annotations" (id)
-);
-CREATE INDEX "ix_ResourceLink_id" ON "ResourceLink" (id);
-
-CREATE TABLE "ToolUseContent" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	type TEXT NOT NULL,
-	name TEXT NOT NULL,
-	input_id INTEGER NOT NULL,
-	_meta_id INTEGER,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(input_id) REFERENCES "ToolInput" (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
-);
-CREATE INDEX "ix_ToolUseContent_uid" ON "ToolUseContent" (uid);
-
-CREATE TABLE "ToolResultContent" (
-	id INTEGER NOT NULL,
-	type TEXT NOT NULL,
-	"toolUseId" TEXT NOT NULL,
-	"isError" BOOLEAN,
-	"structuredContent_id" INTEGER,
-	_meta_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY("structuredContent_id") REFERENCES "StructuredContentData" (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
-);
-CREATE INDEX "ix_ToolResultContent_id" ON "ToolResultContent" (id);
-
-CREATE TABLE "TextResourceContents" (
-	id INTEGER NOT NULL,
-	uri TEXT NOT NULL,
-	"mimeType" TEXT,
-	text TEXT NOT NULL,
-	_meta_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
-);
-CREATE INDEX "ix_TextResourceContents_id" ON "TextResourceContents" (id);
-
-CREATE TABLE "BlobResourceContents" (
-	id INTEGER NOT NULL,
-	uri TEXT NOT NULL,
-	"mimeType" TEXT,
-	blob TEXT NOT NULL,
-	_meta_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
-);
-CREATE INDEX "ix_BlobResourceContents_id" ON "BlobResourceContents" (id);
-
-CREATE TABLE "CompletionContext" (
+CREATE TABLE "McpCompleteRequestParamsContext" (
 	id INTEGER NOT NULL,
 	arguments_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY(arguments_id) REFERENCES "ArgumentMap" (id)
+	FOREIGN KEY(arguments_id) REFERENCES "McpCompleteRequestParamsContextArguments" (id)
 );
-CREATE INDEX "ix_CompletionContext_id" ON "CompletionContext" (id);
+CREATE INDEX "ix_McpCompleteRequestParamsContext_id" ON "McpCompleteRequestParamsContext" (id);
 
-CREATE TABLE "LogData" (
+CREATE TABLE "McpCreateMessageRequestParams" (
 	id INTEGER NOT NULL,
-	error TEXT,
-	details_id INTEGER,
+	"includeContext" VARCHAR(10),
+	"maxTokens" INTEGER NOT NULL,
+	"systemPrompt" TEXT,
+	temperature FLOAT,
+	metadata_id INTEGER,
+	"modelPreferences_id" INTEGER,
+	"toolChoice_id" INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY(details_id) REFERENCES "LogDetails" (id)
+	FOREIGN KEY(metadata_id) REFERENCES "McpJSONObject" (id),
+	FOREIGN KEY("modelPreferences_id") REFERENCES "McpModelPreferences" (id),
+	FOREIGN KEY("toolChoice_id") REFERENCES "McpToolChoice" (id)
 );
-CREATE INDEX "ix_LogData_id" ON "LogData" (id);
+CREATE INDEX "ix_McpCreateMessageRequestParams_id" ON "McpCreateMessageRequestParams" (id);
 
-CREATE TABLE "URLElicitation" (
+CREATE TABLE "McpCreateMessageResult" (
 	id INTEGER NOT NULL,
-	mode TEXT,
-	"elicitationId" TEXT,
-	message TEXT,
-	url TEXT,
-	"ErrorData_id" INTEGER,
+	content TEXT NOT NULL,
+	model TEXT NOT NULL,
+	role VARCHAR(9) NOT NULL,
+	"stopReason" TEXT,
+	_meta_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("ErrorData_id") REFERENCES "ErrorData" (id)
+	FOREIGN KEY(_meta_id) REFERENCES "McpMetaObject" (id)
 );
-CREATE INDEX "ix_URLElicitation_id" ON "URLElicitation" (id);
+CREATE INDEX "ix_McpCreateMessageResult_id" ON "McpCreateMessageResult" (id);
 
-CREATE TABLE "TaskRequestCapabilities" (
+CREATE TABLE "McpElicitRequest" (
 	id INTEGER NOT NULL,
-	elicitation_id INTEGER,
-	sampling_id INTEGER,
-	tools_id INTEGER,
+	method TEXT NOT NULL,
+	params_id INTEGER NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY(elicitation_id) REFERENCES "ElicitationCapability" (id),
-	FOREIGN KEY(sampling_id) REFERENCES "SamplingCapability" (id),
-	FOREIGN KEY(tools_id) REFERENCES "ToolsCapability" (id)
+	FOREIGN KEY(params_id) REFERENCES "McpElicitRequestParams" (id)
 );
-CREATE INDEX "ix_TaskRequestCapabilities_id" ON "TaskRequestCapabilities" (id);
+CREATE INDEX "ix_McpElicitRequest_id" ON "McpElicitRequest" (id);
 
-CREATE TABLE "ExtensionsCapability" (
+CREATE TABLE "McpElicitRequestFormParamsRequestedSchema" (
 	id INTEGER NOT NULL,
-	apps_extension_id INTEGER,
+	type TEXT NOT NULL,
+	schema_dialect TEXT,
+	properties_id INTEGER NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY(apps_extension_id) REFERENCES "ExtensionAppCapability" (id)
+	FOREIGN KEY(properties_id) REFERENCES "McpElicitRequestFormParamsRequestedSchemaProperties" (id)
 );
-CREATE INDEX "ix_ExtensionsCapability_id" ON "ExtensionsCapability" (id);
+CREATE INDEX "ix_McpElicitRequestFormParamsRequestedSchema_id" ON "McpElicitRequestFormParamsRequestedSchema" (id);
 
-CREATE TABLE "ModelHint" (
+CREATE TABLE "McpElicitResult" (
+	id INTEGER NOT NULL,
+	action VARCHAR(7) NOT NULL,
+	content_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(content_id) REFERENCES "McpElicitResultContent" (id)
+);
+CREATE INDEX "ix_McpElicitResult_id" ON "McpElicitResult" (id);
+
+CREATE TABLE "McpEmbeddedResource" (
+	id INTEGER NOT NULL,
+	resource TEXT NOT NULL,
+	type TEXT NOT NULL,
+	_meta_id INTEGER,
+	annotations_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpMetaObject" (id),
+	FOREIGN KEY(annotations_id) REFERENCES "McpAnnotations" (id)
+);
+CREATE INDEX "ix_McpEmbeddedResource_id" ON "McpEmbeddedResource" (id);
+
+CREATE TABLE "McpError" (
+	id INTEGER NOT NULL,
+	code INTEGER NOT NULL,
+	message TEXT NOT NULL,
+	data_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(data_id) REFERENCES "McpJSONValue" (id)
+);
+CREATE INDEX "ix_McpError_id" ON "McpError" (id);
+
+CREATE TABLE "McpHeaderMismatchErrorError" (
+	id INTEGER NOT NULL,
+	code INTEGER NOT NULL,
+	message TEXT NOT NULL,
+	data_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(data_id) REFERENCES "McpJSONValue" (id)
+);
+CREATE INDEX "ix_McpHeaderMismatchErrorError_id" ON "McpHeaderMismatchErrorError" (id);
+
+CREATE TABLE "McpImageContent" (
+	id INTEGER NOT NULL,
+	type TEXT NOT NULL,
+	data TEXT NOT NULL,
+	"mimeType" TEXT NOT NULL,
+	_meta_id INTEGER,
+	annotations_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpMetaObject" (id),
+	FOREIGN KEY(annotations_id) REFERENCES "McpAnnotations" (id)
+);
+CREATE INDEX "ix_McpImageContent_id" ON "McpImageContent" (id);
+
+CREATE TABLE "McpInternalError" (
+	id INTEGER NOT NULL,
+	code INTEGER NOT NULL,
+	message TEXT NOT NULL,
+	data_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(data_id) REFERENCES "McpJSONValue" (id)
+);
+CREATE INDEX "ix_McpInternalError_id" ON "McpInternalError" (id);
+
+CREATE TABLE "McpInvalidParamsError" (
+	id INTEGER NOT NULL,
+	code INTEGER NOT NULL,
+	message TEXT NOT NULL,
+	data_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(data_id) REFERENCES "McpJSONValue" (id)
+);
+CREATE INDEX "ix_McpInvalidParamsError_id" ON "McpInvalidParamsError" (id);
+
+CREATE TABLE "McpInvalidRequestError" (
+	id INTEGER NOT NULL,
+	code INTEGER NOT NULL,
+	message TEXT NOT NULL,
+	data_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(data_id) REFERENCES "McpJSONValue" (id)
+);
+CREATE INDEX "ix_McpInvalidRequestError_id" ON "McpInvalidRequestError" (id);
+
+CREATE TABLE "McpJSONRPCNotification" (
+	id INTEGER NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	method TEXT NOT NULL,
+	params_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(params_id) REFERENCES "McpJSONObject" (id)
+);
+CREATE INDEX "ix_McpJSONRPCNotification_id" ON "McpJSONRPCNotification" (id);
+
+CREATE TABLE "McpJSONRPCRequest" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	method TEXT NOT NULL,
+	params_id INTEGER,
+	PRIMARY KEY (uid),
+	FOREIGN KEY(params_id) REFERENCES "McpJSONObject" (id)
+);
+CREATE INDEX "ix_McpJSONRPCRequest_uid" ON "McpJSONRPCRequest" (uid);
+
+CREATE TABLE "McpListRootsRequestParams" (
+	id INTEGER NOT NULL,
+	_meta_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpMetaObject" (id)
+);
+CREATE INDEX "ix_McpListRootsRequestParams_id" ON "McpListRootsRequestParams" (id);
+
+CREATE TABLE "McpLoggingMessageNotificationParams" (
+	id INTEGER NOT NULL,
+	level VARCHAR(9) NOT NULL,
+	logger TEXT,
+	_meta_id INTEGER,
+	data_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpNotificationMetaObject" (id),
+	FOREIGN KEY(data_id) REFERENCES "McpJSONValue" (id)
+);
+CREATE INDEX "ix_McpLoggingMessageNotificationParams_id" ON "McpLoggingMessageNotificationParams" (id);
+
+CREATE TABLE "McpMethodNotFoundError" (
+	id INTEGER NOT NULL,
+	code INTEGER NOT NULL,
+	message TEXT NOT NULL,
+	data_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(data_id) REFERENCES "McpJSONValue" (id)
+);
+CREATE INDEX "ix_McpMethodNotFoundError_id" ON "McpMethodNotFoundError" (id);
+
+CREATE TABLE "McpModelHint" (
 	id INTEGER NOT NULL,
 	name TEXT,
-	"ModelPreferences_id" INTEGER,
+	"McpModelPreferences_id" INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("ModelPreferences_id") REFERENCES "ModelPreferences" (id)
+	FOREIGN KEY("McpModelPreferences_id") REFERENCES "McpModelPreferences" (id)
 );
-CREATE INDEX "ix_ModelHint_id" ON "ModelHint" (id);
+CREATE INDEX "ix_McpModelHint_id" ON "McpModelHint" (id);
 
-CREATE TABLE "UntitledMultiSelectEnumSchema" (
+CREATE TABLE "McpNotification" (
 	id INTEGER NOT NULL,
-	type TEXT NOT NULL,
-	default_value TEXT,
-	description TEXT,
-	title TEXT,
-	"minItems" INTEGER,
-	"maxItems" INTEGER,
-	items_id INTEGER,
+	method TEXT NOT NULL,
+	params_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY(items_id) REFERENCES "SchemaItems" (id)
+	FOREIGN KEY(params_id) REFERENCES "McpJSONObject" (id)
 );
-CREATE INDEX "ix_UntitledMultiSelectEnumSchema_id" ON "UntitledMultiSelectEnumSchema" (id);
+CREATE INDEX "ix_McpNotification_id" ON "McpNotification" (id);
 
-CREATE TABLE "TitledMultiSelectEnumSchema" (
-	id INTEGER NOT NULL,
-	type TEXT NOT NULL,
-	default_value TEXT,
-	description TEXT,
-	title TEXT,
-	"minItems" INTEGER,
-	"maxItems" INTEGER,
-	items_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(items_id) REFERENCES "SchemaItems" (id)
-);
-CREATE INDEX "ix_TitledMultiSelectEnumSchema_id" ON "TitledMultiSelectEnumSchema" (id);
-
-CREATE TABLE "Result" (
+CREATE TABLE "McpNotificationParams" (
 	id INTEGER NOT NULL,
 	_meta_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
+	FOREIGN KEY(_meta_id) REFERENCES "McpNotificationMetaObject" (id)
 );
-CREATE INDEX "ix_Result_id" ON "Result" (id);
+CREATE INDEX "ix_McpNotificationParams_id" ON "McpNotificationParams" (id);
 
-CREATE TABLE "CancelledNotificationParams" (
+CREATE TABLE "McpParseError" (
 	id INTEGER NOT NULL,
-	"requestId" TEXT,
-	reason TEXT,
-	_meta_id INTEGER,
+	code INTEGER NOT NULL,
+	message TEXT NOT NULL,
+	data_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
+	FOREIGN KEY(data_id) REFERENCES "McpJSONValue" (id)
 );
-CREATE INDEX "ix_CancelledNotificationParams_id" ON "CancelledNotificationParams" (id);
+CREATE INDEX "ix_McpParseError_id" ON "McpParseError" (id);
 
-CREATE TABLE "ProgressNotificationParams" (
+CREATE TABLE "McpProgressNotificationParams" (
 	id INTEGER NOT NULL,
+	message TEXT,
 	progress FLOAT NOT NULL,
 	"progressToken" TEXT NOT NULL,
 	total FLOAT,
-	message TEXT,
 	_meta_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
+	FOREIGN KEY(_meta_id) REFERENCES "McpNotificationMetaObject" (id)
 );
-CREATE INDEX "ix_ProgressNotificationParams_id" ON "ProgressNotificationParams" (id);
+CREATE INDEX "ix_McpProgressNotificationParams_id" ON "McpProgressNotificationParams" (id);
 
-CREATE TABLE "ResourceUpdatedNotificationParams" (
+CREATE TABLE "McpRequest" (
+	id INTEGER NOT NULL,
+	method TEXT NOT NULL,
+	params_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(params_id) REFERENCES "McpJSONObject" (id)
+);
+CREATE INDEX "ix_McpRequest_id" ON "McpRequest" (id);
+
+CREATE TABLE "McpResourceContents" (
+	id INTEGER NOT NULL,
+	"mimeType" TEXT,
+	uri TEXT NOT NULL,
+	_meta_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpMetaObject" (id)
+);
+CREATE INDEX "ix_McpResourceContents_id" ON "McpResourceContents" (id);
+
+CREATE TABLE "McpResourceLink" (
+	id INTEGER NOT NULL,
+	description TEXT,
+	name TEXT NOT NULL,
+	title TEXT,
+	type TEXT NOT NULL,
+	"mimeType" TEXT,
+	size INTEGER,
+	uri TEXT NOT NULL,
+	_meta_id INTEGER,
+	annotations_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpMetaObject" (id),
+	FOREIGN KEY(annotations_id) REFERENCES "McpAnnotations" (id)
+);
+CREATE INDEX "ix_McpResourceLink_id" ON "McpResourceLink" (id);
+
+CREATE TABLE "McpResourceUpdatedNotificationParams" (
 	id INTEGER NOT NULL,
 	uri TEXT NOT NULL,
 	_meta_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
+	FOREIGN KEY(_meta_id) REFERENCES "McpNotificationMetaObject" (id)
 );
-CREATE INDEX "ix_ResourceUpdatedNotificationParams_id" ON "ResourceUpdatedNotificationParams" (id);
+CREATE INDEX "ix_McpResourceUpdatedNotificationParams_id" ON "McpResourceUpdatedNotificationParams" (id);
 
-CREATE TABLE "TaskStatusNotificationParams" (
+CREATE TABLE "McpResultMetaObject" (
 	id INTEGER NOT NULL,
-	"taskId" TEXT NOT NULL,
-	status VARCHAR(14) NOT NULL,
-	"createdAt" TEXT NOT NULL,
-	"lastUpdatedAt" TEXT NOT NULL,
-	ttl INTEGER NOT NULL,
-	"statusMessage" TEXT,
-	"pollInterval" INTEGER,
+	mcp_server_info_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(mcp_server_info_id) REFERENCES "McpImplementation" (id)
+);
+CREATE INDEX "ix_McpResultMetaObject_id" ON "McpResultMetaObject" (id);
+
+CREATE TABLE "McpRoot" (
+	id INTEGER NOT NULL,
+	name TEXT,
+	uri TEXT NOT NULL,
+	"McpListRootsResult_id" INTEGER,
 	_meta_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
+	FOREIGN KEY("McpListRootsResult_id") REFERENCES "McpListRootsResult" (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpMetaObject" (id)
 );
-CREATE INDEX "ix_TaskStatusNotificationParams_id" ON "TaskStatusNotificationParams" (id);
+CREATE INDEX "ix_McpRoot_id" ON "McpRoot" (id);
 
-CREATE TABLE "ElicitationCompleteNotification" (
+CREATE TABLE "McpServerCapabilities" (
+	id INTEGER NOT NULL,
+	completions_id INTEGER,
+	experimental_id INTEGER,
+	extensions_id INTEGER,
+	logging_id INTEGER,
+	prompts_id INTEGER,
+	resources_id INTEGER,
+	tools_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(completions_id) REFERENCES "McpJSONObject" (id),
+	FOREIGN KEY(experimental_id) REFERENCES "McpServerCapabilitiesExperimental" (id),
+	FOREIGN KEY(extensions_id) REFERENCES "McpServerCapabilitiesExtensions" (id),
+	FOREIGN KEY(logging_id) REFERENCES "McpJSONObject" (id),
+	FOREIGN KEY(prompts_id) REFERENCES "McpServerCapabilitiesPrompts" (id),
+	FOREIGN KEY(resources_id) REFERENCES "McpServerCapabilitiesResources" (id),
+	FOREIGN KEY(tools_id) REFERENCES "McpServerCapabilitiesTools" (id)
+);
+CREATE INDEX "ix_McpServerCapabilities_id" ON "McpServerCapabilities" (id);
+
+CREATE TABLE "McpSubscriptionsAcknowledgedNotificationParams" (
+	id INTEGER NOT NULL,
+	_meta_id INTEGER,
+	notifications_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpNotificationMetaObject" (id),
+	FOREIGN KEY(notifications_id) REFERENCES "McpSubscriptionFilter" (id)
+);
+CREATE INDEX "ix_McpSubscriptionsAcknowledgedNotificationParams_id" ON "McpSubscriptionsAcknowledgedNotificationParams" (id);
+
+CREATE TABLE "McpSubscriptionsListenResultMetaObject" (
+	id INTEGER NOT NULL,
+	mcp_subscription_id TEXT NOT NULL,
+	mcp_server_info_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(mcp_server_info_id) REFERENCES "McpImplementation" (id)
+);
+CREATE INDEX "ix_McpSubscriptionsListenResultMetaObject_id" ON "McpSubscriptionsListenResultMetaObject" (id);
+
+CREATE TABLE "McpTextContent" (
+	id INTEGER NOT NULL,
+	type TEXT NOT NULL,
+	text TEXT NOT NULL,
+	_meta_id INTEGER,
+	annotations_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpMetaObject" (id),
+	FOREIGN KEY(annotations_id) REFERENCES "McpAnnotations" (id)
+);
+CREATE INDEX "ix_McpTextContent_id" ON "McpTextContent" (id);
+
+CREATE TABLE "McpTextResourceContents" (
+	id INTEGER NOT NULL,
+	"mimeType" TEXT,
+	text TEXT NOT NULL,
+	uri TEXT NOT NULL,
+	_meta_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpMetaObject" (id)
+);
+CREATE INDEX "ix_McpTextResourceContents_id" ON "McpTextResourceContents" (id);
+
+CREATE TABLE "McpTitledMultiSelectEnumSchema" (
+	id INTEGER NOT NULL,
+	description TEXT,
+	title TEXT,
+	type TEXT NOT NULL,
+	"maxItems" INTEGER,
+	"minItems" INTEGER,
+	items_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(items_id) REFERENCES "McpTitledMultiSelectEnumSchemaItems" (id)
+);
+CREATE INDEX "ix_McpTitledMultiSelectEnumSchema_id" ON "McpTitledMultiSelectEnumSchema" (id);
+
+CREATE TABLE "McpTitledMultiSelectEnumSchemaItemsAnyOf" (
+	id INTEGER NOT NULL,
+	title TEXT NOT NULL,
+	const TEXT NOT NULL,
+	"McpTitledMultiSelectEnumSchemaItems_id" INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY("McpTitledMultiSelectEnumSchemaItems_id") REFERENCES "McpTitledMultiSelectEnumSchemaItems" (id)
+);
+CREATE INDEX "ix_McpTitledMultiSelectEnumSchemaItemsAnyOf_id" ON "McpTitledMultiSelectEnumSchemaItemsAnyOf" (id);
+
+CREATE TABLE "McpTitledSingleSelectEnumSchemaOneOf" (
+	id INTEGER NOT NULL,
+	title TEXT NOT NULL,
+	const TEXT NOT NULL,
+	"McpTitledSingleSelectEnumSchema_id" INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY("McpTitledSingleSelectEnumSchema_id") REFERENCES "McpTitledSingleSelectEnumSchema" (id)
+);
+CREATE INDEX "ix_McpTitledSingleSelectEnumSchemaOneOf_id" ON "McpTitledSingleSelectEnumSchemaOneOf" (id);
+
+CREATE TABLE "McpToolResultContent" (
+	id INTEGER NOT NULL,
+	type TEXT NOT NULL,
+	"isError" BOOLEAN,
+	"toolUseId" TEXT NOT NULL,
+	_meta_id INTEGER,
+	"structuredContent_id" INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpMetaObject" (id),
+	FOREIGN KEY("structuredContent_id") REFERENCES "McpJSONValue" (id)
+);
+CREATE INDEX "ix_McpToolResultContent_id" ON "McpToolResultContent" (id);
+
+CREATE TABLE "McpToolUseContent" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	name TEXT NOT NULL,
+	type TEXT NOT NULL,
+	_meta_id INTEGER,
+	input_id INTEGER NOT NULL,
+	PRIMARY KEY (uid),
+	FOREIGN KEY(_meta_id) REFERENCES "McpMetaObject" (id),
+	FOREIGN KEY(input_id) REFERENCES "McpJSONObject" (id)
+);
+CREATE INDEX "ix_McpToolUseContent_uid" ON "McpToolUseContent" (uid);
+
+CREATE TABLE "McpUnsupportedProtocolVersionErrorError" (
+	id INTEGER NOT NULL,
+	code INTEGER NOT NULL,
+	message TEXT NOT NULL,
+	data_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(data_id) REFERENCES "McpUnsupportedProtocolVersionErrorErrorData" (id)
+);
+CREATE INDEX "ix_McpUnsupportedProtocolVersionErrorError_id" ON "McpUnsupportedProtocolVersionErrorError" (id);
+
+CREATE TABLE "McpUntitledMultiSelectEnumSchema" (
+	id INTEGER NOT NULL,
+	description TEXT,
+	title TEXT,
+	type TEXT NOT NULL,
+	"maxItems" INTEGER,
+	"minItems" INTEGER,
+	items_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(items_id) REFERENCES "McpUntitledMultiSelectEnumSchemaItems" (id)
+);
+CREATE INDEX "ix_McpUntitledMultiSelectEnumSchema_id" ON "McpUntitledMultiSelectEnumSchema" (id);
+
+CREATE TABLE "McpAnnotations_audience" (
+	"McpAnnotations_id" INTEGER,
+	audience VARCHAR(9),
+	PRIMARY KEY ("McpAnnotations_id", audience),
+	FOREIGN KEY("McpAnnotations_id") REFERENCES "McpAnnotations" (id)
+);
+CREATE INDEX "ix_McpAnnotations_audience_audience" ON "McpAnnotations_audience" (audience);
+CREATE INDEX "ix_McpAnnotations_audience_McpAnnotations_id" ON "McpAnnotations_audience" ("McpAnnotations_id");
+
+CREATE TABLE "McpCompleteResultCompletion_values" (
+	"McpCompleteResultCompletion_id" INTEGER,
+	"values" TEXT NOT NULL,
+	PRIMARY KEY ("McpCompleteResultCompletion_id", "values"),
+	FOREIGN KEY("McpCompleteResultCompletion_id") REFERENCES "McpCompleteResultCompletion" (id)
+);
+CREATE INDEX "ix_McpCompleteResultCompletion_values_values" ON "McpCompleteResultCompletion_values" ("values");
+CREATE INDEX "ix_McpCompleteResultCompletion_values_McpCompleteResultCompletion_id" ON "McpCompleteResultCompletion_values" ("McpCompleteResultCompletion_id");
+
+CREATE TABLE "McpLegacyTitledEnumSchema_enum" (
+	"McpLegacyTitledEnumSchema_id" INTEGER,
+	enum TEXT NOT NULL,
+	PRIMARY KEY ("McpLegacyTitledEnumSchema_id", enum),
+	FOREIGN KEY("McpLegacyTitledEnumSchema_id") REFERENCES "McpLegacyTitledEnumSchema" (id)
+);
+CREATE INDEX "ix_McpLegacyTitledEnumSchema_enum_McpLegacyTitledEnumSchema_id" ON "McpLegacyTitledEnumSchema_enum" ("McpLegacyTitledEnumSchema_id");
+CREATE INDEX "ix_McpLegacyTitledEnumSchema_enum_enum" ON "McpLegacyTitledEnumSchema_enum" (enum);
+
+CREATE TABLE "McpLegacyTitledEnumSchema_enumNames" (
+	"McpLegacyTitledEnumSchema_id" INTEGER,
+	"enumNames" TEXT,
+	PRIMARY KEY ("McpLegacyTitledEnumSchema_id", "enumNames"),
+	FOREIGN KEY("McpLegacyTitledEnumSchema_id") REFERENCES "McpLegacyTitledEnumSchema" (id)
+);
+CREATE INDEX "ix_McpLegacyTitledEnumSchema_enumNames_enumNames" ON "McpLegacyTitledEnumSchema_enumNames" ("enumNames");
+CREATE INDEX "ix_McpLegacyTitledEnumSchema_enumNames_McpLegacyTitledEnumSchema_id" ON "McpLegacyTitledEnumSchema_enumNames" ("McpLegacyTitledEnumSchema_id");
+
+CREATE TABLE "McpSubscriptionFilter_resourceSubscriptions" (
+	"McpSubscriptionFilter_id" INTEGER,
+	"resourceSubscriptions" TEXT,
+	PRIMARY KEY ("McpSubscriptionFilter_id", "resourceSubscriptions"),
+	FOREIGN KEY("McpSubscriptionFilter_id") REFERENCES "McpSubscriptionFilter" (id)
+);
+CREATE INDEX "ix_McpSubscriptionFilter_resourceSubscriptions_resourceSubscriptions" ON "McpSubscriptionFilter_resourceSubscriptions" ("resourceSubscriptions");
+CREATE INDEX "ix_McpSubscriptionFilter_resourceSubscriptions_McpSubscriptionFilter_id" ON "McpSubscriptionFilter_resourceSubscriptions" ("McpSubscriptionFilter_id");
+
+CREATE TABLE "McpUnsupportedProtocolVersionErrorErrorData_supported" (
+	"McpUnsupportedProtocolVersionErrorErrorData_id" INTEGER,
+	supported TEXT NOT NULL,
+	PRIMARY KEY ("McpUnsupportedProtocolVersionErrorErrorData_id", supported),
+	FOREIGN KEY("McpUnsupportedProtocolVersionErrorErrorData_id") REFERENCES "McpUnsupportedProtocolVersionErrorErrorData" (id)
+);
+CREATE INDEX "ix_McpUnsupportedProtocolVersionErrorErrorData_supported_McpUnsupportedProtocolVersionErrorErrorData_id" ON "McpUnsupportedProtocolVersionErrorErrorData_supported" ("McpUnsupportedProtocolVersionErrorErrorData_id");
+CREATE INDEX "ix_McpUnsupportedProtocolVersionErrorErrorData_supported_supported" ON "McpUnsupportedProtocolVersionErrorErrorData_supported" (supported);
+
+CREATE TABLE "McpUntitledMultiSelectEnumSchemaItems_enum" (
+	"McpUntitledMultiSelectEnumSchemaItems_id" INTEGER,
+	enum TEXT NOT NULL,
+	PRIMARY KEY ("McpUntitledMultiSelectEnumSchemaItems_id", enum),
+	FOREIGN KEY("McpUntitledMultiSelectEnumSchemaItems_id") REFERENCES "McpUntitledMultiSelectEnumSchemaItems" (id)
+);
+CREATE INDEX "ix_McpUntitledMultiSelectEnumSchemaItems_enum_enum" ON "McpUntitledMultiSelectEnumSchemaItems_enum" (enum);
+CREATE INDEX "ix_McpUntitledMultiSelectEnumSchemaItems_enum_McpUntitledMultiSelectEnumSchemaItems_id" ON "McpUntitledMultiSelectEnumSchemaItems_enum" ("McpUntitledMultiSelectEnumSchemaItems_id");
+
+CREATE TABLE "McpUntitledSingleSelectEnumSchema_enum" (
+	"McpUntitledSingleSelectEnumSchema_id" INTEGER,
+	enum TEXT NOT NULL,
+	PRIMARY KEY ("McpUntitledSingleSelectEnumSchema_id", enum),
+	FOREIGN KEY("McpUntitledSingleSelectEnumSchema_id") REFERENCES "McpUntitledSingleSelectEnumSchema" (id)
+);
+CREATE INDEX "ix_McpUntitledSingleSelectEnumSchema_enum_McpUntitledSingleSelectEnumSchema_id" ON "McpUntitledSingleSelectEnumSchema_enum" ("McpUntitledSingleSelectEnumSchema_id");
+CREATE INDEX "ix_McpUntitledSingleSelectEnumSchema_enum_enum" ON "McpUntitledSingleSelectEnumSchema_enum" (enum);
+
+CREATE TABLE "McpCacheableResult" (
+	id INTEGER NOT NULL,
+	"cacheScope" VARCHAR(7) NOT NULL,
+	"resultType" TEXT NOT NULL,
+	"ttlMs" INTEGER NOT NULL,
+	_meta_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpResultMetaObject" (id)
+);
+CREATE INDEX "ix_McpCacheableResult_id" ON "McpCacheableResult" (id);
+
+CREATE TABLE "McpCallToolResult" (
+	id INTEGER NOT NULL,
+	"isError" BOOLEAN,
+	"resultType" TEXT NOT NULL,
+	_meta_id INTEGER,
+	"structuredContent_id" INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpResultMetaObject" (id),
+	FOREIGN KEY("structuredContent_id") REFERENCES "McpJSONValue" (id)
+);
+CREATE INDEX "ix_McpCallToolResult_id" ON "McpCallToolResult" (id);
+
+CREATE TABLE "McpCancelledNotification" (
 	id INTEGER NOT NULL,
 	jsonrpc TEXT NOT NULL,
 	method TEXT NOT NULL,
 	params_id INTEGER NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY(params_id) REFERENCES "ElicitationCompleteNotificationParams" (id)
+	FOREIGN KEY(params_id) REFERENCES "McpCancelledNotificationParams" (id)
 );
-CREATE INDEX "ix_ElicitationCompleteNotification_id" ON "ElicitationCompleteNotification" (id);
+CREATE INDEX "ix_McpCancelledNotification_id" ON "McpCancelledNotification" (id);
 
-CREATE TABLE "CallToolRequestParams" (
+CREATE TABLE "McpClientCapabilities" (
 	id INTEGER NOT NULL,
-	name TEXT NOT NULL,
-	arguments_id INTEGER,
-	task_id INTEGER,
+	elicitation_id INTEGER,
+	experimental_id INTEGER,
+	extensions_id INTEGER,
+	roots_id INTEGER,
+	sampling_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(elicitation_id) REFERENCES "McpClientCapabilitiesElicitation" (id),
+	FOREIGN KEY(experimental_id) REFERENCES "McpClientCapabilitiesExperimental" (id),
+	FOREIGN KEY(extensions_id) REFERENCES "McpClientCapabilitiesExtensions" (id),
+	FOREIGN KEY(roots_id) REFERENCES "McpClientCapabilitiesRoots" (id),
+	FOREIGN KEY(sampling_id) REFERENCES "McpClientCapabilitiesSampling" (id)
+);
+CREATE INDEX "ix_McpClientCapabilities_id" ON "McpClientCapabilities" (id);
+
+CREATE TABLE "McpClientNotification" (
+	id INTEGER NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	method TEXT NOT NULL,
+	params_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(params_id) REFERENCES "McpCancelledNotificationParams" (id)
+);
+CREATE INDEX "ix_McpClientNotification_id" ON "McpClientNotification" (id);
+
+CREATE TABLE "McpClientResult" (
+	id INTEGER NOT NULL,
+	"resultType" TEXT NOT NULL,
 	_meta_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY(arguments_id) REFERENCES "ArgumentMap" (id),
-	FOREIGN KEY(task_id) REFERENCES "TaskMetadata" (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
+	FOREIGN KEY(_meta_id) REFERENCES "McpResultMetaObject" (id)
 );
-CREATE INDEX "ix_CallToolRequestParams_id" ON "CallToolRequestParams" (id);
+CREATE INDEX "ix_McpClientResult_id" ON "McpClientResult" (id);
 
-CREATE TABLE "GetPromptRequestParams" (
+CREATE TABLE "McpCompleteResult" (
 	id INTEGER NOT NULL,
-	name TEXT NOT NULL,
-	arguments_id INTEGER,
+	"resultType" TEXT NOT NULL,
+	_meta_id INTEGER,
+	completion_id INTEGER NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY(arguments_id) REFERENCES "ArgumentMap" (id)
+	FOREIGN KEY(_meta_id) REFERENCES "McpResultMetaObject" (id),
+	FOREIGN KEY(completion_id) REFERENCES "McpCompleteResultCompletion" (id)
 );
-CREATE INDEX "ix_GetPromptRequestParams_id" ON "GetPromptRequestParams" (id);
+CREATE INDEX "ix_McpCompleteResult_id" ON "McpCompleteResult" (id);
 
-CREATE TABLE "CreateMessageRequestParams" (
+CREATE TABLE "McpCreateMessageRequest" (
 	id INTEGER NOT NULL,
-	"maxTokens" INTEGER NOT NULL,
-	"systemPrompt" TEXT,
-	temperature FLOAT,
-	"includeContext" VARCHAR(10),
-	"modelPreferences_id" INTEGER,
-	"toolChoice_id" INTEGER,
-	task_id INTEGER,
+	method TEXT NOT NULL,
+	params_id INTEGER NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY("modelPreferences_id") REFERENCES "ModelPreferences" (id),
-	FOREIGN KEY("toolChoice_id") REFERENCES "ToolChoice" (id),
-	FOREIGN KEY(task_id) REFERENCES "TaskMetadata" (id)
+	FOREIGN KEY(params_id) REFERENCES "McpCreateMessageRequestParams" (id)
 );
-CREATE INDEX "ix_CreateMessageRequestParams_id" ON "CreateMessageRequestParams" (id);
+CREATE INDEX "ix_McpCreateMessageRequest_id" ON "McpCreateMessageRequest" (id);
 
-CREATE TABLE "ElicitRequestFormParams" (
+CREATE TABLE "McpDiscoverResult" (
+	id INTEGER NOT NULL,
+	"cacheScope" VARCHAR(7) NOT NULL,
+	instructions TEXT,
+	"resultType" TEXT NOT NULL,
+	"ttlMs" INTEGER NOT NULL,
+	_meta_id INTEGER,
+	capabilities_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpResultMetaObject" (id),
+	FOREIGN KEY(capabilities_id) REFERENCES "McpServerCapabilities" (id)
+);
+CREATE INDEX "ix_McpDiscoverResult_id" ON "McpDiscoverResult" (id);
+
+CREATE TABLE "McpElicitRequestFormParams" (
 	id INTEGER NOT NULL,
 	message TEXT NOT NULL,
 	mode TEXT,
 	"requestedSchema_id" INTEGER NOT NULL,
-	task_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("requestedSchema_id") REFERENCES "JsonSchema" (id),
-	FOREIGN KEY(task_id) REFERENCES "TaskMetadata" (id)
+	FOREIGN KEY("requestedSchema_id") REFERENCES "McpElicitRequestFormParamsRequestedSchema" (id)
 );
-CREATE INDEX "ix_ElicitRequestFormParams_id" ON "ElicitRequestFormParams" (id);
+CREATE INDEX "ix_McpElicitRequestFormParams_id" ON "McpElicitRequestFormParams" (id);
 
-CREATE TABLE "ElicitRequestURLParams" (
+CREATE TABLE "McpEmptyResult" (
 	id INTEGER NOT NULL,
-	"elicitationId" TEXT NOT NULL,
-	message TEXT NOT NULL,
-	mode TEXT NOT NULL,
-	url TEXT NOT NULL,
-	task_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(task_id) REFERENCES "TaskMetadata" (id)
-);
-CREATE INDEX "ix_ElicitRequestURLParams_id" ON "ElicitRequestURLParams" (id);
-
-CREATE TABLE "ReadResourceRequest" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	params_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(params_id) REFERENCES "ReadResourceRequestParams" (id)
-);
-CREATE INDEX "ix_ReadResourceRequest_uid" ON "ReadResourceRequest" (uid);
-
-CREATE TABLE "SubscribeRequest" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	params_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(params_id) REFERENCES "SubscribeRequestParams" (id)
-);
-CREATE INDEX "ix_SubscribeRequest_uid" ON "SubscribeRequest" (uid);
-
-CREATE TABLE "UnsubscribeRequest" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	params_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(params_id) REFERENCES "UnsubscribeRequestParams" (id)
-);
-CREATE INDEX "ix_UnsubscribeRequest_uid" ON "UnsubscribeRequest" (uid);
-
-CREATE TABLE "SetLevelRequest" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	params_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(params_id) REFERENCES "SetLevelRequestParams" (id)
-);
-CREATE INDEX "ix_SetLevelRequest_uid" ON "SetLevelRequest" (uid);
-
-CREATE TABLE "CallToolResult" (
-	id INTEGER NOT NULL,
-	"isError" BOOLEAN,
-	"structuredContent_id" INTEGER,
+	"resultType" TEXT NOT NULL,
 	_meta_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("structuredContent_id") REFERENCES "StructuredContentData" (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
+	FOREIGN KEY(_meta_id) REFERENCES "McpResultMetaObject" (id)
 );
-CREATE INDEX "ix_CallToolResult_id" ON "CallToolResult" (id);
+CREATE INDEX "ix_McpEmptyResult_id" ON "McpEmptyResult" (id);
 
-CREATE TABLE "CompleteResult" (
-	id INTEGER NOT NULL,
-	completion_id INTEGER NOT NULL,
-	_meta_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(completion_id) REFERENCES "CompletionData" (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
-);
-CREATE INDEX "ix_CompleteResult_id" ON "CompleteResult" (id);
-
-CREATE TABLE "GetPromptResult" (
+CREATE TABLE "McpGetPromptResult" (
 	id INTEGER NOT NULL,
 	description TEXT,
+	"resultType" TEXT NOT NULL,
 	_meta_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
+	FOREIGN KEY(_meta_id) REFERENCES "McpResultMetaObject" (id)
 );
-CREATE INDEX "ix_GetPromptResult_id" ON "GetPromptResult" (id);
+CREATE INDEX "ix_McpGetPromptResult_id" ON "McpGetPromptResult" (id);
 
-CREATE TABLE "ListPromptsResult" (
-	id INTEGER NOT NULL,
-	"nextCursor" TEXT,
-	_meta_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
-);
-CREATE INDEX "ix_ListPromptsResult_id" ON "ListPromptsResult" (id);
-
-CREATE TABLE "ListResourcesResult" (
-	id INTEGER NOT NULL,
-	"nextCursor" TEXT,
-	_meta_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
-);
-CREATE INDEX "ix_ListResourcesResult_id" ON "ListResourcesResult" (id);
-
-CREATE TABLE "ListResourceTemplatesResult" (
-	id INTEGER NOT NULL,
-	"nextCursor" TEXT,
-	_meta_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
-);
-CREATE INDEX "ix_ListResourceTemplatesResult_id" ON "ListResourceTemplatesResult" (id);
-
-CREATE TABLE "ReadResourceResult" (
-	id INTEGER NOT NULL,
-	_meta_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
-);
-CREATE INDEX "ix_ReadResourceResult_id" ON "ReadResourceResult" (id);
-
-CREATE TABLE "ListToolsResult" (
-	id INTEGER NOT NULL,
-	"nextCursor" TEXT,
-	_meta_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
-);
-CREATE INDEX "ix_ListToolsResult_id" ON "ListToolsResult" (id);
-
-CREATE TABLE "ListRootsResult" (
-	id INTEGER NOT NULL,
-	_meta_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
-);
-CREATE INDEX "ix_ListRootsResult_id" ON "ListRootsResult" (id);
-
-CREATE TABLE "CreateMessageResult" (
-	id INTEGER NOT NULL,
-	model TEXT NOT NULL,
-	role VARCHAR(9) NOT NULL,
-	"stopReason" TEXT,
-	content_id INTEGER NOT NULL,
-	_meta_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(content_id) REFERENCES "ContentBlock" (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
-);
-CREATE INDEX "ix_CreateMessageResult_id" ON "CreateMessageResult" (id);
-
-CREATE TABLE "ElicitResult" (
-	id INTEGER NOT NULL,
-	action VARCHAR(7) NOT NULL,
-	content_id INTEGER,
-	_meta_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(content_id) REFERENCES "ElicitationContent" (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
-);
-CREATE INDEX "ix_ElicitResult_id" ON "ElicitResult" (id);
-
-CREATE TABLE "GetTaskPayloadResult" (
-	id INTEGER NOT NULL,
-	_meta_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
-);
-CREATE INDEX "ix_GetTaskPayloadResult_id" ON "GetTaskPayloadResult" (id);
-
-CREATE TABLE "ListTasksResult" (
-	id INTEGER NOT NULL,
-	"nextCursor" TEXT,
-	_meta_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
-);
-CREATE INDEX "ix_ListTasksResult_id" ON "ListTasksResult" (id);
-
-CREATE TABLE "CancelTaskResult" (
-	id INTEGER NOT NULL,
-	"taskId" TEXT NOT NULL,
-	status VARCHAR(14) NOT NULL,
-	"createdAt" TEXT NOT NULL,
-	"lastUpdatedAt" TEXT NOT NULL,
-	ttl INTEGER NOT NULL,
-	"statusMessage" TEXT,
-	"pollInterval" INTEGER,
-	_meta_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
-);
-CREATE INDEX "ix_CancelTaskResult_id" ON "CancelTaskResult" (id);
-
-CREATE TABLE "GetTaskResult" (
-	id INTEGER NOT NULL,
-	"taskId" TEXT NOT NULL,
-	status VARCHAR(14) NOT NULL,
-	"createdAt" TEXT NOT NULL,
-	"lastUpdatedAt" TEXT NOT NULL,
-	ttl INTEGER NOT NULL,
-	"statusMessage" TEXT,
-	"pollInterval" INTEGER,
-	_meta_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
-);
-CREATE INDEX "ix_GetTaskResult_id" ON "GetTaskResult" (id);
-
-CREATE TABLE "Annotations_audience" (
-	"Annotations_id" INTEGER,
-	audience VARCHAR(9),
-	PRIMARY KEY ("Annotations_id", audience),
-	FOREIGN KEY("Annotations_id") REFERENCES "Annotations" (id)
-);
-CREATE INDEX "ix_Annotations_audience_audience" ON "Annotations_audience" (audience);
-CREATE INDEX "ix_Annotations_audience_Annotations_id" ON "Annotations_audience" ("Annotations_id");
-
-CREATE TABLE "CompletionData_values" (
-	"CompletionData_id" INTEGER,
-	"values" TEXT NOT NULL,
-	PRIMARY KEY ("CompletionData_id", "values"),
-	FOREIGN KEY("CompletionData_id") REFERENCES "CompletionData" (id)
-);
-CREATE INDEX "ix_CompletionData_values_values" ON "CompletionData_values" ("values");
-CREATE INDEX "ix_CompletionData_values_CompletionData_id" ON "CompletionData_values" ("CompletionData_id");
-
-CREATE TABLE "SchemaItems_enum" (
-	"SchemaItems_id" INTEGER,
-	enum TEXT,
-	PRIMARY KEY ("SchemaItems_id", enum),
-	FOREIGN KEY("SchemaItems_id") REFERENCES "SchemaItems" (id)
-);
-CREATE INDEX "ix_SchemaItems_enum_enum" ON "SchemaItems_enum" (enum);
-CREATE INDEX "ix_SchemaItems_enum_SchemaItems_id" ON "SchemaItems_enum" ("SchemaItems_id");
-
-CREATE TABLE "SchemaItems_anyOf" (
-	"SchemaItems_id" INTEGER,
-	"anyOf_id" INTEGER,
-	PRIMARY KEY ("SchemaItems_id", "anyOf_id"),
-	FOREIGN KEY("SchemaItems_id") REFERENCES "SchemaItems" (id),
-	FOREIGN KEY("anyOf_id") REFERENCES "EnumOption" (id)
-);
-CREATE INDEX "ix_SchemaItems_anyOf_SchemaItems_id" ON "SchemaItems_anyOf" ("SchemaItems_id");
-CREATE INDEX "ix_SchemaItems_anyOf_anyOf_id" ON "SchemaItems_anyOf" ("anyOf_id");
-
-CREATE TABLE "JsonSchema_required_list" (
-	"JsonSchema_id" INTEGER,
-	required_list TEXT,
-	PRIMARY KEY ("JsonSchema_id", required_list),
-	FOREIGN KEY("JsonSchema_id") REFERENCES "JsonSchema" (id)
-);
-CREATE INDEX "ix_JsonSchema_required_list_JsonSchema_id" ON "JsonSchema_required_list" ("JsonSchema_id");
-CREATE INDEX "ix_JsonSchema_required_list_required_list" ON "JsonSchema_required_list" (required_list);
-
-CREATE TABLE "JsonSchema_oneOf" (
-	"JsonSchema_id" INTEGER,
-	"oneOf_id" INTEGER,
-	PRIMARY KEY ("JsonSchema_id", "oneOf_id"),
-	FOREIGN KEY("JsonSchema_id") REFERENCES "JsonSchema" (id),
-	FOREIGN KEY("oneOf_id") REFERENCES "EnumOption" (id)
-);
-CREATE INDEX "ix_JsonSchema_oneOf_JsonSchema_id" ON "JsonSchema_oneOf" ("JsonSchema_id");
-CREATE INDEX "ix_JsonSchema_oneOf_oneOf_id" ON "JsonSchema_oneOf" ("oneOf_id");
-
-CREATE TABLE "JsonSchema_anyOf" (
-	"JsonSchema_id" INTEGER,
-	"anyOf_id" INTEGER,
-	PRIMARY KEY ("JsonSchema_id", "anyOf_id"),
-	FOREIGN KEY("JsonSchema_id") REFERENCES "JsonSchema" (id),
-	FOREIGN KEY("anyOf_id") REFERENCES "EnumOption" (id)
-);
-CREATE INDEX "ix_JsonSchema_anyOf_anyOf_id" ON "JsonSchema_anyOf" ("anyOf_id");
-CREATE INDEX "ix_JsonSchema_anyOf_JsonSchema_id" ON "JsonSchema_anyOf" ("JsonSchema_id");
-
-CREATE TABLE "JsonSchema_enum" (
-	"JsonSchema_id" INTEGER,
-	enum TEXT,
-	PRIMARY KEY ("JsonSchema_id", enum),
-	FOREIGN KEY("JsonSchema_id") REFERENCES "JsonSchema" (id)
-);
-CREATE INDEX "ix_JsonSchema_enum_enum" ON "JsonSchema_enum" (enum);
-CREATE INDEX "ix_JsonSchema_enum_JsonSchema_id" ON "JsonSchema_enum" ("JsonSchema_id");
-
-CREATE TABLE "ExtensionAppCapability_mimeTypes" (
-	"ExtensionAppCapability_id" INTEGER,
-	"mimeTypes" TEXT,
-	PRIMARY KEY ("ExtensionAppCapability_id", "mimeTypes"),
-	FOREIGN KEY("ExtensionAppCapability_id") REFERENCES "ExtensionAppCapability" (id)
-);
-CREATE INDEX "ix_ExtensionAppCapability_mimeTypes_ExtensionAppCapability_id" ON "ExtensionAppCapability_mimeTypes" ("ExtensionAppCapability_id");
-CREATE INDEX "ix_ExtensionAppCapability_mimeTypes_mimeTypes" ON "ExtensionAppCapability_mimeTypes" ("mimeTypes");
-
-CREATE TABLE "UntitledSingleSelectEnumSchema_enum" (
-	"UntitledSingleSelectEnumSchema_id" INTEGER,
-	enum TEXT,
-	PRIMARY KEY ("UntitledSingleSelectEnumSchema_id", enum),
-	FOREIGN KEY("UntitledSingleSelectEnumSchema_id") REFERENCES "UntitledSingleSelectEnumSchema" (id)
-);
-CREATE INDEX "ix_UntitledSingleSelectEnumSchema_enum_UntitledSingleSelectEnumSchema_id" ON "UntitledSingleSelectEnumSchema_enum" ("UntitledSingleSelectEnumSchema_id");
-CREATE INDEX "ix_UntitledSingleSelectEnumSchema_enum_enum" ON "UntitledSingleSelectEnumSchema_enum" (enum);
-
-CREATE TABLE "UntitledSingleSelectEnumSchema_enum_values" (
-	"UntitledSingleSelectEnumSchema_id" INTEGER,
-	enum_values TEXT,
-	PRIMARY KEY ("UntitledSingleSelectEnumSchema_id", enum_values),
-	FOREIGN KEY("UntitledSingleSelectEnumSchema_id") REFERENCES "UntitledSingleSelectEnumSchema" (id)
-);
-CREATE INDEX "ix_UntitledSingleSelectEnumSchema_enum_values_UntitledSingleSelectEnumSchema_id" ON "UntitledSingleSelectEnumSchema_enum_values" ("UntitledSingleSelectEnumSchema_id");
-CREATE INDEX "ix_UntitledSingleSelectEnumSchema_enum_values_enum_values" ON "UntitledSingleSelectEnumSchema_enum_values" (enum_values);
-
-CREATE TABLE "TitledSingleSelectEnumSchema_oneOf" (
-	"TitledSingleSelectEnumSchema_id" INTEGER,
-	"oneOf_id" INTEGER,
-	PRIMARY KEY ("TitledSingleSelectEnumSchema_id", "oneOf_id"),
-	FOREIGN KEY("TitledSingleSelectEnumSchema_id") REFERENCES "TitledSingleSelectEnumSchema" (id),
-	FOREIGN KEY("oneOf_id") REFERENCES "EnumOption" (id)
-);
-CREATE INDEX "ix_TitledSingleSelectEnumSchema_oneOf_oneOf_id" ON "TitledSingleSelectEnumSchema_oneOf" ("oneOf_id");
-CREATE INDEX "ix_TitledSingleSelectEnumSchema_oneOf_TitledSingleSelectEnumSchema_id" ON "TitledSingleSelectEnumSchema_oneOf" ("TitledSingleSelectEnumSchema_id");
-
-CREATE TABLE "LegacyTitledEnumSchema_enum" (
-	"LegacyTitledEnumSchema_id" INTEGER,
-	enum TEXT,
-	PRIMARY KEY ("LegacyTitledEnumSchema_id", enum),
-	FOREIGN KEY("LegacyTitledEnumSchema_id") REFERENCES "LegacyTitledEnumSchema" (id)
-);
-CREATE INDEX "ix_LegacyTitledEnumSchema_enum_LegacyTitledEnumSchema_id" ON "LegacyTitledEnumSchema_enum" ("LegacyTitledEnumSchema_id");
-CREATE INDEX "ix_LegacyTitledEnumSchema_enum_enum" ON "LegacyTitledEnumSchema_enum" (enum);
-
-CREATE TABLE "LegacyTitledEnumSchema_enum_values" (
-	"LegacyTitledEnumSchema_id" INTEGER,
-	enum_values TEXT,
-	PRIMARY KEY ("LegacyTitledEnumSchema_id", enum_values),
-	FOREIGN KEY("LegacyTitledEnumSchema_id") REFERENCES "LegacyTitledEnumSchema" (id)
-);
-CREATE INDEX "ix_LegacyTitledEnumSchema_enum_values_LegacyTitledEnumSchema_id" ON "LegacyTitledEnumSchema_enum_values" ("LegacyTitledEnumSchema_id");
-CREATE INDEX "ix_LegacyTitledEnumSchema_enum_values_enum_values" ON "LegacyTitledEnumSchema_enum_values" (enum_values);
-
-CREATE TABLE "LegacyTitledEnumSchema_enumNames" (
-	"LegacyTitledEnumSchema_id" INTEGER,
-	"enumNames" TEXT,
-	PRIMARY KEY ("LegacyTitledEnumSchema_id", "enumNames"),
-	FOREIGN KEY("LegacyTitledEnumSchema_id") REFERENCES "LegacyTitledEnumSchema" (id)
-);
-CREATE INDEX "ix_LegacyTitledEnumSchema_enumNames_LegacyTitledEnumSchema_id" ON "LegacyTitledEnumSchema_enumNames" ("LegacyTitledEnumSchema_id");
-CREATE INDEX "ix_LegacyTitledEnumSchema_enumNames_enumNames" ON "LegacyTitledEnumSchema_enumNames" ("enumNames");
-
-CREATE TABLE "URLElicitationRequiredError" (
+CREATE TABLE "McpHeaderMismatchError" (
 	uid INTEGER NOT NULL,
 	id TEXT,
 	jsonrpc TEXT NOT NULL,
 	error_id INTEGER NOT NULL,
 	PRIMARY KEY (uid),
-	FOREIGN KEY(error_id) REFERENCES "Error" (id)
+	FOREIGN KEY(error_id) REFERENCES "McpHeaderMismatchErrorError" (id)
 );
-CREATE INDEX "ix_URLElicitationRequiredError_uid" ON "URLElicitationRequiredError" (uid);
+CREATE INDEX "ix_McpHeaderMismatchError_uid" ON "McpHeaderMismatchError" (uid);
 
-CREATE TABLE "ResourceContents" (
+CREATE TABLE "McpInputRequiredResult" (
 	id INTEGER NOT NULL,
-	uri TEXT NOT NULL,
-	"mimeType" TEXT,
-	text TEXT,
-	blob TEXT,
-	"ReadResourceResult_id" INTEGER,
+	"requestState" TEXT,
+	"resultType" TEXT NOT NULL,
+	_meta_id INTEGER,
+	"inputRequests_id" INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpResultMetaObject" (id),
+	FOREIGN KEY("inputRequests_id") REFERENCES "McpInputRequests" (id)
+);
+CREATE INDEX "ix_McpInputRequiredResult_id" ON "McpInputRequiredResult" (id);
+
+CREATE TABLE "McpJSONRPCErrorResponse" (
+	uid INTEGER NOT NULL,
+	id TEXT,
+	jsonrpc TEXT NOT NULL,
+	error_id INTEGER NOT NULL,
+	PRIMARY KEY (uid),
+	FOREIGN KEY(error_id) REFERENCES "McpError" (id)
+);
+CREATE INDEX "ix_McpJSONRPCErrorResponse_uid" ON "McpJSONRPCErrorResponse" (uid);
+
+CREATE TABLE "McpListPromptsResult" (
+	id INTEGER NOT NULL,
+	"cacheScope" VARCHAR(7) NOT NULL,
+	"nextCursor" TEXT,
+	"resultType" TEXT NOT NULL,
+	"ttlMs" INTEGER NOT NULL,
 	_meta_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("ReadResourceResult_id") REFERENCES "ReadResourceResult" (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
+	FOREIGN KEY(_meta_id) REFERENCES "McpResultMetaObject" (id)
 );
-CREATE INDEX "ix_ResourceContents_id" ON "ResourceContents" (id);
+CREATE INDEX "ix_McpListPromptsResult_id" ON "McpListPromptsResult" (id);
 
-CREATE TABLE "Resource" (
+CREATE TABLE "McpListResourceTemplatesResult" (
 	id INTEGER NOT NULL,
-	uri TEXT NOT NULL,
-	"mimeType" TEXT,
-	description TEXT,
-	size INTEGER,
-	name TEXT NOT NULL,
-	title TEXT,
-	"ListResourcesResult_id" INTEGER,
-	_meta_id INTEGER,
-	annotations_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY("ListResourcesResult_id") REFERENCES "ListResourcesResult" (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id),
-	FOREIGN KEY(annotations_id) REFERENCES "Annotations" (id)
-);
-CREATE INDEX "ix_Resource_id" ON "Resource" (id);
-
-CREATE TABLE "ResourceTemplate" (
-	id INTEGER NOT NULL,
-	"uriTemplate" TEXT NOT NULL,
-	"mimeType" TEXT,
-	description TEXT,
-	name TEXT NOT NULL,
-	title TEXT,
-	"ListResourceTemplatesResult_id" INTEGER,
-	_meta_id INTEGER,
-	annotations_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY("ListResourceTemplatesResult_id") REFERENCES "ListResourceTemplatesResult" (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id),
-	FOREIGN KEY(annotations_id) REFERENCES "Annotations" (id)
-);
-CREATE INDEX "ix_ResourceTemplate_id" ON "ResourceTemplate" (id);
-
-CREATE TABLE "Root" (
-	id INTEGER NOT NULL,
-	uri TEXT NOT NULL,
-	name TEXT,
-	"ListRootsResult_id" INTEGER,
+	"cacheScope" VARCHAR(7) NOT NULL,
+	"nextCursor" TEXT,
+	"resultType" TEXT NOT NULL,
+	"ttlMs" INTEGER NOT NULL,
 	_meta_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("ListRootsResult_id") REFERENCES "ListRootsResult" (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
+	FOREIGN KEY(_meta_id) REFERENCES "McpResultMetaObject" (id)
 );
-CREATE INDEX "ix_Root_id" ON "Root" (id);
+CREATE INDEX "ix_McpListResourceTemplatesResult_id" ON "McpListResourceTemplatesResult" (id);
 
-CREATE TABLE "Prompt" (
+CREATE TABLE "McpListResourcesResult" (
 	id INTEGER NOT NULL,
-	description TEXT,
-	name TEXT NOT NULL,
-	title TEXT,
-	"ListPromptsResult_id" INTEGER,
+	"cacheScope" VARCHAR(7) NOT NULL,
+	"nextCursor" TEXT,
+	"resultType" TEXT NOT NULL,
+	"ttlMs" INTEGER NOT NULL,
 	_meta_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("ListPromptsResult_id") REFERENCES "ListPromptsResult" (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
+	FOREIGN KEY(_meta_id) REFERENCES "McpResultMetaObject" (id)
 );
-CREATE INDEX "ix_Prompt_id" ON "Prompt" (id);
+CREATE INDEX "ix_McpListResourcesResult_id" ON "McpListResourcesResult" (id);
 
-CREATE TABLE "PromptMessage" (
+CREATE TABLE "McpListRootsRequest" (
 	id INTEGER NOT NULL,
+	method TEXT NOT NULL,
+	params_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(params_id) REFERENCES "McpListRootsRequestParams" (id)
+);
+CREATE INDEX "ix_McpListRootsRequest_id" ON "McpListRootsRequest" (id);
+
+CREATE TABLE "McpListToolsResult" (
+	id INTEGER NOT NULL,
+	"cacheScope" VARCHAR(7) NOT NULL,
+	"nextCursor" TEXT,
+	"resultType" TEXT NOT NULL,
+	"ttlMs" INTEGER NOT NULL,
+	_meta_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpResultMetaObject" (id)
+);
+CREATE INDEX "ix_McpListToolsResult_id" ON "McpListToolsResult" (id);
+
+CREATE TABLE "McpLoggingMessageNotification" (
+	id INTEGER NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	method TEXT NOT NULL,
+	params_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(params_id) REFERENCES "McpLoggingMessageNotificationParams" (id)
+);
+CREATE INDEX "ix_McpLoggingMessageNotification_id" ON "McpLoggingMessageNotification" (id);
+
+CREATE TABLE "McpPaginatedResult" (
+	id INTEGER NOT NULL,
+	"nextCursor" TEXT,
+	"resultType" TEXT NOT NULL,
+	_meta_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpResultMetaObject" (id)
+);
+CREATE INDEX "ix_McpPaginatedResult_id" ON "McpPaginatedResult" (id);
+
+CREATE TABLE "McpProgressNotification" (
+	id INTEGER NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	method TEXT NOT NULL,
+	params_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(params_id) REFERENCES "McpProgressNotificationParams" (id)
+);
+CREATE INDEX "ix_McpProgressNotification_id" ON "McpProgressNotification" (id);
+
+CREATE TABLE "McpPromptListChangedNotification" (
+	id INTEGER NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	method TEXT NOT NULL,
+	params_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(params_id) REFERENCES "McpNotificationParams" (id)
+);
+CREATE INDEX "ix_McpPromptListChangedNotification_id" ON "McpPromptListChangedNotification" (id);
+
+CREATE TABLE "McpReadResourceResult" (
+	id INTEGER NOT NULL,
+	"cacheScope" VARCHAR(7) NOT NULL,
+	"resultType" TEXT NOT NULL,
+	"ttlMs" INTEGER NOT NULL,
+	_meta_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpResultMetaObject" (id)
+);
+CREATE INDEX "ix_McpReadResourceResult_id" ON "McpReadResourceResult" (id);
+
+CREATE TABLE "McpResourceListChangedNotification" (
+	id INTEGER NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	method TEXT NOT NULL,
+	params_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(params_id) REFERENCES "McpNotificationParams" (id)
+);
+CREATE INDEX "ix_McpResourceListChangedNotification_id" ON "McpResourceListChangedNotification" (id);
+
+CREATE TABLE "McpResourceUpdatedNotification" (
+	id INTEGER NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	method TEXT NOT NULL,
+	params_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(params_id) REFERENCES "McpResourceUpdatedNotificationParams" (id)
+);
+CREATE INDEX "ix_McpResourceUpdatedNotification_id" ON "McpResourceUpdatedNotification" (id);
+
+CREATE TABLE "McpResult" (
+	id INTEGER NOT NULL,
+	"resultType" TEXT NOT NULL,
+	_meta_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpResultMetaObject" (id)
+);
+CREATE INDEX "ix_McpResult_id" ON "McpResult" (id);
+
+CREATE TABLE "McpSamplingMessage" (
+	id INTEGER NOT NULL,
+	content TEXT NOT NULL,
 	role VARCHAR(9) NOT NULL,
-	"GetPromptResult_id" INTEGER,
-	content_id INTEGER NOT NULL,
+	"McpCreateMessageRequestParams_id" INTEGER,
+	_meta_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("GetPromptResult_id") REFERENCES "GetPromptResult" (id),
-	FOREIGN KEY(content_id) REFERENCES "ContentBlock" (id)
+	FOREIGN KEY("McpCreateMessageRequestParams_id") REFERENCES "McpCreateMessageRequestParams" (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpMetaObject" (id)
 );
-CREATE INDEX "ix_PromptMessage_id" ON "PromptMessage" (id);
+CREATE INDEX "ix_McpSamplingMessage_id" ON "McpSamplingMessage" (id);
 
-CREATE TABLE "TasksCapability" (
+CREATE TABLE "McpSubscriptionsAcknowledgedNotification" (
 	id INTEGER NOT NULL,
-	requests_id INTEGER,
+	jsonrpc TEXT NOT NULL,
+	method TEXT NOT NULL,
+	params_id INTEGER NOT NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY(requests_id) REFERENCES "TaskRequestCapabilities" (id)
+	FOREIGN KEY(params_id) REFERENCES "McpSubscriptionsAcknowledgedNotificationParams" (id)
 );
-CREATE INDEX "ix_TasksCapability_id" ON "TasksCapability" (id);
+CREATE INDEX "ix_McpSubscriptionsAcknowledgedNotification_id" ON "McpSubscriptionsAcknowledgedNotification" (id);
 
-CREATE TABLE "Tool" (
+CREATE TABLE "McpSubscriptionsListenResult" (
+	id INTEGER NOT NULL,
+	"resultType" TEXT NOT NULL,
+	_meta_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpSubscriptionsListenResultMetaObject" (id)
+);
+CREATE INDEX "ix_McpSubscriptionsListenResult_id" ON "McpSubscriptionsListenResult" (id);
+
+CREATE TABLE "McpToolListChangedNotification" (
+	id INTEGER NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	method TEXT NOT NULL,
+	params_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(params_id) REFERENCES "McpNotificationParams" (id)
+);
+CREATE INDEX "ix_McpToolListChangedNotification_id" ON "McpToolListChangedNotification" (id);
+
+CREATE TABLE "McpUnsupportedProtocolVersionError" (
+	uid INTEGER NOT NULL,
+	id TEXT,
+	jsonrpc TEXT NOT NULL,
+	error_id INTEGER NOT NULL,
+	PRIMARY KEY (uid),
+	FOREIGN KEY(error_id) REFERENCES "McpUnsupportedProtocolVersionErrorError" (id)
+);
+CREATE INDEX "ix_McpUnsupportedProtocolVersionError_uid" ON "McpUnsupportedProtocolVersionError" (uid);
+
+CREATE TABLE "McpCreateMessageRequestParams_stopSequences" (
+	"McpCreateMessageRequestParams_id" INTEGER,
+	"stopSequences" TEXT,
+	PRIMARY KEY ("McpCreateMessageRequestParams_id", "stopSequences"),
+	FOREIGN KEY("McpCreateMessageRequestParams_id") REFERENCES "McpCreateMessageRequestParams" (id)
+);
+CREATE INDEX "ix_McpCreateMessageRequestParams_stopSequences_McpCreateMessageRequestParams_id" ON "McpCreateMessageRequestParams_stopSequences" ("McpCreateMessageRequestParams_id");
+CREATE INDEX "ix_McpCreateMessageRequestParams_stopSequences_stopSequences" ON "McpCreateMessageRequestParams_stopSequences" ("stopSequences");
+
+CREATE TABLE "McpElicitRequestFormParamsRequestedSchema_required_names" (
+	"McpElicitRequestFormParamsRequestedSchema_id" INTEGER,
+	required_names TEXT,
+	PRIMARY KEY ("McpElicitRequestFormParamsRequestedSchema_id", required_names),
+	FOREIGN KEY("McpElicitRequestFormParamsRequestedSchema_id") REFERENCES "McpElicitRequestFormParamsRequestedSchema" (id)
+);
+CREATE INDEX "ix_McpElicitRequestFormParamsRequestedSchema_required_names_required_names" ON "McpElicitRequestFormParamsRequestedSchema_required_names" (required_names);
+CREATE INDEX "ix_McpElicitRequestFormParamsRequestedSchema_required_names_McpElicitRequestFormParamsRequestedSchema_id" ON "McpElicitRequestFormParamsRequestedSchema_required_names" ("McpElicitRequestFormParamsRequestedSchema_id");
+
+CREATE TABLE "McpTitledMultiSelectEnumSchema_default" (
+	"McpTitledMultiSelectEnumSchema_id" INTEGER,
+	"default" TEXT,
+	PRIMARY KEY ("McpTitledMultiSelectEnumSchema_id", "default"),
+	FOREIGN KEY("McpTitledMultiSelectEnumSchema_id") REFERENCES "McpTitledMultiSelectEnumSchema" (id)
+);
+CREATE INDEX "ix_McpTitledMultiSelectEnumSchema_default_McpTitledMultiSelectEnumSchema_id" ON "McpTitledMultiSelectEnumSchema_default" ("McpTitledMultiSelectEnumSchema_id");
+CREATE INDEX "ix_McpTitledMultiSelectEnumSchema_default_default" ON "McpTitledMultiSelectEnumSchema_default" ("default");
+
+CREATE TABLE "McpUntitledMultiSelectEnumSchema_default" (
+	"McpUntitledMultiSelectEnumSchema_id" INTEGER,
+	"default" TEXT,
+	PRIMARY KEY ("McpUntitledMultiSelectEnumSchema_id", "default"),
+	FOREIGN KEY("McpUntitledMultiSelectEnumSchema_id") REFERENCES "McpUntitledMultiSelectEnumSchema" (id)
+);
+CREATE INDEX "ix_McpUntitledMultiSelectEnumSchema_default_McpUntitledMultiSelectEnumSchema_id" ON "McpUntitledMultiSelectEnumSchema_default" ("McpUntitledMultiSelectEnumSchema_id");
+CREATE INDEX "ix_McpUntitledMultiSelectEnumSchema_default_default" ON "McpUntitledMultiSelectEnumSchema_default" ("default");
+
+CREATE TABLE "McpCompleteResultResponse" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	result_id INTEGER NOT NULL,
+	PRIMARY KEY (uid),
+	FOREIGN KEY(result_id) REFERENCES "McpCompleteResult" (id)
+);
+CREATE INDEX "ix_McpCompleteResultResponse_uid" ON "McpCompleteResultResponse" (uid);
+
+CREATE TABLE "McpContentBlock" (
+	id INTEGER NOT NULL,
+	"McpCallToolResult_id" INTEGER,
+	"McpToolResultContent_id" INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY("McpCallToolResult_id") REFERENCES "McpCallToolResult" (id),
+	FOREIGN KEY("McpToolResultContent_id") REFERENCES "McpToolResultContent" (id)
+);
+CREATE INDEX "ix_McpContentBlock_id" ON "McpContentBlock" (id);
+
+CREATE TABLE "McpDiscoverResultResponse" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	result_id INTEGER NOT NULL,
+	PRIMARY KEY (uid),
+	FOREIGN KEY(result_id) REFERENCES "McpDiscoverResult" (id)
+);
+CREATE INDEX "ix_McpDiscoverResultResponse_uid" ON "McpDiscoverResultResponse" (uid);
+
+CREATE TABLE "McpJSONRPCResultResponse" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	result_id INTEGER NOT NULL,
+	PRIMARY KEY (uid),
+	FOREIGN KEY(result_id) REFERENCES "McpResult" (id)
+);
+CREATE INDEX "ix_McpJSONRPCResultResponse_uid" ON "McpJSONRPCResultResponse" (uid);
+
+CREATE TABLE "McpListPromptsResultResponse" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	result_id INTEGER NOT NULL,
+	PRIMARY KEY (uid),
+	FOREIGN KEY(result_id) REFERENCES "McpListPromptsResult" (id)
+);
+CREATE INDEX "ix_McpListPromptsResultResponse_uid" ON "McpListPromptsResultResponse" (uid);
+
+CREATE TABLE "McpListResourceTemplatesResultResponse" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	result_id INTEGER NOT NULL,
+	PRIMARY KEY (uid),
+	FOREIGN KEY(result_id) REFERENCES "McpListResourceTemplatesResult" (id)
+);
+CREATE INDEX "ix_McpListResourceTemplatesResultResponse_uid" ON "McpListResourceTemplatesResultResponse" (uid);
+
+CREATE TABLE "McpListResourcesResultResponse" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	result_id INTEGER NOT NULL,
+	PRIMARY KEY (uid),
+	FOREIGN KEY(result_id) REFERENCES "McpListResourcesResult" (id)
+);
+CREATE INDEX "ix_McpListResourcesResultResponse_uid" ON "McpListResourcesResultResponse" (uid);
+
+CREATE TABLE "McpListToolsResultResponse" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	result_id INTEGER NOT NULL,
+	PRIMARY KEY (uid),
+	FOREIGN KEY(result_id) REFERENCES "McpListToolsResult" (id)
+);
+CREATE INDEX "ix_McpListToolsResultResponse_uid" ON "McpListToolsResultResponse" (uid);
+
+CREATE TABLE "McpMissingRequiredClientCapabilityErrorErrorData" (
+	id INTEGER NOT NULL,
+	"requiredCapabilities_id" INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY("requiredCapabilities_id") REFERENCES "McpClientCapabilities" (id)
+);
+CREATE INDEX "ix_McpMissingRequiredClientCapabilityErrorErrorData_id" ON "McpMissingRequiredClientCapabilityErrorErrorData" (id);
+
+CREATE TABLE "McpPrompt" (
 	id INTEGER NOT NULL,
 	description TEXT,
 	name TEXT NOT NULL,
 	title TEXT,
-	"CreateMessageRequestParams_id" INTEGER,
-	"ListToolsResult_id" INTEGER,
+	"McpListPromptsResult_id" INTEGER,
+	_meta_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY("McpListPromptsResult_id") REFERENCES "McpListPromptsResult" (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpMetaObject" (id)
+);
+CREATE INDEX "ix_McpPrompt_id" ON "McpPrompt" (id);
+
+CREATE TABLE "McpRequestMetaObject" (
+	id INTEGER NOT NULL,
+	mcp_log_level VARCHAR(9),
+	mcp_protocol_version TEXT NOT NULL,
+	"progressToken" TEXT,
+	mcp_client_capabilities_id INTEGER NOT NULL,
+	mcp_client_info_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(mcp_client_capabilities_id) REFERENCES "McpClientCapabilities" (id),
+	FOREIGN KEY(mcp_client_info_id) REFERENCES "McpImplementation" (id)
+);
+CREATE INDEX "ix_McpRequestMetaObject_id" ON "McpRequestMetaObject" (id);
+
+CREATE TABLE "McpResource" (
+	id INTEGER NOT NULL,
+	description TEXT,
+	name TEXT NOT NULL,
+	title TEXT,
+	"mimeType" TEXT,
+	size INTEGER,
+	uri TEXT NOT NULL,
+	"McpListResourcesResult_id" INTEGER,
+	_meta_id INTEGER,
 	annotations_id INTEGER,
-	execution_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY("McpListResourcesResult_id") REFERENCES "McpListResourcesResult" (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpMetaObject" (id),
+	FOREIGN KEY(annotations_id) REFERENCES "McpAnnotations" (id)
+);
+CREATE INDEX "ix_McpResource_id" ON "McpResource" (id);
+
+CREATE TABLE "McpResourceTemplate" (
+	id INTEGER NOT NULL,
+	description TEXT,
+	name TEXT NOT NULL,
+	title TEXT,
+	"mimeType" TEXT,
+	"uriTemplate" TEXT NOT NULL,
+	"McpListResourceTemplatesResult_id" INTEGER,
+	_meta_id INTEGER,
+	annotations_id INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY("McpListResourceTemplatesResult_id") REFERENCES "McpListResourceTemplatesResult" (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpMetaObject" (id),
+	FOREIGN KEY(annotations_id) REFERENCES "McpAnnotations" (id)
+);
+CREATE INDEX "ix_McpResourceTemplate_id" ON "McpResourceTemplate" (id);
+
+CREATE TABLE "McpSubscriptionsListenResultResponse" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	result_id INTEGER NOT NULL,
+	PRIMARY KEY (uid),
+	FOREIGN KEY(result_id) REFERENCES "McpSubscriptionsListenResult" (id)
+);
+CREATE INDEX "ix_McpSubscriptionsListenResultResponse_uid" ON "McpSubscriptionsListenResultResponse" (uid);
+
+CREATE TABLE "McpTool" (
+	id INTEGER NOT NULL,
+	description TEXT,
+	name TEXT NOT NULL,
+	title TEXT,
+	"McpCreateMessageRequestParams_id" INTEGER,
+	"McpListToolsResult_id" INTEGER,
+	_meta_id INTEGER,
+	annotations_id INTEGER,
 	"inputSchema_id" INTEGER NOT NULL,
 	"outputSchema_id" INTEGER,
-	_meta_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("CreateMessageRequestParams_id") REFERENCES "CreateMessageRequestParams" (id),
-	FOREIGN KEY("ListToolsResult_id") REFERENCES "ListToolsResult" (id),
-	FOREIGN KEY(annotations_id) REFERENCES "ToolAnnotations" (id),
-	FOREIGN KEY(execution_id) REFERENCES "ToolExecution" (id),
-	FOREIGN KEY("inputSchema_id") REFERENCES "JsonSchema" (id),
-	FOREIGN KEY("outputSchema_id") REFERENCES "JsonSchema" (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
+	FOREIGN KEY("McpCreateMessageRequestParams_id") REFERENCES "McpCreateMessageRequestParams" (id),
+	FOREIGN KEY("McpListToolsResult_id") REFERENCES "McpListToolsResult" (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpMetaObject" (id),
+	FOREIGN KEY(annotations_id) REFERENCES "McpToolAnnotations" (id),
+	FOREIGN KEY("inputSchema_id") REFERENCES "McpToolInputSchema" (id),
+	FOREIGN KEY("outputSchema_id") REFERENCES "McpToolOutputSchema" (id)
 );
-CREATE INDEX "ix_Tool_id" ON "Tool" (id);
+CREATE INDEX "ix_McpTool_id" ON "McpTool" (id);
 
-CREATE TABLE "SamplingMessage" (
+CREATE TABLE "McpDiscoverResult_supportedVersions" (
+	"McpDiscoverResult_id" INTEGER,
+	"supportedVersions" TEXT NOT NULL,
+	PRIMARY KEY ("McpDiscoverResult_id", "supportedVersions"),
+	FOREIGN KEY("McpDiscoverResult_id") REFERENCES "McpDiscoverResult" (id)
+);
+CREATE INDEX "ix_McpDiscoverResult_supportedVersions_McpDiscoverResult_id" ON "McpDiscoverResult_supportedVersions" ("McpDiscoverResult_id");
+CREATE INDEX "ix_McpDiscoverResult_supportedVersions_supportedVersions" ON "McpDiscoverResult_supportedVersions" ("supportedVersions");
+
+CREATE TABLE "McpReadResourceResult_contents" (
+	"McpReadResourceResult_id" INTEGER,
+	contents TEXT NOT NULL,
+	PRIMARY KEY ("McpReadResourceResult_id", contents),
+	FOREIGN KEY("McpReadResourceResult_id") REFERENCES "McpReadResourceResult" (id)
+);
+CREATE INDEX "ix_McpReadResourceResult_contents_McpReadResourceResult_id" ON "McpReadResourceResult_contents" ("McpReadResourceResult_id");
+CREATE INDEX "ix_McpReadResourceResult_contents_contents" ON "McpReadResourceResult_contents" (contents);
+
+CREATE TABLE "McpCallToolRequestParams" (
+	id INTEGER NOT NULL,
+	name TEXT NOT NULL,
+	"requestState" TEXT,
+	_meta_id INTEGER NOT NULL,
+	arguments_id INTEGER,
+	"inputResponses_id" INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpRequestMetaObject" (id),
+	FOREIGN KEY(arguments_id) REFERENCES "McpJSONObject" (id),
+	FOREIGN KEY("inputResponses_id") REFERENCES "McpInputResponses" (id)
+);
+CREATE INDEX "ix_McpCallToolRequestParams_id" ON "McpCallToolRequestParams" (id);
+
+CREATE TABLE "McpCompleteRequestParams" (
+	id INTEGER NOT NULL,
+	ref TEXT NOT NULL,
+	context_id INTEGER,
+	_meta_id INTEGER NOT NULL,
+	argument_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(context_id) REFERENCES "McpCompleteRequestParamsContext" (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpRequestMetaObject" (id),
+	FOREIGN KEY(argument_id) REFERENCES "McpCompleteRequestParamsArgument" (id)
+);
+CREATE INDEX "ix_McpCompleteRequestParams_id" ON "McpCompleteRequestParams" (id);
+
+CREATE TABLE "McpGetPromptRequestParams" (
+	id INTEGER NOT NULL,
+	name TEXT NOT NULL,
+	"requestState" TEXT,
+	_meta_id INTEGER NOT NULL,
+	arguments_id INTEGER,
+	"inputResponses_id" INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpRequestMetaObject" (id),
+	FOREIGN KEY(arguments_id) REFERENCES "McpGetPromptRequestParamsArguments" (id),
+	FOREIGN KEY("inputResponses_id") REFERENCES "McpInputResponses" (id)
+);
+CREATE INDEX "ix_McpGetPromptRequestParams_id" ON "McpGetPromptRequestParams" (id);
+
+CREATE TABLE "McpIcon" (
+	id INTEGER NOT NULL,
+	"mimeType" TEXT,
+	src TEXT NOT NULL,
+	theme VARCHAR(5),
+	"McpIcons_id" INTEGER,
+	"McpImplementation_id" INTEGER,
+	"McpPrompt_id" INTEGER,
+	"McpResource_id" INTEGER,
+	"McpResourceLink_id" INTEGER,
+	"McpResourceTemplate_id" INTEGER,
+	"McpTool_id" INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY("McpIcons_id") REFERENCES "McpIcons" (id),
+	FOREIGN KEY("McpImplementation_id") REFERENCES "McpImplementation" (id),
+	FOREIGN KEY("McpPrompt_id") REFERENCES "McpPrompt" (id),
+	FOREIGN KEY("McpResource_id") REFERENCES "McpResource" (id),
+	FOREIGN KEY("McpResourceLink_id") REFERENCES "McpResourceLink" (id),
+	FOREIGN KEY("McpResourceTemplate_id") REFERENCES "McpResourceTemplate" (id),
+	FOREIGN KEY("McpTool_id") REFERENCES "McpTool" (id)
+);
+CREATE INDEX "ix_McpIcon_id" ON "McpIcon" (id);
+
+CREATE TABLE "McpInputResponseRequestParams" (
+	id INTEGER NOT NULL,
+	"requestState" TEXT,
+	_meta_id INTEGER NOT NULL,
+	"inputResponses_id" INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpRequestMetaObject" (id),
+	FOREIGN KEY("inputResponses_id") REFERENCES "McpInputResponses" (id)
+);
+CREATE INDEX "ix_McpInputResponseRequestParams_id" ON "McpInputResponseRequestParams" (id);
+
+CREATE TABLE "McpMissingRequiredClientCapabilityErrorError" (
+	id INTEGER NOT NULL,
+	code INTEGER NOT NULL,
+	message TEXT NOT NULL,
+	data_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(data_id) REFERENCES "McpMissingRequiredClientCapabilityErrorErrorData" (id)
+);
+CREATE INDEX "ix_McpMissingRequiredClientCapabilityErrorError_id" ON "McpMissingRequiredClientCapabilityErrorError" (id);
+
+CREATE TABLE "McpPaginatedRequestParams" (
+	id INTEGER NOT NULL,
+	cursor TEXT,
+	_meta_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpRequestMetaObject" (id)
+);
+CREATE INDEX "ix_McpPaginatedRequestParams_id" ON "McpPaginatedRequestParams" (id);
+
+CREATE TABLE "McpPromptArgument" (
+	id INTEGER NOT NULL,
+	description TEXT,
+	name TEXT NOT NULL,
+	title TEXT,
+	required BOOLEAN,
+	"McpPrompt_id" INTEGER,
+	PRIMARY KEY (id),
+	FOREIGN KEY("McpPrompt_id") REFERENCES "McpPrompt" (id)
+);
+CREATE INDEX "ix_McpPromptArgument_id" ON "McpPromptArgument" (id);
+
+CREATE TABLE "McpPromptMessage" (
 	id INTEGER NOT NULL,
 	role VARCHAR(9) NOT NULL,
-	"CreateMessageRequestParams_id" INTEGER,
+	"McpGetPromptResult_id" INTEGER,
 	content_id INTEGER NOT NULL,
-	_meta_id INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("CreateMessageRequestParams_id") REFERENCES "CreateMessageRequestParams" (id),
-	FOREIGN KEY(content_id) REFERENCES "ContentBlock" (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
+	FOREIGN KEY("McpGetPromptResult_id") REFERENCES "McpGetPromptResult" (id),
+	FOREIGN KEY(content_id) REFERENCES "McpContentBlock" (id)
 );
-CREATE INDEX "ix_SamplingMessage_id" ON "SamplingMessage" (id);
+CREATE INDEX "ix_McpPromptMessage_id" ON "McpPromptMessage" (id);
 
-CREATE TABLE "Task" (
+CREATE TABLE "McpReadResourceRequestParams" (
 	id INTEGER NOT NULL,
-	"taskId" TEXT NOT NULL,
-	status VARCHAR(14) NOT NULL,
-	"createdAt" TEXT NOT NULL,
-	"lastUpdatedAt" TEXT NOT NULL,
-	ttl INTEGER NOT NULL,
-	"statusMessage" TEXT,
-	"pollInterval" INTEGER,
-	"ListTasksResult_id" INTEGER,
+	"requestState" TEXT,
+	uri TEXT NOT NULL,
+	_meta_id INTEGER NOT NULL,
+	"inputResponses_id" INTEGER,
 	PRIMARY KEY (id),
-	FOREIGN KEY("ListTasksResult_id") REFERENCES "ListTasksResult" (id)
+	FOREIGN KEY(_meta_id) REFERENCES "McpRequestMetaObject" (id),
+	FOREIGN KEY("inputResponses_id") REFERENCES "McpInputResponses" (id)
 );
-CREATE INDEX "ix_Task_id" ON "Task" (id);
+CREATE INDEX "ix_McpReadResourceRequestParams_id" ON "McpReadResourceRequestParams" (id);
 
-CREATE TABLE "JSONRPCErrorResponse" (
+CREATE TABLE "McpRequestParams" (
+	id INTEGER NOT NULL,
+	_meta_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpRequestMetaObject" (id)
+);
+CREATE INDEX "ix_McpRequestParams_id" ON "McpRequestParams" (id);
+
+CREATE TABLE "McpResourceRequestParams" (
+	id INTEGER NOT NULL,
+	uri TEXT NOT NULL,
+	_meta_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpRequestMetaObject" (id)
+);
+CREATE INDEX "ix_McpResourceRequestParams_id" ON "McpResourceRequestParams" (id);
+
+CREATE TABLE "McpSubscriptionsListenRequestParams" (
+	id INTEGER NOT NULL,
+	_meta_id INTEGER NOT NULL,
+	notifications_id INTEGER NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY(_meta_id) REFERENCES "McpRequestMetaObject" (id),
+	FOREIGN KEY(notifications_id) REFERENCES "McpSubscriptionFilter" (id)
+);
+CREATE INDEX "ix_McpSubscriptionsListenRequestParams_id" ON "McpSubscriptionsListenRequestParams" (id);
+
+CREATE TABLE "McpCallToolRequest" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	method TEXT NOT NULL,
+	params_id INTEGER NOT NULL,
+	PRIMARY KEY (uid),
+	FOREIGN KEY(params_id) REFERENCES "McpCallToolRequestParams" (id)
+);
+CREATE INDEX "ix_McpCallToolRequest_uid" ON "McpCallToolRequest" (uid);
+
+CREATE TABLE "McpCompleteRequest" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	method TEXT NOT NULL,
+	params_id INTEGER NOT NULL,
+	PRIMARY KEY (uid),
+	FOREIGN KEY(params_id) REFERENCES "McpCompleteRequestParams" (id)
+);
+CREATE INDEX "ix_McpCompleteRequest_uid" ON "McpCompleteRequest" (uid);
+
+CREATE TABLE "McpDiscoverRequest" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	method TEXT NOT NULL,
+	params_id INTEGER NOT NULL,
+	PRIMARY KEY (uid),
+	FOREIGN KEY(params_id) REFERENCES "McpRequestParams" (id)
+);
+CREATE INDEX "ix_McpDiscoverRequest_uid" ON "McpDiscoverRequest" (uid);
+
+CREATE TABLE "McpGetPromptRequest" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	method TEXT NOT NULL,
+	params_id INTEGER NOT NULL,
+	PRIMARY KEY (uid),
+	FOREIGN KEY(params_id) REFERENCES "McpGetPromptRequestParams" (id)
+);
+CREATE INDEX "ix_McpGetPromptRequest_uid" ON "McpGetPromptRequest" (uid);
+
+CREATE TABLE "McpListPromptsRequest" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	method TEXT NOT NULL,
+	params_id INTEGER NOT NULL,
+	PRIMARY KEY (uid),
+	FOREIGN KEY(params_id) REFERENCES "McpPaginatedRequestParams" (id)
+);
+CREATE INDEX "ix_McpListPromptsRequest_uid" ON "McpListPromptsRequest" (uid);
+
+CREATE TABLE "McpListResourceTemplatesRequest" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	method TEXT NOT NULL,
+	params_id INTEGER NOT NULL,
+	PRIMARY KEY (uid),
+	FOREIGN KEY(params_id) REFERENCES "McpPaginatedRequestParams" (id)
+);
+CREATE INDEX "ix_McpListResourceTemplatesRequest_uid" ON "McpListResourceTemplatesRequest" (uid);
+
+CREATE TABLE "McpListResourcesRequest" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	method TEXT NOT NULL,
+	params_id INTEGER NOT NULL,
+	PRIMARY KEY (uid),
+	FOREIGN KEY(params_id) REFERENCES "McpPaginatedRequestParams" (id)
+);
+CREATE INDEX "ix_McpListResourcesRequest_uid" ON "McpListResourcesRequest" (uid);
+
+CREATE TABLE "McpListToolsRequest" (
+	uid INTEGER NOT NULL,
+	id TEXT NOT NULL,
+	jsonrpc TEXT NOT NULL,
+	method TEXT NOT NULL,
+	params_id INTEGER NOT NULL,
+	PRIMARY KEY (uid),
+	FOREIGN KEY(params_id) REFERENCES "McpPaginatedRequestParams" (id)
+);
+CREATE INDEX "ix_McpListToolsRequest_uid" ON "McpListToolsRequest" (uid);
+
+CREATE TABLE "McpMissingRequiredClientCapabilityError" (
 	uid INTEGER NOT NULL,
 	id TEXT,
 	jsonrpc TEXT NOT NULL,
 	error_id INTEGER NOT NULL,
 	PRIMARY KEY (uid),
-	FOREIGN KEY(error_id) REFERENCES "Error" (id)
+	FOREIGN KEY(error_id) REFERENCES "McpMissingRequiredClientCapabilityErrorError" (id)
 );
-CREATE INDEX "ix_JSONRPCErrorResponse_uid" ON "JSONRPCErrorResponse" (uid);
+CREATE INDEX "ix_McpMissingRequiredClientCapabilityError_uid" ON "McpMissingRequiredClientCapabilityError" (uid);
 
-CREATE TABLE "LoggingMessageNotificationParams" (
-	id INTEGER NOT NULL,
-	level VARCHAR(9) NOT NULL,
-	logger TEXT,
-	data_id INTEGER NOT NULL,
-	_meta_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(data_id) REFERENCES "LogData" (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
-);
-CREATE INDEX "ix_LoggingMessageNotificationParams_id" ON "LoggingMessageNotificationParams" (id);
-
-CREATE TABLE "CancelledNotification" (
-	id INTEGER NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	params_id INTEGER NOT NULL,
-	PRIMARY KEY (id),
-	FOREIGN KEY(params_id) REFERENCES "CancelledNotificationParams" (id)
-);
-CREATE INDEX "ix_CancelledNotification_id" ON "CancelledNotification" (id);
-
-CREATE TABLE "ProgressNotification" (
-	id INTEGER NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	params_id INTEGER NOT NULL,
-	PRIMARY KEY (id),
-	FOREIGN KEY(params_id) REFERENCES "ProgressNotificationParams" (id)
-);
-CREATE INDEX "ix_ProgressNotification_id" ON "ProgressNotification" (id);
-
-CREATE TABLE "ResourceUpdatedNotification" (
-	id INTEGER NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	params_id INTEGER NOT NULL,
-	PRIMARY KEY (id),
-	FOREIGN KEY(params_id) REFERENCES "ResourceUpdatedNotificationParams" (id)
-);
-CREATE INDEX "ix_ResourceUpdatedNotification_id" ON "ResourceUpdatedNotification" (id);
-
-CREATE TABLE "TaskStatusNotification" (
-	id INTEGER NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	params_id INTEGER NOT NULL,
-	PRIMARY KEY (id),
-	FOREIGN KEY(params_id) REFERENCES "TaskStatusNotificationParams" (id)
-);
-CREATE INDEX "ix_TaskStatusNotification_id" ON "TaskStatusNotification" (id);
-
-CREATE TABLE "CompleteRequestParams" (
-	id INTEGER NOT NULL,
-	argument_id INTEGER NOT NULL,
-	context_id INTEGER,
-	ref_id INTEGER NOT NULL,
-	PRIMARY KEY (id),
-	FOREIGN KEY(argument_id) REFERENCES "CompletionArgument" (id),
-	FOREIGN KEY(context_id) REFERENCES "CompletionContext" (id),
-	FOREIGN KEY(ref_id) REFERENCES "PromptReference" (id)
-);
-CREATE INDEX "ix_CompleteRequestParams_id" ON "CompleteRequestParams" (id);
-
-CREATE TABLE "GetPromptRequest" (
+CREATE TABLE "McpPaginatedRequest" (
 	uid INTEGER NOT NULL,
 	id TEXT NOT NULL,
 	jsonrpc TEXT NOT NULL,
 	method TEXT NOT NULL,
 	params_id INTEGER NOT NULL,
 	PRIMARY KEY (uid),
-	FOREIGN KEY(params_id) REFERENCES "GetPromptRequestParams" (id)
+	FOREIGN KEY(params_id) REFERENCES "McpPaginatedRequestParams" (id)
 );
-CREATE INDEX "ix_GetPromptRequest_uid" ON "GetPromptRequest" (uid);
+CREATE INDEX "ix_McpPaginatedRequest_uid" ON "McpPaginatedRequest" (uid);
 
-CREATE TABLE "CallToolRequest" (
+CREATE TABLE "McpReadResourceRequest" (
 	uid INTEGER NOT NULL,
 	id TEXT NOT NULL,
 	jsonrpc TEXT NOT NULL,
 	method TEXT NOT NULL,
 	params_id INTEGER NOT NULL,
 	PRIMARY KEY (uid),
-	FOREIGN KEY(params_id) REFERENCES "CallToolRequestParams" (id)
+	FOREIGN KEY(params_id) REFERENCES "McpReadResourceRequestParams" (id)
 );
-CREATE INDEX "ix_CallToolRequest_uid" ON "CallToolRequest" (uid);
+CREATE INDEX "ix_McpReadResourceRequest_uid" ON "McpReadResourceRequest" (uid);
 
-CREATE TABLE "CreateMessageRequest" (
+CREATE TABLE "McpSubscriptionsListenRequest" (
 	uid INTEGER NOT NULL,
 	id TEXT NOT NULL,
 	jsonrpc TEXT NOT NULL,
 	method TEXT NOT NULL,
 	params_id INTEGER NOT NULL,
 	PRIMARY KEY (uid),
-	FOREIGN KEY(params_id) REFERENCES "CreateMessageRequestParams" (id)
+	FOREIGN KEY(params_id) REFERENCES "McpSubscriptionsListenRequestParams" (id)
 );
-CREATE INDEX "ix_CreateMessageRequest_uid" ON "CreateMessageRequest" (uid);
+CREATE INDEX "ix_McpSubscriptionsListenRequest_uid" ON "McpSubscriptionsListenRequest" (uid);
 
-CREATE TABLE "ElicitRequest" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	params_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(params_id) REFERENCES "ElicitRequestFormParams" (id)
-);
-CREATE INDEX "ix_ElicitRequest_uid" ON "ElicitRequest" (uid);
-
-CREATE TABLE "CallToolResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "CallToolResult" (id)
-);
-CREATE INDEX "ix_CallToolResultResponse_uid" ON "CallToolResultResponse" (uid);
-
-CREATE TABLE "CompleteResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "CompleteResult" (id)
-);
-CREATE INDEX "ix_CompleteResultResponse_uid" ON "CompleteResultResponse" (uid);
-
-CREATE TABLE "GetPromptResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "GetPromptResult" (id)
-);
-CREATE INDEX "ix_GetPromptResultResponse_uid" ON "GetPromptResultResponse" (uid);
-
-CREATE TABLE "ListPromptsResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "ListPromptsResult" (id)
-);
-CREATE INDEX "ix_ListPromptsResultResponse_uid" ON "ListPromptsResultResponse" (uid);
-
-CREATE TABLE "ListResourcesResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "ListResourcesResult" (id)
-);
-CREATE INDEX "ix_ListResourcesResultResponse_uid" ON "ListResourcesResultResponse" (uid);
-
-CREATE TABLE "ListResourceTemplatesResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "ListResourceTemplatesResult" (id)
-);
-CREATE INDEX "ix_ListResourceTemplatesResultResponse_uid" ON "ListResourceTemplatesResultResponse" (uid);
-
-CREATE TABLE "ReadResourceResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "ReadResourceResult" (id)
-);
-CREATE INDEX "ix_ReadResourceResultResponse_uid" ON "ReadResourceResultResponse" (uid);
-
-CREATE TABLE "ListToolsResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "ListToolsResult" (id)
-);
-CREATE INDEX "ix_ListToolsResultResponse_uid" ON "ListToolsResultResponse" (uid);
-
-CREATE TABLE "ListRootsResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "ListRootsResult" (id)
-);
-CREATE INDEX "ix_ListRootsResultResponse_uid" ON "ListRootsResultResponse" (uid);
-
-CREATE TABLE "CreateMessageResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "CreateMessageResult" (id)
-);
-CREATE INDEX "ix_CreateMessageResultResponse_uid" ON "CreateMessageResultResponse" (uid);
-
-CREATE TABLE "ElicitResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "ElicitResult" (id)
-);
-CREATE INDEX "ix_ElicitResultResponse_uid" ON "ElicitResultResponse" (uid);
-
-CREATE TABLE "SetLevelResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "Result" (id)
-);
-CREATE INDEX "ix_SetLevelResultResponse_uid" ON "SetLevelResultResponse" (uid);
-
-CREATE TABLE "PingResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "Result" (id)
-);
-CREATE INDEX "ix_PingResultResponse_uid" ON "PingResultResponse" (uid);
-
-CREATE TABLE "SubscribeResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "Result" (id)
-);
-CREATE INDEX "ix_SubscribeResultResponse_uid" ON "SubscribeResultResponse" (uid);
-
-CREATE TABLE "UnsubscribeResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "Result" (id)
-);
-CREATE INDEX "ix_UnsubscribeResultResponse_uid" ON "UnsubscribeResultResponse" (uid);
-
-CREATE TABLE "GetTaskResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "GetTaskResult" (id)
-);
-CREATE INDEX "ix_GetTaskResultResponse_uid" ON "GetTaskResultResponse" (uid);
-
-CREATE TABLE "GetTaskPayloadResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "GetTaskPayloadResult" (id)
-);
-CREATE INDEX "ix_GetTaskPayloadResultResponse_uid" ON "GetTaskPayloadResultResponse" (uid);
-
-CREATE TABLE "CancelTaskResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "CancelTaskResult" (id)
-);
-CREATE INDEX "ix_CancelTaskResultResponse_uid" ON "CancelTaskResultResponse" (uid);
-
-CREATE TABLE "ListTasksResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "ListTasksResult" (id)
-);
-CREATE INDEX "ix_ListTasksResultResponse_uid" ON "ListTasksResultResponse" (uid);
-
-CREATE TABLE "ToolResultContent_content" (
-	"ToolResultContent_id" INTEGER,
-	content_id INTEGER NOT NULL,
-	PRIMARY KEY ("ToolResultContent_id", content_id),
-	FOREIGN KEY("ToolResultContent_id") REFERENCES "ToolResultContent" (id),
-	FOREIGN KEY(content_id) REFERENCES "ContentBlock" (id)
-);
-CREATE INDEX "ix_ToolResultContent_content_content_id" ON "ToolResultContent_content" (content_id);
-CREATE INDEX "ix_ToolResultContent_content_ToolResultContent_id" ON "ToolResultContent_content" ("ToolResultContent_id");
-
-CREATE TABLE "UntitledMultiSelectEnumSchema_default" (
-	"UntitledMultiSelectEnumSchema_id" INTEGER,
-	"default" TEXT,
-	PRIMARY KEY ("UntitledMultiSelectEnumSchema_id", "default"),
-	FOREIGN KEY("UntitledMultiSelectEnumSchema_id") REFERENCES "UntitledMultiSelectEnumSchema" (id)
-);
-CREATE INDEX "ix_UntitledMultiSelectEnumSchema_default_UntitledMultiSelectEnumSchema_id" ON "UntitledMultiSelectEnumSchema_default" ("UntitledMultiSelectEnumSchema_id");
-CREATE INDEX "ix_UntitledMultiSelectEnumSchema_default_default" ON "UntitledMultiSelectEnumSchema_default" ("default");
-
-CREATE TABLE "TitledMultiSelectEnumSchema_default" (
-	"TitledMultiSelectEnumSchema_id" INTEGER,
-	"default" TEXT,
-	PRIMARY KEY ("TitledMultiSelectEnumSchema_id", "default"),
-	FOREIGN KEY("TitledMultiSelectEnumSchema_id") REFERENCES "TitledMultiSelectEnumSchema" (id)
-);
-CREATE INDEX "ix_TitledMultiSelectEnumSchema_default_TitledMultiSelectEnumSchema_id" ON "TitledMultiSelectEnumSchema_default" ("TitledMultiSelectEnumSchema_id");
-CREATE INDEX "ix_TitledMultiSelectEnumSchema_default_default" ON "TitledMultiSelectEnumSchema_default" ("default");
-
-CREATE TABLE "CreateMessageRequestParams_stopSequences" (
-	"CreateMessageRequestParams_id" INTEGER,
-	"stopSequences" TEXT,
-	PRIMARY KEY ("CreateMessageRequestParams_id", "stopSequences"),
-	FOREIGN KEY("CreateMessageRequestParams_id") REFERENCES "CreateMessageRequestParams" (id)
-);
-CREATE INDEX "ix_CreateMessageRequestParams_stopSequences_CreateMessageRequestParams_id" ON "CreateMessageRequestParams_stopSequences" ("CreateMessageRequestParams_id");
-CREATE INDEX "ix_CreateMessageRequestParams_stopSequences_stopSequences" ON "CreateMessageRequestParams_stopSequences" ("stopSequences");
-
-CREATE TABLE "CallToolResult_content" (
-	"CallToolResult_id" INTEGER,
-	content_id INTEGER NOT NULL,
-	PRIMARY KEY ("CallToolResult_id", content_id),
-	FOREIGN KEY("CallToolResult_id") REFERENCES "CallToolResult" (id),
-	FOREIGN KEY(content_id) REFERENCES "ContentBlock" (id)
-);
-CREATE INDEX "ix_CallToolResult_content_content_id" ON "CallToolResult_content" (content_id);
-CREATE INDEX "ix_CallToolResult_content_CallToolResult_id" ON "CallToolResult_content" ("CallToolResult_id");
-
-CREATE TABLE "Icon" (
-	id INTEGER NOT NULL,
-	src TEXT NOT NULL,
-	"mimeType" TEXT,
-	theme VARCHAR(5),
-	"HasIcons_id" INTEGER,
-	"Implementation_id" INTEGER,
-	"ResourceLink_id" INTEGER,
-	"Resource_id" INTEGER,
-	"ResourceTemplate_id" INTEGER,
-	"Prompt_id" INTEGER,
-	"Tool_id" INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY("HasIcons_id") REFERENCES "HasIcons" (id),
-	FOREIGN KEY("Implementation_id") REFERENCES "Implementation" (id),
-	FOREIGN KEY("ResourceLink_id") REFERENCES "ResourceLink" (id),
-	FOREIGN KEY("Resource_id") REFERENCES "Resource" (id),
-	FOREIGN KEY("ResourceTemplate_id") REFERENCES "ResourceTemplate" (id),
-	FOREIGN KEY("Prompt_id") REFERENCES "Prompt" (id),
-	FOREIGN KEY("Tool_id") REFERENCES "Tool" (id)
-);
-CREATE INDEX "ix_Icon_id" ON "Icon" (id);
-
-CREATE TABLE "EmbeddedResource" (
-	id INTEGER NOT NULL,
-	type TEXT NOT NULL,
-	resource_id INTEGER NOT NULL,
-	_meta_id INTEGER,
-	annotations_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(resource_id) REFERENCES "ResourceContents" (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id),
-	FOREIGN KEY(annotations_id) REFERENCES "Annotations" (id)
-);
-CREATE INDEX "ix_EmbeddedResource_id" ON "EmbeddedResource" (id);
-
-CREATE TABLE "PromptArgument" (
-	id INTEGER NOT NULL,
-	description TEXT,
-	required BOOLEAN,
-	required_field BOOLEAN,
-	name TEXT NOT NULL,
-	title TEXT,
-	"Prompt_id" INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY("Prompt_id") REFERENCES "Prompt" (id)
-);
-CREATE INDEX "ix_PromptArgument_id" ON "PromptArgument" (id);
-
-CREATE TABLE "ClientCapabilities" (
-	id INTEGER NOT NULL,
-	experimental TEXT,
-	elicitation_id INTEGER,
-	extensions_id INTEGER,
-	roots_id INTEGER,
-	sampling_id INTEGER,
-	tasks_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(elicitation_id) REFERENCES "ElicitationCapability" (id),
-	FOREIGN KEY(extensions_id) REFERENCES "ExtensionsCapability" (id),
-	FOREIGN KEY(roots_id) REFERENCES "RootsCapability" (id),
-	FOREIGN KEY(sampling_id) REFERENCES "SamplingCapability" (id),
-	FOREIGN KEY(tasks_id) REFERENCES "TasksCapability" (id)
-);
-CREATE INDEX "ix_ClientCapabilities_id" ON "ClientCapabilities" (id);
-
-CREATE TABLE "ServerCapabilities" (
-	id INTEGER NOT NULL,
-	experimental TEXT,
-	extensions_id INTEGER,
-	prompts_id INTEGER,
-	resources_id INTEGER,
-	tools_id INTEGER,
-	tasks_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(extensions_id) REFERENCES "ExtensionsCapability" (id),
-	FOREIGN KEY(prompts_id) REFERENCES "PromptsCapability" (id),
-	FOREIGN KEY(resources_id) REFERENCES "ResourcesCapability" (id),
-	FOREIGN KEY(tools_id) REFERENCES "ToolsCapability" (id),
-	FOREIGN KEY(tasks_id) REFERENCES "TasksCapability" (id)
-);
-CREATE INDEX "ix_ServerCapabilities_id" ON "ServerCapabilities" (id);
-
-CREATE TABLE "LoggingMessageNotification" (
-	id INTEGER NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	params_id INTEGER NOT NULL,
-	PRIMARY KEY (id),
-	FOREIGN KEY(params_id) REFERENCES "LoggingMessageNotificationParams" (id)
-);
-CREATE INDEX "ix_LoggingMessageNotification_id" ON "LoggingMessageNotification" (id);
-
-CREATE TABLE "CompleteRequest" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	params_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(params_id) REFERENCES "CompleteRequestParams" (id)
-);
-CREATE INDEX "ix_CompleteRequest_uid" ON "CompleteRequest" (uid);
-
-CREATE TABLE "CreateTaskResult" (
-	id INTEGER NOT NULL,
-	task_id INTEGER NOT NULL,
-	_meta_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(task_id) REFERENCES "Task" (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
-);
-CREATE INDEX "ix_CreateTaskResult_id" ON "CreateTaskResult" (id);
-
-CREATE TABLE "InitializeRequestParams" (
-	id INTEGER NOT NULL,
-	"protocolVersion" TEXT NOT NULL,
-	capabilities_id INTEGER NOT NULL,
-	"clientInfo_id" INTEGER NOT NULL,
-	PRIMARY KEY (id),
-	FOREIGN KEY(capabilities_id) REFERENCES "ClientCapabilities" (id),
-	FOREIGN KEY("clientInfo_id") REFERENCES "Implementation" (id)
-);
-CREATE INDEX "ix_InitializeRequestParams_id" ON "InitializeRequestParams" (id);
-
-CREATE TABLE "InitializeResult" (
-	id INTEGER NOT NULL,
-	"protocolVersion" TEXT NOT NULL,
-	instructions TEXT,
-	capabilities_id INTEGER NOT NULL,
-	"serverInfo_id" INTEGER NOT NULL,
-	_meta_id INTEGER,
-	PRIMARY KEY (id),
-	FOREIGN KEY(capabilities_id) REFERENCES "ServerCapabilities" (id),
-	FOREIGN KEY("serverInfo_id") REFERENCES "Implementation" (id),
-	FOREIGN KEY(_meta_id) REFERENCES "MetaObject" (id)
-);
-CREATE INDEX "ix_InitializeResult_id" ON "InitializeResult" (id);
-
-CREATE TABLE "CreateTaskResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "CreateTaskResult" (id)
-);
-CREATE INDEX "ix_CreateTaskResultResponse_uid" ON "CreateTaskResultResponse" (uid);
-
-CREATE TABLE "Icon_sizes" (
-	"Icon_id" INTEGER,
+CREATE TABLE "McpIcon_sizes" (
+	"McpIcon_id" INTEGER,
 	sizes TEXT,
-	PRIMARY KEY ("Icon_id", sizes),
-	FOREIGN KEY("Icon_id") REFERENCES "Icon" (id)
+	PRIMARY KEY ("McpIcon_id", sizes),
+	FOREIGN KEY("McpIcon_id") REFERENCES "McpIcon" (id)
 );
-CREATE INDEX "ix_Icon_sizes_sizes" ON "Icon_sizes" (sizes);
-CREATE INDEX "ix_Icon_sizes_Icon_id" ON "Icon_sizes" ("Icon_id");
-
-CREATE TABLE "InitializeRequest" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	method TEXT NOT NULL,
-	params_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(params_id) REFERENCES "InitializeRequestParams" (id)
-);
-CREATE INDEX "ix_InitializeRequest_uid" ON "InitializeRequest" (uid);
-
-CREATE TABLE "InitializeResultResponse" (
-	uid INTEGER NOT NULL,
-	id TEXT NOT NULL,
-	jsonrpc TEXT NOT NULL,
-	result_id INTEGER NOT NULL,
-	PRIMARY KEY (uid),
-	FOREIGN KEY(result_id) REFERENCES "InitializeResult" (id)
-);
-CREATE INDEX "ix_InitializeResultResponse_uid" ON "InitializeResultResponse" (uid);
+CREATE INDEX "ix_McpIcon_sizes_sizes" ON "McpIcon_sizes" (sizes);
+CREATE INDEX "ix_McpIcon_sizes_McpIcon_id" ON "McpIcon_sizes" ("McpIcon_id");

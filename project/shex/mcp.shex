@@ -1,20 +1,23 @@
-# metamodel_version: 1.7.0
-# version: draft
+# metamodel_version: 1.12.0
+# version: 2026-07-28
 BASE <https://w3id.org/lmodel/mcp/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX linkml: <https://w3id.org/linkml/>
 PREFIX schema1: <http://schema.org/>
-PREFIX dct: <http://purl.org/dc/terms/>
 
 
-<Cursor> xsd:string
+<McpBase64> xsd:base64Binary
 
-<ProgressToken> xsd:string
+<McpCursor> xsd:string
 
-<RequestId> xsd:string
+<McpProgressToken> xsd:string
 
-<JsonValue> xsd:anyType
+<McpRequestId> xsd:string
+
+<McpResultType> xsd:string
+
+<McpUriTemplate> xsd:string
 
 linkml:String xsd:string
 
@@ -54,1862 +57,1843 @@ linkml:Jsonpath xsd:string
 
 linkml:Sparqlpath xsd:string
 
-<Annotations> CLOSED {
-    (  $<Annotations_tes> (  <audience> [ <https://w3id.org/lmodel/mcp/Role#assistant> <https://w3id.org/lmodel/mcp/Role#user> ] *
-          ;
+<McpAnnotations> CLOSED {
+    (  $<McpAnnotations_tes> (  <audience> [ <https://w3id.org/lmodel/mcp/McpRole#assistant>
+             <https://w3id.org/lmodel/mcp/McpRole#user> ] * ;
           <lastModified> @linkml:String ? ;
           <priority> @linkml:Float ?
        ) ;
-       rdf:type [ <Annotations> ] ?
+       rdf:type [ <McpAnnotations> ] ?
     )
 }
 
-<ArgumentMap> CLOSED {
-    (  $<ArgumentMap_tes> (  <city> @linkml:String ? ;
-          <location> @linkml:String ? ;
-          <language> @linkml:String ? ;
-          <framework> @linkml:String ?
+<McpAudioContent> CLOSED {
+    (  $<McpAudioContent_tes> (  <type> @linkml:String ;
+          <_meta> @<McpMetaObject> ? ;
+          <annotations> @<McpAnnotations> ? ;
+          <data> @<McpBase64> ;
+          <mimeType> @linkml:String
        ) ;
-       rdf:type [ <ArgumentMap> ] ?
+       rdf:type [ <McpAudioContent> ] ?
     )
 }
 
-<AudioContent> CLOSED {
-    (  $<AudioContent_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          &<HasAnnotations_tes> ;
-          rdf:type [ <HasAnnotations> ] ? ;
-          <data> @linkml:String ;
-          <mimeType> @linkml:String ;
-          <type> @linkml:String ;
-          <_meta> @<MetaObject> ? ;
-          <annotations> @<Annotations> ?
-       ) ;
-       rdf:type [ <AudioContent> ] ?
-    )
-}
-
-<BlobResourceContents> CLOSED {
-    (  $<BlobResourceContents_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          <uri> @linkml:Uri ;
-          <mimeType> @linkml:String ? ;
-          <blob> @linkml:String ;
-          <_meta> @<MetaObject> ?
-       ) ;
-       rdf:type [ <BlobResourceContents> ] ?
-    )
-}
-
-<BooleanSchema> CLOSED {
-    (  $<BooleanSchema_tes> (  <type> @linkml:String ;
-          <default> @linkml:Boolean ? ;
-          <default_value> @linkml:Boolean ? ;
-          dct:title @linkml:String ? ;
-          dct:description @linkml:String ?
-       ) ;
-       rdf:type [ <BooleanSchema> ] ?
-    )
-}
-
-<CallToolRequest> CLOSED {
-    (  $<CallToolRequest_tes> (  &<JSONRPCRequest_tes> ;
-          rdf:type [ <JSONRPCRequest> ] ? ;
-          <params> @<CallToolRequestParams> ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <CallToolRequest> ] ?
-    )
-}
-
-<CallToolRequestParams> CLOSED {
-    (  $<CallToolRequestParams_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          <arguments> @<ArgumentMap> ? ;
-          schema1:name @linkml:String ;
-          <task> @<TaskMetadata> ? ;
-          <_meta> @<MetaObject> ?
-       ) ;
-       rdf:type [ <CallToolRequestParams> ] ?
-    )
-}
-
-<CallToolResult> CLOSED {
-    (  $<CallToolResult_tes> (  &<Result_tes> ;
-          rdf:type [ <Result> ] ? ;
-          <content> @<ContentBlock> + ;
-          <isError> @linkml:Boolean ? ;
-          <structuredContent> @<StructuredContentData> ?
-       ) ;
-       rdf:type [ <CallToolResult> ] ?
-    )
-}
-
-<CallToolResultResponse> CLOSED {
-    (  $<CallToolResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<CallToolResult>
-       ) ;
-       rdf:type [ <CallToolResultResponse> ] ?
-    )
-}
-
-<CancelledNotification> CLOSED {
-    (  $<CancelledNotification_tes> (  &<JSONRPCNotification_tes> ;
-          rdf:type [ <JSONRPCNotification> ] ? ;
-          <params> @<CancelledNotificationParams> ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <CancelledNotification> ] ?
-    )
-}
-
-<CancelledNotificationParams> CLOSED {
-    (  $<CancelledNotificationParams_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          <requestId> @<RequestId> ? ;
-          <reason> @linkml:String ? ;
-          <_meta> @<MetaObject> ?
-       ) ;
-       rdf:type [ <CancelledNotificationParams> ] ?
-    )
-}
-
-<CancelTaskRequest> CLOSED {
-    (  $<CancelTaskRequest_tes> (  &<JSONRPCRequest_tes> ;
-          rdf:type [ <JSONRPCRequest> ] ? ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <CancelTaskRequest> ] ?
-    )
-}
-
-<CancelTaskResult> CLOSED {
-    (  $<CancelTaskResult_tes> (  &<Result_tes> ;
-          rdf:type [ <Result> ] ? ;
-          &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          <taskId> @linkml:String ;
-          <status> [ <https://w3id.org/lmodel/mcp/TaskStatusEnum#cancelled> <https://w3id.org/lmodel/mcp/TaskStatusEnum#completed>
-             <https://w3id.org/lmodel/mcp/TaskStatusEnum#failed> <https://w3id.org/lmodel/mcp/TaskStatusEnum#input_required>
-             <https://w3id.org/lmodel/mcp/TaskStatusEnum#working> ] ;
-          <createdAt> @linkml:String ;
-          <lastUpdatedAt> @linkml:String ;
-          <ttl> @linkml:Integer ;
-          <statusMessage> @linkml:String ? ;
-          <pollInterval> @linkml:Integer ?
-       ) ;
-       rdf:type [ <CancelTaskResult> ] ?
-    )
-}
-
-<CancelTaskResultResponse> CLOSED {
-    (  $<CancelTaskResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<CancelTaskResult>
-       ) ;
-       rdf:type [ <CancelTaskResultResponse> ] ?
-    )
-}
-
-<ClientCapabilities> CLOSED {
-    (  $<ClientCapabilities_tes> (  <elicitation> @<ElicitationCapability> ? ;
-          <experimental> @<JsonValue> ? ;
-          <extensions> @<ExtensionsCapability> ? ;
-          <roots> @<RootsCapability> * ;
-          <sampling> @<SamplingCapability> ? ;
-          <tasks> @<TasksCapability> *
-       ) ;
-       rdf:type [ <ClientCapabilities> ] ?
-    )
-}
-
-<ClientNotification> CLOSED {
-    (  $<ClientNotification_tes> rdf:type . * ;
-       rdf:type [ <ClientNotification> ] ?
-    )
-}
-
-<ClientRequest> CLOSED {
-    (  $<ClientRequest_tes> rdf:type . * ;
-       rdf:type [ <ClientRequest> ] ?
-    )
-}
-
-<ClientResult> CLOSED {
-    (  $<ClientResult_tes> rdf:type . * ;
-       rdf:type [ <ClientResult> ] ?
-    )
-}
-
-<CompleteRequest> CLOSED {
-    (  $<CompleteRequest_tes> (  &<JSONRPCRequest_tes> ;
-          rdf:type [ <JSONRPCRequest> ] ? ;
-          <params> @<CompleteRequestParams> ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <CompleteRequest> ] ?
-    )
-}
-
-<CompleteRequestParams> CLOSED {
-    (  $<CompleteRequestParams_tes> (  <argument> @<CompletionArgument> ;
-          <context> @<CompletionContext> ? ;
-          <ref> @<PromptReference>
-       ) ;
-       rdf:type [ <CompleteRequestParams> ] ?
-    )
-}
-
-<CompleteResult> CLOSED {
-    (  $<CompleteResult_tes> (  &<Result_tes> ;
-          rdf:type [ <Result> ] ? ;
-          <completion> @<CompletionData>
-       ) ;
-       rdf:type [ <CompleteResult> ] ?
-    )
-}
-
-<CompleteResultResponse> CLOSED {
-    (  $<CompleteResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<CompleteResult>
-       ) ;
-       rdf:type [ <CompleteResultResponse> ] ?
-    )
-}
-
-<CompletionArgument> CLOSED {
-    (  $<CompletionArgument_tes> (  schema1:name @linkml:String ;
-          <value> @linkml:String
-       ) ;
-       rdf:type [ <CompletionArgument> ] ?
-    )
-}
-
-<CompletionContext> CLOSED {
-    (  $<CompletionContext_tes> <arguments> @<ArgumentMap> ? ;
-       rdf:type [ <CompletionContext> ] ?
-    )
-}
-
-<CompletionData> CLOSED {
-    (  $<CompletionData_tes> (  <values> @linkml:String + ;
-          <total> @linkml:Float ? ;
-          <hasMore> @linkml:Boolean ?
-       ) ;
-       rdf:type [ <CompletionData> ] ?
-    )
-}
-
-<ContentBlock> CLOSED {
-    (  $<ContentBlock_tes> (  <type> @linkml:String ? ;
-          <text> @linkml:String ?
-       ) ;
-       rdf:type [ <ContentBlock> ] ?
-    )
-}
-
-<ContentBlockVariants> CLOSED {
-    (  $<ContentBlockVariants_tes> rdf:type . * ;
-       rdf:type [ <ContentBlockVariants> ] ?
-    )
-}
-
-<CreateMessageRequest> CLOSED {
-    (  $<CreateMessageRequest_tes> (  &<JSONRPCRequest_tes> ;
-          rdf:type [ <JSONRPCRequest> ] ? ;
-          <params> @<CreateMessageRequestParams> ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <CreateMessageRequest> ] ?
-    )
-}
-
-<CreateMessageRequestParams> CLOSED {
-    (  $<CreateMessageRequestParams_tes> (  <maxTokens> @linkml:Integer ;
-          <messages> @<SamplingMessage> + ;
-          <modelPreferences> @<ModelPreferences> ? ;
-          <systemPrompt> @linkml:String ? ;
-          <temperature> @linkml:Float ? ;
-          <includeContext> [ <https://w3id.org/lmodel/mcp/IncludeContextEnum#allServers>
-             <https://w3id.org/lmodel/mcp/IncludeContextEnum#none> <https://w3id.org/lmodel/mcp/IncludeContextEnum#thisServer> ] ?
-          ;
-          <stopSequences> @linkml:String * ;
-          <tools> @<Tool> * ;
-          <toolChoice> @<ToolChoice> ? ;
-          <task> @<TaskMetadata> ?
-       ) ;
-       rdf:type [ <CreateMessageRequestParams> ] ?
-    )
-}
-
-<CreateMessageResult> CLOSED {
-    (  $<CreateMessageResult_tes> (  &<Result_tes> ;
-          rdf:type [ <Result> ] ? ;
-          <content> @<ContentBlock> ;
-          <model> @linkml:String ;
-          <role> [ <https://w3id.org/lmodel/mcp/Role#assistant> <https://w3id.org/lmodel/mcp/Role#user> ] ;
-          <stopReason> @linkml:String ?
-       ) ;
-       rdf:type [ <CreateMessageResult> ] ?
-    )
-}
-
-<CreateMessageResultResponse> CLOSED {
-    (  $<CreateMessageResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<CreateMessageResult>
-       ) ;
-       rdf:type [ <CreateMessageResultResponse> ] ?
-    )
-}
-
-<CreateTaskResult> CLOSED {
-    (  $<CreateTaskResult_tes> (  &<Result_tes> ;
-          rdf:type [ <Result> ] ? ;
-          <task> @<Task>
-       ) ;
-       rdf:type [ <CreateTaskResult> ] ?
-    )
-}
-
-<CreateTaskResultResponse> CLOSED {
-    (  $<CreateTaskResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<CreateTaskResult>
-       ) ;
-       rdf:type [ <CreateTaskResultResponse> ] ?
-    )
-}
-
-<ElicitationCapability> CLOSED {
-    (  $<ElicitationCapability_tes> rdf:type . * ;
-       rdf:type [ <ElicitationCapability> ] ?
-    )
-}
-
-<ElicitationCompleteNotification> CLOSED {
-    (  $<ElicitationCompleteNotification_tes> (  &<JSONRPCNotification_tes> ;
-          rdf:type [ <JSONRPCNotification> ] ? ;
-          <params> @<ElicitationCompleteNotificationParams> ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <ElicitationCompleteNotification> ] ?
-    )
-}
-
-<ElicitationCompleteNotificationParams> CLOSED {
-    (  $<ElicitationCompleteNotificationParams_tes> <elicitationId> @linkml:String ;
-       rdf:type [ <ElicitationCompleteNotificationParams> ] ?
-    )
-}
-
-<ElicitationContent> CLOSED {
-    (  $<ElicitationContent_tes> (  schema1:name @linkml:String ? ;
-          <email> @linkml:String ? ;
-          <age> @linkml:Integer ?
-       ) ;
-       rdf:type [ <ElicitationContent> ] ?
-    )
-}
-
-<ElicitRequest> CLOSED {
-    (  $<ElicitRequest_tes> (  &<JSONRPCRequest_tes> ;
-          rdf:type [ <JSONRPCRequest> ] ? ;
-          <params> @<ElicitRequestFormParams> ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <ElicitRequest> ] ?
-    )
-}
-
-<ElicitRequestFormParams> CLOSED {
-    (  $<ElicitRequestFormParams_tes> (  <message> @linkml:String ;
-          <requestedSchema> @<JsonSchema> ;
-          <mode> @linkml:String ? ;
-          <task> @<TaskMetadata> ?
-       ) ;
-       rdf:type [ <ElicitRequestFormParams> ] ?
-    )
-}
-
-<ElicitRequestParams> CLOSED {
-    (  $<ElicitRequestParams_tes> rdf:type . * ;
-       rdf:type [ <ElicitRequestParams> ] ?
-    )
-}
-
-<ElicitRequestURLParams> CLOSED {
-    (  $<ElicitRequestURLParams_tes> (  <elicitationId> @linkml:String ;
-          <message> @linkml:String ;
-          <mode> @linkml:String ;
-          <url> @linkml:Uri ;
-          <task> @<TaskMetadata> ?
-       ) ;
-       rdf:type [ <ElicitRequestURLParams> ] ?
-    )
-}
-
-<ElicitResult> CLOSED {
-    (  $<ElicitResult_tes> (  &<Result_tes> ;
-          rdf:type [ <Result> ] ? ;
-          <action> [ <https://w3id.org/lmodel/mcp/ElicitActionEnum#accept> <https://w3id.org/lmodel/mcp/ElicitActionEnum#cancel>
-             <https://w3id.org/lmodel/mcp/ElicitActionEnum#decline> ] ;
-          <content> @<ElicitationContent> ?
-       ) ;
-       rdf:type [ <ElicitResult> ] ?
-    )
-}
-
-<ElicitResultResponse> CLOSED {
-    (  $<ElicitResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<ElicitResult>
-       ) ;
-       rdf:type [ <ElicitResultResponse> ] ?
-    )
-}
-
-<EmbeddedResource> CLOSED {
-    (  $<EmbeddedResource_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          &<HasAnnotations_tes> ;
-          rdf:type [ <HasAnnotations> ] ? ;
-          <type> @linkml:String ;
-          <resource> @<ResourceContents> ;
-          <_meta> @<MetaObject> ? ;
-          <annotations> @<Annotations> ?
-       ) ;
-       rdf:type [ <EmbeddedResource> ] ?
-    )
-}
-
-<EnumOption> CLOSED {
-    (  $<EnumOption_tes> (  <const> @linkml:String ;
-          dct:title @linkml:String ?
-       ) ;
-       rdf:type [ <EnumOption> ] ?
-    )
-}
-
-<EnumSchema> CLOSED {
-    (  $<EnumSchema_tes> rdf:type . * ;
-       rdf:type [ <EnumSchema> ] ?
-    )
-}
-
-<Error>  (
+<McpBaseMetadata>  (
     CLOSED {
-       (  $<Error_tes> (  <code> @linkml:Integer ;
-             <data> @<ErrorData> ? ;
-             <message> @linkml:String
+       (  $<McpBaseMetadata_tes> (  schema1:name @linkml:String ;
+             schema1:name @linkml:String ?
           ) ;
-          rdf:type [ <Error> ] ?
+          rdf:type [ <McpBaseMetadata> ] ?
        )
-    } OR @<InternalError> OR @<InvalidParamsError> OR @<InvalidRequestError> OR @<MethodNotFoundError> OR @<ParseError>
+    } OR @<McpImplementation> OR @<McpPrompt> OR @<McpPromptArgument> OR @<McpPromptReference> OR @<McpResource> OR
+    @<McpResourceTemplate> OR @<McpTool>
 )
 
-<ErrorData> CLOSED {
-    (  $<ErrorData_tes> (  <reason> @linkml:String ? ;
-          <elicitations> @<URLElicitation> *
-       ) ;
-       rdf:type [ <ErrorData> ] ?
-    )
-}
-
-<ExtensionAppCapability> CLOSED {
-    (  $<ExtensionAppCapability_tes> <mimeTypes> @linkml:String * ;
-       rdf:type [ <ExtensionAppCapability> ] ?
-    )
-}
-
-<ExtensionsCapability> CLOSED {
-    (  $<ExtensionsCapability_tes> <apps_extension> @<ExtensionAppCapability> ? ;
-       rdf:type [ <ExtensionsCapability> ] ?
-    )
-}
-
-<GetPromptRequest> CLOSED {
-    (  $<GetPromptRequest_tes> (  &<JSONRPCRequest_tes> ;
-          rdf:type [ <JSONRPCRequest> ] ? ;
-          <params> @<GetPromptRequestParams> ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <GetPromptRequest> ] ?
-    )
-}
-
-<GetPromptRequestParams> CLOSED {
-    (  $<GetPromptRequestParams_tes> (  <arguments> @<ArgumentMap> ? ;
-          schema1:name @linkml:String
-       ) ;
-       rdf:type [ <GetPromptRequestParams> ] ?
-    )
-}
-
-<GetPromptResult> CLOSED {
-    (  $<GetPromptResult_tes> (  &<Result_tes> ;
-          rdf:type [ <Result> ] ? ;
-          dct:description @linkml:String ? ;
-          <messages> @<PromptMessage> +
-       ) ;
-       rdf:type [ <GetPromptResult> ] ?
-    )
-}
-
-<GetPromptResultResponse> CLOSED {
-    (  $<GetPromptResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<GetPromptResult>
-       ) ;
-       rdf:type [ <GetPromptResultResponse> ] ?
-    )
-}
-
-<GetTaskPayloadRequest> CLOSED {
-    (  $<GetTaskPayloadRequest_tes> (  &<JSONRPCRequest_tes> ;
-          rdf:type [ <JSONRPCRequest> ] ? ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <GetTaskPayloadRequest> ] ?
-    )
-}
-
-<GetTaskPayloadResult> CLOSED {
-    (  $<GetTaskPayloadResult_tes> (  &<Result_tes> ;
-          rdf:type [ <Result> ] ?
-       ) ;
-       rdf:type [ <GetTaskPayloadResult> ] ?
-    )
-}
-
-<GetTaskPayloadResultResponse> CLOSED {
-    (  $<GetTaskPayloadResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<GetTaskPayloadResult>
-       ) ;
-       rdf:type [ <GetTaskPayloadResultResponse> ] ?
-    )
-}
-
-<GetTaskRequest> CLOSED {
-    (  $<GetTaskRequest_tes> (  &<JSONRPCRequest_tes> ;
-          rdf:type [ <JSONRPCRequest> ] ? ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <GetTaskRequest> ] ?
-    )
-}
-
-<GetTaskResult> CLOSED {
-    (  $<GetTaskResult_tes> (  &<Result_tes> ;
-          rdf:type [ <Result> ] ? ;
-          &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          <taskId> @linkml:String ;
-          <status> [ <https://w3id.org/lmodel/mcp/TaskStatusEnum#cancelled> <https://w3id.org/lmodel/mcp/TaskStatusEnum#completed>
-             <https://w3id.org/lmodel/mcp/TaskStatusEnum#failed> <https://w3id.org/lmodel/mcp/TaskStatusEnum#input_required>
-             <https://w3id.org/lmodel/mcp/TaskStatusEnum#working> ] ;
-          <createdAt> @linkml:String ;
-          <lastUpdatedAt> @linkml:String ;
-          <ttl> @linkml:Integer ;
-          <statusMessage> @linkml:String ? ;
-          <pollInterval> @linkml:Integer ?
-       ) ;
-       rdf:type [ <GetTaskResult> ] ?
-    )
-}
-
-<GetTaskResultResponse> CLOSED {
-    (  $<GetTaskResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<GetTaskResult>
-       ) ;
-       rdf:type [ <GetTaskResultResponse> ] ?
-    )
-}
-
-<HasAnnotations> {
-    (  $<HasAnnotations_tes> <annotations> @<Annotations> ? ;
-       rdf:type [ <HasAnnotations> ] ?
-    )
-}
-
-<HasIcons> {
-    (  $<HasIcons_tes> <icons> @<Icon> * ;
-       rdf:type [ <HasIcons> ] ?
-    )
-}
-
-<HasMeta> {
-    (  $<HasMeta_tes> <_meta> @<MetaObject> ? ;
-       rdf:type [ <HasMeta> ] ?
-    )
-}
-
-<HasName> {
-    (  $<HasName_tes> (  schema1:name @linkml:String ? ;
-          dct:title @linkml:String ?
-       ) ;
-       rdf:type [ <HasName> ] ?
-    )
-}
-
-<Icon> CLOSED {
-    (  $<Icon_tes> (  <src> @linkml:Uri ;
+<McpBlobResourceContents> CLOSED {
+    (  $<McpBlobResourceContents_tes> (  &<McpResourceContents_tes> ;
+          rdf:type [ <McpResourceContents> ] ? ;
+          <_meta> @<McpMetaObject> ? ;
+          <blob> @<McpBase64> ;
           <mimeType> @linkml:String ? ;
-          <sizes> @linkml:String * ;
-          <theme> [ <https://w3id.org/lmodel/mcp/IconThemeEnum#dark> <https://w3id.org/lmodel/mcp/IconThemeEnum#light> ] ?
-       ) ;
-       rdf:type [ <Icon> ] ?
-    )
-}
-
-<ImageContent> CLOSED {
-    (  $<ImageContent_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          &<HasAnnotations_tes> ;
-          rdf:type [ <HasAnnotations> ] ? ;
-          <data> @linkml:String ;
-          <mimeType> @linkml:String ;
-          <type> @linkml:String ;
-          <_meta> @<MetaObject> ? ;
-          <annotations> @<Annotations> ?
-       ) ;
-       rdf:type [ <ImageContent> ] ?
-    )
-}
-
-<Implementation> CLOSED {
-    (  $<Implementation_tes> (  &<HasName_tes> ;
-          rdf:type [ <HasName> ] ? ;
-          &<HasIcons_tes> ;
-          rdf:type [ <HasIcons> ] ? ;
-          <version> @linkml:String ;
-          dct:description @linkml:String ? ;
-          <websiteUrl> @linkml:Uri ? ;
-          schema1:name @linkml:String ;
-          dct:title @linkml:String ? ;
-          <icons> @<Icon> *
-       ) ;
-       rdf:type [ <Implementation> ] ?
-    )
-}
-
-<InitializedNotification> CLOSED {
-    (  $<InitializedNotification_tes> (  &<JSONRPCNotification_tes> ;
-          rdf:type [ <JSONRPCNotification> ] ? ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <InitializedNotification> ] ?
-    )
-}
-
-<InitializeRequest> CLOSED {
-    (  $<InitializeRequest_tes> (  &<JSONRPCRequest_tes> ;
-          rdf:type [ <JSONRPCRequest> ] ? ;
-          <params> @<InitializeRequestParams> ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <InitializeRequest> ] ?
-    )
-}
-
-<InitializeRequestParams> CLOSED {
-    (  $<InitializeRequestParams_tes> (  <capabilities> @<ClientCapabilities> ;
-          <clientInfo> @<Implementation> ;
-          <protocolVersion> @linkml:String
-       ) ;
-       rdf:type [ <InitializeRequestParams> ] ?
-    )
-}
-
-<InitializeResult> CLOSED {
-    (  $<InitializeResult_tes> (  &<Result_tes> ;
-          rdf:type [ <Result> ] ? ;
-          <capabilities> @<ServerCapabilities> ;
-          <protocolVersion> @linkml:String ;
-          <serverInfo> @<Implementation> ;
-          <instructions> @linkml:String ?
-       ) ;
-       rdf:type [ <InitializeResult> ] ?
-    )
-}
-
-<InitializeResultResponse> CLOSED {
-    (  $<InitializeResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<InitializeResult>
-       ) ;
-       rdf:type [ <InitializeResultResponse> ] ?
-    )
-}
-
-<InternalError> CLOSED {
-    (  $<InternalError_tes> (  &<Error_tes> ;
-          rdf:type [ <Error> ] ?
-       ) ;
-       rdf:type [ <InternalError> ] ?
-    )
-}
-
-<InvalidParamsError> CLOSED {
-    (  $<InvalidParamsError_tes> (  &<Error_tes> ;
-          rdf:type [ <Error> ] ?
-       ) ;
-       rdf:type [ <InvalidParamsError> ] ?
-    )
-}
-
-<InvalidRequestError> CLOSED {
-    (  $<InvalidRequestError_tes> (  &<Error_tes> ;
-          rdf:type [ <Error> ] ?
-       ) ;
-       rdf:type [ <InvalidRequestError> ] ?
-    )
-}
-
-<JSONRPCErrorResponse>  (
-    CLOSED {
-       (  $<JSONRPCErrorResponse_tes> (  <id> @<RequestId> ? ;
-             <jsonrpc> @linkml:String ;
-             <error> @<Error>
-          ) ;
-          rdf:type [ <JSONRPCErrorResponse> ] ?
-       )
-    } OR @<URLElicitationRequiredError>
-)
-
-<JSONRPCMessage> CLOSED {
-    (  $<JSONRPCMessage_tes> rdf:type . * ;
-       rdf:type [ <JSONRPCMessage> ] ?
-    )
-}
-
-<JSONRPCNotification>  (
-    @<CancelledNotification> OR @<ElicitationCompleteNotification> OR @<InitializedNotification> OR @<LoggingMessageNotification>
-    OR @<ProgressNotification> OR @<PromptListChangedNotification> OR @<ResourceListChangedNotification> OR
-    @<ResourceUpdatedNotification> OR @<RootsListChangedNotification> OR @<TaskStatusNotification> OR
-    @<ToolListChangedNotification>
-)
-
-<JSONRPCNotification_struct> {
-    (  $<JSONRPCNotification_tes> (  <jsonrpc> @linkml:String ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <JSONRPCNotification> ] ?
-    )
-}
-
-<JSONRPCRequest>  (
-    @<CallToolRequest> OR @<CancelTaskRequest> OR @<CompleteRequest> OR @<CreateMessageRequest> OR @<ElicitRequest> OR
-    @<GetPromptRequest> OR @<GetTaskPayloadRequest> OR @<GetTaskRequest> OR @<InitializeRequest> OR @<ListPromptsRequest> OR
-    @<ListResourceTemplatesRequest> OR @<ListResourcesRequest> OR @<ListRootsRequest> OR @<ListTasksRequest> OR @<ListToolsRequest>
-    OR @<PingRequest> OR @<ReadResourceRequest> OR @<SetLevelRequest> OR @<SubscribeRequest> OR @<UnsubscribeRequest>
-)
-
-<JSONRPCRequest_struct> {
-    (  $<JSONRPCRequest_tes> (  <id> @<RequestId> ;
-          <jsonrpc> @linkml:String ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <JSONRPCRequest> ] ?
-    )
-}
-
-<JSONRPCResponse> CLOSED {
-    (  $<JSONRPCResponse_tes> rdf:type . * ;
-       rdf:type [ <JSONRPCResponse> ] ?
-    )
-}
-
-<JSONRPCResultResponse>  (
-    @<CallToolResultResponse> OR @<CancelTaskResultResponse> OR @<CompleteResultResponse> OR @<CreateMessageResultResponse> OR
-    @<CreateTaskResultResponse> OR @<ElicitResultResponse> OR @<GetPromptResultResponse> OR @<GetTaskPayloadResultResponse> OR
-    @<GetTaskResultResponse> OR @<InitializeResultResponse> OR @<ListPromptsResultResponse> OR
-    @<ListResourceTemplatesResultResponse> OR @<ListResourcesResultResponse> OR @<ListRootsResultResponse> OR
-    @<ListTasksResultResponse> OR @<ListToolsResultResponse> OR @<PingResultResponse> OR @<ReadResourceResultResponse> OR
-    @<SetLevelResultResponse> OR @<SubscribeResultResponse> OR @<UnsubscribeResultResponse>
-)
-
-<JSONRPCResultResponse_struct> {
-    (  $<JSONRPCResultResponse_tes> (  <id> @<RequestId> ;
-          <jsonrpc> @linkml:String
-       ) ;
-       rdf:type [ <JSONRPCResultResponse> ] ?
-    )
-}
-
-<JsonSchema> CLOSED {
-    (  $<JsonSchema_tes> (  <schemaUri> @linkml:String ? ;
-          <type> @linkml:String ? ;
-          <properties> @<SchemaProperties> ? ;
-          <required_list> @linkml:String * ;
-          <additionalProperties> @linkml:Boolean ? ;
-          <minimum> @linkml:Integer ? ;
-          <maximum> @linkml:Integer ? ;
-          <minLength> @linkml:Integer ? ;
-          <maxLength> @linkml:Integer ? ;
-          <format> [ <https://w3id.org/lmodel/mcp/StringFormatEnum#date> <https://w3id.org/lmodel/mcp/StringFormatEnum#date-time>
-             <https://w3id.org/lmodel/mcp/StringFormatEnum#email> <https://w3id.org/lmodel/mcp/StringFormatEnum#uri> ] ? ;
-          dct:description @linkml:String ? ;
-          dct:title @linkml:String ? ;
-          <oneOf> @<EnumOption> * ;
-          <anyOf> @<EnumOption> * ;
-          <items> @<SchemaItems> ? ;
-          <enum> @linkml:String * ;
-          <const> @linkml:String ? ;
-          <default> @<JsonValue> ?
-       ) ;
-       rdf:type [ <JsonSchema> ] ?
-    )
-}
-
-<LegacyTitledEnumSchema> CLOSED {
-    (  $<LegacyTitledEnumSchema_tes> (  <type> @linkml:String ;
-          <enum> @linkml:String * ;
-          <enum_values> @linkml:String * ;
-          <enumNames> @linkml:String * ;
-          <default> @<JsonValue> ? ;
-          <default_value> @linkml:String ? ;
-          dct:description @linkml:String ? ;
-          dct:title @linkml:String ?
-       ) ;
-       rdf:type [ <LegacyTitledEnumSchema> ] ?
-    )
-}
-
-<ListPromptsRequest> CLOSED {
-    (  $<ListPromptsRequest_tes> (  &<JSONRPCRequest_tes> ;
-          rdf:type [ <JSONRPCRequest> ] ? ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <ListPromptsRequest> ] ?
-    )
-}
-
-<ListPromptsResult> CLOSED {
-    (  $<ListPromptsResult_tes> (  &<Result_tes> ;
-          rdf:type [ <Result> ] ? ;
-          <nextCursor> @linkml:String ? ;
-          <prompts> @<Prompt> +
-       ) ;
-       rdf:type [ <ListPromptsResult> ] ?
-    )
-}
-
-<ListPromptsResultResponse> CLOSED {
-    (  $<ListPromptsResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<ListPromptsResult>
-       ) ;
-       rdf:type [ <ListPromptsResultResponse> ] ?
-    )
-}
-
-<ListResourcesRequest> CLOSED {
-    (  $<ListResourcesRequest_tes> (  &<JSONRPCRequest_tes> ;
-          rdf:type [ <JSONRPCRequest> ] ? ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <ListResourcesRequest> ] ?
-    )
-}
-
-<ListResourcesResult> CLOSED {
-    (  $<ListResourcesResult_tes> (  &<Result_tes> ;
-          rdf:type [ <Result> ] ? ;
-          <nextCursor> @linkml:String ? ;
-          <resources> @<Resource> +
-       ) ;
-       rdf:type [ <ListResourcesResult> ] ?
-    )
-}
-
-<ListResourcesResultResponse> CLOSED {
-    (  $<ListResourcesResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<ListResourcesResult>
-       ) ;
-       rdf:type [ <ListResourcesResultResponse> ] ?
-    )
-}
-
-<ListResourceTemplatesRequest> CLOSED {
-    (  $<ListResourceTemplatesRequest_tes> (  &<JSONRPCRequest_tes> ;
-          rdf:type [ <JSONRPCRequest> ] ? ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <ListResourceTemplatesRequest> ] ?
-    )
-}
-
-<ListResourceTemplatesResult> CLOSED {
-    (  $<ListResourceTemplatesResult_tes> (  &<Result_tes> ;
-          rdf:type [ <Result> ] ? ;
-          <nextCursor> @linkml:String ? ;
-          <resourceTemplates> @<ResourceTemplate> +
-       ) ;
-       rdf:type [ <ListResourceTemplatesResult> ] ?
-    )
-}
-
-<ListResourceTemplatesResultResponse> CLOSED {
-    (  $<ListResourceTemplatesResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<ListResourceTemplatesResult>
-       ) ;
-       rdf:type [ <ListResourceTemplatesResultResponse> ] ?
-    )
-}
-
-<ListRootsRequest> CLOSED {
-    (  $<ListRootsRequest_tes> (  &<JSONRPCRequest_tes> ;
-          rdf:type [ <JSONRPCRequest> ] ? ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <ListRootsRequest> ] ?
-    )
-}
-
-<ListRootsResult> CLOSED {
-    (  $<ListRootsResult_tes> (  &<Result_tes> ;
-          rdf:type [ <Result> ] ? ;
-          <roots> @<Root> +
-       ) ;
-       rdf:type [ <ListRootsResult> ] ?
-    )
-}
-
-<ListRootsResultResponse> CLOSED {
-    (  $<ListRootsResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<ListRootsResult>
-       ) ;
-       rdf:type [ <ListRootsResultResponse> ] ?
-    )
-}
-
-<ListTasksRequest> CLOSED {
-    (  $<ListTasksRequest_tes> (  &<JSONRPCRequest_tes> ;
-          rdf:type [ <JSONRPCRequest> ] ? ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <ListTasksRequest> ] ?
-    )
-}
-
-<ListTasksResult> CLOSED {
-    (  $<ListTasksResult_tes> (  &<Result_tes> ;
-          rdf:type [ <Result> ] ? ;
-          <nextCursor> @linkml:String ? ;
-          <tasks> @<Task> +
-       ) ;
-       rdf:type [ <ListTasksResult> ] ?
-    )
-}
-
-<ListTasksResultResponse> CLOSED {
-    (  $<ListTasksResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<ListTasksResult>
-       ) ;
-       rdf:type [ <ListTasksResultResponse> ] ?
-    )
-}
-
-<ListToolsRequest> CLOSED {
-    (  $<ListToolsRequest_tes> (  &<JSONRPCRequest_tes> ;
-          rdf:type [ <JSONRPCRequest> ] ? ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <ListToolsRequest> ] ?
-    )
-}
-
-<ListToolsResult> CLOSED {
-    (  $<ListToolsResult_tes> (  &<Result_tes> ;
-          rdf:type [ <Result> ] ? ;
-          <nextCursor> @linkml:String ? ;
-          <tools> @<Tool> +
-       ) ;
-       rdf:type [ <ListToolsResult> ] ?
-    )
-}
-
-<ListToolsResultResponse> CLOSED {
-    (  $<ListToolsResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<ListToolsResult>
-       ) ;
-       rdf:type [ <ListToolsResultResponse> ] ?
-    )
-}
-
-<LogData> CLOSED {
-    (  $<LogData_tes> (  <error> @linkml:String ? ;
-          <details> @<LogDetails> ?
-       ) ;
-       rdf:type [ <LogData> ] ?
-    )
-}
-
-<LogDetails> CLOSED {
-    (  $<LogDetails_tes> (  <host> @linkml:String ? ;
-          <port> @linkml:Integer ?
-       ) ;
-       rdf:type [ <LogDetails> ] ?
-    )
-}
-
-<LoggingMessageNotification> CLOSED {
-    (  $<LoggingMessageNotification_tes> (  &<JSONRPCNotification_tes> ;
-          rdf:type [ <JSONRPCNotification> ] ? ;
-          <params> @<LoggingMessageNotificationParams> ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <LoggingMessageNotification> ] ?
-    )
-}
-
-<LoggingMessageNotificationParams> CLOSED {
-    (  $<LoggingMessageNotificationParams_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          <data> @<LogData> ;
-          <level> [ <https://w3id.org/lmodel/mcp/LoggingLevel#alert> <https://w3id.org/lmodel/mcp/LoggingLevel#critical>
-             <https://w3id.org/lmodel/mcp/LoggingLevel#debug> <https://w3id.org/lmodel/mcp/LoggingLevel#emergency>
-             <https://w3id.org/lmodel/mcp/LoggingLevel#error> <https://w3id.org/lmodel/mcp/LoggingLevel#info>
-             <https://w3id.org/lmodel/mcp/LoggingLevel#notice> <https://w3id.org/lmodel/mcp/LoggingLevel#warning> ] ;
-          <logger> @linkml:String ? ;
-          <_meta> @<MetaObject> ?
-       ) ;
-       rdf:type [ <LoggingMessageNotificationParams> ] ?
-    )
-}
-
-<MetaObject> CLOSED {
-    (  $<MetaObject_tes> <progressToken> @<ProgressToken> ? ;
-       rdf:type [ <MetaObject> ] ?
-    )
-}
-
-<MethodNotFoundError> CLOSED {
-    (  $<MethodNotFoundError_tes> (  &<Error_tes> ;
-          rdf:type [ <Error> ] ?
-       ) ;
-       rdf:type [ <MethodNotFoundError> ] ?
-    )
-}
-
-<ModelHint> CLOSED {
-    (  $<ModelHint_tes> schema1:name @linkml:String ? ;
-       rdf:type [ <ModelHint> ] ?
-    )
-}
-
-<ModelPreferences> CLOSED {
-    (  $<ModelPreferences_tes> (  <costPriority> @linkml:Float ? ;
-          <intelligencePriority> @linkml:Float ? ;
-          <speedPriority> @linkml:Float ? ;
-          <hints> @<ModelHint> *
-       ) ;
-       rdf:type [ <ModelPreferences> ] ?
-    )
-}
-
-<MultiSelectEnumSchema> CLOSED {
-    (  $<MultiSelectEnumSchema_tes> rdf:type . * ;
-       rdf:type [ <MultiSelectEnumSchema> ] ?
-    )
-}
-
-<NumberSchema> CLOSED {
-    (  $<NumberSchema_tes> (  <type> @linkml:String ;
-          <default> @linkml:Integer ? ;
-          <default_value> @linkml:String ? ;
-          dct:description @linkml:String ? ;
-          <minimum> @linkml:Integer ? ;
-          <maximum> @linkml:Integer ? ;
-          dct:title @linkml:String ?
-       ) ;
-       rdf:type [ <NumberSchema> ] ?
-    )
-}
-
-<PaginatedRequestParams> CLOSED {
-    (  $<PaginatedRequestParams_tes> <cursor> @<Cursor> ? ;
-       rdf:type [ <PaginatedRequestParams> ] ?
-    )
-}
-
-<ParseError> CLOSED {
-    (  $<ParseError_tes> (  &<Error_tes> ;
-          rdf:type [ <Error> ] ?
-       ) ;
-       rdf:type [ <ParseError> ] ?
-    )
-}
-
-<PingRequest> CLOSED {
-    (  $<PingRequest_tes> (  &<JSONRPCRequest_tes> ;
-          rdf:type [ <JSONRPCRequest> ] ? ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <PingRequest> ] ?
-    )
-}
-
-<PingResultResponse> CLOSED {
-    (  $<PingResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<Result> ?
-       ) ;
-       rdf:type [ <PingResultResponse> ] ?
-    )
-}
-
-<PrimitiveSchemaDefinition> CLOSED {
-    (  $<PrimitiveSchemaDefinition_tes> rdf:type . * ;
-       rdf:type [ <PrimitiveSchemaDefinition> ] ?
-    )
-}
-
-<ProgressNotification> CLOSED {
-    (  $<ProgressNotification_tes> (  &<JSONRPCNotification_tes> ;
-          rdf:type [ <JSONRPCNotification> ] ? ;
-          <params> @<ProgressNotificationParams> ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <ProgressNotification> ] ?
-    )
-}
-
-<ProgressNotificationParams> CLOSED {
-    (  $<ProgressNotificationParams_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          <progress> @linkml:Float ;
-          <progressToken> @<ProgressToken> ;
-          <total> @linkml:Float ? ;
-          <message> @linkml:String ? ;
-          <_meta> @<MetaObject> ?
-       ) ;
-       rdf:type [ <ProgressNotificationParams> ] ?
-    )
-}
-
-<Prompt> CLOSED {
-    (  $<Prompt_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          &<HasName_tes> ;
-          rdf:type [ <HasName> ] ? ;
-          &<HasIcons_tes> ;
-          rdf:type [ <HasIcons> ] ? ;
-          <arguments> @<PromptArgument> * ;
-          dct:description @linkml:String ? ;
-          schema1:name @linkml:String ;
-          <_meta> @<MetaObject> ? ;
-          dct:title @linkml:String ? ;
-          <icons> @<Icon> *
-       ) ;
-       rdf:type [ <Prompt> ] ?
-    )
-}
-
-<PromptArgument> CLOSED {
-    (  $<PromptArgument_tes> (  &<HasName_tes> ;
-          rdf:type [ <HasName> ] ? ;
-          dct:description @linkml:String ? ;
-          <required> @linkml:Boolean ? ;
-          <required_field> @linkml:Boolean ? ;
-          schema1:name @linkml:String ;
-          dct:title @linkml:String ?
-       ) ;
-       rdf:type [ <PromptArgument> ] ?
-    )
-}
-
-<PromptListChangedNotification> CLOSED {
-    (  $<PromptListChangedNotification_tes> (  &<JSONRPCNotification_tes> ;
-          rdf:type [ <JSONRPCNotification> ] ? ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <PromptListChangedNotification> ] ?
-    )
-}
-
-<PromptMessage> CLOSED {
-    (  $<PromptMessage_tes> (  <content> @<ContentBlock> ;
-          <role> [ <https://w3id.org/lmodel/mcp/Role#assistant> <https://w3id.org/lmodel/mcp/Role#user> ]
-       ) ;
-       rdf:type [ <PromptMessage> ] ?
-    )
-}
-
-<PromptReference> CLOSED {
-    (  $<PromptReference_tes> (  &<HasName_tes> ;
-          rdf:type [ <HasName> ] ? ;
-          <type> @linkml:String ;
-          schema1:name @linkml:String ;
-          dct:title @linkml:String ?
-       ) ;
-       rdf:type [ <PromptReference> ] ?
-    )
-}
-
-<PromptsCapability> CLOSED {
-    (  $<PromptsCapability_tes> <listChanged> @linkml:Boolean ? ;
-       rdf:type [ <PromptsCapability> ] ?
-    )
-}
-
-<ReadResourceRequest> CLOSED {
-    (  $<ReadResourceRequest_tes> (  &<JSONRPCRequest_tes> ;
-          rdf:type [ <JSONRPCRequest> ] ? ;
-          <params> @<ReadResourceRequestParams> ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <ReadResourceRequest> ] ?
-    )
-}
-
-<ReadResourceRequestParams> CLOSED {
-    (  $<ReadResourceRequestParams_tes> <uri> @linkml:Uri ;
-       rdf:type [ <ReadResourceRequestParams> ] ?
-    )
-}
-
-<ReadResourceResult> CLOSED {
-    (  $<ReadResourceResult_tes> (  &<Result_tes> ;
-          rdf:type [ <Result> ] ? ;
-          <contents> @<ResourceContents> +
-       ) ;
-       rdf:type [ <ReadResourceResult> ] ?
-    )
-}
-
-<ReadResourceResultResponse> CLOSED {
-    (  $<ReadResourceResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<ReadResourceResult>
-       ) ;
-       rdf:type [ <ReadResourceResultResponse> ] ?
-    )
-}
-
-<RelatedTaskMetadata> CLOSED {
-    (  $<RelatedTaskMetadata_tes> <taskId> @linkml:String ;
-       rdf:type [ <RelatedTaskMetadata> ] ?
-    )
-}
-
-<Resource> CLOSED {
-    (  $<Resource_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          &<HasAnnotations_tes> ;
-          rdf:type [ <HasAnnotations> ] ? ;
-          &<HasName_tes> ;
-          rdf:type [ <HasName> ] ? ;
-          &<HasIcons_tes> ;
-          rdf:type [ <HasIcons> ] ? ;
-          <uri> @linkml:Uri ;
-          <mimeType> @linkml:String ? ;
-          dct:description @linkml:String ? ;
-          <size> @linkml:Integer ? ;
-          schema1:name @linkml:String ;
-          <_meta> @<MetaObject> ? ;
-          <annotations> @<Annotations> ? ;
-          dct:title @linkml:String ? ;
-          <icons> @<Icon> *
-       ) ;
-       rdf:type [ <Resource> ] ?
-    )
-}
-
-<ResourceContents> CLOSED {
-    (  $<ResourceContents_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          <uri> @linkml:Uri ;
-          <mimeType> @linkml:String ? ;
-          <text> @linkml:String ? ;
-          <blob> @linkml:String ? ;
-          <_meta> @<MetaObject> ?
-       ) ;
-       rdf:type [ <ResourceContents> ] ?
-    )
-}
-
-<ResourceLink> CLOSED {
-    (  $<ResourceLink_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          &<HasAnnotations_tes> ;
-          rdf:type [ <HasAnnotations> ] ? ;
-          &<HasName_tes> ;
-          rdf:type [ <HasName> ] ? ;
-          &<HasIcons_tes> ;
-          rdf:type [ <HasIcons> ] ? ;
-          <uri> @linkml:Uri ;
-          <mimeType> @linkml:String ? ;
-          dct:description @linkml:String ? ;
-          <size> @linkml:Integer ? ;
-          <type> @linkml:String ;
-          schema1:name @linkml:String ;
-          <_meta> @<MetaObject> ? ;
-          <annotations> @<Annotations> ? ;
-          dct:title @linkml:String ? ;
-          <icons> @<Icon> *
-       ) ;
-       rdf:type [ <ResourceLink> ] ?
-    )
-}
-
-<ResourceListChangedNotification> CLOSED {
-    (  $<ResourceListChangedNotification_tes> (  &<JSONRPCNotification_tes> ;
-          rdf:type [ <JSONRPCNotification> ] ? ;
-          <method> @linkml:String
-       ) ;
-       rdf:type [ <ResourceListChangedNotification> ] ?
-    )
-}
-
-<ResourcesCapability> CLOSED {
-    (  $<ResourcesCapability_tes> (  <listChanged> @linkml:Boolean ? ;
-          <subscribe> @linkml:Boolean ?
-       ) ;
-       rdf:type [ <ResourcesCapability> ] ?
-    )
-}
-
-<ResourceTemplate> CLOSED {
-    (  $<ResourceTemplate_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          &<HasAnnotations_tes> ;
-          rdf:type [ <HasAnnotations> ] ? ;
-          &<HasName_tes> ;
-          rdf:type [ <HasName> ] ? ;
-          &<HasIcons_tes> ;
-          rdf:type [ <HasIcons> ] ? ;
-          <uriTemplate> @linkml:String ;
-          <mimeType> @linkml:String ? ;
-          dct:description @linkml:String ? ;
-          schema1:name @linkml:String ;
-          <_meta> @<MetaObject> ? ;
-          <annotations> @<Annotations> ? ;
-          dct:title @linkml:String ? ;
-          <icons> @<Icon> *
-       ) ;
-       rdf:type [ <ResourceTemplate> ] ?
-    )
-}
-
-<ResourceTemplateReference> CLOSED {
-    (  $<ResourceTemplateReference_tes> (  <type> @linkml:String ;
           <uri> @linkml:Uri
        ) ;
-       rdf:type [ <ResourceTemplateReference> ] ?
+       rdf:type [ <McpBlobResourceContents> ] ?
     )
 }
 
-<ResourceUpdatedNotification> CLOSED {
-    (  $<ResourceUpdatedNotification_tes> (  &<JSONRPCNotification_tes> ;
-          rdf:type [ <JSONRPCNotification> ] ? ;
-          <params> @<ResourceUpdatedNotificationParams> ;
-          <method> @linkml:String
+<McpBooleanSchema> CLOSED {
+    (  $<McpBooleanSchema_tes> (  schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ? ;
+          <type> @linkml:String ;
+          <default> @linkml:Boolean ?
        ) ;
-       rdf:type [ <ResourceUpdatedNotification> ] ?
+       rdf:type [ <McpBooleanSchema> ] ?
     )
 }
 
-<ResourceUpdatedNotificationParams> CLOSED {
-    (  $<ResourceUpdatedNotificationParams_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          <uri> @linkml:Uri ;
-          <_meta> @<MetaObject> ?
-       ) ;
-       rdf:type [ <ResourceUpdatedNotificationParams> ] ?
-    )
-}
-
-<Result>  (
+<McpCacheableResult>  (
     CLOSED {
-       (  $<Result_tes> (  &<HasMeta_tes> ;
-             rdf:type [ <HasMeta> ] ? ;
-             <_meta> @<MetaObject> ?
+       (  $<McpCacheableResult_tes> (  &<McpResult_tes> ;
+             rdf:type [ <McpResult> ] ? ;
+             <_meta> @<McpResultMetaObject> ? ;
+             <cacheScope> [ <https://w3id.org/lmodel/mcp/McpCacheScope#private> <https://w3id.org/lmodel/mcp/McpCacheScope#public>
+                ] ;
+             <resultType> @<McpResultType> ;
+             <ttlMs> @linkml:Integer
           ) ;
-          rdf:type [ <Result> ] ?
+          rdf:type [ <McpCacheableResult> ] ?
        )
-    } OR @<CallToolResult> OR @<CancelTaskResult> OR @<CompleteResult> OR @<CreateMessageResult> OR @<CreateTaskResult> OR
-    @<ElicitResult> OR @<GetPromptResult> OR @<GetTaskPayloadResult> OR @<GetTaskResult> OR @<InitializeResult> OR
-    @<ListPromptsResult> OR @<ListResourceTemplatesResult> OR @<ListResourcesResult> OR @<ListRootsResult> OR @<ListTasksResult> OR
-    @<ListToolsResult> OR @<ReadResourceResult>
+    } OR @<McpDiscoverResult> OR @<McpReadResourceResult>
 )
 
-<Root> CLOSED {
-    (  $<Root_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          <uri> @linkml:Uri ;
-          schema1:name @linkml:String ? ;
-          <_meta> @<MetaObject> ?
+<McpCallToolRequest> CLOSED {
+    (  $<McpCallToolRequest_tes> (  &<McpJSONRPCRequest_tes> ;
+          rdf:type [ <McpJSONRPCRequest> ] ? ;
+          <id> @linkml:String ;
+          <jsonrpc> @linkml:String ;
+          <method> @linkml:String ;
+          <params> @<McpCallToolRequestParams>
        ) ;
-       rdf:type [ <Root> ] ?
+       rdf:type [ <McpCallToolRequest> ] ?
     )
 }
 
-<RootsCapability> CLOSED {
-    (  $<RootsCapability_tes> <listChanged> @linkml:Boolean ? ;
-       rdf:type [ <RootsCapability> ] ?
-    )
-}
-
-<RootsListChangedNotification> CLOSED {
-    (  $<RootsListChangedNotification_tes> (  &<JSONRPCNotification_tes> ;
-          rdf:type [ <JSONRPCNotification> ] ? ;
-          <method> @linkml:String
+<McpCallToolRequestParams> CLOSED {
+    (  $<McpCallToolRequestParams_tes> (  &<McpInputResponseRequestParams_tes> ;
+          rdf:type [ <McpInputResponseRequestParams> ] ? ;
+          schema1:name @linkml:String ;
+          <_meta> @<McpRequestMetaObject> ;
+          <arguments> @<McpJSONObject> ? ;
+          <inputResponses> @<McpInputResponses> ? ;
+          <requestState> @linkml:String ?
        ) ;
-       rdf:type [ <RootsListChangedNotification> ] ?
+       rdf:type [ <McpCallToolRequestParams> ] ?
     )
 }
 
-<SamplingCapability> CLOSED {
-    (  $<SamplingCapability_tes> rdf:type . * ;
-       rdf:type [ <SamplingCapability> ] ?
-    )
-}
-
-<SamplingMessage> CLOSED {
-    (  $<SamplingMessage_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          <content> @<ContentBlock> ;
-          <role> [ <https://w3id.org/lmodel/mcp/Role#assistant> <https://w3id.org/lmodel/mcp/Role#user> ] ;
-          <_meta> @<MetaObject> ?
+<McpCallToolResult> CLOSED {
+    (  $<McpCallToolResult_tes> (  &<McpResult_tes> ;
+          rdf:type [ <McpResult> ] ? ;
+          <_meta> @<McpResultMetaObject> ? ;
+          <content> @<McpContentBlock> + ;
+          <isError> @linkml:Boolean ? ;
+          <resultType> @<McpResultType> ;
+          <structuredContent> @<McpJSONValue> ?
        ) ;
-       rdf:type [ <SamplingMessage> ] ?
+       rdf:type [ <McpCallToolResult> ] ?
     )
 }
 
-<SamplingMessageContentBlock> CLOSED {
-    (  $<SamplingMessageContentBlock_tes> rdf:type . * ;
-       rdf:type [ <SamplingMessageContentBlock> ] ?
-    )
-}
-
-<SchemaItems> CLOSED {
-    (  $<SchemaItems_tes> (  <type> @linkml:String ? ;
-          <enum> @linkml:String * ;
-          <anyOf> @<EnumOption> *
+<McpCallToolResultResponse> CLOSED {
+    (  $<McpCallToolResultResponse_tes> (  &<McpJSONRPCResultResponse_tes> ;
+          rdf:type [ <McpJSONRPCResultResponse> ] ? ;
+          <id> @linkml:String ;
+          <jsonrpc> @linkml:String ;
+          <result> @linkml:String
        ) ;
-       rdf:type [ <SchemaItems> ] ?
+       rdf:type [ <McpCallToolResultResponse> ] ?
     )
 }
 
-<SchemaProperties> CLOSED {
-    (  $<SchemaProperties_tes> (  schema1:name @<JsonSchema> ? ;
-          <email> @<JsonSchema> ? ;
-          <age> @<JsonSchema> ? ;
-          <city> @<JsonSchema> ? ;
-          <location> @<JsonSchema> ? ;
-          <a> @<JsonSchema> ? ;
-          <b> @<JsonSchema> ? ;
-          <temperature> @<JsonSchema> ? ;
-          <conditions> @<JsonSchema> ? ;
-          <humidity> @<JsonSchema> ?
+<McpCancelledNotification>  (
+    CLOSED {
+       (  $<McpCancelledNotification_tes> (  &<McpJSONRPCNotification_tes> ;
+             rdf:type [ <McpJSONRPCNotification> ] ? ;
+             <jsonrpc> @linkml:String ;
+             <method> @linkml:String ;
+             <params> @<McpCancelledNotificationParams>
+          ) ;
+          rdf:type [ <McpCancelledNotification> ] ?
+       )
+    } OR @<McpClientNotification>
+)
+
+<McpCancelledNotificationParams> CLOSED {
+    (  $<McpCancelledNotificationParams_tes> (  &<McpNotificationParams_tes> ;
+          rdf:type [ <McpNotificationParams> ] ? ;
+          <reason> @linkml:String ? ;
+          <_meta> @<McpNotificationMetaObject> ? ;
+          <requestId> @linkml:String
        ) ;
-       rdf:type [ <SchemaProperties> ] ?
+       rdf:type [ <McpCancelledNotificationParams> ] ?
     )
 }
 
-<ServerCapabilities> CLOSED {
-    (  $<ServerCapabilities_tes> (  <experimental> @<JsonValue> ? ;
-          <extensions> @<ExtensionsCapability> ? ;
-          <prompts> @<PromptsCapability> * ;
-          <resources> @<ResourcesCapability> * ;
-          <tools> @<ToolsCapability> * ;
-          <tasks> @<TasksCapability> *
+<McpClientCapabilities> CLOSED {
+    (  $<McpClientCapabilities_tes> (  <elicitation> @<McpClientCapabilitiesElicitation> ? ;
+          <experimental> @<McpClientCapabilitiesExperimental> ? ;
+          <extensions> @<McpClientCapabilitiesExtensions> ? ;
+          <roots> @<McpClientCapabilitiesRoots> ? ;
+          <sampling> @<McpClientCapabilitiesSampling> ?
        ) ;
-       rdf:type [ <ServerCapabilities> ] ?
+       rdf:type [ <McpClientCapabilities> ] ?
     )
 }
 
-<ServerNotification> CLOSED {
-    (  $<ServerNotification_tes> rdf:type . * ;
-       rdf:type [ <ServerNotification> ] ?
-    )
-}
-
-<ServerRequest> CLOSED {
-    (  $<ServerRequest_tes> rdf:type . * ;
-       rdf:type [ <ServerRequest> ] ?
-    )
-}
-
-<ServerResult> CLOSED {
-    (  $<ServerResult_tes> rdf:type . * ;
-       rdf:type [ <ServerResult> ] ?
-    )
-}
-
-<SetLevelRequest> CLOSED {
-    (  $<SetLevelRequest_tes> (  &<JSONRPCRequest_tes> ;
-          rdf:type [ <JSONRPCRequest> ] ? ;
-          <params> @<SetLevelRequestParams> ;
-          <method> @linkml:String
+<McpClientCapabilitiesElicitation> CLOSED {
+    (  $<McpClientCapabilitiesElicitation_tes> (  <form> @<McpJSONObject> ? ;
+          <url_settings> @<McpJSONObject> ?
        ) ;
-       rdf:type [ <SetLevelRequest> ] ?
+       rdf:type [ <McpClientCapabilitiesElicitation> ] ?
     )
 }
 
-<SetLevelRequestParams> CLOSED {
-    (  $<SetLevelRequestParams_tes> <level> [ <https://w3id.org/lmodel/mcp/LoggingLevel#alert>
-          <https://w3id.org/lmodel/mcp/LoggingLevel#critical> <https://w3id.org/lmodel/mcp/LoggingLevel#debug>
-          <https://w3id.org/lmodel/mcp/LoggingLevel#emergency> <https://w3id.org/lmodel/mcp/LoggingLevel#error>
-          <https://w3id.org/lmodel/mcp/LoggingLevel#info> <https://w3id.org/lmodel/mcp/LoggingLevel#notice>
-          <https://w3id.org/lmodel/mcp/LoggingLevel#warning> ] ;
-       rdf:type [ <SetLevelRequestParams> ] ?
+<McpClientCapabilitiesExperimental> CLOSED {
+    (  $<McpClientCapabilitiesExperimental_tes> rdf:type . * ;
+       rdf:type [ <McpClientCapabilitiesExperimental> ] ?
     )
 }
 
-<SetLevelResultResponse> CLOSED {
-    (  $<SetLevelResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<Result> ?
+<McpClientCapabilitiesExtensions> CLOSED {
+    (  $<McpClientCapabilitiesExtensions_tes> rdf:type . * ;
+       rdf:type [ <McpClientCapabilitiesExtensions> ] ?
+    )
+}
+
+<McpClientCapabilitiesRoots> CLOSED {
+    (  $<McpClientCapabilitiesRoots_tes> rdf:type . * ;
+       rdf:type [ <McpClientCapabilitiesRoots> ] ?
+    )
+}
+
+<McpClientCapabilitiesSampling> CLOSED {
+    (  $<McpClientCapabilitiesSampling_tes> (  <context> @<McpJSONObject> ? ;
+          <tools> @<McpJSONObject> ?
        ) ;
-       rdf:type [ <SetLevelResultResponse> ] ?
+       rdf:type [ <McpClientCapabilitiesSampling> ] ?
     )
 }
 
-<SingleSelectEnumSchema> CLOSED {
-    (  $<SingleSelectEnumSchema_tes> rdf:type . * ;
-       rdf:type [ <SingleSelectEnumSchema> ] ?
-    )
-}
-
-<StringSchema> CLOSED {
-    (  $<StringSchema_tes> (  <type> @linkml:String ;
-          <default> @<JsonValue> ? ;
-          <default_value> @linkml:String ? ;
-          dct:description @linkml:String ? ;
-          <format> [ <https://w3id.org/lmodel/mcp/StringFormatEnum#date> <https://w3id.org/lmodel/mcp/StringFormatEnum#date-time>
-             <https://w3id.org/lmodel/mcp/StringFormatEnum#email> <https://w3id.org/lmodel/mcp/StringFormatEnum#uri> ] ? ;
-          <minLength> @linkml:Integer ? ;
-          <maxLength> @linkml:Integer ? ;
-          dct:title @linkml:String ?
+<McpClientNotification> CLOSED {
+    (  $<McpClientNotification_tes> (  &<McpCancelledNotification_tes> ;
+          rdf:type [ <McpCancelledNotification> ] ? ;
+          <jsonrpc> @linkml:String ;
+          <method> @linkml:String ;
+          <params> @<McpCancelledNotificationParams>
        ) ;
-       rdf:type [ <StringSchema> ] ?
+       rdf:type [ <McpClientNotification> ] ?
     )
 }
 
-<StructuredContentData> CLOSED {
-    (  $<StructuredContentData_tes> (  <temperature> @linkml:Float ? ;
-          <conditions> @linkml:String ? ;
-          <humidity> @linkml:Float ?
+<McpClientRequest> CLOSED {
+    (  $<McpClientRequest_tes> rdf:type . * ;
+       rdf:type [ <McpClientRequest> ] ?
+    )
+}
+
+<McpClientResult> CLOSED {
+    (  $<McpClientResult_tes> (  &<McpEmptyResult_tes> ;
+          rdf:type [ <McpEmptyResult> ] ?
        ) ;
-       rdf:type [ <StructuredContentData> ] ?
+       rdf:type [ <McpClientResult> ] ?
     )
 }
 
-<SubscribeRequest> CLOSED {
-    (  $<SubscribeRequest_tes> (  &<JSONRPCRequest_tes> ;
-          rdf:type [ <JSONRPCRequest> ] ? ;
-          <params> @<SubscribeRequestParams> ;
-          <method> @linkml:String
+<McpCompleteRequest> CLOSED {
+    (  $<McpCompleteRequest_tes> (  &<McpJSONRPCRequest_tes> ;
+          rdf:type [ <McpJSONRPCRequest> ] ? ;
+          <id> @linkml:String ;
+          <jsonrpc> @linkml:String ;
+          <method> @linkml:String ;
+          <params> @<McpCompleteRequestParams>
        ) ;
-       rdf:type [ <SubscribeRequest> ] ?
+       rdf:type [ <McpCompleteRequest> ] ?
     )
 }
 
-<SubscribeRequestParams> CLOSED {
-    (  $<SubscribeRequestParams_tes> <uri> @linkml:Uri ;
-       rdf:type [ <SubscribeRequestParams> ] ?
-    )
-}
-
-<SubscribeResultResponse> CLOSED {
-    (  $<SubscribeResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<Result> ?
+<McpCompleteRequestParams> CLOSED {
+    (  $<McpCompleteRequestParams_tes> (  &<McpRequestParams_tes> ;
+          rdf:type [ <McpRequestParams> ] ? ;
+          <context> @<McpCompleteRequestParamsContext> ? ;
+          <_meta> @<McpRequestMetaObject> ;
+          <argument> @<McpCompleteRequestParamsArgument> ;
+          <ref> @linkml:String
        ) ;
-       rdf:type [ <SubscribeResultResponse> ] ?
+       rdf:type [ <McpCompleteRequestParams> ] ?
     )
 }
 
-<Task> CLOSED {
-    (  $<Task_tes> (  <taskId> @linkml:String ;
-          <status> [ <https://w3id.org/lmodel/mcp/TaskStatusEnum#cancelled> <https://w3id.org/lmodel/mcp/TaskStatusEnum#completed>
-             <https://w3id.org/lmodel/mcp/TaskStatusEnum#failed> <https://w3id.org/lmodel/mcp/TaskStatusEnum#input_required>
-             <https://w3id.org/lmodel/mcp/TaskStatusEnum#working> ] ;
-          <createdAt> @linkml:String ;
-          <lastUpdatedAt> @linkml:String ;
-          <ttl> @linkml:Integer ;
-          <statusMessage> @linkml:String ? ;
-          <pollInterval> @linkml:Integer ?
+<McpCompleteRequestParamsArgument> CLOSED {
+    (  $<McpCompleteRequestParamsArgument_tes> (  schema1:name @linkml:String ;
+          <value> @linkml:String
        ) ;
-       rdf:type [ <Task> ] ?
+       rdf:type [ <McpCompleteRequestParamsArgument> ] ?
     )
 }
 
-<TaskMetadata> CLOSED {
-    (  $<TaskMetadata_tes> <ttl> @linkml:Integer ? ;
-       rdf:type [ <TaskMetadata> ] ?
+<McpCompleteRequestParamsContext> CLOSED {
+    (  $<McpCompleteRequestParamsContext_tes> <arguments> @<McpCompleteRequestParamsContextArguments> ? ;
+       rdf:type [ <McpCompleteRequestParamsContext> ] ?
     )
 }
 
-<TaskRequestCapabilities> CLOSED {
-    (  $<TaskRequestCapabilities_tes> (  <elicitation> @<ElicitationCapability> ? ;
-          <sampling> @<SamplingCapability> ? ;
-          <tools> @<ToolsCapability> *
+<McpCompleteRequestParamsContextArguments> CLOSED {
+    (  $<McpCompleteRequestParamsContextArguments_tes> rdf:type . * ;
+       rdf:type [ <McpCompleteRequestParamsContextArguments> ] ?
+    )
+}
+
+<McpCompleteResult> CLOSED {
+    (  $<McpCompleteResult_tes> (  &<McpResult_tes> ;
+          rdf:type [ <McpResult> ] ? ;
+          <_meta> @<McpResultMetaObject> ? ;
+          <completion> @<McpCompleteResultCompletion> ;
+          <resultType> @<McpResultType>
        ) ;
-       rdf:type [ <TaskRequestCapabilities> ] ?
+       rdf:type [ <McpCompleteResult> ] ?
     )
 }
 
-<TasksCapability> CLOSED {
-    (  $<TasksCapability_tes> <requests> @<TaskRequestCapabilities> ? ;
-       rdf:type [ <TasksCapability> ] ?
-    )
-}
-
-<TaskStatusNotification> CLOSED {
-    (  $<TaskStatusNotification_tes> (  &<JSONRPCNotification_tes> ;
-          rdf:type [ <JSONRPCNotification> ] ? ;
-          <params> @<TaskStatusNotificationParams> ;
-          <method> @linkml:String
+<McpCompleteResultCompletion> CLOSED {
+    (  $<McpCompleteResultCompletion_tes> (  <hasMore> @linkml:Boolean ? ;
+          <total> @linkml:Integer ? ;
+          <values> @linkml:String +
        ) ;
-       rdf:type [ <TaskStatusNotification> ] ?
+       rdf:type [ <McpCompleteResultCompletion> ] ?
     )
 }
 
-<TaskStatusNotificationParams> CLOSED {
-    (  $<TaskStatusNotificationParams_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          <taskId> @linkml:String ;
-          <status> [ <https://w3id.org/lmodel/mcp/TaskStatusEnum#cancelled> <https://w3id.org/lmodel/mcp/TaskStatusEnum#completed>
-             <https://w3id.org/lmodel/mcp/TaskStatusEnum#failed> <https://w3id.org/lmodel/mcp/TaskStatusEnum#input_required>
-             <https://w3id.org/lmodel/mcp/TaskStatusEnum#working> ] ;
-          <createdAt> @linkml:String ;
-          <lastUpdatedAt> @linkml:String ;
-          <ttl> @linkml:Integer ;
-          <statusMessage> @linkml:String ? ;
-          <pollInterval> @linkml:Integer ? ;
-          <_meta> @<MetaObject> ?
+<McpCompleteResultResponse> CLOSED {
+    (  $<McpCompleteResultResponse_tes> (  &<McpJSONRPCResultResponse_tes> ;
+          rdf:type [ <McpJSONRPCResultResponse> ] ? ;
+          <id> @linkml:String ;
+          <jsonrpc> @linkml:String ;
+          <result> @<McpCompleteResult>
        ) ;
-       rdf:type [ <TaskStatusNotificationParams> ] ?
+       rdf:type [ <McpCompleteResultResponse> ] ?
     )
 }
 
-<TextContent> CLOSED {
-    (  $<TextContent_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          &<HasAnnotations_tes> ;
-          rdf:type [ <HasAnnotations> ] ? ;
-          <text> @linkml:String ;
+<McpContentBlock> CLOSED {
+    (  $<McpContentBlock_tes> rdf:type . * ;
+       rdf:type [ <McpContentBlock> ] ?
+    )
+}
+
+<McpCreateMessageRequest> CLOSED {
+    (  $<McpCreateMessageRequest_tes> (  <method> @linkml:String ;
+          <params> @<McpCreateMessageRequestParams>
+       ) ;
+       rdf:type [ <McpCreateMessageRequest> ] ?
+    )
+}
+
+<McpCreateMessageRequestParams> CLOSED {
+    (  $<McpCreateMessageRequestParams_tes> (  <includeContext> [
+             <https://w3id.org/lmodel/mcp/McpCreateMessageRequestParamsIncludeContext#allServers>
+             <https://w3id.org/lmodel/mcp/McpCreateMessageRequestParamsIncludeContext#none>
+             <https://w3id.org/lmodel/mcp/McpCreateMessageRequestParamsIncludeContext#thisServer> ] ? ;
+          <maxTokens> @linkml:Integer ;
+          <messages> @<McpSamplingMessage> + ;
+          <metadata> @<McpJSONObject> ? ;
+          <modelPreferences> @<McpModelPreferences> ? ;
+          <stopSequences> @linkml:String * ;
+          <systemPrompt> @linkml:String ? ;
+          <temperature> @linkml:Float ? ;
+          <toolChoice> @<McpToolChoice> ? ;
+          <tools> @<McpTool> *
+       ) ;
+       rdf:type [ <McpCreateMessageRequestParams> ] ?
+    )
+}
+
+<McpCreateMessageResult> CLOSED {
+    (  $<McpCreateMessageResult_tes> (  &<McpSamplingMessage_tes> ;
+          rdf:type [ <McpSamplingMessage> ] ? ;
+          <_meta> @<McpMetaObject> ? ;
+          <content> @linkml:String ;
+          <model> @linkml:String ;
+          <role> [ <https://w3id.org/lmodel/mcp/McpRole#assistant> <https://w3id.org/lmodel/mcp/McpRole#user> ] ;
+          <stopReason> @linkml:String ?
+       ) ;
+       rdf:type [ <McpCreateMessageResult> ] ?
+    )
+}
+
+<McpDiscoverRequest> CLOSED {
+    (  $<McpDiscoverRequest_tes> (  &<McpJSONRPCRequest_tes> ;
+          rdf:type [ <McpJSONRPCRequest> ] ? ;
+          <id> @linkml:String ;
+          <jsonrpc> @linkml:String ;
+          <method> @linkml:String ;
+          <params> @<McpRequestParams>
+       ) ;
+       rdf:type [ <McpDiscoverRequest> ] ?
+    )
+}
+
+<McpDiscoverResult> CLOSED {
+    (  $<McpDiscoverResult_tes> (  &<McpCacheableResult_tes> ;
+          rdf:type [ <McpCacheableResult> ] ? ;
+          <_meta> @<McpResultMetaObject> ? ;
+          <cacheScope> [ <https://w3id.org/lmodel/mcp/McpCacheScope#private> <https://w3id.org/lmodel/mcp/McpCacheScope#public> ] ;
+          <capabilities> @<McpServerCapabilities> ;
+          <instructions> @linkml:String ? ;
+          <resultType> @<McpResultType> ;
+          <supportedVersions> @linkml:String + ;
+          <ttlMs> @linkml:Integer
+       ) ;
+       rdf:type [ <McpDiscoverResult> ] ?
+    )
+}
+
+<McpDiscoverResultResponse> CLOSED {
+    (  $<McpDiscoverResultResponse_tes> (  &<McpJSONRPCResultResponse_tes> ;
+          rdf:type [ <McpJSONRPCResultResponse> ] ? ;
+          <id> @linkml:String ;
+          <jsonrpc> @linkml:String ;
+          <result> @<McpDiscoverResult>
+       ) ;
+       rdf:type [ <McpDiscoverResultResponse> ] ?
+    )
+}
+
+<McpElicitRequest> CLOSED {
+    (  $<McpElicitRequest_tes> (  <method> @linkml:String ;
+          <params> @<McpElicitRequestParams>
+       ) ;
+       rdf:type [ <McpElicitRequest> ] ?
+    )
+}
+
+<McpElicitRequestFormParams> CLOSED {
+    (  $<McpElicitRequestFormParams_tes> (  <message> @linkml:String ;
+          <mode> @linkml:String ? ;
+          <requestedSchema> @<McpElicitRequestFormParamsRequestedSchema>
+       ) ;
+       rdf:type [ <McpElicitRequestFormParams> ] ?
+    )
+}
+
+<McpElicitRequestFormParamsRequestedSchema> CLOSED {
+    (  $<McpElicitRequestFormParamsRequestedSchema_tes> (  <type> @linkml:String ;
+          <schema_dialect> @linkml:String ? ;
+          <properties> @<McpElicitRequestFormParamsRequestedSchemaProperties> ;
+          <required_names> @linkml:String *
+       ) ;
+       rdf:type [ <McpElicitRequestFormParamsRequestedSchema> ] ?
+    )
+}
+
+<McpElicitRequestFormParamsRequestedSchemaProperties> CLOSED {
+    (  $<McpElicitRequestFormParamsRequestedSchemaProperties_tes> rdf:type . * ;
+       rdf:type [ <McpElicitRequestFormParamsRequestedSchemaProperties> ] ?
+    )
+}
+
+<McpElicitRequestParams> CLOSED {
+    (  $<McpElicitRequestParams_tes> rdf:type . * ;
+       rdf:type [ <McpElicitRequestParams> ] ?
+    )
+}
+
+<McpElicitRequestURLParams> CLOSED {
+    (  $<McpElicitRequestURLParams_tes> (  schema1:url @linkml:Uri ;
+          <message> @linkml:String ;
+          <mode> @linkml:String
+       ) ;
+       rdf:type [ <McpElicitRequestURLParams> ] ?
+    )
+}
+
+<McpElicitResult> CLOSED {
+    (  $<McpElicitResult_tes> (  <action> [ <https://w3id.org/lmodel/mcp/McpElicitResultAction#accept>
+             <https://w3id.org/lmodel/mcp/McpElicitResultAction#cancel> <https://w3id.org/lmodel/mcp/McpElicitResultAction#decline>
+             ] ;
+          <content> @<McpElicitResultContent> ?
+       ) ;
+       rdf:type [ <McpElicitResult> ] ?
+    )
+}
+
+<McpElicitResultContent> CLOSED {
+    (  $<McpElicitResultContent_tes> rdf:type . * ;
+       rdf:type [ <McpElicitResultContent> ] ?
+    )
+}
+
+<McpEmbeddedResource> CLOSED {
+    (  $<McpEmbeddedResource_tes> (  <resource> @linkml:String ;
           <type> @linkml:String ;
-          <_meta> @<MetaObject> ? ;
-          <annotations> @<Annotations> ?
+          <_meta> @<McpMetaObject> ? ;
+          <annotations> @<McpAnnotations> ?
        ) ;
-       rdf:type [ <TextContent> ] ?
+       rdf:type [ <McpEmbeddedResource> ] ?
     )
 }
 
-<TextResourceContents> CLOSED {
-    (  $<TextResourceContents_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          <uri> @linkml:Uri ;
+<McpEmptyResult>  (
+    CLOSED {
+       (  $<McpEmptyResult_tes> (  &<McpResult_tes> ;
+             rdf:type [ <McpResult> ] ?
+          ) ;
+          rdf:type [ <McpEmptyResult> ] ?
+       )
+    } OR @<McpClientResult>
+)
+
+<McpEnumSchema> CLOSED {
+    (  $<McpEnumSchema_tes> rdf:type . * ;
+       rdf:type [ <McpEnumSchema> ] ?
+    )
+}
+
+<McpError>  (
+    CLOSED {
+       (  $<McpError_tes> (  <code> @linkml:Integer ;
+             <data> @<McpJSONValue> ? ;
+             <message> @linkml:String
+          ) ;
+          rdf:type [ <McpError> ] ?
+       )
+    } OR @<McpHeaderMismatchErrorError> OR @<McpInternalError> OR @<McpInvalidParamsError> OR @<McpInvalidRequestError> OR
+    @<McpMethodNotFoundError> OR @<McpMissingRequiredClientCapabilityErrorError> OR @<McpParseError> OR
+    @<McpUnsupportedProtocolVersionErrorError>
+)
+
+<McpGetPromptRequest> CLOSED {
+    (  $<McpGetPromptRequest_tes> (  &<McpJSONRPCRequest_tes> ;
+          rdf:type [ <McpJSONRPCRequest> ] ? ;
+          <id> @linkml:String ;
+          <jsonrpc> @linkml:String ;
+          <method> @linkml:String ;
+          <params> @<McpGetPromptRequestParams>
+       ) ;
+       rdf:type [ <McpGetPromptRequest> ] ?
+    )
+}
+
+<McpGetPromptRequestParams> CLOSED {
+    (  $<McpGetPromptRequestParams_tes> (  &<McpInputResponseRequestParams_tes> ;
+          rdf:type [ <McpInputResponseRequestParams> ] ? ;
+          schema1:name @linkml:String ;
+          <_meta> @<McpRequestMetaObject> ;
+          <arguments> @<McpGetPromptRequestParamsArguments> ? ;
+          <inputResponses> @<McpInputResponses> ? ;
+          <requestState> @linkml:String ?
+       ) ;
+       rdf:type [ <McpGetPromptRequestParams> ] ?
+    )
+}
+
+<McpGetPromptRequestParamsArguments> CLOSED {
+    (  $<McpGetPromptRequestParamsArguments_tes> rdf:type . * ;
+       rdf:type [ <McpGetPromptRequestParamsArguments> ] ?
+    )
+}
+
+<McpGetPromptResult> CLOSED {
+    (  $<McpGetPromptResult_tes> (  &<McpResult_tes> ;
+          rdf:type [ <McpResult> ] ? ;
+          schema1:description @linkml:String ? ;
+          <_meta> @<McpResultMetaObject> ? ;
+          <messages> @<McpPromptMessage> + ;
+          <resultType> @<McpResultType>
+       ) ;
+       rdf:type [ <McpGetPromptResult> ] ?
+    )
+}
+
+<McpGetPromptResultResponse> CLOSED {
+    (  $<McpGetPromptResultResponse_tes> (  &<McpJSONRPCResultResponse_tes> ;
+          rdf:type [ <McpJSONRPCResultResponse> ] ? ;
+          <id> @linkml:String ;
+          <jsonrpc> @linkml:String ;
+          <result> @linkml:String
+       ) ;
+       rdf:type [ <McpGetPromptResultResponse> ] ?
+    )
+}
+
+<McpHeaderMismatchError> CLOSED {
+    (  $<McpHeaderMismatchError_tes> (  &<McpJSONRPCErrorResponse_tes> ;
+          rdf:type [ <McpJSONRPCErrorResponse> ] ? ;
+          <id> @linkml:String ? ;
+          <error> @<McpHeaderMismatchErrorError> ;
+          <jsonrpc> @linkml:String
+       ) ;
+       rdf:type [ <McpHeaderMismatchError> ] ?
+    )
+}
+
+<McpHeaderMismatchErrorError> CLOSED {
+    (  $<McpHeaderMismatchErrorError_tes> (  &<McpError_tes> ;
+          rdf:type [ <McpError> ] ? ;
+          <code> @linkml:Integer
+       ) ;
+       rdf:type [ <McpHeaderMismatchErrorError> ] ?
+    )
+}
+
+<McpIcon> CLOSED {
+    (  $<McpIcon_tes> (  <mimeType> @linkml:String ? ;
+          <sizes> @linkml:String * ;
+          <src> @linkml:Uri ;
+          <theme> [ <https://w3id.org/lmodel/mcp/McpIconTheme#dark> <https://w3id.org/lmodel/mcp/McpIconTheme#light> ] ?
+       ) ;
+       rdf:type [ <McpIcon> ] ?
+    )
+}
+
+<McpIcons> CLOSED {
+    (  $<McpIcons_tes> <icons> @<McpIcon> * ;
+       rdf:type [ <McpIcons> ] ?
+    )
+}
+
+<McpImageContent> CLOSED {
+    (  $<McpImageContent_tes> (  <type> @linkml:String ;
+          <_meta> @<McpMetaObject> ? ;
+          <annotations> @<McpAnnotations> ? ;
+          <data> @<McpBase64> ;
+          <mimeType> @linkml:String
+       ) ;
+       rdf:type [ <McpImageContent> ] ?
+    )
+}
+
+<McpImplementation> CLOSED {
+    (  $<McpImplementation_tes> (  &<McpBaseMetadata_tes> ;
+          rdf:type [ <McpBaseMetadata> ] ? ;
+          &<McpIcons_tes> ;
+          rdf:type [ <McpIcons> ] ? ;
+          schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ;
+          schema1:name @linkml:String ? ;
+          schema1:version @linkml:String ;
+          <icons> @<McpIcon> * ;
+          <websiteUrl> @linkml:Uri ?
+       ) ;
+       rdf:type [ <McpImplementation> ] ?
+    )
+}
+
+<McpInputRequest> CLOSED {
+    (  $<McpInputRequest_tes> rdf:type . * ;
+       rdf:type [ <McpInputRequest> ] ?
+    )
+}
+
+<McpInputRequests> CLOSED {
+    (  $<McpInputRequests_tes> rdf:type . * ;
+       rdf:type [ <McpInputRequests> ] ?
+    )
+}
+
+<McpInputRequiredResult> CLOSED {
+    (  $<McpInputRequiredResult_tes> (  &<McpResult_tes> ;
+          rdf:type [ <McpResult> ] ? ;
+          <_meta> @<McpResultMetaObject> ? ;
+          <inputRequests> @<McpInputRequests> ? ;
+          <requestState> @linkml:String ? ;
+          <resultType> @<McpResultType>
+       ) ;
+       rdf:type [ <McpInputRequiredResult> ] ?
+    )
+}
+
+<McpInputResponse> CLOSED {
+    (  $<McpInputResponse_tes> rdf:type . * ;
+       rdf:type [ <McpInputResponse> ] ?
+    )
+}
+
+<McpInputResponseRequestParams>  (
+    CLOSED {
+       (  $<McpInputResponseRequestParams_tes> (  &<McpRequestParams_tes> ;
+             rdf:type [ <McpRequestParams> ] ? ;
+             <_meta> @<McpRequestMetaObject> ;
+             <inputResponses> @<McpInputResponses> ? ;
+             <requestState> @linkml:String ?
+          ) ;
+          rdf:type [ <McpInputResponseRequestParams> ] ?
+       )
+    } OR @<McpCallToolRequestParams> OR @<McpGetPromptRequestParams>
+)
+
+<McpInputResponses> CLOSED {
+    (  $<McpInputResponses_tes> rdf:type . * ;
+       rdf:type [ <McpInputResponses> ] ?
+    )
+}
+
+<McpInternalError> CLOSED {
+    (  $<McpInternalError_tes> (  &<McpError_tes> ;
+          rdf:type [ <McpError> ] ? ;
+          <code> @linkml:Integer ;
+          <data> @<McpJSONValue> ? ;
+          <message> @linkml:String
+       ) ;
+       rdf:type [ <McpInternalError> ] ?
+    )
+}
+
+<McpInvalidParamsError> CLOSED {
+    (  $<McpInvalidParamsError_tes> (  &<McpError_tes> ;
+          rdf:type [ <McpError> ] ? ;
+          <code> @linkml:Integer ;
+          <data> @<McpJSONValue> ? ;
+          <message> @linkml:String
+       ) ;
+       rdf:type [ <McpInvalidParamsError> ] ?
+    )
+}
+
+<McpInvalidRequestError> CLOSED {
+    (  $<McpInvalidRequestError_tes> (  &<McpError_tes> ;
+          rdf:type [ <McpError> ] ? ;
+          <code> @linkml:Integer ;
+          <data> @<McpJSONValue> ? ;
+          <message> @linkml:String
+       ) ;
+       rdf:type [ <McpInvalidRequestError> ] ?
+    )
+}
+
+<McpJSONObject> CLOSED {
+    (  $<McpJSONObject_tes> rdf:type . * ;
+       rdf:type [ <McpJSONObject> ] ?
+    )
+}
+
+<McpJSONRPCErrorResponse>  (
+    CLOSED {
+       (  $<McpJSONRPCErrorResponse_tes> (  <id> @linkml:String ? ;
+             <error> @<McpError> ;
+             <jsonrpc> @linkml:String
+          ) ;
+          rdf:type [ <McpJSONRPCErrorResponse> ] ?
+       )
+    } OR @<McpHeaderMismatchError> OR @<McpMissingRequiredClientCapabilityError> OR @<McpUnsupportedProtocolVersionError>
+)
+
+<McpJSONRPCMessage> CLOSED {
+    (  $<McpJSONRPCMessage_tes> rdf:type . * ;
+       rdf:type [ <McpJSONRPCMessage> ] ?
+    )
+}
+
+<McpJSONRPCNotification>  (
+    CLOSED {
+       (  $<McpJSONRPCNotification_tes> (  &<McpNotification_tes> ;
+             rdf:type [ <McpNotification> ] ? ;
+             <jsonrpc> @linkml:String ;
+             <method> @linkml:String ;
+             <params> @<McpJSONObject> ?
+          ) ;
+          rdf:type [ <McpJSONRPCNotification> ] ?
+       )
+    } OR @<McpCancelledNotification> OR @<McpLoggingMessageNotification> OR @<McpProgressNotification> OR
+    @<McpPromptListChangedNotification> OR @<McpResourceListChangedNotification> OR @<McpResourceUpdatedNotification> OR
+    @<McpSubscriptionsAcknowledgedNotification> OR @<McpToolListChangedNotification>
+)
+
+<McpJSONRPCRequest>  (
+    CLOSED {
+       (  $<McpJSONRPCRequest_tes> (  &<McpRequest_tes> ;
+             rdf:type [ <McpRequest> ] ? ;
+             <id> @linkml:String ;
+             <jsonrpc> @linkml:String ;
+             <method> @linkml:String ;
+             <params> @<McpJSONObject> ?
+          ) ;
+          rdf:type [ <McpJSONRPCRequest> ] ?
+       )
+    } OR @<McpCallToolRequest> OR @<McpCompleteRequest> OR @<McpDiscoverRequest> OR @<McpGetPromptRequest> OR
+    @<McpPaginatedRequest> OR @<McpReadResourceRequest> OR @<McpSubscriptionsListenRequest>
+)
+
+<McpJSONRPCResponse> CLOSED {
+    (  $<McpJSONRPCResponse_tes> rdf:type . * ;
+       rdf:type [ <McpJSONRPCResponse> ] ?
+    )
+}
+
+<McpJSONRPCResultResponse>  (
+    CLOSED {
+       (  $<McpJSONRPCResultResponse_tes> (  <id> @linkml:String ;
+             <jsonrpc> @linkml:String ;
+             <result> @<McpResult>
+          ) ;
+          rdf:type [ <McpJSONRPCResultResponse> ] ?
+       )
+    } OR @<McpCallToolResultResponse> OR @<McpCompleteResultResponse> OR @<McpDiscoverResultResponse> OR
+    @<McpGetPromptResultResponse> OR @<McpListPromptsResultResponse> OR @<McpListResourceTemplatesResultResponse> OR
+    @<McpListResourcesResultResponse> OR @<McpListToolsResultResponse> OR @<McpReadResourceResultResponse> OR
+    @<McpSubscriptionsListenResultResponse>
+)
+
+<McpJSONValue> CLOSED {
+    (  $<McpJSONValue_tes> rdf:type . * ;
+       rdf:type [ linkml:Any ] ?
+    )
+}
+
+<McpLegacyTitledEnumSchema> CLOSED {
+    (  $<McpLegacyTitledEnumSchema_tes> (  schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ? ;
+          <type> @linkml:String ;
+          <default> @linkml:String ? ;
+          <enum> @linkml:String + ;
+          <enumNames> @linkml:String *
+       ) ;
+       rdf:type [ <McpLegacyTitledEnumSchema> ] ?
+    )
+}
+
+<McpListPromptsRequest> CLOSED {
+    (  $<McpListPromptsRequest_tes> (  &<McpPaginatedRequest_tes> ;
+          rdf:type [ <McpPaginatedRequest> ] ? ;
+          <id> @linkml:String ;
+          <jsonrpc> @linkml:String ;
+          <method> @linkml:String ;
+          <params> @<McpPaginatedRequestParams>
+       ) ;
+       rdf:type [ <McpListPromptsRequest> ] ?
+    )
+}
+
+<McpListPromptsResult> CLOSED {
+    (  $<McpListPromptsResult_tes> (  &<McpPaginatedResult_tes> ;
+          rdf:type [ <McpPaginatedResult> ] ? ;
+          &<McpCacheableResult_tes> ;
+          rdf:type [ <McpCacheableResult> ] ? ;
+          <_meta> @<McpResultMetaObject> ? ;
+          <cacheScope> [ <https://w3id.org/lmodel/mcp/McpCacheScope#private> <https://w3id.org/lmodel/mcp/McpCacheScope#public> ] ;
+          <nextCursor> @<McpCursor> ? ;
+          <prompts> @<McpPrompt> + ;
+          <resultType> @<McpResultType> ;
+          <ttlMs> @linkml:Integer
+       ) ;
+       rdf:type [ <McpListPromptsResult> ] ?
+    )
+}
+
+<McpListPromptsResultResponse> CLOSED {
+    (  $<McpListPromptsResultResponse_tes> (  &<McpJSONRPCResultResponse_tes> ;
+          rdf:type [ <McpJSONRPCResultResponse> ] ? ;
+          <id> @linkml:String ;
+          <jsonrpc> @linkml:String ;
+          <result> @<McpListPromptsResult>
+       ) ;
+       rdf:type [ <McpListPromptsResultResponse> ] ?
+    )
+}
+
+<McpListResourcesRequest> CLOSED {
+    (  $<McpListResourcesRequest_tes> (  &<McpPaginatedRequest_tes> ;
+          rdf:type [ <McpPaginatedRequest> ] ? ;
+          <id> @linkml:String ;
+          <jsonrpc> @linkml:String ;
+          <method> @linkml:String ;
+          <params> @<McpPaginatedRequestParams>
+       ) ;
+       rdf:type [ <McpListResourcesRequest> ] ?
+    )
+}
+
+<McpListResourcesResult> CLOSED {
+    (  $<McpListResourcesResult_tes> (  &<McpPaginatedResult_tes> ;
+          rdf:type [ <McpPaginatedResult> ] ? ;
+          &<McpCacheableResult_tes> ;
+          rdf:type [ <McpCacheableResult> ] ? ;
+          <_meta> @<McpResultMetaObject> ? ;
+          <cacheScope> [ <https://w3id.org/lmodel/mcp/McpCacheScope#private> <https://w3id.org/lmodel/mcp/McpCacheScope#public> ] ;
+          <nextCursor> @<McpCursor> ? ;
+          <resources> @<McpResource> + ;
+          <resultType> @<McpResultType> ;
+          <ttlMs> @linkml:Integer
+       ) ;
+       rdf:type [ <McpListResourcesResult> ] ?
+    )
+}
+
+<McpListResourcesResultResponse> CLOSED {
+    (  $<McpListResourcesResultResponse_tes> (  &<McpJSONRPCResultResponse_tes> ;
+          rdf:type [ <McpJSONRPCResultResponse> ] ? ;
+          <id> @linkml:String ;
+          <jsonrpc> @linkml:String ;
+          <result> @<McpListResourcesResult>
+       ) ;
+       rdf:type [ <McpListResourcesResultResponse> ] ?
+    )
+}
+
+<McpListResourceTemplatesRequest> CLOSED {
+    (  $<McpListResourceTemplatesRequest_tes> (  &<McpPaginatedRequest_tes> ;
+          rdf:type [ <McpPaginatedRequest> ] ? ;
+          <id> @linkml:String ;
+          <jsonrpc> @linkml:String ;
+          <method> @linkml:String ;
+          <params> @<McpPaginatedRequestParams>
+       ) ;
+       rdf:type [ <McpListResourceTemplatesRequest> ] ?
+    )
+}
+
+<McpListResourceTemplatesResult> CLOSED {
+    (  $<McpListResourceTemplatesResult_tes> (  &<McpPaginatedResult_tes> ;
+          rdf:type [ <McpPaginatedResult> ] ? ;
+          &<McpCacheableResult_tes> ;
+          rdf:type [ <McpCacheableResult> ] ? ;
+          <_meta> @<McpResultMetaObject> ? ;
+          <cacheScope> [ <https://w3id.org/lmodel/mcp/McpCacheScope#private> <https://w3id.org/lmodel/mcp/McpCacheScope#public> ] ;
+          <nextCursor> @<McpCursor> ? ;
+          <resourceTemplates> @<McpResourceTemplate> + ;
+          <resultType> @<McpResultType> ;
+          <ttlMs> @linkml:Integer
+       ) ;
+       rdf:type [ <McpListResourceTemplatesResult> ] ?
+    )
+}
+
+<McpListResourceTemplatesResultResponse> CLOSED {
+    (  $<McpListResourceTemplatesResultResponse_tes> (  &<McpJSONRPCResultResponse_tes> ;
+          rdf:type [ <McpJSONRPCResultResponse> ] ? ;
+          <id> @linkml:String ;
+          <jsonrpc> @linkml:String ;
+          <result> @<McpListResourceTemplatesResult>
+       ) ;
+       rdf:type [ <McpListResourceTemplatesResultResponse> ] ?
+    )
+}
+
+<McpListRootsRequest> CLOSED {
+    (  $<McpListRootsRequest_tes> (  <method> @linkml:String ;
+          <params> @<McpListRootsRequestParams> ?
+       ) ;
+       rdf:type [ <McpListRootsRequest> ] ?
+    )
+}
+
+<McpListRootsRequestParams> CLOSED {
+    (  $<McpListRootsRequestParams_tes> <_meta> @<McpMetaObject> ? ;
+       rdf:type [ <McpListRootsRequestParams> ] ?
+    )
+}
+
+<McpListRootsResult> CLOSED {
+    (  $<McpListRootsResult_tes> <roots> @<McpRoot> + ;
+       rdf:type [ <McpListRootsResult> ] ?
+    )
+}
+
+<McpListToolsRequest> CLOSED {
+    (  $<McpListToolsRequest_tes> (  &<McpPaginatedRequest_tes> ;
+          rdf:type [ <McpPaginatedRequest> ] ? ;
+          <id> @linkml:String ;
+          <jsonrpc> @linkml:String ;
+          <method> @linkml:String ;
+          <params> @<McpPaginatedRequestParams>
+       ) ;
+       rdf:type [ <McpListToolsRequest> ] ?
+    )
+}
+
+<McpListToolsResult> CLOSED {
+    (  $<McpListToolsResult_tes> (  &<McpPaginatedResult_tes> ;
+          rdf:type [ <McpPaginatedResult> ] ? ;
+          &<McpCacheableResult_tes> ;
+          rdf:type [ <McpCacheableResult> ] ? ;
+          <_meta> @<McpResultMetaObject> ? ;
+          <cacheScope> [ <https://w3id.org/lmodel/mcp/McpCacheScope#private> <https://w3id.org/lmodel/mcp/McpCacheScope#public> ] ;
+          <nextCursor> @<McpCursor> ? ;
+          <resultType> @<McpResultType> ;
+          <tools> @<McpTool> + ;
+          <ttlMs> @linkml:Integer
+       ) ;
+       rdf:type [ <McpListToolsResult> ] ?
+    )
+}
+
+<McpListToolsResultResponse> CLOSED {
+    (  $<McpListToolsResultResponse_tes> (  &<McpJSONRPCResultResponse_tes> ;
+          rdf:type [ <McpJSONRPCResultResponse> ] ? ;
+          <id> @linkml:String ;
+          <jsonrpc> @linkml:String ;
+          <result> @<McpListToolsResult>
+       ) ;
+       rdf:type [ <McpListToolsResultResponse> ] ?
+    )
+}
+
+<McpLoggingMessageNotification> CLOSED {
+    (  $<McpLoggingMessageNotification_tes> (  &<McpJSONRPCNotification_tes> ;
+          rdf:type [ <McpJSONRPCNotification> ] ? ;
+          <jsonrpc> @linkml:String ;
+          <method> @linkml:String ;
+          <params> @<McpLoggingMessageNotificationParams>
+       ) ;
+       rdf:type [ <McpLoggingMessageNotification> ] ?
+    )
+}
+
+<McpLoggingMessageNotificationParams> CLOSED {
+    (  $<McpLoggingMessageNotificationParams_tes> (  &<McpNotificationParams_tes> ;
+          rdf:type [ <McpNotificationParams> ] ? ;
+          <_meta> @<McpNotificationMetaObject> ? ;
+          <data> @<McpJSONValue> ;
+          <level> [ <https://w3id.org/lmodel/mcp/McpLoggingLevel#alert> <https://w3id.org/lmodel/mcp/McpLoggingLevel#critical>
+             <https://w3id.org/lmodel/mcp/McpLoggingLevel#debug> <https://w3id.org/lmodel/mcp/McpLoggingLevel#emergency>
+             <https://w3id.org/lmodel/mcp/McpLoggingLevel#error> <https://w3id.org/lmodel/mcp/McpLoggingLevel#info>
+             <https://w3id.org/lmodel/mcp/McpLoggingLevel#notice> <https://w3id.org/lmodel/mcp/McpLoggingLevel#warning> ] ;
+          <logger> @linkml:String ?
+       ) ;
+       rdf:type [ <McpLoggingMessageNotificationParams> ] ?
+    )
+}
+
+<McpMetaObject>  (
+    CLOSED {
+       (  $<McpMetaObject_tes> rdf:type . * ;
+          rdf:type [ <McpMetaObject> ] ?
+       )
+    } OR @<McpNotificationMetaObject> OR @<McpRequestMetaObject> OR @<McpResultMetaObject>
+)
+
+<McpMethodNotFoundError> CLOSED {
+    (  $<McpMethodNotFoundError_tes> (  &<McpError_tes> ;
+          rdf:type [ <McpError> ] ? ;
+          <code> @linkml:Integer ;
+          <data> @<McpJSONValue> ? ;
+          <message> @linkml:String
+       ) ;
+       rdf:type [ <McpMethodNotFoundError> ] ?
+    )
+}
+
+<McpMissingRequiredClientCapabilityError> CLOSED {
+    (  $<McpMissingRequiredClientCapabilityError_tes> (  &<McpJSONRPCErrorResponse_tes> ;
+          rdf:type [ <McpJSONRPCErrorResponse> ] ? ;
+          <id> @linkml:String ? ;
+          <error> @<McpMissingRequiredClientCapabilityErrorError> ;
+          <jsonrpc> @linkml:String
+       ) ;
+       rdf:type [ <McpMissingRequiredClientCapabilityError> ] ?
+    )
+}
+
+<McpMissingRequiredClientCapabilityErrorError> CLOSED {
+    (  $<McpMissingRequiredClientCapabilityErrorError_tes> (  &<McpError_tes> ;
+          rdf:type [ <McpError> ] ? ;
+          <code> @linkml:Integer ;
+          <data> @<McpMissingRequiredClientCapabilityErrorErrorData>
+       ) ;
+       rdf:type [ <McpMissingRequiredClientCapabilityErrorError> ] ?
+    )
+}
+
+<McpMissingRequiredClientCapabilityErrorErrorData> CLOSED {
+    (  $<McpMissingRequiredClientCapabilityErrorErrorData_tes> <requiredCapabilities> @<McpClientCapabilities> ;
+       rdf:type [ <McpMissingRequiredClientCapabilityErrorErrorData> ] ?
+    )
+}
+
+<McpModelHint> CLOSED {
+    (  $<McpModelHint_tes> schema1:name @linkml:String ? ;
+       rdf:type [ <McpModelHint> ] ?
+    )
+}
+
+<McpModelPreferences> CLOSED {
+    (  $<McpModelPreferences_tes> (  <costPriority> @linkml:Float ? ;
+          <hints> @<McpModelHint> * ;
+          <intelligencePriority> @linkml:Float ? ;
+          <speedPriority> @linkml:Float ?
+       ) ;
+       rdf:type [ <McpModelPreferences> ] ?
+    )
+}
+
+<McpMultiSelectEnumSchema> CLOSED {
+    (  $<McpMultiSelectEnumSchema_tes> rdf:type . * ;
+       rdf:type [ <McpMultiSelectEnumSchema> ] ?
+    )
+}
+
+<McpNotification>  (
+    CLOSED {
+       (  $<McpNotification_tes> (  <method> @linkml:String ;
+             <params> @<McpJSONObject> ?
+          ) ;
+          rdf:type [ <McpNotification> ] ?
+       )
+    } OR @<McpJSONRPCNotification>
+)
+
+<McpNotificationMetaObject> CLOSED {
+    (  $<McpNotificationMetaObject_tes> (  &<McpMetaObject_tes> ;
+          rdf:type [ <McpMetaObject> ] ? ;
+          <mcp_subscription_id> @linkml:String ?
+       ) ;
+       rdf:type [ <McpNotificationMetaObject> ] ?
+    )
+}
+
+<McpNotificationParams>  (
+    CLOSED {
+       (  $<McpNotificationParams_tes> <_meta> @<McpNotificationMetaObject> ? ;
+          rdf:type [ <McpNotificationParams> ] ?
+       )
+    } OR @<McpCancelledNotificationParams> OR @<McpLoggingMessageNotificationParams> OR @<McpProgressNotificationParams> OR
+    @<McpResourceUpdatedNotificationParams> OR @<McpSubscriptionsAcknowledgedNotificationParams>
+)
+
+<McpNumberSchema> CLOSED {
+    (  $<McpNumberSchema_tes> (  schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ? ;
+          <type> [ <https://w3id.org/lmodel/mcp/McpNumberSchemaType#integer>
+             <https://w3id.org/lmodel/mcp/McpNumberSchemaType#number> ] ;
+          <default> @linkml:Float ? ;
+          <maximum> @linkml:Float ? ;
+          <minimum> @linkml:Float ?
+       ) ;
+       rdf:type [ <McpNumberSchema> ] ?
+    )
+}
+
+<McpPaginatedRequest>  (
+    CLOSED {
+       (  $<McpPaginatedRequest_tes> (  &<McpJSONRPCRequest_tes> ;
+             rdf:type [ <McpJSONRPCRequest> ] ? ;
+             <id> @linkml:String ;
+             <jsonrpc> @linkml:String ;
+             <method> @linkml:String ;
+             <params> @<McpPaginatedRequestParams>
+          ) ;
+          rdf:type [ <McpPaginatedRequest> ] ?
+       )
+    } OR @<McpListPromptsRequest> OR @<McpListResourceTemplatesRequest> OR @<McpListResourcesRequest> OR @<McpListToolsRequest>
+)
+
+<McpPaginatedRequestParams> CLOSED {
+    (  $<McpPaginatedRequestParams_tes> (  &<McpRequestParams_tes> ;
+          rdf:type [ <McpRequestParams> ] ? ;
+          <_meta> @<McpRequestMetaObject> ;
+          <cursor> @<McpCursor> ?
+       ) ;
+       rdf:type [ <McpPaginatedRequestParams> ] ?
+    )
+}
+
+<McpPaginatedResult>  (
+    CLOSED {
+       (  $<McpPaginatedResult_tes> (  &<McpResult_tes> ;
+             rdf:type [ <McpResult> ] ? ;
+             <_meta> @<McpResultMetaObject> ? ;
+             <nextCursor> @<McpCursor> ? ;
+             <resultType> @<McpResultType>
+          ) ;
+          rdf:type [ <McpPaginatedResult> ] ?
+       )
+    } OR @<McpListPromptsResult> OR @<McpListResourceTemplatesResult> OR @<McpListResourcesResult> OR @<McpListToolsResult>
+)
+
+<McpParseError> CLOSED {
+    (  $<McpParseError_tes> (  &<McpError_tes> ;
+          rdf:type [ <McpError> ] ? ;
+          <code> @linkml:Integer ;
+          <data> @<McpJSONValue> ? ;
+          <message> @linkml:String
+       ) ;
+       rdf:type [ <McpParseError> ] ?
+    )
+}
+
+<McpPrimitiveSchemaDefinition> CLOSED {
+    (  $<McpPrimitiveSchemaDefinition_tes> rdf:type . * ;
+       rdf:type [ <McpPrimitiveSchemaDefinition> ] ?
+    )
+}
+
+<McpProgressNotification> CLOSED {
+    (  $<McpProgressNotification_tes> (  &<McpJSONRPCNotification_tes> ;
+          rdf:type [ <McpJSONRPCNotification> ] ? ;
+          <jsonrpc> @linkml:String ;
+          <method> @linkml:String ;
+          <params> @<McpProgressNotificationParams>
+       ) ;
+       rdf:type [ <McpProgressNotification> ] ?
+    )
+}
+
+<McpProgressNotificationParams> CLOSED {
+    (  $<McpProgressNotificationParams_tes> (  &<McpNotificationParams_tes> ;
+          rdf:type [ <McpNotificationParams> ] ? ;
+          <_meta> @<McpNotificationMetaObject> ? ;
+          <message> @linkml:String ? ;
+          <progress> @linkml:Float ;
+          <progressToken> @linkml:String ;
+          <total> @linkml:Float ?
+       ) ;
+       rdf:type [ <McpProgressNotificationParams> ] ?
+    )
+}
+
+<McpPrompt> CLOSED {
+    (  $<McpPrompt_tes> (  &<McpBaseMetadata_tes> ;
+          rdf:type [ <McpBaseMetadata> ] ? ;
+          &<McpIcons_tes> ;
+          rdf:type [ <McpIcons> ] ? ;
+          schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ;
+          schema1:name @linkml:String ? ;
+          <_meta> @<McpMetaObject> ? ;
+          <arguments> @<McpPromptArgument> * ;
+          <icons> @<McpIcon> *
+       ) ;
+       rdf:type [ <McpPrompt> ] ?
+    )
+}
+
+<McpPromptArgument> CLOSED {
+    (  $<McpPromptArgument_tes> (  &<McpBaseMetadata_tes> ;
+          rdf:type [ <McpBaseMetadata> ] ? ;
+          schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ;
+          schema1:name @linkml:String ? ;
+          schema1:valueRequired @linkml:Boolean ?
+       ) ;
+       rdf:type [ <McpPromptArgument> ] ?
+    )
+}
+
+<McpPromptListChangedNotification> CLOSED {
+    (  $<McpPromptListChangedNotification_tes> (  &<McpJSONRPCNotification_tes> ;
+          rdf:type [ <McpJSONRPCNotification> ] ? ;
+          <jsonrpc> @linkml:String ;
+          <method> @linkml:String ;
+          <params> @<McpNotificationParams> ?
+       ) ;
+       rdf:type [ <McpPromptListChangedNotification> ] ?
+    )
+}
+
+<McpPromptMessage> CLOSED {
+    (  $<McpPromptMessage_tes> (  <content> @<McpContentBlock> ;
+          <role> [ <https://w3id.org/lmodel/mcp/McpRole#assistant> <https://w3id.org/lmodel/mcp/McpRole#user> ]
+       ) ;
+       rdf:type [ <McpPromptMessage> ] ?
+    )
+}
+
+<McpPromptReference> CLOSED {
+    (  $<McpPromptReference_tes> (  &<McpBaseMetadata_tes> ;
+          rdf:type [ <McpBaseMetadata> ] ? ;
+          schema1:name @linkml:String ;
+          schema1:name @linkml:String ? ;
+          <type> @linkml:String
+       ) ;
+       rdf:type [ <McpPromptReference> ] ?
+    )
+}
+
+<McpReadResourceRequest> CLOSED {
+    (  $<McpReadResourceRequest_tes> (  &<McpJSONRPCRequest_tes> ;
+          rdf:type [ <McpJSONRPCRequest> ] ? ;
+          <id> @linkml:String ;
+          <jsonrpc> @linkml:String ;
+          <method> @linkml:String ;
+          <params> @<McpReadResourceRequestParams>
+       ) ;
+       rdf:type [ <McpReadResourceRequest> ] ?
+    )
+}
+
+<McpReadResourceRequestParams> CLOSED {
+    (  $<McpReadResourceRequestParams_tes> (  &<McpResourceRequestParams_tes> ;
+          rdf:type [ <McpResourceRequestParams> ] ? ;
+          &<McpInputResponseRequestParams_tes> ;
+          rdf:type [ <McpInputResponseRequestParams> ] ? ;
+          <_meta> @<McpRequestMetaObject> ;
+          <inputResponses> @<McpInputResponses> ? ;
+          <requestState> @linkml:String ? ;
+          <uri> @linkml:Uri
+       ) ;
+       rdf:type [ <McpReadResourceRequestParams> ] ?
+    )
+}
+
+<McpReadResourceResult> CLOSED {
+    (  $<McpReadResourceResult_tes> (  &<McpCacheableResult_tes> ;
+          rdf:type [ <McpCacheableResult> ] ? ;
+          <_meta> @<McpResultMetaObject> ? ;
+          <cacheScope> [ <https://w3id.org/lmodel/mcp/McpCacheScope#private> <https://w3id.org/lmodel/mcp/McpCacheScope#public> ] ;
+          <contents> @linkml:String + ;
+          <resultType> @<McpResultType> ;
+          <ttlMs> @linkml:Integer
+       ) ;
+       rdf:type [ <McpReadResourceResult> ] ?
+    )
+}
+
+<McpReadResourceResultResponse> CLOSED {
+    (  $<McpReadResourceResultResponse_tes> (  &<McpJSONRPCResultResponse_tes> ;
+          rdf:type [ <McpJSONRPCResultResponse> ] ? ;
+          <id> @linkml:String ;
+          <jsonrpc> @linkml:String ;
+          <result> @linkml:String
+       ) ;
+       rdf:type [ <McpReadResourceResultResponse> ] ?
+    )
+}
+
+<McpRequest>  (
+    CLOSED {
+       (  $<McpRequest_tes> (  <method> @linkml:String ;
+             <params> @<McpJSONObject> ?
+          ) ;
+          rdf:type [ <McpRequest> ] ?
+       )
+    } OR @<McpJSONRPCRequest>
+)
+
+<McpRequestMetaObject> CLOSED {
+    (  $<McpRequestMetaObject_tes> (  &<McpMetaObject_tes> ;
+          rdf:type [ <McpMetaObject> ] ? ;
+          <mcp_client_capabilities> @<McpClientCapabilities> ;
+          <mcp_client_info> @<McpImplementation> ? ;
+          <mcp_log_level> [ <https://w3id.org/lmodel/mcp/McpLoggingLevel#alert>
+             <https://w3id.org/lmodel/mcp/McpLoggingLevel#critical> <https://w3id.org/lmodel/mcp/McpLoggingLevel#debug>
+             <https://w3id.org/lmodel/mcp/McpLoggingLevel#emergency> <https://w3id.org/lmodel/mcp/McpLoggingLevel#error>
+             <https://w3id.org/lmodel/mcp/McpLoggingLevel#info> <https://w3id.org/lmodel/mcp/McpLoggingLevel#notice>
+             <https://w3id.org/lmodel/mcp/McpLoggingLevel#warning> ] ? ;
+          <mcp_protocol_version> @linkml:String ;
+          <progressToken> @linkml:String ?
+       ) ;
+       rdf:type [ <McpRequestMetaObject> ] ?
+    )
+}
+
+<McpRequestParams>  (
+    CLOSED {
+       (  $<McpRequestParams_tes> <_meta> @<McpRequestMetaObject> ;
+          rdf:type [ <McpRequestParams> ] ?
+       )
+    } OR @<McpCompleteRequestParams> OR @<McpInputResponseRequestParams> OR @<McpPaginatedRequestParams> OR
+    @<McpResourceRequestParams> OR @<McpSubscriptionsListenRequestParams>
+)
+
+<McpResource>  (
+    CLOSED {
+       (  $<McpResource_tes> (  &<McpBaseMetadata_tes> ;
+             rdf:type [ <McpBaseMetadata> ] ? ;
+             &<McpIcons_tes> ;
+             rdf:type [ <McpIcons> ] ? ;
+             schema1:description @linkml:String ? ;
+             schema1:name @linkml:String ;
+             schema1:name @linkml:String ? ;
+             <_meta> @<McpMetaObject> ? ;
+             <annotations> @<McpAnnotations> ? ;
+             <icons> @<McpIcon> * ;
+             <mimeType> @linkml:String ? ;
+             <size> @linkml:Integer ? ;
+             <uri> @linkml:Uri
+          ) ;
+          rdf:type [ <McpResource> ] ?
+       )
+    } OR @<McpResourceLink>
+)
+
+<McpResourceContents>  (
+    CLOSED {
+       (  $<McpResourceContents_tes> (  <_meta> @<McpMetaObject> ? ;
+             <mimeType> @linkml:String ? ;
+             <uri> @linkml:Uri
+          ) ;
+          rdf:type [ <McpResourceContents> ] ?
+       )
+    } OR @<McpBlobResourceContents> OR @<McpTextResourceContents>
+)
+
+<McpResourceLink> CLOSED {
+    (  $<McpResourceLink_tes> (  &<McpResource_tes> ;
+          rdf:type [ <McpResource> ] ? ;
+          schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ;
+          schema1:name @linkml:String ? ;
+          <type> @linkml:String ;
+          <_meta> @<McpMetaObject> ? ;
+          <annotations> @<McpAnnotations> ? ;
+          <icons> @<McpIcon> * ;
+          <mimeType> @linkml:String ? ;
+          <size> @linkml:Integer ? ;
+          <uri> @linkml:Uri
+       ) ;
+       rdf:type [ <McpResourceLink> ] ?
+    )
+}
+
+<McpResourceListChangedNotification> CLOSED {
+    (  $<McpResourceListChangedNotification_tes> (  &<McpJSONRPCNotification_tes> ;
+          rdf:type [ <McpJSONRPCNotification> ] ? ;
+          <jsonrpc> @linkml:String ;
+          <method> @linkml:String ;
+          <params> @<McpNotificationParams> ?
+       ) ;
+       rdf:type [ <McpResourceListChangedNotification> ] ?
+    )
+}
+
+<McpResourceRequestParams>  (
+    CLOSED {
+       (  $<McpResourceRequestParams_tes> (  &<McpRequestParams_tes> ;
+             rdf:type [ <McpRequestParams> ] ? ;
+             <_meta> @<McpRequestMetaObject> ;
+             <uri> @linkml:Uri
+          ) ;
+          rdf:type [ <McpResourceRequestParams> ] ?
+       )
+    } OR @<McpReadResourceRequestParams>
+)
+
+<McpResourceTemplate> CLOSED {
+    (  $<McpResourceTemplate_tes> (  &<McpBaseMetadata_tes> ;
+          rdf:type [ <McpBaseMetadata> ] ? ;
+          &<McpIcons_tes> ;
+          rdf:type [ <McpIcons> ] ? ;
+          schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ;
+          schema1:name @linkml:String ? ;
+          <_meta> @<McpMetaObject> ? ;
+          <annotations> @<McpAnnotations> ? ;
+          <icons> @<McpIcon> * ;
+          <mimeType> @linkml:String ? ;
+          <uriTemplate> @<McpUriTemplate>
+       ) ;
+       rdf:type [ <McpResourceTemplate> ] ?
+    )
+}
+
+<McpResourceTemplateReference> CLOSED {
+    (  $<McpResourceTemplateReference_tes> (  <type> @linkml:String ;
+          <uri> @<McpUriTemplate>
+       ) ;
+       rdf:type [ <McpResourceTemplateReference> ] ?
+    )
+}
+
+<McpResourceUpdatedNotification> CLOSED {
+    (  $<McpResourceUpdatedNotification_tes> (  &<McpJSONRPCNotification_tes> ;
+          rdf:type [ <McpJSONRPCNotification> ] ? ;
+          <jsonrpc> @linkml:String ;
+          <method> @linkml:String ;
+          <params> @<McpResourceUpdatedNotificationParams>
+       ) ;
+       rdf:type [ <McpResourceUpdatedNotification> ] ?
+    )
+}
+
+<McpResourceUpdatedNotificationParams> CLOSED {
+    (  $<McpResourceUpdatedNotificationParams_tes> (  &<McpNotificationParams_tes> ;
+          rdf:type [ <McpNotificationParams> ] ? ;
+          <_meta> @<McpNotificationMetaObject> ? ;
+          <uri> @linkml:Uri
+       ) ;
+       rdf:type [ <McpResourceUpdatedNotificationParams> ] ?
+    )
+}
+
+<McpResult>  (
+    CLOSED {
+       (  $<McpResult_tes> (  <_meta> @<McpResultMetaObject> ? ;
+             <resultType> @<McpResultType>
+          ) ;
+          rdf:type [ <McpResult> ] ?
+       )
+    } OR @<McpCacheableResult> OR @<McpCallToolResult> OR @<McpCompleteResult> OR @<McpEmptyResult> OR @<McpGetPromptResult> OR
+    @<McpInputRequiredResult> OR @<McpPaginatedResult> OR @<McpSubscriptionsListenResult>
+)
+
+<McpResultMetaObject>  (
+    CLOSED {
+       (  $<McpResultMetaObject_tes> (  &<McpMetaObject_tes> ;
+             rdf:type [ <McpMetaObject> ] ? ;
+             <mcp_server_info> @<McpImplementation> ?
+          ) ;
+          rdf:type [ <McpResultMetaObject> ] ?
+       )
+    } OR @<McpSubscriptionsListenResultMetaObject>
+)
+
+<McpRoot> CLOSED {
+    (  $<McpRoot_tes> (  schema1:name @linkml:String ? ;
+          <_meta> @<McpMetaObject> ? ;
+          <uri> @linkml:Uri
+       ) ;
+       rdf:type [ <McpRoot> ] ?
+    )
+}
+
+<McpSamplingMessage>  (
+    CLOSED {
+       (  $<McpSamplingMessage_tes> (  <_meta> @<McpMetaObject> ? ;
+             <content> @linkml:String ;
+             <role> [ <https://w3id.org/lmodel/mcp/McpRole#assistant> <https://w3id.org/lmodel/mcp/McpRole#user> ]
+          ) ;
+          rdf:type [ <McpSamplingMessage> ] ?
+       )
+    } OR @<McpCreateMessageResult>
+)
+
+<McpSamplingMessageContentBlock> CLOSED {
+    (  $<McpSamplingMessageContentBlock_tes> rdf:type . * ;
+       rdf:type [ <McpSamplingMessageContentBlock> ] ?
+    )
+}
+
+<McpServerCapabilities> CLOSED {
+    (  $<McpServerCapabilities_tes> (  <completions> @<McpJSONObject> ? ;
+          <experimental> @<McpServerCapabilitiesExperimental> ? ;
+          <extensions> @<McpServerCapabilitiesExtensions> ? ;
+          <logging> @<McpJSONObject> ? ;
+          <prompts> @<McpServerCapabilitiesPrompts> ? ;
+          <resources> @<McpServerCapabilitiesResources> ? ;
+          <tools> @<McpServerCapabilitiesTools> ?
+       ) ;
+       rdf:type [ <McpServerCapabilities> ] ?
+    )
+}
+
+<McpServerCapabilitiesExperimental> CLOSED {
+    (  $<McpServerCapabilitiesExperimental_tes> rdf:type . * ;
+       rdf:type [ <McpServerCapabilitiesExperimental> ] ?
+    )
+}
+
+<McpServerCapabilitiesExtensions> CLOSED {
+    (  $<McpServerCapabilitiesExtensions_tes> rdf:type . * ;
+       rdf:type [ <McpServerCapabilitiesExtensions> ] ?
+    )
+}
+
+<McpServerCapabilitiesPrompts> CLOSED {
+    (  $<McpServerCapabilitiesPrompts_tes> <listChanged> @linkml:Boolean ? ;
+       rdf:type [ <McpServerCapabilitiesPrompts> ] ?
+    )
+}
+
+<McpServerCapabilitiesResources> CLOSED {
+    (  $<McpServerCapabilitiesResources_tes> (  <listChanged> @linkml:Boolean ? ;
+          <subscribe> @linkml:Boolean ?
+       ) ;
+       rdf:type [ <McpServerCapabilitiesResources> ] ?
+    )
+}
+
+<McpServerCapabilitiesTools> CLOSED {
+    (  $<McpServerCapabilitiesTools_tes> <listChanged> @linkml:Boolean ? ;
+       rdf:type [ <McpServerCapabilitiesTools> ] ?
+    )
+}
+
+<McpServerNotification> CLOSED {
+    (  $<McpServerNotification_tes> rdf:type . * ;
+       rdf:type [ <McpServerNotification> ] ?
+    )
+}
+
+<McpServerResult> CLOSED {
+    (  $<McpServerResult_tes> rdf:type . * ;
+       rdf:type [ <McpServerResult> ] ?
+    )
+}
+
+<McpSingleSelectEnumSchema> CLOSED {
+    (  $<McpSingleSelectEnumSchema_tes> rdf:type . * ;
+       rdf:type [ <McpSingleSelectEnumSchema> ] ?
+    )
+}
+
+<McpStringSchema> CLOSED {
+    (  $<McpStringSchema_tes> (  schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ? ;
+          <type> @linkml:String ;
+          <default> @linkml:String ? ;
+          <format> [ <https://w3id.org/lmodel/mcp/McpStringSchemaFormat#date>
+             <https://w3id.org/lmodel/mcp/McpStringSchemaFormat#date-time>
+             <https://w3id.org/lmodel/mcp/McpStringSchemaFormat#email> <https://w3id.org/lmodel/mcp/McpStringSchemaFormat#uri> ] ?
+          ;
+          <maxLength> @linkml:Integer ? ;
+          <minLength> @linkml:Integer ?
+       ) ;
+       rdf:type [ <McpStringSchema> ] ?
+    )
+}
+
+<McpSubscriptionFilter> CLOSED {
+    (  $<McpSubscriptionFilter_tes> (  <promptsListChanged> @linkml:Boolean ? ;
+          <resourceSubscriptions> @linkml:String * ;
+          <resourcesListChanged> @linkml:Boolean ? ;
+          <toolsListChanged> @linkml:Boolean ?
+       ) ;
+       rdf:type [ <McpSubscriptionFilter> ] ?
+    )
+}
+
+<McpSubscriptionsAcknowledgedNotification> CLOSED {
+    (  $<McpSubscriptionsAcknowledgedNotification_tes> (  &<McpJSONRPCNotification_tes> ;
+          rdf:type [ <McpJSONRPCNotification> ] ? ;
+          <jsonrpc> @linkml:String ;
+          <method> @linkml:String ;
+          <params> @<McpSubscriptionsAcknowledgedNotificationParams>
+       ) ;
+       rdf:type [ <McpSubscriptionsAcknowledgedNotification> ] ?
+    )
+}
+
+<McpSubscriptionsAcknowledgedNotificationParams> CLOSED {
+    (  $<McpSubscriptionsAcknowledgedNotificationParams_tes> (  &<McpNotificationParams_tes> ;
+          rdf:type [ <McpNotificationParams> ] ? ;
+          <_meta> @<McpNotificationMetaObject> ? ;
+          <notifications> @<McpSubscriptionFilter>
+       ) ;
+       rdf:type [ <McpSubscriptionsAcknowledgedNotificationParams> ] ?
+    )
+}
+
+<McpSubscriptionsListenRequest> CLOSED {
+    (  $<McpSubscriptionsListenRequest_tes> (  &<McpJSONRPCRequest_tes> ;
+          rdf:type [ <McpJSONRPCRequest> ] ? ;
+          <id> @linkml:String ;
+          <jsonrpc> @linkml:String ;
+          <method> @linkml:String ;
+          <params> @<McpSubscriptionsListenRequestParams>
+       ) ;
+       rdf:type [ <McpSubscriptionsListenRequest> ] ?
+    )
+}
+
+<McpSubscriptionsListenRequestParams> CLOSED {
+    (  $<McpSubscriptionsListenRequestParams_tes> (  &<McpRequestParams_tes> ;
+          rdf:type [ <McpRequestParams> ] ? ;
+          <_meta> @<McpRequestMetaObject> ;
+          <notifications> @<McpSubscriptionFilter>
+       ) ;
+       rdf:type [ <McpSubscriptionsListenRequestParams> ] ?
+    )
+}
+
+<McpSubscriptionsListenResult> CLOSED {
+    (  $<McpSubscriptionsListenResult_tes> (  &<McpResult_tes> ;
+          rdf:type [ <McpResult> ] ? ;
+          <_meta> @<McpSubscriptionsListenResultMetaObject> ;
+          <resultType> @<McpResultType>
+       ) ;
+       rdf:type [ <McpSubscriptionsListenResult> ] ?
+    )
+}
+
+<McpSubscriptionsListenResultMetaObject> CLOSED {
+    (  $<McpSubscriptionsListenResultMetaObject_tes> (  &<McpResultMetaObject_tes> ;
+          rdf:type [ <McpResultMetaObject> ] ? ;
+          <mcp_server_info> @<McpImplementation> ? ;
+          <mcp_subscription_id> @linkml:String
+       ) ;
+       rdf:type [ <McpSubscriptionsListenResultMetaObject> ] ?
+    )
+}
+
+<McpSubscriptionsListenResultResponse> CLOSED {
+    (  $<McpSubscriptionsListenResultResponse_tes> (  &<McpJSONRPCResultResponse_tes> ;
+          rdf:type [ <McpJSONRPCResultResponse> ] ? ;
+          <id> @linkml:String ;
+          <jsonrpc> @linkml:String ;
+          <result> @<McpSubscriptionsListenResult>
+       ) ;
+       rdf:type [ <McpSubscriptionsListenResultResponse> ] ?
+    )
+}
+
+<McpTextContent> CLOSED {
+    (  $<McpTextContent_tes> (  <type> @linkml:String ;
+          <_meta> @<McpMetaObject> ? ;
+          <annotations> @<McpAnnotations> ? ;
+          <text> @linkml:String
+       ) ;
+       rdf:type [ <McpTextContent> ] ?
+    )
+}
+
+<McpTextResourceContents> CLOSED {
+    (  $<McpTextResourceContents_tes> (  &<McpResourceContents_tes> ;
+          rdf:type [ <McpResourceContents> ] ? ;
+          <_meta> @<McpMetaObject> ? ;
           <mimeType> @linkml:String ? ;
           <text> @linkml:String ;
-          <_meta> @<MetaObject> ?
+          <uri> @linkml:Uri
        ) ;
-       rdf:type [ <TextResourceContents> ] ?
+       rdf:type [ <McpTextResourceContents> ] ?
     )
 }
 
-<TitledMultiSelectEnumSchema> CLOSED {
-    (  $<TitledMultiSelectEnumSchema_tes> (  <type> @linkml:String ;
-          <items> @<SchemaItems> ? ;
+<McpTitledMultiSelectEnumSchema> CLOSED {
+    (  $<McpTitledMultiSelectEnumSchema_tes> (  schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ? ;
+          <type> @linkml:String ;
           <default> @linkml:String * ;
-          <default_value> @linkml:String ? ;
-          dct:description @linkml:String ? ;
-          dct:title @linkml:String ? ;
-          <minItems> @linkml:Integer ? ;
-          <maxItems> @linkml:Integer ?
+          <items> @<McpTitledMultiSelectEnumSchemaItems> ;
+          <maxItems> @linkml:Integer ? ;
+          <minItems> @linkml:Integer ?
        ) ;
-       rdf:type [ <TitledMultiSelectEnumSchema> ] ?
+       rdf:type [ <McpTitledMultiSelectEnumSchema> ] ?
     )
 }
 
-<TitledSingleSelectEnumSchema> CLOSED {
-    (  $<TitledSingleSelectEnumSchema_tes> (  <type> @linkml:String ;
-          <oneOf> @<EnumOption> * ;
-          <default> @<JsonValue> ? ;
-          <default_value> @linkml:String ? ;
-          dct:description @linkml:String ? ;
-          dct:title @linkml:String ?
-       ) ;
-       rdf:type [ <TitledSingleSelectEnumSchema> ] ?
+<McpTitledMultiSelectEnumSchemaItems> CLOSED {
+    (  $<McpTitledMultiSelectEnumSchemaItems_tes> <anyOf> @<McpTitledMultiSelectEnumSchemaItemsAnyOf> + ;
+       rdf:type [ <McpTitledMultiSelectEnumSchemaItems> ] ?
     )
 }
 
-<Tool> CLOSED {
-    (  $<Tool_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          &<HasName_tes> ;
-          rdf:type [ <HasName> ] ? ;
-          &<HasIcons_tes> ;
-          rdf:type [ <HasIcons> ] ? ;
-          <annotations> @<ToolAnnotations> ? ;
-          <execution> @<ToolExecution> ? ;
-          dct:description @linkml:String ? ;
-          <inputSchema> @<JsonSchema> ;
-          <outputSchema> @<JsonSchema> ? ;
+<McpTitledMultiSelectEnumSchemaItemsAnyOf> CLOSED {
+    (  $<McpTitledMultiSelectEnumSchemaItemsAnyOf_tes> (  schema1:name @linkml:String ;
+          <const> @linkml:String
+       ) ;
+       rdf:type [ <McpTitledMultiSelectEnumSchemaItemsAnyOf> ] ?
+    )
+}
+
+<McpTitledSingleSelectEnumSchema> CLOSED {
+    (  $<McpTitledSingleSelectEnumSchema_tes> (  schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ? ;
+          <type> @linkml:String ;
+          <default> @linkml:String ? ;
+          <oneOf> @<McpTitledSingleSelectEnumSchemaOneOf> +
+       ) ;
+       rdf:type [ <McpTitledSingleSelectEnumSchema> ] ?
+    )
+}
+
+<McpTitledSingleSelectEnumSchemaOneOf> CLOSED {
+    (  $<McpTitledSingleSelectEnumSchemaOneOf_tes> (  schema1:name @linkml:String ;
+          <const> @linkml:String
+       ) ;
+       rdf:type [ <McpTitledSingleSelectEnumSchemaOneOf> ] ?
+    )
+}
+
+<McpTool> CLOSED {
+    (  $<McpTool_tes> (  &<McpBaseMetadata_tes> ;
+          rdf:type [ <McpBaseMetadata> ] ? ;
+          &<McpIcons_tes> ;
+          rdf:type [ <McpIcons> ] ? ;
+          schema1:description @linkml:String ? ;
           schema1:name @linkml:String ;
-          <_meta> @<MetaObject> ? ;
-          dct:title @linkml:String ? ;
-          <icons> @<Icon> *
+          schema1:name @linkml:String ? ;
+          <_meta> @<McpMetaObject> ? ;
+          <annotations> @<McpToolAnnotations> ? ;
+          <icons> @<McpIcon> * ;
+          <inputSchema> @<McpToolInputSchema> ;
+          <outputSchema> @<McpToolOutputSchema> ?
        ) ;
-       rdf:type [ <Tool> ] ?
+       rdf:type [ <McpTool> ] ?
     )
 }
 
-<ToolAnnotations> CLOSED {
-    (  $<ToolAnnotations_tes> (  dct:title @linkml:String ? ;
+<McpToolAnnotations> CLOSED {
+    (  $<McpToolAnnotations_tes> (  schema1:name @linkml:String ? ;
           <destructiveHint> @linkml:Boolean ? ;
           <idempotentHint> @linkml:Boolean ? ;
           <openWorldHint> @linkml:Boolean ? ;
           <readOnlyHint> @linkml:Boolean ?
        ) ;
-       rdf:type [ <ToolAnnotations> ] ?
+       rdf:type [ <McpToolAnnotations> ] ?
     )
 }
 
-<ToolChoice> CLOSED {
-    (  $<ToolChoice_tes> <mode> [ <https://w3id.org/lmodel/mcp/ToolChoiceModeEnum#auto>
-          <https://w3id.org/lmodel/mcp/ToolChoiceModeEnum#none> <https://w3id.org/lmodel/mcp/ToolChoiceModeEnum#required> ] ? ;
-       rdf:type [ <ToolChoice> ] ?
+<McpToolChoice> CLOSED {
+    (  $<McpToolChoice_tes> <mode> [ <https://w3id.org/lmodel/mcp/McpToolChoiceMode#auto>
+          <https://w3id.org/lmodel/mcp/McpToolChoiceMode#none> <https://w3id.org/lmodel/mcp/McpToolChoiceMode#required> ] ? ;
+       rdf:type [ <McpToolChoice> ] ?
     )
 }
 
-<ToolExecution> CLOSED {
-    (  $<ToolExecution_tes> <taskSupport> [ <https://w3id.org/lmodel/mcp/TaskSupportEnum#forbidden>
-          <https://w3id.org/lmodel/mcp/TaskSupportEnum#optional> <https://w3id.org/lmodel/mcp/TaskSupportEnum#required> ] ? ;
-       rdf:type [ <ToolExecution> ] ?
-    )
-}
-
-<ToolInput> CLOSED {
-    (  $<ToolInput_tes> (  <city> @linkml:String ? ;
-          <location> @linkml:String ?
+<McpToolInputSchema> CLOSED {
+    (  $<McpToolInputSchema_tes> (  <type> @linkml:String ;
+          <schema_dialect> @linkml:String ?
        ) ;
-       rdf:type [ <ToolInput> ] ?
+       rdf:type [ <McpToolInputSchema> ] ?
     )
 }
 
-<ToolListChangedNotification> CLOSED {
-    (  $<ToolListChangedNotification_tes> (  &<JSONRPCNotification_tes> ;
-          rdf:type [ <JSONRPCNotification> ] ? ;
-          <method> @linkml:String
+<McpToolListChangedNotification> CLOSED {
+    (  $<McpToolListChangedNotification_tes> (  &<McpJSONRPCNotification_tes> ;
+          rdf:type [ <McpJSONRPCNotification> ] ? ;
+          <jsonrpc> @linkml:String ;
+          <method> @linkml:String ;
+          <params> @<McpNotificationParams> ?
        ) ;
-       rdf:type [ <ToolListChangedNotification> ] ?
+       rdf:type [ <McpToolListChangedNotification> ] ?
     )
 }
 
-<ToolResultContent> CLOSED {
-    (  $<ToolResultContent_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          <content> @<ContentBlock> + ;
-          <type> @linkml:String ;
-          <toolUseId> @linkml:String ;
+<McpToolOutputSchema> CLOSED {
+    (  $<McpToolOutputSchema_tes> <schema_dialect> @linkml:String ? ;
+       rdf:type [ <McpToolOutputSchema> ] ?
+    )
+}
+
+<McpToolResultContent> CLOSED {
+    (  $<McpToolResultContent_tes> (  <type> @linkml:String ;
+          <_meta> @<McpMetaObject> ? ;
+          <content> @<McpContentBlock> + ;
           <isError> @linkml:Boolean ? ;
-          <structuredContent> @<StructuredContentData> ? ;
-          <_meta> @<MetaObject> ?
+          <structuredContent> @<McpJSONValue> ? ;
+          <toolUseId> @linkml:String
        ) ;
-       rdf:type [ <ToolResultContent> ] ?
+       rdf:type [ <McpToolResultContent> ] ?
     )
 }
 
-<ToolsCapability> CLOSED {
-    (  $<ToolsCapability_tes> <listChanged> @linkml:Boolean ? ;
-       rdf:type [ <ToolsCapability> ] ?
-    )
-}
-
-<ToolUseContent> CLOSED {
-    (  $<ToolUseContent_tes> (  &<HasMeta_tes> ;
-          rdf:type [ <HasMeta> ] ? ;
-          <id> @linkml:String ;
-          <type> @linkml:String ;
+<McpToolUseContent> CLOSED {
+    (  $<McpToolUseContent_tes> (  <id> @linkml:String ;
           schema1:name @linkml:String ;
-          <input> @<ToolInput> ;
-          <_meta> @<MetaObject> ?
+          <type> @linkml:String ;
+          <_meta> @<McpMetaObject> ? ;
+          <input> @<McpJSONObject>
        ) ;
-       rdf:type [ <ToolUseContent> ] ?
+       rdf:type [ <McpToolUseContent> ] ?
     )
 }
 
-<UnsubscribeRequest> CLOSED {
-    (  $<UnsubscribeRequest_tes> (  &<JSONRPCRequest_tes> ;
-          rdf:type [ <JSONRPCRequest> ] ? ;
-          <params> @<UnsubscribeRequestParams> ;
-          <method> @linkml:String
+<McpUnsupportedProtocolVersionError> CLOSED {
+    (  $<McpUnsupportedProtocolVersionError_tes> (  &<McpJSONRPCErrorResponse_tes> ;
+          rdf:type [ <McpJSONRPCErrorResponse> ] ? ;
+          <id> @linkml:String ? ;
+          <error> @<McpUnsupportedProtocolVersionErrorError> ;
+          <jsonrpc> @linkml:String
        ) ;
-       rdf:type [ <UnsubscribeRequest> ] ?
+       rdf:type [ <McpUnsupportedProtocolVersionError> ] ?
     )
 }
 
-<UnsubscribeRequestParams> CLOSED {
-    (  $<UnsubscribeRequestParams_tes> <uri> @linkml:Uri ;
-       rdf:type [ <UnsubscribeRequestParams> ] ?
-    )
-}
-
-<UnsubscribeResultResponse> CLOSED {
-    (  $<UnsubscribeResultResponse_tes> (  &<JSONRPCResultResponse_tes> ;
-          rdf:type [ <JSONRPCResultResponse> ] ? ;
-          <result> @<Result> ?
+<McpUnsupportedProtocolVersionErrorError> CLOSED {
+    (  $<McpUnsupportedProtocolVersionErrorError_tes> (  &<McpError_tes> ;
+          rdf:type [ <McpError> ] ? ;
+          <code> @linkml:Integer ;
+          <data> @<McpUnsupportedProtocolVersionErrorErrorData>
        ) ;
-       rdf:type [ <UnsubscribeResultResponse> ] ?
+       rdf:type [ <McpUnsupportedProtocolVersionErrorError> ] ?
     )
 }
 
-<UntitledMultiSelectEnumSchema> CLOSED {
-    (  $<UntitledMultiSelectEnumSchema_tes> (  <type> @linkml:String ;
-          <items> @<SchemaItems> ? ;
+<McpUnsupportedProtocolVersionErrorErrorData> CLOSED {
+    (  $<McpUnsupportedProtocolVersionErrorErrorData_tes> (  <requested> @linkml:String ;
+          <supported> @linkml:String +
+       ) ;
+       rdf:type [ <McpUnsupportedProtocolVersionErrorErrorData> ] ?
+    )
+}
+
+<McpUntitledMultiSelectEnumSchema> CLOSED {
+    (  $<McpUntitledMultiSelectEnumSchema_tes> (  schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ? ;
+          <type> @linkml:String ;
           <default> @linkml:String * ;
-          <default_value> @linkml:String ? ;
-          dct:description @linkml:String ? ;
-          dct:title @linkml:String ? ;
-          <minItems> @linkml:Integer ? ;
-          <maxItems> @linkml:Integer ?
+          <items> @<McpUntitledMultiSelectEnumSchemaItems> ;
+          <maxItems> @linkml:Integer ? ;
+          <minItems> @linkml:Integer ?
        ) ;
-       rdf:type [ <UntitledMultiSelectEnumSchema> ] ?
+       rdf:type [ <McpUntitledMultiSelectEnumSchema> ] ?
     )
 }
 
-<UntitledSingleSelectEnumSchema> CLOSED {
-    (  $<UntitledSingleSelectEnumSchema_tes> (  <type> @linkml:String ;
-          <enum> @linkml:String * ;
-          <enum_values> @linkml:String * ;
-          <default> @<JsonValue> ? ;
-          <default_value> @linkml:String ? ;
-          dct:description @linkml:String ? ;
-          dct:title @linkml:String ?
+<McpUntitledMultiSelectEnumSchemaItems> CLOSED {
+    (  $<McpUntitledMultiSelectEnumSchemaItems_tes> (  <type> @linkml:String ;
+          <enum> @linkml:String +
        ) ;
-       rdf:type [ <UntitledSingleSelectEnumSchema> ] ?
+       rdf:type [ <McpUntitledMultiSelectEnumSchemaItems> ] ?
     )
 }
 
-<URLElicitation> CLOSED {
-    (  $<URLElicitation_tes> (  <mode> @linkml:String ? ;
-          <elicitationId> @linkml:String ? ;
-          <message> @linkml:String ? ;
-          <url> @linkml:Uri ?
+<McpUntitledSingleSelectEnumSchema> CLOSED {
+    (  $<McpUntitledSingleSelectEnumSchema_tes> (  schema1:description @linkml:String ? ;
+          schema1:name @linkml:String ? ;
+          <type> @linkml:String ;
+          <default> @linkml:String ? ;
+          <enum> @linkml:String +
        ) ;
-       rdf:type [ <URLElicitation> ] ?
-    )
-}
-
-<URLElicitationRequiredError> CLOSED {
-    (  $<URLElicitationRequiredError_tes> (  &<JSONRPCErrorResponse_tes> ;
-          rdf:type [ <JSONRPCErrorResponse> ] ?
-       ) ;
-       rdf:type [ <URLElicitationRequiredError> ] ?
+       rdf:type [ <McpUntitledSingleSelectEnumSchema> ] ?
     )
 }

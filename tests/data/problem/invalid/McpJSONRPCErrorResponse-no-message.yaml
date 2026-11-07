@@ -1,0 +1,5 @@
+# An error carries a message.
+jsonrpc: "2.0"
+id: 42
+error:
+  code: -32602

@@ -1,0 +1,4 @@
+# Each argument of a prompt needs a name.
+name: code_review
+arguments:
+  - description: The unified diff to review.

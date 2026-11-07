@@ -1,0 +1,99 @@
+Model Context Protocol LinkML Schema (mcp)
+Copyright 2026 Noel McLoughlin
+
+The code in this repository is licensed under the Apache License,
+Version 2.0 (see LICENSE). The work it models, and the files it copies
+unchanged, are third-party work under their own terms, listed below.
+
+Model Context Protocol
+----------------------
+
+src/mcp/schema/mcp.yaml, src/mcp/datamodel/, project/, docs/schema/ and
+meta/ render the schema of the Model Context Protocol (MCP), version
+2026-07-28, by Model Context Protocol a Series of LF Projects, LLC:
+https://github.com/modelcontextprotocol/modelcontextprotocol. This project
+is not part of the MCP project, and its use does not imply endorsement by
+the MCP project or LF Projects, LLC. "Model Context Protocol" names the
+protocol here; LF Projects' trademark policy is at
+https://www.lfprojects.org/policies/.
+
+The MCP project licenses new code and specification contributions under
+the Apache License, Version 2.0, and documentation other than the
+specification under CC BY 4.0. Contributions whose authors have not agreed
+to relicense them remain under the MIT License. Both licences let anyone
+copy, adapt and share the schema, with its copyright and licence notices.
+
+upstream/modelcontextprotocol/ holds these files whole and unchanged, each
+matched by git object hash in scripts/upstream_pins.tsv:
+
+  Copyright (c) 2024-2025 Model Context Protocol a Series of LF Projects,
+  LLC, under the Apache License 2.0 or the MIT License, as its LICENSE
+  says:
+    schema/2026-07-28/schema.json
+    schema/2026-07-28/schema.ts
+    schema/2026-07-28/examples/ (129 files)
+    at the tag 2026-07-28, commit 5f5440b.
+
+  LICENSE, the MCP project's statement of its licensing and the texts of
+  the Apache License 2.0, the MIT License and CC BY 4.0, as that repository
+  publishes it.
+
+The schema keeps MCP's own descriptions, word for word, where schema.json
+gives one, and the text of each @deprecated tag in schema.ts, and so do the
+files generated from it. Those texts are MCP's work under the terms above,
+not this project's. Where MCP gives no description, the words are this
+project's (scripts/mcp_to_linkml.py lists them). The structure, names and
+constraints follow schema.json and schema.ts, and meta/schema.json is MCP's
+schema regenerated from that rendering.
+
+linkml-project-copier
+---------------------
+
+This project was generated from linkml-project-copier
+(https://github.com/linkml/linkml-project-copier), and its justfile,
+configuration and documentation scaffolding derive from that template:
+
+  The MIT License (MIT)
+  Copyright (c) 2025 David Linke
+
+  Permission is hereby granted, free of charge, to any person obtaining a
+  copy of this software and associated documentation files (the
+  "Software"), to deal in the Software without restriction, including
+  without limitation the rights to use, copy, modify, merge, publish,
+  distribute, sublicense, and/or sell copies of the Software, and to permit
+  persons to whom the Software is furnished to do so, subject to the
+  following conditions:
+
+  The above copyright notice and this permission notice shall be included
+  in all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+  OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+  NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+  DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+  OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+  USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Knowledge bundle
+----------------
+
+This product maintains its documentation as a Linked Open Knowledge Format
+(LOKF) bundle under .lokf/: https://lokf.nolan-nichols.com/specification/
+The concepts under .lokf/knowledge/ are this project's work, licensed under
+the Creative Commons Attribution 4.0 International Public License (CC BY 4.0,
+https://creativecommons.org/licenses/by/4.0/), as .lokf/schema/lokf.yaml states.
+
+LOKF is a semantic profile of the Open Knowledge Format (OKF) specification
+by Google Cloud Platform:
+https://github.com/GoogleCloudPlatform/open-knowledge-format/blob/main/SPEC.md
+
+The scripts under .lokf/scripts/ and .lokf/m365/ and the
+knowledge-librarian, knowledge-registrar, knowledge-release and
+knowledge-sync workflows under .github/workflows/ are copies of the
+ktl-sidecar templates in knowledge-trust-ladder
+(https://github.com/noelmcloughlin/knowledge-trust-ladder). The site under
+website/ and the knowledge-website workflow derive from the ktl-website
+templates in the same repository, and website/NOTICE lists the part
+adapted from the LOKF toolkit's site. All of them are licensed under the
+Apache License, Version 2.0.

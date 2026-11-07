@@ -1,14 +1,14 @@
-# Example data for mcp
+# Test data
 
-This folder contains example data for testing and demonstrating the datamodel`
-sorted in subfolders:
+Each file is an MCP message or part of one, or a broken copy of one, named
+`<Class>-<what it shows>.yaml` after the class it is checked against.
 
-- `valid` for data conforming to the datamodel. Used to verify the datamodel.
-- `invalid` for data not conforming to the datamodel. Used to verify the validation.
-- `problem` for data which are not yet handled correctly in the current schema version,
-   again separated into valid/invalid.
+- `problem/valid/` holds examples that must pass, at least one for each class a
+  knowledge-bundle concept may name as its type.
+- `problem/invalid/` holds examples that must fail, each breaking one rule.
 
-The filenames of all example data must conform to the scheme `classname-###.yaml`
-where classname must be a the name of a class from the schema. "###" can be a number
-or one or more other characters allowed in filenames. The classname is derived by
-splitting at the first "-" and taking the part before the "-".
+The examples use MCP's keys. The example runner reads a key listed under
+`aliases`, such as `io.modelcontextprotocol/protocolVersion`, by the slot's name,
+so the examples are kept under `problem/`, where it does not look.
+`tests/test_data.py` checks each against `meta/schema.json` and MCP's own
+`schema.json`. `valid/` and `invalid/` stay empty.

@@ -1,0 +1,24 @@
+# Definitions whose shape in meta/schema.json differs from MCP's schema.json once both
+# are normalised (tests/mcp_parity.py says how), each with its reason. A difference that
+# changes no verdict is listed here; one that does is also in probes.yaml.
+JSONValue: >-
+  The model's JSONValue is any JSON value, which is wider than MCP's anyOf of an object,
+  an array, and a string, integer or boolean (probes.yaml, wider).
+JSONObject: >-
+  Its values are the model's JSONValue, which is any JSON value.
+CallToolRequestParams: >-
+  arguments refers to JSONObject where MCP writes an object of any values inline; with
+  JSONValue as any value, the two accept the same.
+ToolUseContent: >-
+  input refers to JSONObject where MCP writes an object of any values inline.
+Request: >-
+  params refers to JSONObject where MCP writes an object of any values inline.
+Notification: >-
+  params refers to JSONObject where MCP writes an object of any values inline.
+JSONRPCRequest: >-
+  params refers to JSONObject where MCP writes an object of any values inline.
+JSONRPCNotification: >-
+  params refers to JSONObject where MCP writes an object of any values inline.
+InputRequiredResult: >-
+  The model states the rule MCP's description gives, that at least one of inputRequests
+  or requestState is present (probes.yaml, narrower).

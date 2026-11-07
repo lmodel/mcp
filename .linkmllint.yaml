@@ -1,0 +1,9 @@
+# linkml-lint reads this file from the directory `just lint` runs in. The recommended rules
+# apply, with one exception. A permissible value keeps MCP's spelling (allServers,
+# date-time, thisServer), so a value in a message is the one MCP's schema.json gives.
+extends: recommended
+rules:
+  standard_naming:
+    level: error
+    exclude_type:
+      - permissible_value

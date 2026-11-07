@@ -1,4 +1,0 @@
-level: "info"
-data:
-  error: "Server started successfully"
-logger: "main"

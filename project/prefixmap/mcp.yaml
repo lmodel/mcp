@@ -1,7 +1,10 @@
 {
-   "dct": "http://purl.org/dc/terms/",
-   "jsonrpc": "https://www.jsonrpc.org/",
    "linkml": "https://w3id.org/linkml/",
    "mcp": "https://w3id.org/lmodel/mcp/",
-   "schema": "http://schema.org/"
+   "mcp_schema": "https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/2026-07-28/schema/2026-07-28/schema.json#/$defs/",
+   "schema": "http://schema.org/",
+   "xsd": "http://www.w3.org/2001/XMLSchema#",
+   "McpJSONValue": {
+      "@id": "linkml:Any"
+   }
 }

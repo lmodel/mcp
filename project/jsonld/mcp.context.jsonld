@@ -1,216 +1,169 @@
 {
    "@context": {
       "xsd": "http://www.w3.org/2001/XMLSchema#",
-      "dct": "http://purl.org/dc/terms/",
-      "jsonrpc": {
-         "@id": "jsonrpc"
-      },
       "linkml": "https://w3id.org/linkml/",
       "mcp": "https://w3id.org/lmodel/mcp/",
+      "mcp_schema": "https://raw.githubusercontent.com/modelcontextprotocol/modelcontextprotocol/2026-07-28/schema/2026-07-28/schema.json#/$defs/",
       "schema": "http://schema.org/",
       "skos": "http://www.w3.org/2004/02/skos/core#",
       "@vocab": "https://w3id.org/lmodel/mcp/",
-      "_meta": {
-         "@type": "@id",
-         "@id": "_meta"
+      "audience": {
+         "@id": "audience"
       },
-      "a": {
-         "@type": "@id",
-         "@id": "a"
+      "context": {
+         "@id": "context"
       },
-      "action": {
-         "@context": {
-            "text": "skos:notation",
-            "description": "skos:prefLabel",
-            "meaning": "@id"
-         },
-         "@id": "action"
+      "description": {
+         "@id": "schema:description"
       },
-      "additionalProperties": {
-         "@type": "xsd:boolean",
-         "@id": "additionalProperties"
+      "id": {
+         "@id": "id"
       },
-      "age": {
-         "@type": "xsd:integer",
-         "@id": "age"
+      "lastModified": {
+         "@id": "lastModified"
+      },
+      "priority": {
+         "@type": "xsd:float",
+         "@id": "priority"
       },
       "annotations": {
          "@type": "@id",
          "@id": "annotations"
       },
-      "anyOf": {
+      "data": {
          "@type": "@id",
-         "@id": "anyOf"
+         "@id": "data"
       },
-      "apps_extension": {
+      "_meta": {
          "@type": "@id",
-         "@id": "apps_extension"
+         "@id": "_meta"
       },
-      "argument": {
+      "mimeType": {
+         "@id": "mimeType"
+      },
+      "blob": {
+         "@type": "xsd:base64Binary",
+         "@id": "blob"
+      },
+      "uri": {
+         "@type": "xsd:anyURI",
+         "@id": "uri"
+      },
+      "default": {
+         "@id": "default"
+      },
+      "cacheScope": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "cacheScope"
+      },
+      "resultType": {
+         "@id": "resultType"
+      },
+      "ttlMs": {
+         "@type": "xsd:integer",
+         "@id": "ttlMs"
+      },
+      "jsonrpc": {
+         "@id": "jsonrpc"
+      },
+      "method": {
+         "@id": "method"
+      },
+      "params": {
          "@type": "@id",
-         "@id": "argument"
+         "@id": "params"
       },
       "arguments": {
          "@type": "@id",
          "@id": "arguments"
       },
-      "audience": {
-         "@context": {
-            "text": "skos:notation",
-            "description": "skos:prefLabel",
-            "meaning": "@id"
-         },
-         "@id": "audience"
-      },
-      "b": {
+      "inputResponses": {
          "@type": "@id",
-         "@id": "b"
+         "@id": "inputResponses"
       },
-      "blob": {
-         "@id": "blob"
-      },
-      "capabilities": {
-         "@id": "capabilities"
-      },
-      "city": {
-         "@id": "city"
-      },
-      "clientInfo": {
-         "@type": "@id",
-         "@id": "clientInfo"
-      },
-      "code": {
-         "@type": "xsd:integer",
-         "@id": "code"
-      },
-      "completion": {
-         "@type": "@id",
-         "@id": "completion"
-      },
-      "conditions": {
-         "@id": "conditions"
-      },
-      "const": {
-         "@id": "const"
+      "requestState": {
+         "@id": "requestState"
       },
       "content": {
          "@type": "@id",
          "@id": "content"
       },
-      "contents": {
-         "@type": "@id",
-         "@id": "contents"
-      },
-      "context": {
-         "@type": "@id",
-         "@id": "context"
-      },
-      "costPriority": {
-         "@type": "xsd:float",
-         "@id": "costPriority"
-      },
-      "createdAt": {
-         "@id": "createdAt"
-      },
-      "cursor": {
-         "@id": "cursor"
-      },
-      "data": {
-         "@id": "data"
-      },
-      "default": {
-         "@type": "xsd:anyType",
-         "@id": "default"
-      },
-      "default_value": {
-         "@id": "default_value"
-      },
-      "description": {
-         "@id": "dct:description"
-      },
-      "destructiveHint": {
+      "isError": {
          "@type": "xsd:boolean",
-         "@id": "destructiveHint"
+         "@id": "isError"
       },
-      "details": {
+      "structuredContent": {
          "@type": "@id",
-         "@id": "details"
+         "@id": "structuredContent"
+      },
+      "result": {
+         "@type": "@id",
+         "@id": "result"
+      },
+      "requestId": {
+         "@id": "requestId"
       },
       "elicitation": {
-         "@type": "xsd:anyType",
+         "@type": "@id",
          "@id": "elicitation"
       },
-      "elicitationId": {
-         "@id": "elicitationId"
-      },
-      "elicitations": {
-         "@type": "@id",
-         "@id": "elicitations"
-      },
-      "email": {
-         "@id": "email"
-      },
-      "enum": {
-         "@id": "enum"
-      },
-      "enum_values": {
-         "@id": "enum_values"
-      },
-      "enumNames": {
-         "@id": "enumNames"
-      },
-      "error": {
-         "@type": "@id",
-         "@id": "error"
-      },
-      "execution": {
-         "@type": "@id",
-         "@id": "execution"
-      },
       "experimental": {
-         "@type": "xsd:anyType",
+         "@type": "@id",
          "@id": "experimental"
       },
       "extensions": {
-         "@type": "xsd:anyType",
+         "@type": "@id",
          "@id": "extensions"
       },
-      "format": {
-         "@context": {
-            "text": "skos:notation",
-            "description": "skos:prefLabel",
-            "meaning": "@id"
-         },
-         "@id": "format"
+      "roots": {
+         "@type": "@id",
+         "@id": "roots"
       },
-      "framework": {
-         "@id": "framework"
+      "sampling": {
+         "@type": "@id",
+         "@id": "sampling"
+      },
+      "form": {
+         "@type": "@id",
+         "@id": "form"
+      },
+      "url_settings": {
+         "@type": "@id",
+         "@id": "url_settings"
+      },
+      "tools": {
+         "@type": "@id",
+         "@id": "tools"
+      },
+      "argument": {
+         "@type": "@id",
+         "@id": "argument"
+      },
+      "ref": {
+         "@type": "@id",
+         "@id": "ref"
+      },
+      "value": {
+         "@id": "value"
+      },
+      "completion": {
+         "@type": "@id",
+         "@id": "completion"
       },
       "hasMore": {
          "@type": "xsd:boolean",
          "@id": "hasMore"
       },
-      "hints": {
-         "@type": "@id",
-         "@id": "hints"
-      },
-      "host": {
-         "@id": "host"
-      },
-      "humidity": {
+      "total": {
          "@type": "xsd:float",
-         "@id": "humidity"
+         "@id": "total"
       },
-      "icons": {
-         "@type": "@id",
-         "@id": "icons"
-      },
-      "id": {
-         "@id": "id"
-      },
-      "idempotentHint": {
-         "@type": "xsd:boolean",
-         "@id": "idempotentHint"
+      "values": {
+         "@id": "values"
       },
       "includeContext": {
          "@context": {
@@ -220,209 +173,38 @@
          },
          "@id": "includeContext"
       },
-      "input": {
-         "@type": "@id",
-         "@id": "input"
-      },
-      "inputSchema": {
-         "@type": "@id",
-         "@id": "inputSchema"
-      },
-      "instructions": {
-         "@id": "instructions"
-      },
-      "intelligencePriority": {
-         "@type": "xsd:float",
-         "@id": "intelligencePriority"
-      },
-      "isError": {
-         "@type": "xsd:boolean",
-         "@id": "isError"
-      },
-      "items": {
-         "@type": "@id",
-         "@id": "items"
-      },
-      "language": {
-         "@id": "language"
-      },
-      "lastModified": {
-         "@id": "lastModified"
-      },
-      "lastUpdatedAt": {
-         "@id": "lastUpdatedAt"
-      },
-      "level": {
-         "@context": {
-            "text": "skos:notation",
-            "description": "skos:prefLabel",
-            "meaning": "@id"
-         },
-         "@id": "level"
-      },
-      "listChanged": {
-         "@type": "xsd:boolean",
-         "@id": "listChanged"
-      },
-      "location": {
-         "@id": "location"
-      },
-      "logger": {
-         "@id": "logger"
-      },
-      "maximum": {
-         "@type": "xsd:integer",
-         "@id": "maximum"
-      },
-      "maxItems": {
-         "@type": "xsd:integer",
-         "@id": "maxItems"
-      },
-      "maxLength": {
-         "@type": "xsd:integer",
-         "@id": "maxLength"
-      },
       "maxTokens": {
          "@type": "xsd:integer",
          "@id": "maxTokens"
-      },
-      "message": {
-         "@id": "message"
       },
       "messages": {
          "@type": "@id",
          "@id": "messages"
       },
-      "method": {
-         "@id": "method"
-      },
-      "mimeType": {
-         "@id": "mimeType"
-      },
-      "mimeTypes": {
-         "@id": "mimeTypes"
-      },
-      "minimum": {
-         "@type": "xsd:integer",
-         "@id": "minimum"
-      },
-      "minItems": {
-         "@type": "xsd:integer",
-         "@id": "minItems"
-      },
-      "minLength": {
-         "@type": "xsd:integer",
-         "@id": "minLength"
-      },
-      "mode": {
-         "@id": "mode"
-      },
-      "model": {
-         "@id": "model"
+      "metadata": {
+         "@type": "@id",
+         "@id": "metadata"
       },
       "modelPreferences": {
          "@type": "@id",
          "@id": "modelPreferences"
       },
-      "name": {
-         "@id": "schema:name"
+      "stopSequences": {
+         "@id": "stopSequences"
       },
-      "nextCursor": {
-         "@id": "nextCursor"
+      "systemPrompt": {
+         "@id": "systemPrompt"
       },
-      "oneOf": {
-         "@type": "@id",
-         "@id": "oneOf"
-      },
-      "openWorldHint": {
-         "@type": "xsd:boolean",
-         "@id": "openWorldHint"
-      },
-      "outputSchema": {
-         "@type": "@id",
-         "@id": "outputSchema"
-      },
-      "params": {
-         "@id": "params"
-      },
-      "pollInterval": {
-         "@type": "xsd:integer",
-         "@id": "pollInterval"
-      },
-      "port": {
-         "@type": "xsd:integer",
-         "@id": "port"
-      },
-      "priority": {
+      "temperature": {
          "@type": "xsd:float",
-         "@id": "priority"
+         "@id": "temperature"
       },
-      "progress": {
-         "@type": "xsd:float",
-         "@id": "progress"
-      },
-      "progressToken": {
-         "@id": "progressToken"
-      },
-      "prompts": {
+      "toolChoice": {
          "@type": "@id",
-         "@id": "prompts"
+         "@id": "toolChoice"
       },
-      "properties": {
-         "@type": "@id",
-         "@id": "properties"
-      },
-      "protocolVersion": {
-         "@id": "protocolVersion"
-      },
-      "readOnlyHint": {
-         "@type": "xsd:boolean",
-         "@id": "readOnlyHint"
-      },
-      "reason": {
-         "@id": "reason"
-      },
-      "ref": {
-         "@type": "@id",
-         "@id": "ref"
-      },
-      "requestedSchema": {
-         "@type": "@id",
-         "@id": "requestedSchema"
-      },
-      "requestId": {
-         "@id": "requestId"
-      },
-      "requests": {
-         "@type": "@id",
-         "@id": "requests"
-      },
-      "required": {
-         "@type": "xsd:boolean",
-         "@id": "required"
-      },
-      "required_field": {
-         "@type": "xsd:boolean",
-         "@id": "required_field"
-      },
-      "required_list": {
-         "@id": "required_list"
-      },
-      "resource": {
-         "@type": "@id",
-         "@id": "resource"
-      },
-      "resources": {
-         "@type": "@id",
-         "@id": "resources"
-      },
-      "resourceTemplates": {
-         "@type": "@id",
-         "@id": "resourceTemplates"
-      },
-      "result": {
-         "@type": "@id",
-         "@id": "result"
+      "model": {
+         "@id": "model"
       },
       "role": {
          "@context": {
@@ -432,89 +214,66 @@
          },
          "@id": "role"
       },
-      "roots": {
+      "stopReason": {
+         "@id": "stopReason"
+      },
+      "capabilities": {
          "@type": "@id",
-         "@id": "roots"
+         "@id": "capabilities"
       },
-      "sampling": {
-         "@type": "xsd:anyType",
-         "@id": "sampling"
+      "instructions": {
+         "@id": "instructions"
       },
-      "schemaUri": {
-         "@id": "schemaUri"
+      "supportedVersions": {
+         "@id": "supportedVersions"
       },
-      "serverInfo": {
+      "message": {
+         "@id": "message"
+      },
+      "mode": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "mode"
+      },
+      "requestedSchema": {
          "@type": "@id",
-         "@id": "serverInfo"
+         "@id": "requestedSchema"
       },
-      "size": {
+      "properties": {
+         "@type": "@id",
+         "@id": "properties"
+      },
+      "required_names": {
+         "@id": "required_names"
+      },
+      "schema_dialect": {
+         "@id": "schema_dialect"
+      },
+      "action": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "action"
+      },
+      "code": {
          "@type": "xsd:integer",
-         "@id": "size"
+         "@id": "code"
+      },
+      "error": {
+         "@type": "@id",
+         "@id": "error"
       },
       "sizes": {
          "@id": "sizes"
       },
-      "speedPriority": {
-         "@type": "xsd:float",
-         "@id": "speedPriority"
-      },
       "src": {
          "@type": "xsd:anyURI",
          "@id": "src"
-      },
-      "status": {
-         "@context": {
-            "text": "skos:notation",
-            "description": "skos:prefLabel",
-            "meaning": "@id"
-         },
-         "@id": "status"
-      },
-      "statusMessage": {
-         "@id": "statusMessage"
-      },
-      "stopReason": {
-         "@id": "stopReason"
-      },
-      "stopSequences": {
-         "@id": "stopSequences"
-      },
-      "structuredContent": {
-         "@type": "@id",
-         "@id": "structuredContent"
-      },
-      "subscribe": {
-         "@type": "xsd:boolean",
-         "@id": "subscribe"
-      },
-      "systemPrompt": {
-         "@id": "systemPrompt"
-      },
-      "task": {
-         "@type": "@id",
-         "@id": "task"
-      },
-      "taskId": {
-         "@id": "taskId"
-      },
-      "tasks": {
-         "@type": "@id",
-         "@id": "tasks"
-      },
-      "taskSupport": {
-         "@context": {
-            "text": "skos:notation",
-            "description": "skos:prefLabel",
-            "meaning": "@id"
-         },
-         "@id": "taskSupport"
-      },
-      "temperature": {
-         "@type": "xsd:float",
-         "@id": "temperature"
-      },
-      "text": {
-         "@id": "text"
       },
       "theme": {
          "@context": {
@@ -524,612 +283,810 @@
          },
          "@id": "theme"
       },
-      "title": {
-         "@id": "dct:title"
-      },
-      "toolChoice": {
+      "icons": {
          "@type": "@id",
-         "@id": "toolChoice"
-      },
-      "tools": {
-         "@type": "@id",
-         "@id": "tools"
-      },
-      "toolUseId": {
-         "@id": "toolUseId"
-      },
-      "total": {
-         "@type": "xsd:float",
-         "@id": "total"
-      },
-      "ttl": {
-         "@type": "xsd:integer",
-         "@id": "ttl"
-      },
-      "type": {
-         "@id": "type"
-      },
-      "uri": {
-         "@type": "xsd:anyURI",
-         "@id": "uri"
-      },
-      "uriTemplate": {
-         "@id": "uriTemplate"
-      },
-      "url": {
-         "@type": "xsd:anyURI",
-         "@id": "url"
-      },
-      "value": {
-         "@id": "value"
-      },
-      "values": {
-         "@id": "values"
-      },
-      "version": {
-         "@id": "version"
+         "@id": "icons"
       },
       "websiteUrl": {
          "@type": "xsd:anyURI",
          "@id": "websiteUrl"
       },
-      "Annotations": {
-         "@id": "Annotations"
+      "inputRequests": {
+         "@type": "@id",
+         "@id": "inputRequests"
+      },
+      "enum": {
+         "@id": "enum"
+      },
+      "enumNames": {
+         "@id": "enumNames"
+      },
+      "nextCursor": {
+         "@id": "nextCursor"
       },
-      "ArgumentMap": {
-         "@id": "ArgumentMap"
+      "prompts": {
+         "@type": "@id",
+         "@id": "prompts"
       },
-      "AudioContent": {
-         "@id": "AudioContent"
+      "resources": {
+         "@type": "@id",
+         "@id": "resources"
       },
-      "BlobResourceContents": {
-         "@id": "BlobResourceContents"
+      "resourceTemplates": {
+         "@type": "@id",
+         "@id": "resourceTemplates"
       },
-      "BooleanSchema": {
-         "@id": "BooleanSchema"
+      "level": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "level"
       },
-      "CallToolRequest": {
-         "@id": "CallToolRequest"
+      "logger": {
+         "@id": "logger"
+      },
+      "requiredCapabilities": {
+         "@type": "@id",
+         "@id": "requiredCapabilities"
+      },
+      "costPriority": {
+         "@type": "xsd:float",
+         "@id": "costPriority"
+      },
+      "hints": {
+         "@type": "@id",
+         "@id": "hints"
+      },
+      "intelligencePriority": {
+         "@type": "xsd:float",
+         "@id": "intelligencePriority"
+      },
+      "speedPriority": {
+         "@type": "xsd:float",
+         "@id": "speedPriority"
+      },
+      "mcp_subscription_id": {
+         "@id": "mcp_subscription_id"
+      },
+      "maximum": {
+         "@type": "xsd:float",
+         "@id": "maximum"
+      },
+      "minimum": {
+         "@type": "xsd:float",
+         "@id": "minimum"
+      },
+      "cursor": {
+         "@id": "cursor"
+      },
+      "progress": {
+         "@type": "xsd:float",
+         "@id": "progress"
+      },
+      "progressToken": {
+         "@id": "progressToken"
+      },
+      "required": {
+         "@type": "xsd:boolean",
+         "@id": "schema:valueRequired"
+      },
+      "contents": {
+         "@type": "@id",
+         "@id": "contents"
+      },
+      "mcp_client_capabilities": {
+         "@type": "@id",
+         "@id": "mcp_client_capabilities"
       },
-      "CallToolRequestParams": {
-         "@id": "CallToolRequestParams"
+      "mcp_client_info": {
+         "@type": "@id",
+         "@id": "mcp_client_info"
       },
-      "CallToolResult": {
-         "@id": "CallToolResult"
+      "mcp_log_level": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "mcp_log_level"
       },
-      "CallToolResultResponse": {
-         "@id": "CallToolResultResponse"
+      "mcp_protocol_version": {
+         "@id": "mcp_protocol_version"
       },
-      "CancelledNotification": {
-         "@id": "CancelledNotification"
+      "size": {
+         "@type": "xsd:integer",
+         "@id": "size"
       },
-      "CancelledNotificationParams": {
-         "@id": "CancelledNotificationParams"
+      "uriTemplate": {
+         "@id": "uriTemplate"
       },
-      "CancelTaskRequest": {
-         "@id": "CancelTaskRequest"
+      "mcp_server_info": {
+         "@type": "@id",
+         "@id": "mcp_server_info"
       },
-      "CancelTaskResult": {
-         "@id": "CancelTaskResult"
+      "completions": {
+         "@type": "@id",
+         "@id": "completions"
       },
-      "CancelTaskResultResponse": {
-         "@id": "CancelTaskResultResponse"
+      "logging": {
+         "@type": "@id",
+         "@id": "logging"
       },
-      "ClientCapabilities": {
-         "@id": "ClientCapabilities"
+      "listChanged": {
+         "@type": "xsd:boolean",
+         "@id": "listChanged"
       },
-      "ClientNotification": {
-         "@id": "ClientNotification"
+      "subscribe": {
+         "@type": "xsd:boolean",
+         "@id": "subscribe"
       },
-      "ClientRequest": {
-         "@id": "ClientRequest"
+      "format": {
+         "@context": {
+            "text": "skos:notation",
+            "description": "skos:prefLabel",
+            "meaning": "@id"
+         },
+         "@id": "format"
       },
-      "ClientResult": {
-         "@id": "ClientResult"
+      "maxLength": {
+         "@type": "xsd:integer",
+         "@id": "maxLength"
       },
-      "CompleteRequest": {
-         "@id": "CompleteRequest"
+      "minLength": {
+         "@type": "xsd:integer",
+         "@id": "minLength"
       },
-      "CompleteRequestParams": {
-         "@id": "CompleteRequestParams"
+      "promptsListChanged": {
+         "@type": "xsd:boolean",
+         "@id": "promptsListChanged"
       },
-      "CompleteResult": {
-         "@id": "CompleteResult"
+      "resourceSubscriptions": {
+         "@id": "resourceSubscriptions"
       },
-      "CompleteResultResponse": {
-         "@id": "CompleteResultResponse"
+      "resourcesListChanged": {
+         "@type": "xsd:boolean",
+         "@id": "resourcesListChanged"
       },
-      "CompletionArgument": {
-         "@id": "CompletionArgument"
+      "toolsListChanged": {
+         "@type": "xsd:boolean",
+         "@id": "toolsListChanged"
       },
-      "CompletionContext": {
-         "@id": "CompletionContext"
+      "notifications": {
+         "@type": "@id",
+         "@id": "notifications"
       },
-      "CompletionData": {
-         "@id": "CompletionData"
+      "text": {
+         "@id": "text"
       },
-      "ContentBlock": {
-         "@id": "ContentBlock"
+      "items": {
+         "@type": "@id",
+         "@id": "items"
       },
-      "ContentBlockVariants": {
-         "@id": "ContentBlockVariants"
+      "maxItems": {
+         "@type": "xsd:integer",
+         "@id": "maxItems"
       },
-      "CreateMessageRequest": {
-         "@id": "CreateMessageRequest"
+      "minItems": {
+         "@type": "xsd:integer",
+         "@id": "minItems"
       },
-      "CreateMessageRequestParams": {
-         "@id": "CreateMessageRequestParams"
+      "anyOf": {
+         "@type": "@id",
+         "@id": "anyOf"
       },
-      "CreateMessageResult": {
-         "@id": "CreateMessageResult"
+      "const": {
+         "@id": "const"
       },
-      "CreateMessageResultResponse": {
-         "@id": "CreateMessageResultResponse"
+      "oneOf": {
+         "@type": "@id",
+         "@id": "oneOf"
       },
-      "CreateTaskResult": {
-         "@id": "CreateTaskResult"
+      "inputSchema": {
+         "@type": "@id",
+         "@id": "inputSchema"
       },
-      "CreateTaskResultResponse": {
-         "@id": "CreateTaskResultResponse"
+      "outputSchema": {
+         "@type": "@id",
+         "@id": "outputSchema"
       },
-      "ElicitationCapability": {
-         "@id": "ElicitationCapability"
+      "destructiveHint": {
+         "@type": "xsd:boolean",
+         "@id": "destructiveHint"
       },
-      "ElicitationCompleteNotification": {
-         "@id": "ElicitationCompleteNotification"
+      "idempotentHint": {
+         "@type": "xsd:boolean",
+         "@id": "idempotentHint"
       },
-      "ElicitationCompleteNotificationParams": {
-         "@id": "ElicitationCompleteNotificationParams"
+      "openWorldHint": {
+         "@type": "xsd:boolean",
+         "@id": "openWorldHint"
       },
-      "ElicitationContent": {
-         "@id": "ElicitationContent"
+      "readOnlyHint": {
+         "@type": "xsd:boolean",
+         "@id": "readOnlyHint"
       },
-      "ElicitRequest": {
-         "@id": "ElicitRequest"
+      "toolUseId": {
+         "@id": "toolUseId"
       },
-      "ElicitRequestFormParams": {
-         "@id": "ElicitRequestFormParams"
+      "input": {
+         "@type": "@id",
+         "@id": "input"
       },
-      "ElicitRequestParams": {
-         "@id": "ElicitRequestParams"
+      "requested": {
+         "@id": "requested"
       },
-      "ElicitRequestURLParams": {
-         "@id": "ElicitRequestURLParams"
+      "supported": {
+         "@id": "supported"
       },
-      "ElicitResult": {
-         "@id": "ElicitResult"
+      "name": {
+         "@id": "schema:name"
       },
-      "ElicitResultResponse": {
-         "@id": "ElicitResultResponse"
+      "reason": {
+         "@id": "reason"
       },
-      "EmbeddedResource": {
-         "@id": "EmbeddedResource"
+      "resource": {
+         "@id": "resource"
       },
-      "EnumOption": {
-         "@id": "EnumOption"
+      "title": {
+         "@id": "schema:name"
       },
-      "EnumSchema": {
-         "@id": "EnumSchema"
+      "type": {
+         "@id": "type"
       },
-      "Error": {
-         "@id": "Error"
+      "url": {
+         "@type": "xsd:anyURI",
+         "@id": "schema:url"
       },
-      "ErrorData": {
-         "@id": "ErrorData"
+      "version": {
+         "@id": "schema:version"
       },
-      "ExtensionAppCapability": {
-         "@id": "ExtensionAppCapability"
+      "McpAnnotations": {
+         "@id": "McpAnnotations"
       },
-      "ExtensionsCapability": {
-         "@id": "ExtensionsCapability"
+      "McpAudioContent": {
+         "@id": "McpAudioContent"
       },
-      "GetPromptRequest": {
-         "@id": "GetPromptRequest"
+      "McpBaseMetadata": {
+         "@id": "McpBaseMetadata"
       },
-      "GetPromptRequestParams": {
-         "@id": "GetPromptRequestParams"
+      "McpBlobResourceContents": {
+         "@id": "McpBlobResourceContents"
       },
-      "GetPromptResult": {
-         "@id": "GetPromptResult"
+      "McpBooleanSchema": {
+         "@id": "McpBooleanSchema"
       },
-      "GetPromptResultResponse": {
-         "@id": "GetPromptResultResponse"
+      "McpCacheableResult": {
+         "@id": "McpCacheableResult"
       },
-      "GetTaskPayloadRequest": {
-         "@id": "GetTaskPayloadRequest"
+      "McpCallToolRequest": {
+         "@id": "McpCallToolRequest"
       },
-      "GetTaskPayloadResult": {
-         "@id": "GetTaskPayloadResult"
+      "McpCallToolRequestParams": {
+         "@id": "McpCallToolRequestParams"
       },
-      "GetTaskPayloadResultResponse": {
-         "@id": "GetTaskPayloadResultResponse"
+      "McpCallToolResult": {
+         "@id": "McpCallToolResult"
       },
-      "GetTaskRequest": {
-         "@id": "GetTaskRequest"
+      "McpCallToolResultResponse": {
+         "@id": "McpCallToolResultResponse"
       },
-      "GetTaskResult": {
-         "@id": "GetTaskResult"
+      "McpCancelledNotification": {
+         "@id": "McpCancelledNotification"
       },
-      "GetTaskResultResponse": {
-         "@id": "GetTaskResultResponse"
+      "McpCancelledNotificationParams": {
+         "@id": "McpCancelledNotificationParams"
       },
-      "HasAnnotations": {
-         "@id": "HasAnnotations"
+      "McpClientCapabilities": {
+         "@id": "McpClientCapabilities"
       },
-      "HasIcons": {
-         "@id": "HasIcons"
+      "McpClientCapabilitiesElicitation": {
+         "@id": "McpClientCapabilitiesElicitation"
       },
-      "HasMeta": {
-         "@id": "HasMeta"
+      "McpClientCapabilitiesExperimental": {
+         "@id": "McpClientCapabilitiesExperimental"
       },
-      "HasName": {
-         "@id": "HasName"
+      "McpClientCapabilitiesExtensions": {
+         "@id": "McpClientCapabilitiesExtensions"
       },
-      "Icon": {
-         "@id": "Icon"
+      "McpClientCapabilitiesRoots": {
+         "@id": "McpClientCapabilitiesRoots"
       },
-      "ImageContent": {
-         "@id": "ImageContent"
+      "McpClientCapabilitiesSampling": {
+         "@id": "McpClientCapabilitiesSampling",
+         "@context": {
+            "context": {
+               "@id": "context",
+               "@type": "@id"
+            }
+         }
       },
-      "Implementation": {
-         "@id": "Implementation"
+      "McpClientNotification": {
+         "@id": "McpClientNotification"
       },
-      "InitializedNotification": {
-         "@id": "InitializedNotification"
+      "McpClientRequest": {
+         "@id": "McpClientRequest"
       },
-      "InitializeRequest": {
-         "@id": "InitializeRequest"
+      "McpClientResult": {
+         "@id": "McpClientResult"
       },
-      "InitializeRequestParams": {
-         "@id": "InitializeRequestParams"
+      "McpCompleteRequest": {
+         "@id": "McpCompleteRequest"
       },
-      "InitializeResult": {
-         "@id": "InitializeResult"
+      "McpCompleteRequestParams": {
+         "@id": "McpCompleteRequestParams",
+         "@context": {
+            "context": {
+               "@id": "context",
+               "@type": "@id"
+            }
+         }
       },
-      "InitializeResultResponse": {
-         "@id": "InitializeResultResponse"
+      "McpCompleteRequestParamsArgument": {
+         "@id": "McpCompleteRequestParamsArgument"
       },
-      "InternalError": {
-         "@id": "InternalError"
+      "McpCompleteRequestParamsContext": {
+         "@id": "McpCompleteRequestParamsContext"
       },
-      "InvalidParamsError": {
-         "@id": "InvalidParamsError"
+      "McpCompleteRequestParamsContextArguments": {
+         "@id": "McpCompleteRequestParamsContextArguments"
       },
-      "InvalidRequestError": {
-         "@id": "InvalidRequestError"
+      "McpCompleteResult": {
+         "@id": "McpCompleteResult"
       },
-      "JSONRPCErrorResponse": {
-         "@id": "JSONRPCErrorResponse"
+      "McpCompleteResultCompletion": {
+         "@id": "McpCompleteResultCompletion"
       },
-      "JSONRPCMessage": {
-         "@id": "JSONRPCMessage"
+      "McpCompleteResultResponse": {
+         "@id": "McpCompleteResultResponse"
       },
-      "JSONRPCNotification": {
-         "@id": "JSONRPCNotification"
+      "McpContentBlock": {
+         "@id": "McpContentBlock"
       },
-      "JSONRPCRequest": {
-         "@id": "JSONRPCRequest"
+      "McpCreateMessageRequest": {
+         "@id": "McpCreateMessageRequest"
       },
-      "JSONRPCResponse": {
-         "@id": "JSONRPCResponse"
+      "McpCreateMessageRequestParams": {
+         "@id": "McpCreateMessageRequestParams"
       },
-      "JSONRPCResultResponse": {
-         "@id": "JSONRPCResultResponse"
+      "McpCreateMessageResult": {
+         "@id": "McpCreateMessageResult"
       },
-      "JsonSchema": {
-         "@id": "JsonSchema"
+      "McpDiscoverRequest": {
+         "@id": "McpDiscoverRequest"
       },
-      "LegacyTitledEnumSchema": {
-         "@id": "LegacyTitledEnumSchema"
+      "McpDiscoverResult": {
+         "@id": "McpDiscoverResult"
       },
-      "ListPromptsRequest": {
-         "@id": "ListPromptsRequest"
+      "McpDiscoverResultResponse": {
+         "@id": "McpDiscoverResultResponse"
       },
-      "ListPromptsResult": {
-         "@id": "ListPromptsResult"
+      "McpElicitRequest": {
+         "@id": "McpElicitRequest"
       },
-      "ListPromptsResultResponse": {
-         "@id": "ListPromptsResultResponse"
+      "McpElicitRequestFormParams": {
+         "@id": "McpElicitRequestFormParams"
       },
-      "ListResourcesRequest": {
-         "@id": "ListResourcesRequest"
+      "McpElicitRequestFormParamsRequestedSchema": {
+         "@id": "McpElicitRequestFormParamsRequestedSchema"
       },
-      "ListResourcesResult": {
-         "@id": "ListResourcesResult"
+      "McpElicitRequestFormParamsRequestedSchemaProperties": {
+         "@id": "McpElicitRequestFormParamsRequestedSchemaProperties"
       },
-      "ListResourcesResultResponse": {
-         "@id": "ListResourcesResultResponse"
+      "McpElicitRequestParams": {
+         "@id": "McpElicitRequestParams"
       },
-      "ListResourceTemplatesRequest": {
-         "@id": "ListResourceTemplatesRequest"
+      "McpElicitRequestURLParams": {
+         "@id": "McpElicitRequestURLParams"
       },
-      "ListResourceTemplatesResult": {
-         "@id": "ListResourceTemplatesResult"
+      "McpElicitResult": {
+         "@id": "McpElicitResult"
       },
-      "ListResourceTemplatesResultResponse": {
-         "@id": "ListResourceTemplatesResultResponse"
+      "McpElicitResultContent": {
+         "@id": "McpElicitResultContent"
       },
-      "ListRootsRequest": {
-         "@id": "ListRootsRequest"
+      "McpEmbeddedResource": {
+         "@id": "McpEmbeddedResource"
       },
-      "ListRootsResult": {
-         "@id": "ListRootsResult"
+      "McpEmptyResult": {
+         "@id": "McpEmptyResult"
       },
-      "ListRootsResultResponse": {
-         "@id": "ListRootsResultResponse"
+      "McpEnumSchema": {
+         "@id": "McpEnumSchema"
       },
-      "ListTasksRequest": {
-         "@id": "ListTasksRequest"
+      "McpError": {
+         "@id": "McpError"
       },
-      "ListTasksResult": {
-         "@id": "ListTasksResult"
+      "McpGetPromptRequest": {
+         "@id": "McpGetPromptRequest"
       },
-      "ListTasksResultResponse": {
-         "@id": "ListTasksResultResponse"
+      "McpGetPromptRequestParams": {
+         "@id": "McpGetPromptRequestParams"
       },
-      "ListToolsRequest": {
-         "@id": "ListToolsRequest"
+      "McpGetPromptRequestParamsArguments": {
+         "@id": "McpGetPromptRequestParamsArguments"
       },
-      "ListToolsResult": {
-         "@id": "ListToolsResult"
+      "McpGetPromptResult": {
+         "@id": "McpGetPromptResult"
       },
-      "ListToolsResultResponse": {
-         "@id": "ListToolsResultResponse"
+      "McpGetPromptResultResponse": {
+         "@id": "McpGetPromptResultResponse"
       },
-      "LogData": {
-         "@id": "LogData"
+      "McpHeaderMismatchError": {
+         "@id": "McpHeaderMismatchError"
       },
-      "LogDetails": {
-         "@id": "LogDetails"
+      "McpHeaderMismatchErrorError": {
+         "@id": "McpHeaderMismatchErrorError"
       },
-      "LoggingMessageNotification": {
-         "@id": "LoggingMessageNotification"
+      "McpIcon": {
+         "@id": "McpIcon"
       },
-      "LoggingMessageNotificationParams": {
-         "@id": "LoggingMessageNotificationParams"
+      "McpIcons": {
+         "@id": "McpIcons"
       },
-      "MetaObject": {
-         "@id": "MetaObject"
+      "McpImageContent": {
+         "@id": "McpImageContent"
       },
-      "MethodNotFoundError": {
-         "@id": "MethodNotFoundError"
+      "McpImplementation": {
+         "@id": "McpImplementation"
       },
-      "ModelHint": {
-         "@id": "ModelHint"
+      "McpInputRequest": {
+         "@id": "McpInputRequest"
       },
-      "ModelPreferences": {
-         "@id": "ModelPreferences"
+      "McpInputRequests": {
+         "@id": "McpInputRequests"
       },
-      "MultiSelectEnumSchema": {
-         "@id": "MultiSelectEnumSchema"
+      "McpInputRequiredResult": {
+         "@id": "McpInputRequiredResult"
       },
-      "NumberSchema": {
-         "@id": "NumberSchema"
+      "McpInputResponse": {
+         "@id": "McpInputResponse"
       },
-      "PaginatedRequestParams": {
-         "@id": "PaginatedRequestParams"
+      "McpInputResponseRequestParams": {
+         "@id": "McpInputResponseRequestParams"
       },
-      "ParseError": {
-         "@id": "ParseError"
+      "McpInputResponses": {
+         "@id": "McpInputResponses"
       },
-      "PingRequest": {
-         "@id": "PingRequest"
+      "McpInternalError": {
+         "@id": "McpInternalError"
       },
-      "PingResultResponse": {
-         "@id": "PingResultResponse"
+      "McpInvalidParamsError": {
+         "@id": "McpInvalidParamsError"
       },
-      "PrimitiveSchemaDefinition": {
-         "@id": "PrimitiveSchemaDefinition"
+      "McpInvalidRequestError": {
+         "@id": "McpInvalidRequestError"
       },
-      "ProgressNotification": {
-         "@id": "ProgressNotification"
+      "McpJSONObject": {
+         "@id": "McpJSONObject"
       },
-      "ProgressNotificationParams": {
-         "@id": "ProgressNotificationParams"
+      "McpJSONRPCErrorResponse": {
+         "@id": "McpJSONRPCErrorResponse"
       },
-      "Prompt": {
-         "@id": "Prompt"
+      "McpJSONRPCMessage": {
+         "@id": "McpJSONRPCMessage"
       },
-      "PromptArgument": {
-         "@id": "PromptArgument"
+      "McpJSONRPCNotification": {
+         "@id": "McpJSONRPCNotification"
       },
-      "PromptListChangedNotification": {
-         "@id": "PromptListChangedNotification"
+      "McpJSONRPCRequest": {
+         "@id": "McpJSONRPCRequest"
       },
-      "PromptMessage": {
-         "@id": "PromptMessage"
+      "McpJSONRPCResponse": {
+         "@id": "McpJSONRPCResponse"
       },
-      "PromptReference": {
-         "@id": "PromptReference"
+      "McpJSONRPCResultResponse": {
+         "@id": "McpJSONRPCResultResponse"
       },
-      "PromptsCapability": {
-         "@id": "PromptsCapability"
+      "McpJSONValue": {
+         "@id": "linkml:Any"
       },
-      "ReadResourceRequest": {
-         "@id": "ReadResourceRequest"
+      "McpLegacyTitledEnumSchema": {
+         "@id": "McpLegacyTitledEnumSchema"
       },
-      "ReadResourceRequestParams": {
-         "@id": "ReadResourceRequestParams"
+      "McpListPromptsRequest": {
+         "@id": "McpListPromptsRequest"
       },
-      "ReadResourceResult": {
-         "@id": "ReadResourceResult"
+      "McpListPromptsResult": {
+         "@id": "McpListPromptsResult"
       },
-      "ReadResourceResultResponse": {
-         "@id": "ReadResourceResultResponse"
+      "McpListPromptsResultResponse": {
+         "@id": "McpListPromptsResultResponse"
       },
-      "RelatedTaskMetadata": {
-         "@id": "RelatedTaskMetadata"
+      "McpListResourcesRequest": {
+         "@id": "McpListResourcesRequest"
       },
-      "Resource": {
-         "@id": "Resource"
+      "McpListResourcesResult": {
+         "@id": "McpListResourcesResult"
       },
-      "ResourceContents": {
-         "@id": "ResourceContents"
+      "McpListResourcesResultResponse": {
+         "@id": "McpListResourcesResultResponse"
       },
-      "ResourceLink": {
-         "@id": "ResourceLink"
+      "McpListResourceTemplatesRequest": {
+         "@id": "McpListResourceTemplatesRequest"
       },
-      "ResourceListChangedNotification": {
-         "@id": "ResourceListChangedNotification"
+      "McpListResourceTemplatesResult": {
+         "@id": "McpListResourceTemplatesResult"
       },
-      "ResourcesCapability": {
-         "@id": "ResourcesCapability"
+      "McpListResourceTemplatesResultResponse": {
+         "@id": "McpListResourceTemplatesResultResponse"
       },
-      "ResourceTemplate": {
-         "@id": "ResourceTemplate"
+      "McpListRootsRequest": {
+         "@id": "McpListRootsRequest"
       },
-      "ResourceTemplateReference": {
-         "@id": "ResourceTemplateReference"
+      "McpListRootsRequestParams": {
+         "@id": "McpListRootsRequestParams"
       },
-      "ResourceUpdatedNotification": {
-         "@id": "ResourceUpdatedNotification"
+      "McpListRootsResult": {
+         "@id": "McpListRootsResult"
       },
-      "ResourceUpdatedNotificationParams": {
-         "@id": "ResourceUpdatedNotificationParams"
+      "McpListToolsRequest": {
+         "@id": "McpListToolsRequest"
       },
-      "Result": {
-         "@id": "Result"
+      "McpListToolsResult": {
+         "@id": "McpListToolsResult"
       },
-      "Root": {
-         "@id": "Root"
+      "McpListToolsResultResponse": {
+         "@id": "McpListToolsResultResponse"
       },
-      "RootsCapability": {
-         "@id": "RootsCapability"
+      "McpLoggingMessageNotification": {
+         "@id": "McpLoggingMessageNotification"
       },
-      "RootsListChangedNotification": {
-         "@id": "RootsListChangedNotification"
+      "McpLoggingMessageNotificationParams": {
+         "@id": "McpLoggingMessageNotificationParams"
       },
-      "SamplingCapability": {
-         "@id": "SamplingCapability"
+      "McpMetaObject": {
+         "@id": "McpMetaObject"
       },
-      "SamplingMessage": {
-         "@id": "SamplingMessage"
+      "McpMethodNotFoundError": {
+         "@id": "McpMethodNotFoundError"
       },
-      "SamplingMessageContentBlock": {
-         "@id": "SamplingMessageContentBlock"
+      "McpMissingRequiredClientCapabilityError": {
+         "@id": "McpMissingRequiredClientCapabilityError"
       },
-      "SchemaItems": {
-         "@id": "SchemaItems"
+      "McpMissingRequiredClientCapabilityErrorError": {
+         "@id": "McpMissingRequiredClientCapabilityErrorError"
       },
-      "SchemaProperties": {
-         "@id": "SchemaProperties"
+      "McpMissingRequiredClientCapabilityErrorErrorData": {
+         "@id": "McpMissingRequiredClientCapabilityErrorErrorData"
       },
-      "ServerCapabilities": {
-         "@id": "ServerCapabilities"
+      "McpModelHint": {
+         "@id": "McpModelHint"
       },
-      "ServerNotification": {
-         "@id": "ServerNotification"
+      "McpModelPreferences": {
+         "@id": "McpModelPreferences"
       },
-      "ServerRequest": {
-         "@id": "ServerRequest"
+      "McpMultiSelectEnumSchema": {
+         "@id": "McpMultiSelectEnumSchema"
       },
-      "ServerResult": {
-         "@id": "ServerResult"
+      "McpNotification": {
+         "@id": "McpNotification"
       },
-      "SetLevelRequest": {
-         "@id": "SetLevelRequest"
+      "McpNotificationMetaObject": {
+         "@id": "McpNotificationMetaObject"
       },
-      "SetLevelRequestParams": {
-         "@id": "SetLevelRequestParams"
+      "McpNotificationParams": {
+         "@id": "McpNotificationParams"
       },
-      "SetLevelResultResponse": {
-         "@id": "SetLevelResultResponse"
+      "McpNumberSchema": {
+         "@id": "McpNumberSchema"
       },
-      "SingleSelectEnumSchema": {
-         "@id": "SingleSelectEnumSchema"
+      "McpPaginatedRequest": {
+         "@id": "McpPaginatedRequest"
       },
-      "StringSchema": {
-         "@id": "StringSchema"
+      "McpPaginatedRequestParams": {
+         "@id": "McpPaginatedRequestParams"
       },
-      "StructuredContentData": {
-         "@id": "StructuredContentData"
+      "McpPaginatedResult": {
+         "@id": "McpPaginatedResult"
       },
-      "SubscribeRequest": {
-         "@id": "SubscribeRequest"
+      "McpParseError": {
+         "@id": "McpParseError"
       },
-      "SubscribeRequestParams": {
-         "@id": "SubscribeRequestParams"
+      "McpPrimitiveSchemaDefinition": {
+         "@id": "McpPrimitiveSchemaDefinition"
       },
-      "SubscribeResultResponse": {
-         "@id": "SubscribeResultResponse"
+      "McpProgressNotification": {
+         "@id": "McpProgressNotification"
       },
-      "Task": {
-         "@id": "Task"
+      "McpProgressNotificationParams": {
+         "@id": "McpProgressNotificationParams"
       },
-      "TaskMetadata": {
-         "@id": "TaskMetadata"
+      "McpPrompt": {
+         "@id": "McpPrompt"
       },
-      "TaskRequestCapabilities": {
-         "@id": "TaskRequestCapabilities"
+      "McpPromptArgument": {
+         "@id": "McpPromptArgument"
       },
-      "TasksCapability": {
-         "@id": "TasksCapability"
+      "McpPromptListChangedNotification": {
+         "@id": "McpPromptListChangedNotification"
       },
-      "TaskStatusNotification": {
-         "@id": "TaskStatusNotification"
+      "McpPromptMessage": {
+         "@id": "McpPromptMessage"
       },
-      "TaskStatusNotificationParams": {
-         "@id": "TaskStatusNotificationParams"
+      "McpPromptReference": {
+         "@id": "McpPromptReference"
       },
-      "TextContent": {
-         "@id": "TextContent"
+      "McpReadResourceRequest": {
+         "@id": "McpReadResourceRequest"
       },
-      "TextResourceContents": {
-         "@id": "TextResourceContents"
+      "McpReadResourceRequestParams": {
+         "@id": "McpReadResourceRequestParams"
       },
-      "TitledMultiSelectEnumSchema": {
-         "@id": "TitledMultiSelectEnumSchema"
+      "McpReadResourceResult": {
+         "@id": "McpReadResourceResult"
       },
-      "TitledSingleSelectEnumSchema": {
-         "@id": "TitledSingleSelectEnumSchema"
+      "McpReadResourceResultResponse": {
+         "@id": "McpReadResourceResultResponse"
       },
-      "Tool": {
-         "@id": "Tool"
+      "McpRequest": {
+         "@id": "McpRequest"
       },
-      "ToolAnnotations": {
-         "@id": "ToolAnnotations"
+      "McpRequestMetaObject": {
+         "@id": "McpRequestMetaObject"
       },
-      "ToolChoice": {
-         "@id": "ToolChoice"
+      "McpRequestParams": {
+         "@id": "McpRequestParams"
       },
-      "ToolExecution": {
-         "@id": "ToolExecution"
+      "McpResource": {
+         "@id": "McpResource"
       },
-      "ToolInput": {
-         "@id": "ToolInput"
+      "McpResourceContents": {
+         "@id": "McpResourceContents"
       },
-      "ToolListChangedNotification": {
-         "@id": "ToolListChangedNotification"
+      "McpResourceLink": {
+         "@id": "McpResourceLink"
       },
-      "ToolResultContent": {
-         "@id": "ToolResultContent"
+      "McpResourceListChangedNotification": {
+         "@id": "McpResourceListChangedNotification"
       },
-      "ToolsCapability": {
-         "@id": "ToolsCapability"
+      "McpResourceRequestParams": {
+         "@id": "McpResourceRequestParams"
       },
-      "ToolUseContent": {
-         "@id": "ToolUseContent"
+      "McpResourceTemplate": {
+         "@id": "McpResourceTemplate"
       },
-      "UnsubscribeRequest": {
-         "@id": "UnsubscribeRequest"
+      "McpResourceTemplateReference": {
+         "@id": "McpResourceTemplateReference"
       },
-      "UnsubscribeRequestParams": {
-         "@id": "UnsubscribeRequestParams"
+      "McpResourceUpdatedNotification": {
+         "@id": "McpResourceUpdatedNotification"
       },
-      "UnsubscribeResultResponse": {
-         "@id": "UnsubscribeResultResponse"
+      "McpResourceUpdatedNotificationParams": {
+         "@id": "McpResourceUpdatedNotificationParams"
       },
-      "UntitledMultiSelectEnumSchema": {
-         "@id": "UntitledMultiSelectEnumSchema"
+      "McpResult": {
+         "@id": "McpResult"
       },
-      "UntitledSingleSelectEnumSchema": {
-         "@id": "UntitledSingleSelectEnumSchema"
+      "McpResultMetaObject": {
+         "@id": "McpResultMetaObject"
       },
-      "URLElicitation": {
-         "@id": "URLElicitation"
+      "McpRoot": {
+         "@id": "McpRoot"
       },
-      "URLElicitationRequiredError": {
-         "@id": "URLElicitationRequiredError"
+      "McpSamplingMessage": {
+         "@id": "McpSamplingMessage"
+      },
+      "McpSamplingMessageContentBlock": {
+         "@id": "McpSamplingMessageContentBlock"
+      },
+      "McpServerCapabilities": {
+         "@id": "McpServerCapabilities"
+      },
+      "McpServerCapabilitiesExperimental": {
+         "@id": "McpServerCapabilitiesExperimental"
+      },
+      "McpServerCapabilitiesExtensions": {
+         "@id": "McpServerCapabilitiesExtensions"
+      },
+      "McpServerCapabilitiesPrompts": {
+         "@id": "McpServerCapabilitiesPrompts"
+      },
+      "McpServerCapabilitiesResources": {
+         "@id": "McpServerCapabilitiesResources"
+      },
+      "McpServerCapabilitiesTools": {
+         "@id": "McpServerCapabilitiesTools"
+      },
+      "McpServerNotification": {
+         "@id": "McpServerNotification"
+      },
+      "McpServerResult": {
+         "@id": "McpServerResult"
+      },
+      "McpSingleSelectEnumSchema": {
+         "@id": "McpSingleSelectEnumSchema"
+      },
+      "McpStringSchema": {
+         "@id": "McpStringSchema"
+      },
+      "McpSubscriptionFilter": {
+         "@id": "McpSubscriptionFilter"
+      },
+      "McpSubscriptionsAcknowledgedNotification": {
+         "@id": "McpSubscriptionsAcknowledgedNotification"
+      },
+      "McpSubscriptionsAcknowledgedNotificationParams": {
+         "@id": "McpSubscriptionsAcknowledgedNotificationParams"
+      },
+      "McpSubscriptionsListenRequest": {
+         "@id": "McpSubscriptionsListenRequest"
+      },
+      "McpSubscriptionsListenRequestParams": {
+         "@id": "McpSubscriptionsListenRequestParams"
+      },
+      "McpSubscriptionsListenResult": {
+         "@id": "McpSubscriptionsListenResult"
+      },
+      "McpSubscriptionsListenResultMetaObject": {
+         "@id": "McpSubscriptionsListenResultMetaObject"
+      },
+      "McpSubscriptionsListenResultResponse": {
+         "@id": "McpSubscriptionsListenResultResponse"
+      },
+      "McpTextContent": {
+         "@id": "McpTextContent"
+      },
+      "McpTextResourceContents": {
+         "@id": "McpTextResourceContents"
+      },
+      "McpTitledMultiSelectEnumSchema": {
+         "@id": "McpTitledMultiSelectEnumSchema"
+      },
+      "McpTitledMultiSelectEnumSchemaItems": {
+         "@id": "McpTitledMultiSelectEnumSchemaItems"
+      },
+      "McpTitledMultiSelectEnumSchemaItemsAnyOf": {
+         "@id": "McpTitledMultiSelectEnumSchemaItemsAnyOf"
+      },
+      "McpTitledSingleSelectEnumSchema": {
+         "@id": "McpTitledSingleSelectEnumSchema"
+      },
+      "McpTitledSingleSelectEnumSchemaOneOf": {
+         "@id": "McpTitledSingleSelectEnumSchemaOneOf"
+      },
+      "McpTool": {
+         "@id": "McpTool"
+      },
+      "McpToolAnnotations": {
+         "@id": "McpToolAnnotations"
+      },
+      "McpToolChoice": {
+         "@id": "McpToolChoice"
+      },
+      "McpToolInputSchema": {
+         "@id": "McpToolInputSchema"
+      },
+      "McpToolListChangedNotification": {
+         "@id": "McpToolListChangedNotification"
+      },
+      "McpToolOutputSchema": {
+         "@id": "McpToolOutputSchema"
+      },
+      "McpToolResultContent": {
+         "@id": "McpToolResultContent"
+      },
+      "McpToolUseContent": {
+         "@id": "McpToolUseContent"
+      },
+      "McpUnsupportedProtocolVersionError": {
+         "@id": "McpUnsupportedProtocolVersionError"
+      },
+      "McpUnsupportedProtocolVersionErrorError": {
+         "@id": "McpUnsupportedProtocolVersionErrorError"
+      },
+      "McpUnsupportedProtocolVersionErrorErrorData": {
+         "@id": "McpUnsupportedProtocolVersionErrorErrorData"
+      },
+      "McpUntitledMultiSelectEnumSchema": {
+         "@id": "McpUntitledMultiSelectEnumSchema"
+      },
+      "McpUntitledMultiSelectEnumSchemaItems": {
+         "@id": "McpUntitledMultiSelectEnumSchemaItems"
+      },
+      "McpUntitledSingleSelectEnumSchema": {
+         "@id": "McpUntitledSingleSelectEnumSchema"
       }
    }
 }

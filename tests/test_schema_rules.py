@@ -15,6 +15,7 @@ _LOADER = getattr(yaml, "CSafeLoader", yaml.SafeLoader)
 def _load(path):
     return yaml.load(path.read_text(encoding="utf-8"), Loader=_LOADER)
 
+
 ROOT = Path(__file__).parent.parent
 
 # What a host may import beside this schema's adapt copy: LOKF's schema, pinned

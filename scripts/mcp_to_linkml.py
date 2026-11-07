@@ -85,7 +85,10 @@ CLASS_DEPRECATIONS = {
     ),
 }
 VALUE_DEPRECATIONS = {
-    "CreateMessageRequestParams/properties/includeContext": ("thisServer", "allServers"),
+    "CreateMessageRequestParams/properties/includeContext": (
+        "thisServer",
+        "allServers",
+    ),
 }
 
 # String formats MCP uses, and the type that carries each.
@@ -380,12 +383,14 @@ def read_typescript(text: str) -> TypeScript:
                 attached += 1
         elif prop and deprecated is not None and interface_at(after):
             owner = interface_at(after)
-            ts.deprecated_keys[(owner, text[prop.start(1) : prop.end(1)].strip('"'))] = (
-                deprecated
-            )
+            ts.deprecated_keys[
+                (owner, text[prop.start(1) : prop.end(1)].strip('"'))
+            ] = deprecated
             attached += 1
     if attached != len(re.findall(r"@deprecated\b", text)):
-        raise ValueError("schema.ts has a @deprecated tag on something this script skips")
+        raise ValueError(
+            "schema.ts has a @deprecated tag on something this script skips"
+        )
     for name, clause in re.findall(
         r"export\s+interface\s+(\w+)\s*(?:extends\s+([^{]+))?\{", code
     ):
@@ -612,7 +617,9 @@ class Converter:
         members = [f"`{self.ref(b)}`" for b in node.get("anyOf", [])]
         if members and all(m != "`None`" for m in members):
             return f"One of {', '.join(members)}."
-        raise ValueError(f"MCP gives {name} no description: add one to CLASS_DESCRIPTIONS")
+        raise ValueError(
+            f"MCP gives {name} no description: add one to CLASS_DESCRIPTIONS"
+        )
 
     def order(self, element: dict) -> dict:
         keys = (

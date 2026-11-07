@@ -32,7 +32,9 @@ def _files(watch, ref):
         for path, sha in watch.pins().items()
         if path.startswith(prefix)
     }
-    files |= {p.removeprefix(f"{watch.FOLDER}/"): s for p, s in watch.NOT_COPIED.items()}
+    files |= {
+        p.removeprefix(f"{watch.FOLDER}/"): s for p, s in watch.NOT_COPIED.items()
+    }
     if ref == watch.BRANCH:
         folder = f"{watch.FOLDER}/"
         files |= {p.removeprefix(folder): s for p, s in watch.EDITED_ON_BRANCH.items()}

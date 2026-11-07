@@ -1,26 +1,34 @@
-"""Data test."""
-import os
-import glob
-import pytest
+"""Checks each example against MCP's form of the schema.
+
+An example is an MCP message or part of one, with MCP's keys, such as inputSchema or
+io.modelcontextprotocol/protocolVersion. linkml-validate and the example runner read the
+key a slot lists under aliases by the slot's name, so they cannot read every example;
+the examples sit under tests/data/problem/, where the runner does not look, and this test
+validates them against the file scripts/mcp_meta.py gives, and against MCP's own, by the
+definition the class renders. `tests/data/problem/valid/<Class>-<anything>.yaml` must
+pass both, and `tests/data/problem/invalid/<Class>-<anything>.yaml` must fail both.
+"""
+
 from pathlib import Path
 
-import mcp.datamodel.mcp
-from linkml_runtime.loaders import yaml_loader
+import pytest
 
-DATA_DIR_VALID = Path(__file__).parent / "data" / "valid"
-DATA_DIR_INVALID = Path(__file__).parent / "data" / "invalid"
+import mcp_parity as parity
 
-VALID_EXAMPLE_FILES = glob.glob(os.path.join(DATA_DIR_VALID, '*.yaml'))
-INVALID_EXAMPLE_FILES = glob.glob(os.path.join(DATA_DIR_INVALID, '*.yaml'))
+DATA = Path(__file__).parent / "data" / "problem"
+VALID = sorted((DATA / "valid").glob("*.yaml"))
+INVALID = sorted((DATA / "invalid").glob("*.yaml"))
 
 
-@pytest.mark.parametrize("filepath", VALID_EXAMPLE_FILES)
-def test_valid_data_files(filepath):
-    """Test loading of all valid data files."""
-    target_class_name = Path(filepath).stem.split("-")[0]
-    tgt_class = getattr(
-        mcp.datamodel.mcp,
-        target_class_name,
-    )
-    obj = yaml_loader.load(filepath, target_class=tgt_class)
-    assert obj
+@pytest.mark.parametrize("path", VALID, ids=lambda p: p.stem)
+def test_valid_example(path):
+    name, data = parity.definition_of(path), parity._yaml(path)
+    assert parity.verdict("generated", name, data)
+    assert parity.verdict("published", name, data)
+
+
+@pytest.mark.parametrize("path", INVALID, ids=lambda p: p.stem)
+def test_counter_example(path):
+    name, data = parity.definition_of(path), parity._yaml(path)
+    assert not parity.verdict("generated", name, data)
+    assert not parity.verdict("published", name, data)

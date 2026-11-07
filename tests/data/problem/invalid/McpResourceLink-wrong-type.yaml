@@ -1,0 +1,4 @@
+# A resource link's type is resource_link.
+type: link
+uri: file:///reports/q3.pdf
+name: q3_report

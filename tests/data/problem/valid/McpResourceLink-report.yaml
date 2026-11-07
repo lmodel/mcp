@@ -1,0 +1,5 @@
+# A link to a resource, returned as content in a tool's result.
+type: resource_link
+uri: file:///reports/q3.pdf
+name: q3_report
+mimeType: application/pdf

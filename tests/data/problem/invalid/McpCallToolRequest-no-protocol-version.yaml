@@ -1,0 +1,8 @@
+# A request's _meta must name the protocol version.
+jsonrpc: "2.0"
+id: 42
+method: tools/call
+params:
+  name: get_forecast
+  _meta:
+    io.modelcontextprotocol/clientCapabilities: {}

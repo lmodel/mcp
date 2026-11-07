@@ -1,0 +1,6 @@
+# The serverInfo a server reports in a result's _meta.
+name: example-weather-server
+title: Example weather server
+version: 1.4.2
+description: Serves forecasts from a public weather service.
+websiteUrl: https://example.com/weather

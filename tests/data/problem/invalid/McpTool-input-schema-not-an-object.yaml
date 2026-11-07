@@ -1,0 +1,4 @@
+# A tool's arguments are always a JSON object.
+name: get_forecast
+inputSchema:
+  type: array

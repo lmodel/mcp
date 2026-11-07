@@ -1,0 +1,6 @@
+# The error a server returns for a tool it does not have.
+jsonrpc: "2.0"
+id: 42
+error:
+  code: -32602
+  message: Unknown tool get_forcast

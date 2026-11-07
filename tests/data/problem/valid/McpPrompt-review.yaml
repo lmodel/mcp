@@ -1,0 +1,11 @@
+# A prompt a server lists in its prompts/list result.
+name: code_review
+title: Review a change
+description: Asks the model to review a diff for bugs and style.
+arguments:
+  - name: diff
+    description: The unified diff to review.
+    required: true
+  - name: focus
+    title: Focus
+    description: What to look at first, such as security.

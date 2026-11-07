@@ -1,0 +1,6 @@
+# A resource template whose URI takes a date.
+uriTemplate: file:///logs/{date}.log
+name: daily_log
+title: Daily log
+description: The service's log for one day.
+mimeType: text/plain

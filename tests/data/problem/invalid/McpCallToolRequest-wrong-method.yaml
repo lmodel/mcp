@@ -1,0 +1,9 @@
+# A tools/call request's method is tools/call.
+jsonrpc: "2.0"
+id: 42
+method: tools/run
+params:
+  name: get_forecast
+  _meta:
+    io.modelcontextprotocol/protocolVersion: "2026-07-28"
+    io.modelcontextprotocol/clientCapabilities: {}

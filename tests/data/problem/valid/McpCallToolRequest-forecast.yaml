@@ -1,0 +1,18 @@
+# A tools/call request. Every request in this version declares the client's
+# capabilities and the protocol version in its _meta.
+jsonrpc: "2.0"
+id: 42
+method: tools/call
+params:
+  name: get_forecast
+  arguments:
+    city: Galway
+    days: 3
+  _meta:
+    io.modelcontextprotocol/protocolVersion: "2026-07-28"
+    io.modelcontextprotocol/clientCapabilities:
+      sampling: {}
+    io.modelcontextprotocol/clientInfo:
+      name: example-client
+      version: 0.9.0
+    progressToken: forecast-42

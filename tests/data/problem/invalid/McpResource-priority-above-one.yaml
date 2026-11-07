@@ -1,0 +1,5 @@
+# A priority lies between 0 and 1.
+uri: file:///project/README.md
+name: readme
+annotations:
+  priority: 2

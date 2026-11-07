@@ -26,82 +26,85 @@ imports:
 subsets:
   common_types:
     title: Common Types
-    description: The definitions schema.ts files under Common Types.
+    description: The definitions schema.ts tags `@category Common Types`.
   completion_complete:
     title: completion/complete
-    description: The definitions schema.ts files under `completion/complete`.
+    description: The definitions schema.ts tags `@category completion/complete`.
   content:
     title: Content
-    description: The definitions schema.ts files under Content.
+    description: The definitions schema.ts tags `@category Content`.
   elicitation_create:
     title: elicitation/create
-    description: The definitions schema.ts files under `elicitation/create`.
+    description: The definitions schema.ts tags `@category elicitation/create`.
   errors:
     title: Errors
-    description: The definitions schema.ts files under Errors.
+    description: The definitions schema.ts tags `@category Errors`.
+  internal:
+    title: internal
+    description: The definitions schema.ts tags `@internal`.
   json_rpc:
     title: JSON-RPC
-    description: The definitions schema.ts files under JSON-RPC.
+    description: The definitions schema.ts tags `@category JSON-RPC`.
   multi_round_trip:
     title: Multi Round-Trip
-    description: The definitions schema.ts files under Multi Round-Trip.
+    description: The definitions schema.ts tags `@category Multi Round-Trip`.
   notifications_cancelled:
     title: notifications/cancelled
-    description: The definitions schema.ts files under `notifications/cancelled`.
+    description: The definitions schema.ts tags `@category notifications/cancelled`.
   notifications_message:
     title: notifications/message
-    description: The definitions schema.ts files under `notifications/message`.
+    description: The definitions schema.ts tags `@category notifications/message`.
   notifications_progress:
     title: notifications/progress
-    description: The definitions schema.ts files under `notifications/progress`.
+    description: The definitions schema.ts tags `@category notifications/progress`.
   notifications_prompts_list_changed:
     title: notifications/prompts/list_changed
-    description: The definitions schema.ts files under `notifications/prompts/list_changed`.
+    description: The definitions schema.ts tags `@category notifications/prompts/list_changed`.
   notifications_resources_list_changed:
     title: notifications/resources/list_changed
-    description: The definitions schema.ts files under `notifications/resources/list_changed`.
+    description: The definitions schema.ts tags `@category notifications/resources/list_changed`.
   notifications_resources_updated:
     title: notifications/resources/updated
-    description: The definitions schema.ts files under `notifications/resources/updated`.
+    description: The definitions schema.ts tags `@category notifications/resources/updated`.
   notifications_subscriptions_acknowledged:
     title: notifications/subscriptions/acknowledged
-    description: The definitions schema.ts files under `notifications/subscriptions/acknowledged`.
+    description: The definitions schema.ts tags `@category notifications/subscriptions/acknowledged`.
   notifications_tools_list_changed:
     title: notifications/tools/list_changed
-    description: The definitions schema.ts files under `notifications/tools/list_changed`.
+    description: The definitions schema.ts tags `@category notifications/tools/list_changed`.
   prompts_get:
     title: prompts/get
-    description: The definitions schema.ts files under `prompts/get`.
+    description: The definitions schema.ts tags `@category prompts/get`.
   prompts_list:
     title: prompts/list
-    description: The definitions schema.ts files under `prompts/list`.
+    description: The definitions schema.ts tags `@category prompts/list`.
   resources_list:
     title: resources/list
-    description: The definitions schema.ts files under `resources/list`.
+    description: The definitions schema.ts tags `@category resources/list`.
   resources_read:
     title: resources/read
-    description: The definitions schema.ts files under `resources/read`.
+    description: The definitions schema.ts tags `@category resources/read`.
   resources_templates_list:
     title: resources/templates/list
-    description: The definitions schema.ts files under `resources/templates/list`.
+    description: The definitions schema.ts tags `@category resources/templates/list`.
   roots_list:
     title: roots/list
-    description: The definitions schema.ts files under `roots/list`.
+    description: The definitions schema.ts tags `@category roots/list`.
   sampling_createmessage:
     title: sampling/createMessage
-    description: The definitions schema.ts files under `sampling/createMessage`.
+    description: The definitions schema.ts tags `@category sampling/createMessage`.
   server_discover:
     title: server/discover
-    description: The definitions schema.ts files under `server/discover`.
+    description: The definitions schema.ts tags `@category server/discover`.
   subscriptions_listen:
     title: subscriptions/listen
-    description: The definitions schema.ts files under `subscriptions/listen`.
+    description: The definitions schema.ts tags `@category subscriptions/listen`.
   tools_call:
     title: tools/call
-    description: The definitions schema.ts files under `tools/call`.
+    description: The definitions schema.ts tags `@category tools/call`.
   tools_list:
     title: tools/list
-    description: The definitions schema.ts files under `tools/list`.
+    description: The definitions schema.ts tags `@category tools/list`.
 types:
   McpBase64:
     typeof: string
@@ -112,6 +115,8 @@ types:
   McpCursor:
     description: An opaque token used to represent a cursor for pagination.
     typeof: string
+    in_subset:
+    - common_types
     exact_mappings:
     - mcp_schema:Cursor
   McpProgressToken:
@@ -123,6 +128,8 @@ types:
     comments:
     - linkml 1.12.1's JSON Schema generator reads a type's typeof and not its union_of, so each slot that
       takes this value states the union in its own any_of.
+    in_subset:
+    - common_types
     exact_mappings:
     - mcp_schema:ProgressToken
   McpRequestId:
@@ -134,6 +141,8 @@ types:
     comments:
     - linkml 1.12.1's JSON Schema generator reads a type's typeof and not its union_of, so each slot that
       takes this value states the union in its own any_of.
+    in_subset:
+    - common_types
     exact_mappings:
     - mcp_schema:RequestId
   McpResultType:
@@ -144,6 +153,8 @@ types:
       complete - the request completed successfully and the result contains the final content.
       input_required - the request requires additional input and the result contains an {@link InputRequiredResult} object with instructions for the client to provide additional input before retrying the original request.
     typeof: string
+    in_subset:
+    - common_types
     exact_mappings:
     - mcp_schema:ResultType
   McpUriTemplate:
@@ -168,6 +179,8 @@ enums:
     description: The values MCP allows for `cacheScope`.
     exact_mappings:
     - mcp_schema:CacheableResult/properties/cacheScope
+    in_subset:
+    - internal
     permissible_values:
       private: {}
       public: {}
@@ -178,9 +191,15 @@ enums:
     in_subset:
     - sampling_createmessage
     permissible_values:
-      allServers: {}
+      allServers:
+        deprecated: The `"thisServer"` and `"allServers"` values are deprecated as of protocol version
+          2025-11-25 (SEP-2596) and will be removed no later than the Sampling feature itself (SEP-2577).
+          Omit this field or use `"none"`.
       none: {}
-      thisServer: {}
+      thisServer:
+        deprecated: The `"thisServer"` and `"allServers"` values are deprecated as of protocol version
+          2025-11-25 (SEP-2596) and will be removed no later than the Sampling feature itself (SEP-2577).
+          Omit this field or use `"none"`.
   McpElicitResultAction:
     description: The values MCP allows for `action`.
     exact_mappings:
@@ -210,6 +229,8 @@ enums:
     - mcp_schema:LoggingLevel
     in_subset:
     - common_types
+    deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
+      for at least twelve months; see the deprecated features registry.
     permissible_values:
       alert: {}
       critical: {}
@@ -344,6 +365,8 @@ classes:
         required: true
   McpBaseMetadata:
     description: Base interface for metadata with name (identifier) and title (display name) properties.
+    in_subset:
+    - internal
     exact_mappings:
     - mcp_schema:BaseMetadata
     extra_slots:
@@ -436,6 +459,8 @@ classes:
   McpCacheableResult:
     description: A result that supports a time-to-live (TTL) hint for client-side caching.
     is_a: McpResult
+    in_subset:
+    - internal
     exact_mappings:
     - mcp_schema:CacheableResult
     extra_slots:
@@ -471,6 +496,7 @@ classes:
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
         alias: resultType
+        range: McpResultType
         required: true
       ttl_ms:
         description: |-
@@ -599,6 +625,7 @@ classes:
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
         alias: resultType
+        range: McpResultType
         required: true
       structured_content:
         description: |-
@@ -722,9 +749,13 @@ classes:
         range: McpClientCapabilitiesExtensions
       roots:
         description: Present if the client supports listing roots.
+        deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
+          for at least twelve months; see the deprecated features registry.
         range: McpClientCapabilitiesRoots
       sampling:
         description: Present if the client supports sampling from an LLM.
+        deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
+          for at least twelve months; see the deprecated features registry.
         range: McpClientCapabilitiesSampling
   McpClientCapabilitiesElicitation:
     description: Present if the client supports elicitation from the server.
@@ -804,6 +835,8 @@ classes:
 
       This notification indicates that the result will be unused, so any associated processing SHOULD cease.
     is_a: McpCancelledNotification
+    in_subset:
+    - internal
     exact_mappings:
     - mcp_schema:ClientNotification
     extra_slots:
@@ -825,6 +858,8 @@ classes:
     description: One of `DiscoverRequest`, `ListResourcesRequest`, `ListResourceTemplatesRequest`, `ReadResourceRequest`,
       `SubscriptionsListenRequest`, `ListPromptsRequest`, `GetPromptRequest`, `ListToolsRequest`, `CallToolRequest`,
       `CompleteRequest`.
+    in_subset:
+    - internal
     exact_mappings:
     - mcp_schema:ClientRequest
     any_of:
@@ -843,6 +878,8 @@ classes:
   McpClientResult:
     description: Common result fields.
     is_a: McpEmptyResult
+    in_subset:
+    - internal
     exact_mappings:
     - mcp_schema:ClientResult
     extra_slots:
@@ -976,6 +1013,7 @@ classes:
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
         alias: resultType
+        range: McpResultType
         required: true
   McpCompleteResultCompletion:
     description: The object MCP's `CompleteResult` holds under `completion`.
@@ -1046,6 +1084,8 @@ classes:
     description: A request from the server to sample an LLM via the client. The client has full discretion
       over which model to select. The client should also inform the user before beginning sampling, to
       allow them to inspect the request (human in the loop) and decide whether to approve it.
+    deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
+      for at least twelve months; see the deprecated features registry.
     in_subset:
     - sampling_createmessage
     exact_mappings:
@@ -1063,6 +1103,8 @@ classes:
         required: true
   McpCreateMessageRequestParams:
     description: Parameters for a `sampling/createMessage` request.
+    deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
+      for at least twelve months; see the deprecated features registry.
     in_subset:
     - sampling_createmessage
     exact_mappings:
@@ -1078,6 +1120,9 @@ classes:
           Default is `"none"`. The values `"thisServer"` and `"allServers"` are deprecated (SEP-2596): servers SHOULD
           omit this field or use `"none"`, and SHOULD only use the deprecated values if the client declares
           {@link ClientCapabilities.sampling.context}.
+        deprecated: The `"thisServer"` and `"allServers"` values are deprecated as of protocol version
+          2025-11-25 (SEP-2596) and will be removed no later than the Sampling feature itself (SEP-2577).
+          Omit this field or use `"none"`.
         alias: includeContext
         range: McpCreateMessageRequestParamsIncludeContext
       max_tokens:
@@ -1132,6 +1177,8 @@ classes:
       The result returned by the client for a {@link CreateMessageRequestsampling/createMessage} request.
       The client should inform the user before returning the sampled message, to allow them
       to inspect the response (human in the loop) and decide whether to allow the server to see it.
+    deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
+      for at least twelve months; see the deprecated features registry.
     is_a: McpSamplingMessage
     in_subset:
     - sampling_createmessage
@@ -1276,6 +1323,7 @@ classes:
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
         alias: resultType
+        range: McpResultType
         required: true
       supported_versions:
         description: |-
@@ -1538,6 +1586,8 @@ classes:
   McpEnumSchema:
     description: One of `UntitledSingleSelectEnumSchema`, `TitledSingleSelectEnumSchema`, `UntitledMultiSelectEnumSchema`,
       `TitledMultiSelectEnumSchema`, `LegacyTitledEnumSchema`.
+    in_subset:
+    - elicitation_create
     exact_mappings:
     - mcp_schema:EnumSchema
     any_of:
@@ -1685,6 +1735,7 @@ classes:
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
         alias: resultType
+        range: McpResultType
         required: true
   McpGetPromptResultResponse:
     description: A successful response from the server for a {@link GetPromptRequestprompts/get} request.
@@ -1801,6 +1852,8 @@ classes:
         range: McpIconTheme
   McpIcons:
     description: Base interface to add `icons` property.
+    in_subset:
+    - internal
     exact_mappings:
     - mcp_schema:Icons
     extra_slots:
@@ -1928,6 +1981,8 @@ classes:
         range: uri
   McpInputRequest:
     description: One of `CreateMessageRequest`, `ListRootsRequest`, `ElicitRequest`.
+    in_subset:
+    - internal
     exact_mappings:
     - mcp_schema:InputRequest
     any_of:
@@ -1995,9 +2050,12 @@ classes:
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
         alias: resultType
+        range: McpResultType
         required: true
   McpInputResponse:
     description: One of `CreateMessageResult`, `ListRootsResult`, `ElicitResult`.
+    in_subset:
+    - internal
     exact_mappings:
     - mcp_schema:InputResponse
     any_of:
@@ -2274,6 +2332,9 @@ classes:
     description: |-
       Use {@link TitledSingleSelectEnumSchema} instead.
       This interface will be removed in a future version.
+    deprecated: Use {@link TitledSingleSelectEnumSchema} instead. This interface will be removed in a
+      future version.
+    deprecated_element_has_possible_replacement: mcp:McpTitledSingleSelectEnumSchema
     in_subset:
     - elicitation_create
     exact_mappings:
@@ -2376,6 +2437,7 @@ classes:
           An opaque token representing the pagination position after the last returned result.
           If present, there may be more results available.
         alias: nextCursor
+        range: McpCursor
       prompts:
         description: A prompt or prompt template that the server offers.
         multivalued: true
@@ -2392,6 +2454,7 @@ classes:
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
         alias: resultType
+        range: McpResultType
         required: true
       ttl_ms:
         description: |-
@@ -2501,6 +2564,7 @@ classes:
           An opaque token representing the pagination position after the last returned result.
           If present, there may be more results available.
         alias: nextCursor
+        range: McpCursor
       resource_templates:
         description: A template description for resources available on the server.
         alias: resourceTemplates
@@ -2518,6 +2582,7 @@ classes:
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
         alias: resultType
+        range: McpResultType
         required: true
       ttl_ms:
         description: |-
@@ -2628,6 +2693,7 @@ classes:
           An opaque token representing the pagination position after the last returned result.
           If present, there may be more results available.
         alias: nextCursor
+        range: McpCursor
       resources:
         description: A known resource that the server is capable of reading.
         multivalued: true
@@ -2644,6 +2710,7 @@ classes:
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
         alias: resultType
+        range: McpResultType
         required: true
       ttl_ms:
         description: |-
@@ -2696,6 +2763,8 @@ classes:
 
       This request is typically used when the server needs to understand the file system
       structure or access specific locations that the client has permission to read from.
+    deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
+      for at least twelve months; see the deprecated features registry.
     in_subset:
     - roots_list
     exact_mappings:
@@ -2743,6 +2812,8 @@ classes:
       The result returned by the client for a {@link ListRootsRequestroots/list} request.
       This result contains an array of {@link Root} objects, each representing a root directory
       or file that the server can operate on.
+    deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
+      for at least twelve months; see the deprecated features registry.
     in_subset:
     - roots_list
     exact_mappings:
@@ -2823,6 +2894,7 @@ classes:
           An opaque token representing the pagination position after the last returned result.
           If present, there may be more results available.
         alias: nextCursor
+        range: McpCursor
       result_type:
         description: |-
           Indicates the type of the result, which allows the client to determine
@@ -2833,6 +2905,7 @@ classes:
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
         alias: resultType
+        range: McpResultType
         required: true
       tools:
         description: Definition for a tool the client can call.
@@ -2883,6 +2956,8 @@ classes:
   McpLoggingMessageNotification:
     description: JSONRPCNotification of a log message passed from server to client. The client opts in
       by setting `"io.modelcontextprotocol/logLevel"` in a request's `_meta`.
+    deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
+      for at least twelve months; see the deprecated features registry.
     is_a: McpJSONRPCNotification
     in_subset:
     - notifications_message
@@ -2905,6 +2980,8 @@ classes:
         required: true
   McpLoggingMessageNotificationParams:
     description: Parameters for a `notifications/message` notification.
+    deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
+      for at least twelve months; see the deprecated features registry.
     is_a: McpNotificationParams
     in_subset:
     - notifications_message
@@ -3047,6 +3124,8 @@ classes:
 
       Keys not declared here are currently left unspecified by the spec and are up
       to the client to interpret.
+    deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
+      for at least twelve months; see the deprecated features registry.
     in_subset:
     - sampling_createmessage
     exact_mappings:
@@ -3080,6 +3159,8 @@ classes:
       These preferences are always advisory. The client MAY ignore them. It is also
       up to the client to decide how to interpret these preferences and how to
       balance them against other considerations.
+    deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
+      for at least twelve months; see the deprecated features registry.
     in_subset:
     - sampling_createmessage
     exact_mappings:
@@ -3128,6 +3209,8 @@ classes:
         maximum_value: 1
   McpMultiSelectEnumSchema:
     description: One of `UntitledMultiSelectEnumSchema`, `TitledMultiSelectEnumSchema`.
+    in_subset:
+    - elicitation_create
     exact_mappings:
     - mcp_schema:MultiSelectEnumSchema
     any_of:
@@ -3137,6 +3220,8 @@ classes:
       allowed: true
   McpNotification:
     description: MCP's `Notification`.
+    in_subset:
+    - internal
     exact_mappings:
     - mcp_schema:Notification
     extra_slots:
@@ -3227,6 +3312,8 @@ classes:
   McpPaginatedRequest:
     description: MCP's `PaginatedRequest`.
     is_a: McpJSONRPCRequest
+    in_subset:
+    - internal
     exact_mappings:
     - mcp_schema:PaginatedRequest
     extra_slots:
@@ -3271,9 +3358,12 @@ classes:
         description: |-
           An opaque token representing the current pagination position.
           If provided, the server should return results starting after this cursor.
+        range: McpCursor
   McpPaginatedResult:
     description: MCP's `PaginatedResult`.
     is_a: McpResult
+    in_subset:
+    - internal
     exact_mappings:
     - mcp_schema:PaginatedResult
     extra_slots:
@@ -3289,6 +3379,7 @@ classes:
           An opaque token representing the pagination position after the last returned result.
           If present, there may be more results available.
         alias: nextCursor
+        range: McpCursor
       result_type:
         description: |-
           Indicates the type of the result, which allows the client to determine
@@ -3299,6 +3390,7 @@ classes:
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
         alias: resultType
+        range: McpResultType
         required: true
   McpParseError:
     description: A JSON-RPC error indicating that invalid JSON was received by the server. This error
@@ -3694,6 +3786,7 @@ classes:
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
         alias: resultType
+        range: McpResultType
         required: true
       ttl_ms:
         description: |-
@@ -3740,6 +3833,8 @@ classes:
         required: true
   McpRequest:
     description: MCP's `Request`.
+    in_subset:
+    - internal
     exact_mappings:
     - mcp_schema:Request
     extra_slots:
@@ -3796,6 +3891,8 @@ classes:
           If absent, the server MUST NOT send any {@link LoggingMessageNotificationnotifications/message}
           notifications for this request. The client opts in to log messages by
           explicitly setting a level. Replaces the former `logging/setLevel` RPC.
+        deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
+          for at least twelve months; see the deprecated features registry.
         aliases:
         - io.modelcontextprotocol/logLevel
         range: McpLoggingLevel
@@ -3921,6 +4018,8 @@ classes:
         required: true
   McpResourceContents:
     description: The contents of a specific resource or sub-resource.
+    in_subset:
+    - internal
     exact_mappings:
     - mcp_schema:ResourceContents
     extra_slots:
@@ -4070,6 +4169,8 @@ classes:
   McpResourceRequestParams:
     description: Common params for resource-related requests.
     is_a: McpRequestParams
+    in_subset:
+    - internal
     exact_mappings:
     - mcp_schema:ResourceRequestParams
     extra_slots:
@@ -4254,6 +4355,7 @@ classes:
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
         alias: resultType
+        range: McpResultType
         required: true
   McpResultMetaObject:
     description: Extends {@link MetaObject} with additional result-specific fields. All key naming rules
@@ -4284,6 +4386,8 @@ classes:
         range: McpImplementation
   McpRoot:
     description: Represents a root directory or file that the server can operate on.
+    deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
+      for at least twelve months; see the deprecated features registry.
     in_subset:
     - roots_list
     exact_mappings:
@@ -4327,6 +4431,8 @@ classes:
         required: true
   McpSamplingMessage:
     description: Describes a message issued to or received from an LLM API.
+    deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
+      for at least twelve months; see the deprecated features registry.
     in_subset:
     - sampling_createmessage
     exact_mappings:
@@ -4371,6 +4477,8 @@ classes:
         required: true
   McpSamplingMessageContentBlock:
     description: One of `TextContent`, `ImageContent`, `AudioContent`, `ToolUseContent`, `ToolResultContent`.
+    deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
+      for at least twelve months; see the deprecated features registry.
     in_subset:
     - sampling_createmessage
     exact_mappings:
@@ -4410,6 +4518,8 @@ classes:
         range: McpServerCapabilitiesExtensions
       logging:
         description: Present if the server supports sending log messages to the client.
+        deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
+          for at least twelve months; see the deprecated features registry.
         range: McpJSONObject
       prompts:
         description: Present if the server offers any prompt templates.
@@ -4490,6 +4600,8 @@ classes:
     description: One of `CancelledNotification`, `ProgressNotification`, `ResourceListChangedNotification`,
       `SubscriptionsAcknowledgedNotification`, `ResourceUpdatedNotification`, `PromptListChangedNotification`,
       `ToolListChangedNotification`, `LoggingMessageNotification`.
+    in_subset:
+    - internal
     exact_mappings:
     - mcp_schema:ServerNotification
     any_of:
@@ -4507,6 +4619,8 @@ classes:
     description: One of `Result`, `InputRequiredResult`, `DiscoverResult`, `ListResourcesResult`, `ListResourceTemplatesResult`,
       `ReadResourceResult`, `SubscriptionsListenResult`, `ListPromptsResult`, `GetPromptResult`, `ListToolsResult`,
       `CallToolResult`, `CompleteResult`.
+    in_subset:
+    - internal
     exact_mappings:
     - mcp_schema:ServerResult
     any_of:
@@ -4526,6 +4640,8 @@ classes:
       allowed: true
   McpSingleSelectEnumSchema:
     description: One of `UntitledSingleSelectEnumSchema`, `TitledSingleSelectEnumSchema`.
+    in_subset:
+    - elicitation_create
     exact_mappings:
     - mcp_schema:SingleSelectEnumSchema
     any_of:
@@ -4748,6 +4864,7 @@ classes:
           server implementing an earlier protocol version (which does not include
           `resultType`), the client MUST treat the absent field as `"complete"`.
         alias: resultType
+        range: McpResultType
         required: true
   McpSubscriptionsListenResultMetaObject:
     description: |-
@@ -5195,6 +5312,8 @@ classes:
         range: boolean
   McpToolChoice:
     description: Controls tool selection behavior for sampling requests.
+    deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
+      for at least twelve months; see the deprecated features registry.
     in_subset:
     - sampling_createmessage
     exact_mappings:
@@ -5284,6 +5403,8 @@ classes:
         - $schema
   McpToolResultContent:
     description: The result of a tool use, provided by the user back to the assistant.
+    deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
+      for at least twelve months; see the deprecated features registry.
     in_subset:
     - sampling_createmessage
     exact_mappings:
@@ -5338,6 +5459,8 @@ classes:
         required: true
   McpToolUseContent:
     description: A request from the assistant to call a tool.
+    deprecated: Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification
+      for at least twelve months; see the deprecated features registry.
     in_subset:
     - sampling_createmessage
     exact_mappings:

@@ -107,7 +107,7 @@ type McpCacheableResult
   {
     meta: McpResultMetaObject
     cacheScope: McpCacheScope!
-    resultType: String!
+    resultType: McpResultType!
     ttlMs: Int!
   }
 
@@ -133,7 +133,7 @@ type McpCallToolResult
     meta: McpResultMetaObject
     content: [McpContentBlock]!
     isError: Boolean
-    resultType: String!
+    resultType: McpResultType!
     structuredContent: McpJSONValue
   }
 
@@ -205,7 +205,7 @@ type McpClientRequest
 type McpClientResult
   {
     meta: McpResultMetaObject
-    resultType: String!
+    resultType: McpResultType!
   }
 
 type McpCompleteRequest
@@ -243,7 +243,7 @@ type McpCompleteResult
   {
     meta: McpResultMetaObject
     completion: McpCompleteResultCompletion!
-    resultType: String!
+    resultType: McpResultType!
   }
 
 type McpCompleteResultCompletion
@@ -307,7 +307,7 @@ type McpDiscoverResult
     cacheScope: McpCacheScope!
     capabilities: McpServerCapabilities!
     instructions: String
-    resultType: String!
+    resultType: McpResultType!
     supportedVersions: [String]!
     ttlMs: Int!
   }
@@ -376,7 +376,7 @@ type McpEmbeddedResource
 type McpEmptyResult
   {
     meta: McpResultMetaObject
-    resultType: String!
+    resultType: McpResultType!
   }
 
 type McpEnumSchema
@@ -416,7 +416,7 @@ type McpGetPromptResult
     description: String
     meta: McpResultMetaObject
     messages: [McpPromptMessage]!
-    resultType: String!
+    resultType: McpResultType!
   }
 
 type McpGetPromptResultResponse
@@ -485,7 +485,7 @@ type McpInputRequiredResult
     meta: McpResultMetaObject
     inputRequests: McpInputRequests
     requestState: String
-    resultType: String!
+    resultType: McpResultType!
   }
 
 type McpInputResponse
@@ -589,9 +589,9 @@ type McpListPromptsResult implements McpCacheableResult
   {
     meta: McpResultMetaObject
     cacheScope: McpCacheScope!
-    nextCursor: String
+    nextCursor: McpCursor
     prompts: [McpPrompt]!
-    resultType: String!
+    resultType: McpResultType!
     ttlMs: Int!
   }
 
@@ -614,9 +614,9 @@ type McpListResourcesResult implements McpCacheableResult
   {
     meta: McpResultMetaObject
     cacheScope: McpCacheScope!
-    nextCursor: String
+    nextCursor: McpCursor
     resources: [McpResource]!
-    resultType: String!
+    resultType: McpResultType!
     ttlMs: Int!
   }
 
@@ -639,9 +639,9 @@ type McpListResourceTemplatesResult implements McpCacheableResult
   {
     meta: McpResultMetaObject
     cacheScope: McpCacheScope!
-    nextCursor: String
+    nextCursor: McpCursor
     resourceTemplates: [McpResourceTemplate]!
-    resultType: String!
+    resultType: McpResultType!
     ttlMs: Int!
   }
 
@@ -680,8 +680,8 @@ type McpListToolsResult implements McpCacheableResult
   {
     meta: McpResultMetaObject
     cacheScope: McpCacheScope!
-    nextCursor: String
-    resultType: String!
+    nextCursor: McpCursor
+    resultType: McpResultType!
     tools: [McpTool]!
     ttlMs: Int!
   }
@@ -792,14 +792,14 @@ type McpPaginatedRequest
 type McpPaginatedRequestParams
   {
     meta: McpRequestMetaObject!
-    cursor: String
+    cursor: McpCursor
   }
 
 type McpPaginatedResult
   {
     meta: McpResultMetaObject
-    nextCursor: String
-    resultType: String!
+    nextCursor: McpCursor
+    resultType: McpResultType!
   }
 
 type McpParseError
@@ -888,7 +888,7 @@ type McpReadResourceResult
     meta: McpResultMetaObject
     cacheScope: McpCacheScope!
     contents: [String]!
-    resultType: String!
+    resultType: McpResultType!
     ttlMs: Int!
   }
 
@@ -1000,7 +1000,7 @@ type McpResourceUpdatedNotificationParams
 type McpResult
   {
     meta: McpResultMetaObject
-    resultType: String!
+    resultType: McpResultType!
   }
 
 type McpResultMetaObject
@@ -1122,7 +1122,7 @@ type McpSubscriptionsListenRequestParams
 type McpSubscriptionsListenResult
   {
     meta: McpSubscriptionsListenResultMetaObject!
-    resultType: String!
+    resultType: McpResultType!
   }
 
 type McpSubscriptionsListenResultMetaObject

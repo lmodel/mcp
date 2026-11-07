@@ -118,7 +118,7 @@ linkml:Sparqlpath xsd:string
              <_meta> @<McpResultMetaObject> ? ;
              <cacheScope> [ <https://w3id.org/lmodel/mcp/McpCacheScope#private> <https://w3id.org/lmodel/mcp/McpCacheScope#public>
                 ] ;
-             <resultType> @linkml:String ;
+             <resultType> @<McpResultType> ;
              <ttlMs> @linkml:Integer
           ) ;
           rdf:type [ <McpCacheableResult> ] ?
@@ -157,7 +157,7 @@ linkml:Sparqlpath xsd:string
           <_meta> @<McpResultMetaObject> ? ;
           <content> @<McpContentBlock> + ;
           <isError> @linkml:Boolean ? ;
-          <resultType> @linkml:String ;
+          <resultType> @<McpResultType> ;
           <structuredContent> @<McpJSONValue> ?
        ) ;
        rdf:type [ <McpCallToolResult> ] ?
@@ -318,7 +318,7 @@ linkml:Sparqlpath xsd:string
           rdf:type [ <McpResult> ] ? ;
           <_meta> @<McpResultMetaObject> ? ;
           <completion> @<McpCompleteResultCompletion> ;
-          <resultType> @linkml:String
+          <resultType> @<McpResultType>
        ) ;
        rdf:type [ <McpCompleteResult> ] ?
     )
@@ -409,7 +409,7 @@ linkml:Sparqlpath xsd:string
           <cacheScope> [ <https://w3id.org/lmodel/mcp/McpCacheScope#private> <https://w3id.org/lmodel/mcp/McpCacheScope#public> ] ;
           <capabilities> @<McpServerCapabilities> ;
           <instructions> @linkml:String ? ;
-          <resultType> @linkml:String ;
+          <resultType> @<McpResultType> ;
           <supportedVersions> @linkml:String + ;
           <ttlMs> @linkml:Integer
        ) ;
@@ -568,7 +568,7 @@ linkml:Sparqlpath xsd:string
           schema1:description @linkml:String ? ;
           <_meta> @<McpResultMetaObject> ? ;
           <messages> @<McpPromptMessage> + ;
-          <resultType> @linkml:String
+          <resultType> @<McpResultType>
        ) ;
        rdf:type [ <McpGetPromptResult> ] ?
     )
@@ -666,7 +666,7 @@ linkml:Sparqlpath xsd:string
           <_meta> @<McpResultMetaObject> ? ;
           <inputRequests> @<McpInputRequests> ? ;
           <requestState> @linkml:String ? ;
-          <resultType> @linkml:String
+          <resultType> @<McpResultType>
        ) ;
        rdf:type [ <McpInputRequiredResult> ] ?
     )
@@ -840,9 +840,9 @@ linkml:Sparqlpath xsd:string
           rdf:type [ <McpCacheableResult> ] ? ;
           <_meta> @<McpResultMetaObject> ? ;
           <cacheScope> [ <https://w3id.org/lmodel/mcp/McpCacheScope#private> <https://w3id.org/lmodel/mcp/McpCacheScope#public> ] ;
-          <nextCursor> @linkml:String ? ;
+          <nextCursor> @<McpCursor> ? ;
           <prompts> @<McpPrompt> + ;
-          <resultType> @linkml:String ;
+          <resultType> @<McpResultType> ;
           <ttlMs> @linkml:Integer
        ) ;
        rdf:type [ <McpListPromptsResult> ] ?
@@ -879,9 +879,9 @@ linkml:Sparqlpath xsd:string
           rdf:type [ <McpCacheableResult> ] ? ;
           <_meta> @<McpResultMetaObject> ? ;
           <cacheScope> [ <https://w3id.org/lmodel/mcp/McpCacheScope#private> <https://w3id.org/lmodel/mcp/McpCacheScope#public> ] ;
-          <nextCursor> @linkml:String ? ;
+          <nextCursor> @<McpCursor> ? ;
           <resources> @<McpResource> + ;
-          <resultType> @linkml:String ;
+          <resultType> @<McpResultType> ;
           <ttlMs> @linkml:Integer
        ) ;
        rdf:type [ <McpListResourcesResult> ] ?
@@ -918,9 +918,9 @@ linkml:Sparqlpath xsd:string
           rdf:type [ <McpCacheableResult> ] ? ;
           <_meta> @<McpResultMetaObject> ? ;
           <cacheScope> [ <https://w3id.org/lmodel/mcp/McpCacheScope#private> <https://w3id.org/lmodel/mcp/McpCacheScope#public> ] ;
-          <nextCursor> @linkml:String ? ;
+          <nextCursor> @<McpCursor> ? ;
           <resourceTemplates> @<McpResourceTemplate> + ;
-          <resultType> @linkml:String ;
+          <resultType> @<McpResultType> ;
           <ttlMs> @linkml:Integer
        ) ;
        rdf:type [ <McpListResourceTemplatesResult> ] ?
@@ -977,8 +977,8 @@ linkml:Sparqlpath xsd:string
           rdf:type [ <McpCacheableResult> ] ? ;
           <_meta> @<McpResultMetaObject> ? ;
           <cacheScope> [ <https://w3id.org/lmodel/mcp/McpCacheScope#private> <https://w3id.org/lmodel/mcp/McpCacheScope#public> ] ;
-          <nextCursor> @linkml:String ? ;
-          <resultType> @linkml:String ;
+          <nextCursor> @<McpCursor> ? ;
+          <resultType> @<McpResultType> ;
           <tools> @<McpTool> + ;
           <ttlMs> @linkml:Integer
        ) ;
@@ -1150,7 +1150,7 @@ linkml:Sparqlpath xsd:string
     (  $<McpPaginatedRequestParams_tes> (  &<McpRequestParams_tes> ;
           rdf:type [ <McpRequestParams> ] ? ;
           <_meta> @<McpRequestMetaObject> ;
-          <cursor> @linkml:String ?
+          <cursor> @<McpCursor> ?
        ) ;
        rdf:type [ <McpPaginatedRequestParams> ] ?
     )
@@ -1161,8 +1161,8 @@ linkml:Sparqlpath xsd:string
        (  $<McpPaginatedResult_tes> (  &<McpResult_tes> ;
              rdf:type [ <McpResult> ] ? ;
              <_meta> @<McpResultMetaObject> ? ;
-             <nextCursor> @linkml:String ? ;
-             <resultType> @linkml:String
+             <nextCursor> @<McpCursor> ? ;
+             <resultType> @<McpResultType>
           ) ;
           rdf:type [ <McpPaginatedResult> ] ?
        )
@@ -1300,7 +1300,7 @@ linkml:Sparqlpath xsd:string
           <_meta> @<McpResultMetaObject> ? ;
           <cacheScope> [ <https://w3id.org/lmodel/mcp/McpCacheScope#private> <https://w3id.org/lmodel/mcp/McpCacheScope#public> ] ;
           <contents> @linkml:String + ;
-          <resultType> @linkml:String ;
+          <resultType> @<McpResultType> ;
           <ttlMs> @linkml:Integer
        ) ;
        rdf:type [ <McpReadResourceResult> ] ?
@@ -1477,7 +1477,7 @@ linkml:Sparqlpath xsd:string
 <McpResult>  (
     CLOSED {
        (  $<McpResult_tes> (  <_meta> @<McpResultMetaObject> ? ;
-             <resultType> @linkml:String
+             <resultType> @<McpResultType>
           ) ;
           rdf:type [ <McpResult> ] ?
        )
@@ -1658,7 +1658,7 @@ linkml:Sparqlpath xsd:string
     (  $<McpSubscriptionsListenResult_tes> (  &<McpResult_tes> ;
           rdf:type [ <McpResult> ] ? ;
           <_meta> @<McpSubscriptionsListenResultMetaObject> ;
-          <resultType> @linkml:String
+          <resultType> @<McpResultType>
        ) ;
        rdf:type [ <McpSubscriptionsListenResult> ] ?
     )

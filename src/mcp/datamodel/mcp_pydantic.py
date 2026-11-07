@@ -91,162 +91,174 @@ linkml_meta = LinkMLMeta({'default_prefix': 'mcp',
                   'https://modelcontextprotocol.io/specification/2026-07-28'],
      'source': 'https://github.com/modelcontextprotocol/modelcontextprotocol/tree/2026-07-28/schema/2026-07-28',
      'source_file': 'src/mcp/schema/mcp.yaml',
-     'subsets': {'common_types': {'description': 'The definitions schema.ts files '
-                                                 'under Common Types.',
+     'subsets': {'common_types': {'description': 'The definitions schema.ts tags '
+                                                 '`@category Common Types`.',
                                   'from_schema': 'https://w3id.org/lmodel/mcp',
                                   'name': 'common_types',
                                   'title': 'Common Types'},
                  'completion_complete': {'description': 'The definitions schema.ts '
-                                                        'files under '
-                                                        '`completion/complete`.',
+                                                        'tags `@category '
+                                                        'completion/complete`.',
                                          'from_schema': 'https://w3id.org/lmodel/mcp',
                                          'name': 'completion_complete',
                                          'title': 'completion/complete'},
-                 'content': {'description': 'The definitions schema.ts files under '
-                                            'Content.',
+                 'content': {'description': 'The definitions schema.ts tags '
+                                            '`@category Content`.',
                              'from_schema': 'https://w3id.org/lmodel/mcp',
                              'name': 'content',
                              'title': 'Content'},
                  'elicitation_create': {'description': 'The definitions schema.ts '
-                                                       'files under '
-                                                       '`elicitation/create`.',
+                                                       'tags `@category '
+                                                       'elicitation/create`.',
                                         'from_schema': 'https://w3id.org/lmodel/mcp',
                                         'name': 'elicitation_create',
                                         'title': 'elicitation/create'},
-                 'errors': {'description': 'The definitions schema.ts files under '
-                                           'Errors.',
+                 'errors': {'description': 'The definitions schema.ts tags '
+                                           '`@category Errors`.',
                             'from_schema': 'https://w3id.org/lmodel/mcp',
                             'name': 'errors',
                             'title': 'Errors'},
-                 'json_rpc': {'description': 'The definitions schema.ts files '
-                                             'under JSON-RPC.',
+                 'internal': {'description': 'The definitions schema.ts tags '
+                                             '`@internal`.',
+                              'from_schema': 'https://w3id.org/lmodel/mcp',
+                              'name': 'internal',
+                              'title': 'internal'},
+                 'json_rpc': {'description': 'The definitions schema.ts tags '
+                                             '`@category JSON-RPC`.',
                               'from_schema': 'https://w3id.org/lmodel/mcp',
                               'name': 'json_rpc',
                               'title': 'JSON-RPC'},
                  'multi_round_trip': {'description': 'The definitions schema.ts '
-                                                     'files under Multi '
-                                                     'Round-Trip.',
+                                                     'tags `@category Multi '
+                                                     'Round-Trip`.',
                                       'from_schema': 'https://w3id.org/lmodel/mcp',
                                       'name': 'multi_round_trip',
                                       'title': 'Multi Round-Trip'},
                  'notifications_cancelled': {'description': 'The definitions '
-                                                            'schema.ts files under '
-                                                            '`notifications/cancelled`.',
+                                                            'schema.ts tags '
+                                                            '`@category '
+                                                            'notifications/cancelled`.',
                                              'from_schema': 'https://w3id.org/lmodel/mcp',
                                              'name': 'notifications_cancelled',
                                              'title': 'notifications/cancelled'},
                  'notifications_message': {'description': 'The definitions '
-                                                          'schema.ts files under '
-                                                          '`notifications/message`.',
+                                                          'schema.ts tags '
+                                                          '`@category '
+                                                          'notifications/message`.',
                                            'from_schema': 'https://w3id.org/lmodel/mcp',
                                            'name': 'notifications_message',
                                            'title': 'notifications/message'},
                  'notifications_progress': {'description': 'The definitions '
-                                                           'schema.ts files under '
-                                                           '`notifications/progress`.',
+                                                           'schema.ts tags '
+                                                           '`@category '
+                                                           'notifications/progress`.',
                                             'from_schema': 'https://w3id.org/lmodel/mcp',
                                             'name': 'notifications_progress',
                                             'title': 'notifications/progress'},
                  'notifications_prompts_list_changed': {'description': 'The '
                                                                        'definitions '
                                                                        'schema.ts '
-                                                                       'files '
-                                                                       'under '
-                                                                       '`notifications/prompts/list_changed`.',
+                                                                       'tags '
+                                                                       '`@category '
+                                                                       'notifications/prompts/list_changed`.',
                                                         'from_schema': 'https://w3id.org/lmodel/mcp',
                                                         'name': 'notifications_prompts_list_changed',
                                                         'title': 'notifications/prompts/list_changed'},
                  'notifications_resources_list_changed': {'description': 'The '
                                                                          'definitions '
                                                                          'schema.ts '
-                                                                         'files '
-                                                                         'under '
-                                                                         '`notifications/resources/list_changed`.',
+                                                                         'tags '
+                                                                         '`@category '
+                                                                         'notifications/resources/list_changed`.',
                                                           'from_schema': 'https://w3id.org/lmodel/mcp',
                                                           'name': 'notifications_resources_list_changed',
                                                           'title': 'notifications/resources/list_changed'},
                  'notifications_resources_updated': {'description': 'The '
                                                                     'definitions '
                                                                     'schema.ts '
-                                                                    'files under '
-                                                                    '`notifications/resources/updated`.',
+                                                                    'tags '
+                                                                    '`@category '
+                                                                    'notifications/resources/updated`.',
                                                      'from_schema': 'https://w3id.org/lmodel/mcp',
                                                      'name': 'notifications_resources_updated',
                                                      'title': 'notifications/resources/updated'},
                  'notifications_subscriptions_acknowledged': {'description': 'The '
                                                                              'definitions '
                                                                              'schema.ts '
-                                                                             'files '
-                                                                             'under '
-                                                                             '`notifications/subscriptions/acknowledged`.',
+                                                                             'tags '
+                                                                             '`@category '
+                                                                             'notifications/subscriptions/acknowledged`.',
                                                               'from_schema': 'https://w3id.org/lmodel/mcp',
                                                               'name': 'notifications_subscriptions_acknowledged',
                                                               'title': 'notifications/subscriptions/acknowledged'},
                  'notifications_tools_list_changed': {'description': 'The '
                                                                      'definitions '
                                                                      'schema.ts '
-                                                                     'files under '
-                                                                     '`notifications/tools/list_changed`.',
+                                                                     'tags '
+                                                                     '`@category '
+                                                                     'notifications/tools/list_changed`.',
                                                       'from_schema': 'https://w3id.org/lmodel/mcp',
                                                       'name': 'notifications_tools_list_changed',
                                                       'title': 'notifications/tools/list_changed'},
-                 'prompts_get': {'description': 'The definitions schema.ts files '
-                                                'under `prompts/get`.',
+                 'prompts_get': {'description': 'The definitions schema.ts tags '
+                                                '`@category prompts/get`.',
                                  'from_schema': 'https://w3id.org/lmodel/mcp',
                                  'name': 'prompts_get',
                                  'title': 'prompts/get'},
-                 'prompts_list': {'description': 'The definitions schema.ts files '
-                                                 'under `prompts/list`.',
+                 'prompts_list': {'description': 'The definitions schema.ts tags '
+                                                 '`@category prompts/list`.',
                                   'from_schema': 'https://w3id.org/lmodel/mcp',
                                   'name': 'prompts_list',
                                   'title': 'prompts/list'},
-                 'resources_list': {'description': 'The definitions schema.ts '
-                                                   'files under `resources/list`.',
+                 'resources_list': {'description': 'The definitions schema.ts tags '
+                                                   '`@category resources/list`.',
                                     'from_schema': 'https://w3id.org/lmodel/mcp',
                                     'name': 'resources_list',
                                     'title': 'resources/list'},
-                 'resources_read': {'description': 'The definitions schema.ts '
-                                                   'files under `resources/read`.',
+                 'resources_read': {'description': 'The definitions schema.ts tags '
+                                                   '`@category resources/read`.',
                                     'from_schema': 'https://w3id.org/lmodel/mcp',
                                     'name': 'resources_read',
                                     'title': 'resources/read'},
                  'resources_templates_list': {'description': 'The definitions '
-                                                             'schema.ts files '
-                                                             'under '
-                                                             '`resources/templates/list`.',
+                                                             'schema.ts tags '
+                                                             '`@category '
+                                                             'resources/templates/list`.',
                                               'from_schema': 'https://w3id.org/lmodel/mcp',
                                               'name': 'resources_templates_list',
                                               'title': 'resources/templates/list'},
-                 'roots_list': {'description': 'The definitions schema.ts files '
-                                               'under `roots/list`.',
+                 'roots_list': {'description': 'The definitions schema.ts tags '
+                                               '`@category roots/list`.',
                                 'from_schema': 'https://w3id.org/lmodel/mcp',
                                 'name': 'roots_list',
                                 'title': 'roots/list'},
                  'sampling_createmessage': {'description': 'The definitions '
-                                                           'schema.ts files under '
-                                                           '`sampling/createMessage`.',
+                                                           'schema.ts tags '
+                                                           '`@category '
+                                                           'sampling/createMessage`.',
                                             'from_schema': 'https://w3id.org/lmodel/mcp',
                                             'name': 'sampling_createmessage',
                                             'title': 'sampling/createMessage'},
                  'server_discover': {'description': 'The definitions schema.ts '
-                                                    'files under '
-                                                    '`server/discover`.',
+                                                    'tags `@category '
+                                                    'server/discover`.',
                                      'from_schema': 'https://w3id.org/lmodel/mcp',
                                      'name': 'server_discover',
                                      'title': 'server/discover'},
                  'subscriptions_listen': {'description': 'The definitions '
-                                                         'schema.ts files under '
-                                                         '`subscriptions/listen`.',
+                                                         'schema.ts tags '
+                                                         '`@category '
+                                                         'subscriptions/listen`.',
                                           'from_schema': 'https://w3id.org/lmodel/mcp',
                                           'name': 'subscriptions_listen',
                                           'title': 'subscriptions/listen'},
-                 'tools_call': {'description': 'The definitions schema.ts files '
-                                               'under `tools/call`.',
+                 'tools_call': {'description': 'The definitions schema.ts tags '
+                                               '`@category tools/call`.',
                                 'from_schema': 'https://w3id.org/lmodel/mcp',
                                 'name': 'tools_call',
                                 'title': 'tools/call'},
-                 'tools_list': {'description': 'The definitions schema.ts files '
-                                               'under `tools/list`.',
+                 'tools_list': {'description': 'The definitions schema.ts tags '
+                                               '`@category tools/list`.',
                                 'from_schema': 'https://w3id.org/lmodel/mcp',
                                 'name': 'tools_list',
                                 'title': 'tools/list'}},
@@ -262,6 +274,7 @@ linkml_meta = LinkMLMeta({'default_prefix': 'mcp',
                                             'cursor for pagination.',
                              'exact_mappings': ['mcp_schema:Cursor'],
                              'from_schema': 'https://w3id.org/lmodel/mcp',
+                             'in_subset': ['common_types'],
                              'name': 'McpCursor',
                              'typeof': 'string'},
                'McpProgressToken': {'comments': ["linkml 1.12.1's JSON Schema "
@@ -276,6 +289,7 @@ linkml_meta = LinkMLMeta({'default_prefix': 'mcp',
                                                    'original request.',
                                     'exact_mappings': ['mcp_schema:ProgressToken'],
                                     'from_schema': 'https://w3id.org/lmodel/mcp',
+                                    'in_subset': ['common_types'],
                                     'name': 'McpProgressToken',
                                     'typeof': 'string',
                                     'union_of': ['string', 'integer']},
@@ -288,6 +302,7 @@ linkml_meta = LinkMLMeta({'default_prefix': 'mcp',
                                                'request in JSON-RPC.',
                                 'exact_mappings': ['mcp_schema:RequestId'],
                                 'from_schema': 'https://w3id.org/lmodel/mcp',
+                                'in_subset': ['common_types'],
                                 'name': 'McpRequestId',
                                 'typeof': 'string',
                                 'union_of': ['string', 'integer']},
@@ -309,6 +324,7 @@ linkml_meta = LinkMLMeta({'default_prefix': 'mcp',
                                                 'retrying the original request.',
                                  'exact_mappings': ['mcp_schema:ResultType'],
                                  'from_schema': 'https://w3id.org/lmodel/mcp',
+                                 'in_subset': ['common_types'],
                                  'name': 'McpResultType',
                                  'typeof': 'string'},
                'McpUriTemplate': {'comments': ['MCP gives such a string the format '
@@ -560,6 +576,7 @@ class McpBaseMetadata(ConfiguredBaseModel):
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:BaseMetadata'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
+         'in_subset': ['internal'],
          'slot_usage': {'name': {'description': 'Intended for programmatic or logical '
                                                 'use, but used as a display name in '
                                                 'past specs or fallback (if title '
@@ -726,8 +743,14 @@ per-extension settings objects. An empty object indicates support with no settin
 
 Keys MUST follow the {@link MetaObject`_meta` key naming rules}, with a
 mandatory prefix.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpClientCapabilities', 'McpServerCapabilities']} })
-    roots: Optional[McpClientCapabilitiesRoots] = Field(default=None, description="""Present if the client supports listing roots.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpClientCapabilities', 'McpListRootsResult']} })
-    sampling: Optional[McpClientCapabilitiesSampling] = Field(default=None, description="""Present if the client supports sampling from an LLM.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpClientCapabilities']} })
+    roots: Optional[McpClientCapabilitiesRoots] = Field(default=None, description="""Present if the client supports listing roots.""", json_schema_extra = { "linkml_meta": {'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
+                       'Remains in the specification for at least twelve months; see '
+                       'the deprecated features registry.',
+         'domain_of': ['McpClientCapabilities', 'McpListRootsResult']} })
+    sampling: Optional[McpClientCapabilitiesSampling] = Field(default=None, description="""Present if the client supports sampling from an LLM.""", json_schema_extra = { "linkml_meta": {'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
+                       'Remains in the specification for at least twelve months; see '
+                       'the deprecated features registry.',
+         'domain_of': ['McpClientCapabilities']} })
 
 
 class McpClientCapabilitiesElicitation(ConfiguredBaseModel):
@@ -818,7 +841,8 @@ class McpClientRequest(ConfiguredBaseModel):
                     {'is_a': 'McpCompleteRequest'}],
          'exact_mappings': ['mcp_schema:ClientRequest'],
          'extra_slots': {'allowed': True},
-         'from_schema': 'https://w3id.org/lmodel/mcp'})
+         'from_schema': 'https://w3id.org/lmodel/mcp',
+         'in_subset': ['internal']})
 
     pass
 
@@ -916,7 +940,10 @@ class McpCreateMessageRequest(ConfiguredBaseModel):
     """
     A request from the server to sample an LLM via the client. The client has full discretion over which model to select. The client should also inform the user before beginning sampling, to allow them to inspect the request (human in the loop) and decide whether to approve it.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:CreateMessageRequest'],
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
+                       'Remains in the specification for at least twelve months; see '
+                       'the deprecated features registry.',
+         'exact_mappings': ['mcp_schema:CreateMessageRequest'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
          'in_subset': ['sampling_createmessage']})
@@ -982,7 +1009,10 @@ class McpCreateMessageRequestParams(ConfiguredBaseModel):
     """
     Parameters for a `sampling/createMessage` request.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:CreateMessageRequestParams'],
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
+                       'Remains in the specification for at least twelve months; see '
+                       'the deprecated features registry.',
+         'exact_mappings': ['mcp_schema:CreateMessageRequestParams'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
          'in_subset': ['sampling_createmessage']})
@@ -992,7 +1022,11 @@ The client MAY ignore this request.
 
 Default is `\"none\"`. The values `\"thisServer\"` and `\"allServers\"` are deprecated (SEP-2596): servers SHOULD
 omit this field or use `\"none\"`, and SHOULD only use the deprecated values if the client declares
-{@link ClientCapabilities.sampling.context}.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCreateMessageRequestParams']} })
+{@link ClientCapabilities.sampling.context}.""", json_schema_extra = { "linkml_meta": {'deprecated': 'The `"thisServer"` and `"allServers"` values are deprecated as '
+                       'of protocol version 2025-11-25 (SEP-2596) and will be removed '
+                       'no later than the Sampling feature itself (SEP-2577). Omit '
+                       'this field or use `"none"`.',
+         'domain_of': ['McpCreateMessageRequestParams']} })
     maxTokens: int = Field(default=..., description="""The requested maximum number of tokens to sample (to prevent runaway completions).
 
 The client MAY choose to sample fewer tokens than the requested maximum.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCreateMessageRequestParams']} })
@@ -1361,7 +1395,8 @@ class McpEnumSchema(ConfiguredBaseModel):
                     {'is_a': 'McpLegacyTitledEnumSchema'}],
          'exact_mappings': ['mcp_schema:EnumSchema'],
          'extra_slots': {'allowed': True},
-         'from_schema': 'https://w3id.org/lmodel/mcp'})
+         'from_schema': 'https://w3id.org/lmodel/mcp',
+         'in_subset': ['elicitation_create']})
 
     pass
 
@@ -1502,7 +1537,8 @@ class McpIcons(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:Icons'],
          'extra_slots': {'allowed': True},
-         'from_schema': 'https://w3id.org/lmodel/mcp'})
+         'from_schema': 'https://w3id.org/lmodel/mcp',
+         'in_subset': ['internal']})
 
     icons: Optional[list[McpIcon]] = Field(default=None, description="""Optional set of sized icons that the client can display in a user interface.
 
@@ -1782,7 +1818,8 @@ class McpInputRequest(ConfiguredBaseModel):
                     {'is_a': 'McpElicitRequest'}],
          'exact_mappings': ['mcp_schema:InputRequest'],
          'extra_slots': {'allowed': True},
-         'from_schema': 'https://w3id.org/lmodel/mcp'})
+         'from_schema': 'https://w3id.org/lmodel/mcp',
+         'in_subset': ['internal']})
 
     pass
 
@@ -1809,7 +1846,8 @@ class McpInputResponse(ConfiguredBaseModel):
                     {'is_a': 'McpElicitResult'}],
          'exact_mappings': ['mcp_schema:InputResponse'],
          'extra_slots': {'allowed': True},
-         'from_schema': 'https://w3id.org/lmodel/mcp'})
+         'from_schema': 'https://w3id.org/lmodel/mcp',
+         'in_subset': ['internal']})
 
     pass
 
@@ -2627,7 +2665,10 @@ class McpLegacyTitledEnumSchema(ConfiguredBaseModel):
     Use {@link TitledSingleSelectEnumSchema} instead.
     This interface will be removed in a future version.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:LegacyTitledEnumSchema'],
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'deprecated': 'Use {@link TitledSingleSelectEnumSchema} instead. This '
+                       'interface will be removed in a future version.',
+         'deprecated_element_has_possible_replacement': 'mcp:McpTitledSingleSelectEnumSchema',
+         'exact_mappings': ['mcp_schema:LegacyTitledEnumSchema'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
          'in_subset': ['elicitation_create'],
@@ -2992,7 +3033,10 @@ class McpListRootsRequest(ConfiguredBaseModel):
     This request is typically used when the server needs to understand the file system
     structure or access specific locations that the client has permission to read from.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ListRootsRequest'],
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
+                       'Remains in the specification for at least twelve months; see '
+                       'the deprecated features registry.',
+         'exact_mappings': ['mcp_schema:ListRootsRequest'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
          'in_subset': ['roots_list']})
@@ -3132,7 +3176,10 @@ class McpListRootsResult(ConfiguredBaseModel):
     This result contains an array of {@link Root} objects, each representing a root directory
     or file that the server can operate on.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ListRootsResult'],
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
+                       'Remains in the specification for at least twelve months; see '
+                       'the deprecated features registry.',
+         'exact_mappings': ['mcp_schema:ListRootsResult'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
          'in_subset': ['roots_list']})
@@ -3444,7 +3491,10 @@ class McpModelHint(ConfiguredBaseModel):
     Keys not declared here are currently left unspecified by the spec and are up
     to the client to interpret.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ModelHint'],
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
+                       'Remains in the specification for at least twelve months; see '
+                       'the deprecated features registry.',
+         'exact_mappings': ['mcp_schema:ModelHint'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
          'in_subset': ['sampling_createmessage'],
@@ -3510,7 +3560,10 @@ class McpModelPreferences(ConfiguredBaseModel):
     up to the client to decide how to interpret these preferences and how to
     balance them against other considerations.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ModelPreferences'],
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
+                       'Remains in the specification for at least twelve months; see '
+                       'the deprecated features registry.',
+         'exact_mappings': ['mcp_schema:ModelPreferences'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
          'in_subset': ['sampling_createmessage']})
@@ -3541,7 +3594,8 @@ class McpMultiSelectEnumSchema(ConfiguredBaseModel):
                     {'is_a': 'McpTitledMultiSelectEnumSchema'}],
          'exact_mappings': ['mcp_schema:MultiSelectEnumSchema'],
          'extra_slots': {'allowed': True},
-         'from_schema': 'https://w3id.org/lmodel/mcp'})
+         'from_schema': 'https://w3id.org/lmodel/mcp',
+         'in_subset': ['elicitation_create']})
 
     pass
 
@@ -3552,7 +3606,8 @@ class McpNotification(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:Notification'],
          'extra_slots': {'allowed': True},
-         'from_schema': 'https://w3id.org/lmodel/mcp'})
+         'from_schema': 'https://w3id.org/lmodel/mcp',
+         'in_subset': ['internal']})
 
     method: str = Field(default=..., description="""The name of the method.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCancelledNotification',
@@ -3835,7 +3890,8 @@ class McpClientNotification(McpCancelledNotification):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ClientNotification'],
          'extra_slots': {'allowed': True},
-         'from_schema': 'https://w3id.org/lmodel/mcp'})
+         'from_schema': 'https://w3id.org/lmodel/mcp',
+         'in_subset': ['internal']})
 
     jsonrpc: Literal["2.0"] = Field(default=..., description="""The JSON-RPC version, always `2.0`.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCallToolResultResponse',
@@ -3936,7 +3992,10 @@ class McpLoggingMessageNotification(McpJSONRPCNotification):
     """
     JSONRPCNotification of a log message passed from server to client. The client opts in by setting `\"io.modelcontextprotocol/logLevel\"` in a request's `_meta`.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:LoggingMessageNotification'],
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
+                       'Remains in the specification for at least twelve months; see '
+                       'the deprecated features registry.',
+         'exact_mappings': ['mcp_schema:LoggingMessageNotification'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
          'in_subset': ['notifications_message']})
@@ -4185,7 +4244,10 @@ class McpLoggingMessageNotificationParams(McpNotificationParams):
     """
     Parameters for a `notifications/message` notification.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:LoggingMessageNotificationParams'],
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
+                       'Remains in the specification for at least twelve months; see '
+                       'the deprecated features registry.',
+         'exact_mappings': ['mcp_schema:LoggingMessageNotificationParams'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
          'in_subset': ['notifications_message']})
@@ -5161,7 +5223,8 @@ class McpRequest(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:Request'],
          'extra_slots': {'allowed': True},
-         'from_schema': 'https://w3id.org/lmodel/mcp'})
+         'from_schema': 'https://w3id.org/lmodel/mcp',
+         'in_subset': ['internal']})
 
     method: str = Field(default=..., description="""The name of the method.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpCallToolRequest',
                        'McpCancelledNotification',
@@ -5897,7 +5960,8 @@ class McpPaginatedRequest(McpJSONRPCRequest):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:PaginatedRequest'],
          'extra_slots': {'allowed': True},
-         'from_schema': 'https://w3id.org/lmodel/mcp'})
+         'from_schema': 'https://w3id.org/lmodel/mcp',
+         'in_subset': ['internal']})
 
     identifier: Union[int, str] = Field(default=..., description="""A uniquely identifying ID for a request in JSON-RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['id'],
          'any_of': [{'range': 'string'}, {'range': 'integer'}],
@@ -6725,6 +6789,9 @@ security decisions.""", json_schema_extra = { "linkml_meta": {'aliases': ['io.mo
 If absent, the server MUST NOT send any {@link LoggingMessageNotificationnotifications/message}
 notifications for this request. The client opts in to log messages by
 explicitly setting a level. Replaces the former `logging/setLevel` RPC.""", json_schema_extra = { "linkml_meta": {'aliases': ['io.modelcontextprotocol/logLevel'],
+         'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
+                       'Remains in the specification for at least twelve months; see '
+                       'the deprecated features registry.',
          'domain_of': ['McpRequestMetaObject']} })
     mcp_protocol_version: str = Field(default=..., description="""The MCP Protocol Version being used for this request. Required.
 
@@ -7386,7 +7453,8 @@ class McpResourceContents(ConfiguredBaseModel):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ResourceContents'],
          'extra_slots': {'allowed': True},
-         'from_schema': 'https://w3id.org/lmodel/mcp'})
+         'from_schema': 'https://w3id.org/lmodel/mcp',
+         'in_subset': ['internal']})
 
     meta: Optional[McpMetaObject] = Field(default=None, alias="_meta", description="""Represents the contents of a `_meta` field, which clients and servers use to attach additional metadata to their interactions.
 
@@ -7903,7 +7971,8 @@ class McpResourceRequestParams(McpRequestParams):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ResourceRequestParams'],
          'extra_slots': {'allowed': True},
-         'from_schema': 'https://w3id.org/lmodel/mcp'})
+         'from_schema': 'https://w3id.org/lmodel/mcp',
+         'in_subset': ['internal']})
 
     meta: McpRequestMetaObject = Field(default=..., alias="_meta", description="""Extends {@link MetaObject} with additional request-specific fields. All key naming rules from `MetaObject` apply.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBlobResourceContents',
@@ -8539,7 +8608,8 @@ class McpCacheableResult(McpResult):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:CacheableResult'],
          'extra_slots': {'allowed': True},
-         'from_schema': 'https://w3id.org/lmodel/mcp'})
+         'from_schema': 'https://w3id.org/lmodel/mcp',
+         'in_subset': ['internal']})
 
     meta: Optional[McpResultMetaObject] = Field(default=None, alias="_meta", description="""Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBlobResourceContents',
@@ -9020,7 +9090,8 @@ class McpClientResult(McpEmptyResult):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ClientResult'],
          'extra_slots': {'allowed': True},
-         'from_schema': 'https://w3id.org/lmodel/mcp'})
+         'from_schema': 'https://w3id.org/lmodel/mcp',
+         'in_subset': ['internal']})
 
     meta: Optional[McpResultMetaObject] = Field(default=None, alias="_meta", description="""Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBlobResourceContents',
@@ -9294,7 +9365,8 @@ class McpPaginatedResult(McpResult):
     """
     linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:PaginatedResult'],
          'extra_slots': {'allowed': True},
-         'from_schema': 'https://w3id.org/lmodel/mcp'})
+         'from_schema': 'https://w3id.org/lmodel/mcp',
+         'in_subset': ['internal']})
 
     meta: Optional[McpResultMetaObject] = Field(default=None, alias="_meta", description="""Extends {@link MetaObject} with additional result-specific fields. All key naming rules from `MetaObject` apply.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpAudioContent',
                        'McpBlobResourceContents',
@@ -9976,7 +10048,10 @@ class McpRoot(ConfiguredBaseModel):
     """
     Represents a root directory or file that the server can operate on.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:Root'],
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
+                       'Remains in the specification for at least twelve months; see '
+                       'the deprecated features registry.',
+         'exact_mappings': ['mcp_schema:Root'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
          'in_subset': ['roots_list'],
@@ -10086,7 +10161,10 @@ class McpSamplingMessage(ConfiguredBaseModel):
     """
     Describes a message issued to or received from an LLM API.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:SamplingMessage'],
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
+                       'Remains in the specification for at least twelve months; see '
+                       'the deprecated features registry.',
+         'exact_mappings': ['mcp_schema:SamplingMessage'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
          'in_subset': ['sampling_createmessage']})
@@ -10177,7 +10255,10 @@ class McpCreateMessageResult(McpSamplingMessage):
     The client should inform the user before returning the sampled message, to allow them
     to inspect the response (human in the loop) and decide whether to allow the server to see it.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:CreateMessageResult'],
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
+                       'Remains in the specification for at least twelve months; see '
+                       'the deprecated features registry.',
+         'exact_mappings': ['mcp_schema:CreateMessageResult'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
          'in_subset': ['sampling_createmessage']})
@@ -10281,6 +10362,9 @@ class McpSamplingMessageContentBlock(ConfiguredBaseModel):
                     {'is_a': 'McpAudioContent'},
                     {'is_a': 'McpToolUseContent'},
                     {'is_a': 'McpToolResultContent'}],
+         'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
+                       'Remains in the specification for at least twelve months; see '
+                       'the deprecated features registry.',
          'exact_mappings': ['mcp_schema:SamplingMessageContentBlock'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
@@ -10306,7 +10390,10 @@ objects. An empty object indicates support with no settings.
 
 Keys MUST follow the {@link MetaObject`_meta` key naming rules}, with a
 mandatory prefix.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpClientCapabilities', 'McpServerCapabilities']} })
-    logging: Optional[McpJSONObject] = Field(default=None, description="""Present if the server supports sending log messages to the client.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpServerCapabilities']} })
+    logging: Optional[McpJSONObject] = Field(default=None, description="""Present if the server supports sending log messages to the client.""", json_schema_extra = { "linkml_meta": {'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
+                       'Remains in the specification for at least twelve months; see '
+                       'the deprecated features registry.',
+         'domain_of': ['McpServerCapabilities']} })
     prompts: Optional[McpServerCapabilitiesPrompts] = Field(default=None, description="""Present if the server offers any prompt templates.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpListPromptsResult', 'McpServerCapabilities']} })
     resources: Optional[McpServerCapabilitiesResources] = Field(default=None, description="""Present if the server offers any resources to read.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpListResourcesResult', 'McpServerCapabilities']} })
     tools: Optional[McpServerCapabilitiesTools] = Field(default=None, description="""Present if the server offers any tools to call.""", json_schema_extra = { "linkml_meta": {'domain_of': ['McpClientCapabilitiesSampling',
@@ -10401,7 +10488,8 @@ class McpServerNotification(ConfiguredBaseModel):
                     {'is_a': 'McpLoggingMessageNotification'}],
          'exact_mappings': ['mcp_schema:ServerNotification'],
          'extra_slots': {'allowed': True},
-         'from_schema': 'https://w3id.org/lmodel/mcp'})
+         'from_schema': 'https://w3id.org/lmodel/mcp',
+         'in_subset': ['internal']})
 
     pass
 
@@ -10424,7 +10512,8 @@ class McpServerResult(ConfiguredBaseModel):
                     {'is_a': 'McpCompleteResult'}],
          'exact_mappings': ['mcp_schema:ServerResult'],
          'extra_slots': {'allowed': True},
-         'from_schema': 'https://w3id.org/lmodel/mcp'})
+         'from_schema': 'https://w3id.org/lmodel/mcp',
+         'in_subset': ['internal']})
 
     pass
 
@@ -10437,7 +10526,8 @@ class McpSingleSelectEnumSchema(ConfiguredBaseModel):
                     {'is_a': 'McpTitledSingleSelectEnumSchema'}],
          'exact_mappings': ['mcp_schema:SingleSelectEnumSchema'],
          'extra_slots': {'allowed': True},
-         'from_schema': 'https://w3id.org/lmodel/mcp'})
+         'from_schema': 'https://w3id.org/lmodel/mcp',
+         'in_subset': ['elicitation_create']})
 
     pass
 
@@ -11861,7 +11951,10 @@ class McpToolChoice(ConfiguredBaseModel):
     """
     Controls tool selection behavior for sampling requests.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ToolChoice'],
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
+                       'Remains in the specification for at least twelve months; see '
+                       'the deprecated features registry.',
+         'exact_mappings': ['mcp_schema:ToolChoice'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
          'in_subset': ['sampling_createmessage']})
@@ -12050,7 +12143,10 @@ class McpToolResultContent(ConfiguredBaseModel):
     """
     The result of a tool use, provided by the user back to the assistant.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ToolResultContent'],
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
+                       'Remains in the specification for at least twelve months; see '
+                       'the deprecated features registry.',
+         'exact_mappings': ['mcp_schema:ToolResultContent'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
          'in_subset': ['sampling_createmessage']})
@@ -12151,7 +12247,10 @@ class McpToolUseContent(ConfiguredBaseModel):
     """
     A request from the assistant to call a tool.
     """
-    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'exact_mappings': ['mcp_schema:ToolUseContent'],
+    linkml_meta: ClassVar[LinkMLMeta] = LinkMLMeta({'deprecated': 'Deprecated as of protocol version 2026-07-28 (SEP-2577). '
+                       'Remains in the specification for at least twelve months; see '
+                       'the deprecated features registry.',
+         'exact_mappings': ['mcp_schema:ToolUseContent'],
          'extra_slots': {'allowed': True},
          'from_schema': 'https://w3id.org/lmodel/mcp',
          'in_subset': ['sampling_createmessage'],

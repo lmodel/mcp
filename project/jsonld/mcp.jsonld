@@ -41,7 +41,7 @@
     {
       "name": "common_types",
       "definition_uri": "https://w3id.org/lmodel/mcp/CommonTypes",
-      "description": "The definitions schema.ts files under Common Types.",
+      "description": "The definitions schema.ts tags `@category Common Types`.",
       "title": "Common Types",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -49,7 +49,7 @@
     {
       "name": "completion_complete",
       "definition_uri": "https://w3id.org/lmodel/mcp/CompletionComplete",
-      "description": "The definitions schema.ts files under `completion/complete`.",
+      "description": "The definitions schema.ts tags `@category completion/complete`.",
       "title": "completion/complete",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -57,7 +57,7 @@
     {
       "name": "content",
       "definition_uri": "https://w3id.org/lmodel/mcp/Content",
-      "description": "The definitions schema.ts files under Content.",
+      "description": "The definitions schema.ts tags `@category Content`.",
       "title": "Content",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -65,7 +65,7 @@
     {
       "name": "elicitation_create",
       "definition_uri": "https://w3id.org/lmodel/mcp/ElicitationCreate",
-      "description": "The definitions schema.ts files under `elicitation/create`.",
+      "description": "The definitions schema.ts tags `@category elicitation/create`.",
       "title": "elicitation/create",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -73,15 +73,23 @@
     {
       "name": "errors",
       "definition_uri": "https://w3id.org/lmodel/mcp/Errors",
-      "description": "The definitions schema.ts files under Errors.",
+      "description": "The definitions schema.ts tags `@category Errors`.",
       "title": "Errors",
+      "from_schema": "https://w3id.org/lmodel/mcp",
+      "@type": "SubsetDefinition"
+    },
+    {
+      "name": "internal",
+      "definition_uri": "https://w3id.org/lmodel/mcp/Internal",
+      "description": "The definitions schema.ts tags `@internal`.",
+      "title": "internal",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
     },
     {
       "name": "json_rpc",
       "definition_uri": "https://w3id.org/lmodel/mcp/JsonRpc",
-      "description": "The definitions schema.ts files under JSON-RPC.",
+      "description": "The definitions schema.ts tags `@category JSON-RPC`.",
       "title": "JSON-RPC",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -89,7 +97,7 @@
     {
       "name": "multi_round_trip",
       "definition_uri": "https://w3id.org/lmodel/mcp/MultiRoundTrip",
-      "description": "The definitions schema.ts files under Multi Round-Trip.",
+      "description": "The definitions schema.ts tags `@category Multi Round-Trip`.",
       "title": "Multi Round-Trip",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -97,7 +105,7 @@
     {
       "name": "notifications_cancelled",
       "definition_uri": "https://w3id.org/lmodel/mcp/NotificationsCancelled",
-      "description": "The definitions schema.ts files under `notifications/cancelled`.",
+      "description": "The definitions schema.ts tags `@category notifications/cancelled`.",
       "title": "notifications/cancelled",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -105,7 +113,7 @@
     {
       "name": "notifications_message",
       "definition_uri": "https://w3id.org/lmodel/mcp/NotificationsMessage",
-      "description": "The definitions schema.ts files under `notifications/message`.",
+      "description": "The definitions schema.ts tags `@category notifications/message`.",
       "title": "notifications/message",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -113,7 +121,7 @@
     {
       "name": "notifications_progress",
       "definition_uri": "https://w3id.org/lmodel/mcp/NotificationsProgress",
-      "description": "The definitions schema.ts files under `notifications/progress`.",
+      "description": "The definitions schema.ts tags `@category notifications/progress`.",
       "title": "notifications/progress",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -121,7 +129,7 @@
     {
       "name": "notifications_prompts_list_changed",
       "definition_uri": "https://w3id.org/lmodel/mcp/NotificationsPromptsListChanged",
-      "description": "The definitions schema.ts files under `notifications/prompts/list_changed`.",
+      "description": "The definitions schema.ts tags `@category notifications/prompts/list_changed`.",
       "title": "notifications/prompts/list_changed",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -129,7 +137,7 @@
     {
       "name": "notifications_resources_list_changed",
       "definition_uri": "https://w3id.org/lmodel/mcp/NotificationsResourcesListChanged",
-      "description": "The definitions schema.ts files under `notifications/resources/list_changed`.",
+      "description": "The definitions schema.ts tags `@category notifications/resources/list_changed`.",
       "title": "notifications/resources/list_changed",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -137,7 +145,7 @@
     {
       "name": "notifications_resources_updated",
       "definition_uri": "https://w3id.org/lmodel/mcp/NotificationsResourcesUpdated",
-      "description": "The definitions schema.ts files under `notifications/resources/updated`.",
+      "description": "The definitions schema.ts tags `@category notifications/resources/updated`.",
       "title": "notifications/resources/updated",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -145,7 +153,7 @@
     {
       "name": "notifications_subscriptions_acknowledged",
       "definition_uri": "https://w3id.org/lmodel/mcp/NotificationsSubscriptionsAcknowledged",
-      "description": "The definitions schema.ts files under `notifications/subscriptions/acknowledged`.",
+      "description": "The definitions schema.ts tags `@category notifications/subscriptions/acknowledged`.",
       "title": "notifications/subscriptions/acknowledged",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -153,7 +161,7 @@
     {
       "name": "notifications_tools_list_changed",
       "definition_uri": "https://w3id.org/lmodel/mcp/NotificationsToolsListChanged",
-      "description": "The definitions schema.ts files under `notifications/tools/list_changed`.",
+      "description": "The definitions schema.ts tags `@category notifications/tools/list_changed`.",
       "title": "notifications/tools/list_changed",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -161,7 +169,7 @@
     {
       "name": "prompts_get",
       "definition_uri": "https://w3id.org/lmodel/mcp/PromptsGet",
-      "description": "The definitions schema.ts files under `prompts/get`.",
+      "description": "The definitions schema.ts tags `@category prompts/get`.",
       "title": "prompts/get",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -169,7 +177,7 @@
     {
       "name": "prompts_list",
       "definition_uri": "https://w3id.org/lmodel/mcp/PromptsList",
-      "description": "The definitions schema.ts files under `prompts/list`.",
+      "description": "The definitions schema.ts tags `@category prompts/list`.",
       "title": "prompts/list",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -177,7 +185,7 @@
     {
       "name": "resources_list",
       "definition_uri": "https://w3id.org/lmodel/mcp/ResourcesList",
-      "description": "The definitions schema.ts files under `resources/list`.",
+      "description": "The definitions schema.ts tags `@category resources/list`.",
       "title": "resources/list",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -185,7 +193,7 @@
     {
       "name": "resources_read",
       "definition_uri": "https://w3id.org/lmodel/mcp/ResourcesRead",
-      "description": "The definitions schema.ts files under `resources/read`.",
+      "description": "The definitions schema.ts tags `@category resources/read`.",
       "title": "resources/read",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -193,7 +201,7 @@
     {
       "name": "resources_templates_list",
       "definition_uri": "https://w3id.org/lmodel/mcp/ResourcesTemplatesList",
-      "description": "The definitions schema.ts files under `resources/templates/list`.",
+      "description": "The definitions schema.ts tags `@category resources/templates/list`.",
       "title": "resources/templates/list",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -201,7 +209,7 @@
     {
       "name": "roots_list",
       "definition_uri": "https://w3id.org/lmodel/mcp/RootsList",
-      "description": "The definitions schema.ts files under `roots/list`.",
+      "description": "The definitions schema.ts tags `@category roots/list`.",
       "title": "roots/list",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -209,7 +217,7 @@
     {
       "name": "sampling_createmessage",
       "definition_uri": "https://w3id.org/lmodel/mcp/SamplingCreatemessage",
-      "description": "The definitions schema.ts files under `sampling/createMessage`.",
+      "description": "The definitions schema.ts tags `@category sampling/createMessage`.",
       "title": "sampling/createMessage",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -217,7 +225,7 @@
     {
       "name": "server_discover",
       "definition_uri": "https://w3id.org/lmodel/mcp/ServerDiscover",
-      "description": "The definitions schema.ts files under `server/discover`.",
+      "description": "The definitions schema.ts tags `@category server/discover`.",
       "title": "server/discover",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -225,7 +233,7 @@
     {
       "name": "subscriptions_listen",
       "definition_uri": "https://w3id.org/lmodel/mcp/SubscriptionsListen",
-      "description": "The definitions schema.ts files under `subscriptions/listen`.",
+      "description": "The definitions schema.ts tags `@category subscriptions/listen`.",
       "title": "subscriptions/listen",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -233,7 +241,7 @@
     {
       "name": "tools_call",
       "definition_uri": "https://w3id.org/lmodel/mcp/ToolsCall",
-      "description": "The definitions schema.ts files under `tools/call`.",
+      "description": "The definitions schema.ts tags `@category tools/call`.",
       "title": "tools/call",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -241,7 +249,7 @@
     {
       "name": "tools_list",
       "definition_uri": "https://w3id.org/lmodel/mcp/ToolsList",
-      "description": "The definitions schema.ts files under `tools/list`.",
+      "description": "The definitions schema.ts tags `@category tools/list`.",
       "title": "tools/list",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "@type": "SubsetDefinition"
@@ -265,6 +273,9 @@
       "name": "McpCursor",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpCursor",
       "description": "An opaque token used to represent a cursor for pagination.",
+      "in_subset": [
+        "common_types"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:Cursor"
@@ -280,6 +291,9 @@
       "description": "A progress token, used to associate progress notifications with the original request.",
       "comments": [
         "linkml 1.12.1's JSON Schema generator reads a type's typeof and not its union_of, so each slot that takes this value states the union in its own any_of."
+      ],
+      "in_subset": [
+        "common_types"
       ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
@@ -301,6 +315,9 @@
       "comments": [
         "linkml 1.12.1's JSON Schema generator reads a type's typeof and not its union_of, so each slot that takes this value states the union in its own any_of."
       ],
+      "in_subset": [
+        "common_types"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:RequestId"
@@ -318,6 +335,9 @@
       "name": "McpResultType",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpResultType",
       "description": "Indicates the type of a {@link Result} object, allowing the client to\ndetermine how to parse the response.\n\ncomplete - the request completed successfully and the result contains the final content.\ninput_required - the request requires additional input and the result contains an {@link InputRequiredResult} object with instructions for the client to provide additional input before retrying the original request.",
+      "in_subset": [
+        "common_types"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:ResultType"
@@ -654,6 +674,9 @@
       "name": "McpCacheScope",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpCacheScope",
       "description": "The values MCP allows for `cacheScope`.",
+      "in_subset": [
+        "internal"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:CacheableResult/properties/cacheScope"
@@ -680,13 +703,15 @@
       ],
       "permissible_values": [
         {
-          "text": "allServers"
+          "text": "allServers",
+          "deprecated": "The `\"thisServer\"` and `\"allServers\"` values are deprecated as of protocol version 2025-11-25 (SEP-2596) and will be removed no later than the Sampling feature itself (SEP-2577). Omit this field or use `\"none\"`."
         },
         {
           "text": "none"
         },
         {
-          "text": "thisServer"
+          "text": "thisServer",
+          "deprecated": "The `\"thisServer\"` and `\"allServers\"` values are deprecated as of protocol version 2025-11-25 (SEP-2596) and will be removed no later than the Sampling feature itself (SEP-2577). Omit this field or use `\"none\"`."
         }
       ]
     },
@@ -737,6 +762,7 @@
       "name": "McpLoggingLevel",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpLoggingLevel",
       "description": "The severity of a log message.\n\nThese map to syslog message severities, as specified in RFC-5424:\nhttps://datatracker.ietf.org/doc/html/rfc5424#section-6.2.1",
+      "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
       "in_subset": [
         "common_types"
       ],
@@ -1237,7 +1263,7 @@
       "domain_of": [
         "McpCacheableResult"
       ],
-      "range": "string",
+      "range": "McpResultType",
       "required": true,
       "@type": "SlotDefinition"
     },
@@ -1443,7 +1469,7 @@
       "domain_of": [
         "McpCallToolResult"
       ],
-      "range": "string",
+      "range": "McpResultType",
       "required": true,
       "@type": "SlotDefinition"
     },
@@ -1677,6 +1703,7 @@
     {
       "name": "mcpClientCapabilities__roots",
       "description": "Present if the client supports listing roots.",
+      "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "slot_uri": "https://w3id.org/lmodel/mcp/roots",
       "alias": "roots",
@@ -1692,6 +1719,7 @@
     {
       "name": "mcpClientCapabilities__sampling",
       "description": "Present if the client supports sampling from an LLM.",
+      "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "slot_uri": "https://w3id.org/lmodel/mcp/sampling",
       "alias": "sampling",
@@ -2033,7 +2061,7 @@
       "domain_of": [
         "McpCompleteResult"
       ],
-      "range": "string",
+      "range": "McpResultType",
       "required": true,
       "@type": "SlotDefinition"
     },
@@ -2171,6 +2199,7 @@
     {
       "name": "mcpCreateMessageRequestParams__include_context",
       "description": "A request to include context from one or more MCP servers (including the caller), to be attached to the prompt.\nThe client MAY ignore this request.\n\nDefault is `\"none\"`. The values `\"thisServer\"` and `\"allServers\"` are deprecated (SEP-2596): servers SHOULD\nomit this field or use `\"none\"`, and SHOULD only use the deprecated values if the client declares\n{@link ClientCapabilities.sampling.context}.",
+      "deprecated": "The `\"thisServer\"` and `\"allServers\"` values are deprecated as of protocol version 2025-11-25 (SEP-2596) and will be removed no later than the Sampling feature itself (SEP-2577). Omit this field or use `\"none\"`.",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "slot_uri": "https://w3id.org/lmodel/mcp/includeContext",
       "alias": "includeContext",
@@ -2552,7 +2581,7 @@
       "domain_of": [
         "McpDiscoverResult"
       ],
-      "range": "string",
+      "range": "McpResultType",
       "required": true,
       "@type": "SlotDefinition"
     },
@@ -3136,7 +3165,7 @@
       "domain_of": [
         "McpGetPromptResult"
       ],
-      "range": "string",
+      "range": "McpResultType",
       "required": true,
       "@type": "SlotDefinition"
     },
@@ -3506,7 +3535,7 @@
       "domain_of": [
         "McpInputRequiredResult"
       ],
-      "range": "string",
+      "range": "McpResultType",
       "required": true,
       "@type": "SlotDefinition"
     },
@@ -4088,7 +4117,7 @@
       "domain_of": [
         "McpListPromptsResult"
       ],
-      "range": "string",
+      "range": "McpCursor",
       "@type": "SlotDefinition"
     },
     {
@@ -4118,7 +4147,7 @@
       "domain_of": [
         "McpListPromptsResult"
       ],
-      "range": "string",
+      "range": "McpResultType",
       "required": true,
       "@type": "SlotDefinition"
     },
@@ -4307,7 +4336,7 @@
       "domain_of": [
         "McpListResourceTemplatesResult"
       ],
-      "range": "string",
+      "range": "McpCursor",
       "@type": "SlotDefinition"
     },
     {
@@ -4337,7 +4366,7 @@
       "domain_of": [
         "McpListResourceTemplatesResult"
       ],
-      "range": "string",
+      "range": "McpResultType",
       "required": true,
       "@type": "SlotDefinition"
     },
@@ -4526,7 +4555,7 @@
       "domain_of": [
         "McpListResourcesResult"
       ],
-      "range": "string",
+      "range": "McpCursor",
       "@type": "SlotDefinition"
     },
     {
@@ -4556,7 +4585,7 @@
       "domain_of": [
         "McpListResourcesResult"
       ],
-      "range": "string",
+      "range": "McpResultType",
       "required": true,
       "@type": "SlotDefinition"
     },
@@ -4807,7 +4836,7 @@
       "domain_of": [
         "McpListToolsResult"
       ],
-      "range": "string",
+      "range": "McpCursor",
       "@type": "SlotDefinition"
     },
     {
@@ -4820,7 +4849,7 @@
       "domain_of": [
         "McpListToolsResult"
       ],
-      "range": "string",
+      "range": "McpResultType",
       "required": true,
       "@type": "SlotDefinition"
     },
@@ -5451,7 +5480,7 @@
       "domain_of": [
         "McpPaginatedRequestParams"
       ],
-      "range": "string",
+      "range": "McpCursor",
       "@type": "SlotDefinition"
     },
     {
@@ -5479,7 +5508,7 @@
       "domain_of": [
         "McpPaginatedResult"
       ],
-      "range": "string",
+      "range": "McpCursor",
       "@type": "SlotDefinition"
     },
     {
@@ -5492,7 +5521,7 @@
       "domain_of": [
         "McpPaginatedResult"
       ],
-      "range": "string",
+      "range": "McpResultType",
       "required": true,
       "@type": "SlotDefinition"
     },
@@ -6017,7 +6046,7 @@
       "domain_of": [
         "McpReadResourceResult"
       ],
-      "range": "string",
+      "range": "McpResultType",
       "required": true,
       "@type": "SlotDefinition"
     },
@@ -6171,6 +6200,7 @@
     {
       "name": "mcpRequestMetaObject__mcp_log_level",
       "description": "The desired log level for this request. Optional.\n\nIf absent, the server MUST NOT send any {@link LoggingMessageNotificationnotifications/message}\nnotifications for this request. The client opts in to log messages by\nexplicitly setting a level. Replaces the former `logging/setLevel` RPC.",
+      "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "aliases": [
         "io.modelcontextprotocol/logLevel"
@@ -6752,7 +6782,7 @@
       "domain_of": [
         "McpResult"
       ],
-      "range": "string",
+      "range": "McpResultType",
       "required": true,
       "@type": "SlotDefinition"
     },
@@ -6922,6 +6952,7 @@
     {
       "name": "mcpServerCapabilities__logging",
       "description": "Present if the server supports sending log messages to the client.",
+      "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
       "from_schema": "https://w3id.org/lmodel/mcp",
       "slot_uri": "https://w3id.org/lmodel/mcp/logging",
       "alias": "logging",
@@ -7362,7 +7393,7 @@
       "domain_of": [
         "McpSubscriptionsListenResult"
       ],
-      "range": "string",
+      "range": "McpResultType",
       "required": true,
       "@type": "SlotDefinition"
     },
@@ -9670,6 +9701,9 @@
       "name": "McpBaseMetadata",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpBaseMetadata",
       "description": "Base interface for metadata with name (identifier) and title (display name) properties.",
+      "in_subset": [
+        "internal"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:BaseMetadata"
@@ -9788,6 +9822,9 @@
       "name": "McpCacheableResult",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpCacheableResult",
       "description": "A result that supports a time-to-live (TTL) hint for client-side caching.",
+      "in_subset": [
+        "internal"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:CacheableResult"
@@ -9820,6 +9857,7 @@
           "name": "result_type",
           "description": "Indicates the type of the result, which allows the client to determine\nhow to parse the result object.\n\nServers implementing this protocol version MUST include this field.\nFor backward compatibility, when a client receives a result from a\nserver implementing an earlier protocol version (which does not include\n`resultType`), the client MUST treat the absent field as `\"complete\"`.",
           "alias": "resultType",
+          "range": "McpResultType",
           "required": true,
           "@type": "SlotDefinition"
         },
@@ -10012,6 +10050,7 @@
           "name": "result_type",
           "description": "Indicates the type of the result, which allows the client to determine\nhow to parse the result object.\n\nServers implementing this protocol version MUST include this field.\nFor backward compatibility, when a client receives a result from a\nserver implementing an earlier protocol version (which does not include\n`resultType`), the client MUST treat the absent field as `\"complete\"`.",
           "alias": "resultType",
+          "range": "McpResultType",
           "required": true,
           "@type": "SlotDefinition"
         },
@@ -10247,12 +10286,14 @@
         {
           "name": "roots",
           "description": "Present if the client supports listing roots.",
+          "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
           "range": "McpClientCapabilitiesRoots",
           "@type": "SlotDefinition"
         },
         {
           "name": "sampling",
           "description": "Present if the client supports sampling from an LLM.",
+          "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
           "range": "McpClientCapabilitiesSampling",
           "@type": "SlotDefinition"
         }
@@ -10411,6 +10452,9 @@
       "name": "McpClientNotification",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpClientNotification",
       "description": "This notification is sent by the client to indicate that it is cancelling a request it previously issued.\n\nOn stdio, the server also sends this notification, solely to terminate a {@link SubscriptionsListenRequestsubscriptions/listen} stream: it references the ID of the `subscriptions/listen` request that opened the stream. Servers MUST NOT use this notification to cancel any other request.\n\nThe request SHOULD still be in-flight, but due to communication latency, it is always possible that this notification MAY arrive after the request has already finished.\n\nThis notification indicates that the result will be unused, so any associated processing SHOULD cease.",
+      "in_subset": [
+        "internal"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:ClientNotification"
@@ -10456,6 +10500,9 @@
       "name": "McpClientRequest",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpClientRequest",
       "description": "One of `DiscoverRequest`, `ListResourcesRequest`, `ListResourceTemplatesRequest`, `ReadResourceRequest`, `SubscriptionsListenRequest`, `ListPromptsRequest`, `GetPromptRequest`, `ListToolsRequest`, `CallToolRequest`, `CompleteRequest`.",
+      "in_subset": [
+        "internal"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:ClientRequest"
@@ -10514,6 +10561,9 @@
       "name": "McpClientResult",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpClientResult",
       "description": "Common result fields.",
+      "in_subset": [
+        "internal"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:ClientResult"
@@ -10787,6 +10837,7 @@
           "name": "result_type",
           "description": "Indicates the type of the result, which allows the client to determine\nhow to parse the result object.\n\nServers implementing this protocol version MUST include this field.\nFor backward compatibility, when a client receives a result from a\nserver implementing an earlier protocol version (which does not include\n`resultType`), the client MUST treat the absent field as `\"complete\"`.",
           "alias": "resultType",
+          "range": "McpResultType",
           "required": true,
           "@type": "SlotDefinition"
         }
@@ -10950,6 +11001,7 @@
       "name": "McpCreateMessageRequest",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpCreateMessageRequest",
       "description": "A request from the server to sample an LLM via the client. The client has full discretion over which model to select. The client should also inform the user before beginning sampling, to allow them to inspect the request (human in the loop) and decide whether to approve it.",
+      "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
       "in_subset": [
         "sampling_createmessage"
       ],
@@ -10989,6 +11041,7 @@
       "name": "McpCreateMessageRequestParams",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpCreateMessageRequestParams",
       "description": "Parameters for a `sampling/createMessage` request.",
+      "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
       "in_subset": [
         "sampling_createmessage"
       ],
@@ -11013,6 +11066,7 @@
         {
           "name": "include_context",
           "description": "A request to include context from one or more MCP servers (including the caller), to be attached to the prompt.\nThe client MAY ignore this request.\n\nDefault is `\"none\"`. The values `\"thisServer\"` and `\"allServers\"` are deprecated (SEP-2596): servers SHOULD\nomit this field or use `\"none\"`, and SHOULD only use the deprecated values if the client declares\n{@link ClientCapabilities.sampling.context}.",
+          "deprecated": "The `\"thisServer\"` and `\"allServers\"` values are deprecated as of protocol version 2025-11-25 (SEP-2596) and will be removed no later than the Sampling feature itself (SEP-2577). Omit this field or use `\"none\"`.",
           "alias": "includeContext",
           "range": "McpCreateMessageRequestParamsIncludeContext",
           "@type": "SlotDefinition"
@@ -11093,6 +11147,7 @@
       "name": "McpCreateMessageResult",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpCreateMessageResult",
       "description": "The result returned by the client for a {@link CreateMessageRequestsampling/createMessage} request.\nThe client should inform the user before returning the sampled message, to allow them\nto inspect the response (human in the loop) and decide whether to allow the server to see it.",
+      "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
       "in_subset": [
         "sampling_createmessage"
       ],
@@ -11300,6 +11355,7 @@
           "name": "result_type",
           "description": "Indicates the type of the result, which allows the client to determine\nhow to parse the result object.\n\nServers implementing this protocol version MUST include this field.\nFor backward compatibility, when a client receives a result from a\nserver implementing an earlier protocol version (which does not include\n`resultType`), the client MUST treat the absent field as `\"complete\"`.",
           "alias": "resultType",
+          "range": "McpResultType",
           "required": true,
           "@type": "SlotDefinition"
         },
@@ -11799,6 +11855,9 @@
       "name": "McpEnumSchema",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpEnumSchema",
       "description": "One of `UntitledSingleSelectEnumSchema`, `TitledSingleSelectEnumSchema`, `UntitledMultiSelectEnumSchema`, `TitledMultiSelectEnumSchema`, `LegacyTitledEnumSchema`.",
+      "in_subset": [
+        "elicitation_create"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:EnumSchema"
@@ -12064,6 +12123,7 @@
           "name": "result_type",
           "description": "Indicates the type of the result, which allows the client to determine\nhow to parse the result object.\n\nServers implementing this protocol version MUST include this field.\nFor backward compatibility, when a client receives a result from a\nserver implementing an earlier protocol version (which does not include\n`resultType`), the client MUST treat the absent field as `\"complete\"`.",
           "alias": "resultType",
+          "range": "McpResultType",
           "required": true,
           "@type": "SlotDefinition"
         }
@@ -12294,6 +12354,9 @@
       "name": "McpIcons",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpIcons",
       "description": "Base interface to add `icons` property.",
+      "in_subset": [
+        "internal"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:Icons"
@@ -12436,6 +12499,9 @@
       "name": "McpInputRequest",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpInputRequest",
       "description": "One of `CreateMessageRequest`, `ListRootsRequest`, `ElicitRequest`.",
+      "in_subset": [
+        "internal"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:InputRequest"
@@ -12531,6 +12597,7 @@
           "name": "result_type",
           "description": "Indicates the type of the result, which allows the client to determine\nhow to parse the result object.\n\nServers implementing this protocol version MUST include this field.\nFor backward compatibility, when a client receives a result from a\nserver implementing an earlier protocol version (which does not include\n`resultType`), the client MUST treat the absent field as `\"complete\"`.",
           "alias": "resultType",
+          "range": "McpResultType",
           "required": true,
           "@type": "SlotDefinition"
         }
@@ -12568,6 +12635,9 @@
       "name": "McpInputResponse",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpInputResponse",
       "description": "One of `CreateMessageResult`, `ListRootsResult`, `ElicitResult`.",
+      "in_subset": [
+        "internal"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:InputResponse"
@@ -13146,10 +13216,12 @@
       "name": "McpLegacyTitledEnumSchema",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpLegacyTitledEnumSchema",
       "description": "Use {@link TitledSingleSelectEnumSchema} instead.\nThis interface will be removed in a future version.",
+      "deprecated": "Use {@link TitledSingleSelectEnumSchema} instead. This interface will be removed in a future version.",
       "in_subset": [
         "elicitation_create"
       ],
       "from_schema": "https://w3id.org/lmodel/mcp",
+      "deprecated_element_has_possible_replacement": "mcp:McpTitledSingleSelectEnumSchema",
       "exact_mappings": [
         "mcp_schema:LegacyTitledEnumSchema"
       ],
@@ -13312,6 +13384,7 @@
           "name": "next_cursor",
           "description": "An opaque token representing the pagination position after the last returned result.\nIf present, there may be more results available.",
           "alias": "nextCursor",
+          "range": "McpCursor",
           "@type": "SlotDefinition"
         },
         {
@@ -13327,6 +13400,7 @@
           "name": "result_type",
           "description": "Indicates the type of the result, which allows the client to determine\nhow to parse the result object.\n\nServers implementing this protocol version MUST include this field.\nFor backward compatibility, when a client receives a result from a\nserver implementing an earlier protocol version (which does not include\n`resultType`), the client MUST treat the absent field as `\"complete\"`.",
           "alias": "resultType",
+          "range": "McpResultType",
           "required": true,
           "@type": "SlotDefinition"
         },
@@ -13519,6 +13593,7 @@
           "name": "next_cursor",
           "description": "An opaque token representing the pagination position after the last returned result.\nIf present, there may be more results available.",
           "alias": "nextCursor",
+          "range": "McpCursor",
           "@type": "SlotDefinition"
         },
         {
@@ -13535,6 +13610,7 @@
           "name": "result_type",
           "description": "Indicates the type of the result, which allows the client to determine\nhow to parse the result object.\n\nServers implementing this protocol version MUST include this field.\nFor backward compatibility, when a client receives a result from a\nserver implementing an earlier protocol version (which does not include\n`resultType`), the client MUST treat the absent field as `\"complete\"`.",
           "alias": "resultType",
+          "range": "McpResultType",
           "required": true,
           "@type": "SlotDefinition"
         },
@@ -13727,6 +13803,7 @@
           "name": "next_cursor",
           "description": "An opaque token representing the pagination position after the last returned result.\nIf present, there may be more results available.",
           "alias": "nextCursor",
+          "range": "McpCursor",
           "@type": "SlotDefinition"
         },
         {
@@ -13742,6 +13819,7 @@
           "name": "result_type",
           "description": "Indicates the type of the result, which allows the client to determine\nhow to parse the result object.\n\nServers implementing this protocol version MUST include this field.\nFor backward compatibility, when a client receives a result from a\nserver implementing an earlier protocol version (which does not include\n`resultType`), the client MUST treat the absent field as `\"complete\"`.",
           "alias": "resultType",
+          "range": "McpResultType",
           "required": true,
           "@type": "SlotDefinition"
         },
@@ -13826,6 +13904,7 @@
       "name": "McpListRootsRequest",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpListRootsRequest",
       "description": "Sent from the server to request a list of root URIs from the client. Roots allow\nservers to ask for specific directories or files to operate on. A common example\nfor roots is providing a set of repositories or directories a server should operate\non.\n\nThis request is typically used when the server needs to understand the file system\nstructure or access specific locations that the client has permission to read from.",
+      "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
       "in_subset": [
         "roots_list"
       ],
@@ -13895,6 +13974,7 @@
       "name": "McpListRootsResult",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpListRootsResult",
       "description": "The result returned by the client for a {@link ListRootsRequestroots/list} request.\nThis result contains an array of {@link Root} objects, each representing a root directory\nor file that the server can operate on.",
+      "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
       "in_subset": [
         "roots_list"
       ],
@@ -14036,12 +14116,14 @@
           "name": "next_cursor",
           "description": "An opaque token representing the pagination position after the last returned result.\nIf present, there may be more results available.",
           "alias": "nextCursor",
+          "range": "McpCursor",
           "@type": "SlotDefinition"
         },
         {
           "name": "result_type",
           "description": "Indicates the type of the result, which allows the client to determine\nhow to parse the result object.\n\nServers implementing this protocol version MUST include this field.\nFor backward compatibility, when a client receives a result from a\nserver implementing an earlier protocol version (which does not include\n`resultType`), the client MUST treat the absent field as `\"complete\"`.",
           "alias": "resultType",
+          "range": "McpResultType",
           "required": true,
           "@type": "SlotDefinition"
         },
@@ -14135,6 +14217,7 @@
       "name": "McpLoggingMessageNotification",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpLoggingMessageNotification",
       "description": "JSONRPCNotification of a log message passed from server to client. The client opts in by setting `\"io.modelcontextprotocol/logLevel\"` in a request's `_meta`.",
+      "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
       "in_subset": [
         "notifications_message"
       ],
@@ -14183,6 +14266,7 @@
       "name": "McpLoggingMessageNotificationParams",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpLoggingMessageNotificationParams",
       "description": "Parameters for a `notifications/message` notification.",
+      "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
       "in_subset": [
         "notifications_message"
       ],
@@ -14436,6 +14520,7 @@
       "name": "McpModelHint",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpModelHint",
       "description": "Hints to use for model selection.\n\nKeys not declared here are currently left unspecified by the spec and are up\nto the client to interpret.",
+      "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
       "in_subset": [
         "sampling_createmessage"
       ],
@@ -14458,6 +14543,7 @@
       "name": "McpModelPreferences",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpModelPreferences",
       "description": "The server's preferences for model selection, requested of the client during sampling.\n\nBecause LLMs can vary along multiple dimensions, choosing the \"best\" model is\nrarely straightforward.  Different models excel in different areas\u2014some are\nfaster but less capable, others are more capable but more expensive, and so\non. This interface allows servers to express their priorities across multiple\ndimensions to help clients make an appropriate selection for their use case.\n\nThese preferences are always advisory. The client MAY ignore them. It is also\nup to the client to decide how to interpret these preferences and how to\nbalance them against other considerations.",
+      "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
       "in_subset": [
         "sampling_createmessage"
       ],
@@ -14520,6 +14606,9 @@
       "name": "McpMultiSelectEnumSchema",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpMultiSelectEnumSchema",
       "description": "One of `UntitledMultiSelectEnumSchema`, `TitledMultiSelectEnumSchema`.",
+      "in_subset": [
+        "elicitation_create"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:MultiSelectEnumSchema"
@@ -14546,6 +14635,9 @@
       "name": "McpNotification",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpNotification",
       "description": "MCP's `Notification`.",
+      "in_subset": [
+        "internal"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:Notification"
@@ -14711,6 +14803,9 @@
       "name": "McpPaginatedRequest",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpPaginatedRequest",
       "description": "MCP's `PaginatedRequest`.",
+      "in_subset": [
+        "internal"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:PaginatedRequest"
@@ -14800,6 +14895,7 @@
         {
           "name": "cursor",
           "description": "An opaque token representing the current pagination position.\nIf provided, the server should return results starting after this cursor.",
+          "range": "McpCursor",
           "@type": "SlotDefinition"
         }
       ],
@@ -14814,6 +14910,9 @@
       "name": "McpPaginatedResult",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpPaginatedResult",
       "description": "MCP's `PaginatedResult`.",
+      "in_subset": [
+        "internal"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:PaginatedResult"
@@ -14837,12 +14936,14 @@
           "name": "next_cursor",
           "description": "An opaque token representing the pagination position after the last returned result.\nIf present, there may be more results available.",
           "alias": "nextCursor",
+          "range": "McpCursor",
           "@type": "SlotDefinition"
         },
         {
           "name": "result_type",
           "description": "Indicates the type of the result, which allows the client to determine\nhow to parse the result object.\n\nServers implementing this protocol version MUST include this field.\nFor backward compatibility, when a client receives a result from a\nserver implementing an earlier protocol version (which does not include\n`resultType`), the client MUST treat the absent field as `\"complete\"`.",
           "alias": "resultType",
+          "range": "McpResultType",
           "required": true,
           "@type": "SlotDefinition"
         }
@@ -15472,6 +15573,7 @@
           "name": "result_type",
           "description": "Indicates the type of the result, which allows the client to determine\nhow to parse the result object.\n\nServers implementing this protocol version MUST include this field.\nFor backward compatibility, when a client receives a result from a\nserver implementing an earlier protocol version (which does not include\n`resultType`), the client MUST treat the absent field as `\"complete\"`.",
           "alias": "resultType",
+          "range": "McpResultType",
           "required": true,
           "@type": "SlotDefinition"
         },
@@ -15565,6 +15667,9 @@
       "name": "McpRequest",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpRequest",
       "description": "MCP's `Request`.",
+      "in_subset": [
+        "internal"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:Request"
@@ -15638,6 +15743,7 @@
         {
           "name": "mcp_log_level",
           "description": "The desired log level for this request. Optional.\n\nIf absent, the server MUST NOT send any {@link LoggingMessageNotificationnotifications/message}\nnotifications for this request. The client opts in to log messages by\nexplicitly setting a level. Replaces the former `logging/setLevel` RPC.",
+          "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
           "aliases": [
             "io.modelcontextprotocol/logLevel"
           ],
@@ -15789,6 +15895,9 @@
       "name": "McpResourceContents",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpResourceContents",
       "description": "The contents of a specific resource or sub-resource.",
+      "in_subset": [
+        "internal"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:ResourceContents"
@@ -15963,6 +16072,9 @@
       "name": "McpResourceRequestParams",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpResourceRequestParams",
       "description": "Common params for resource-related requests.",
+      "in_subset": [
+        "internal"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:ResourceRequestParams"
@@ -16225,6 +16337,7 @@
           "name": "result_type",
           "description": "Indicates the type of the result, which allows the client to determine\nhow to parse the result object.\n\nServers implementing this protocol version MUST include this field.\nFor backward compatibility, when a client receives a result from a\nserver implementing an earlier protocol version (which does not include\n`resultType`), the client MUST treat the absent field as `\"complete\"`.",
           "alias": "resultType",
+          "range": "McpResultType",
           "required": true,
           "@type": "SlotDefinition"
         }
@@ -16274,6 +16387,7 @@
       "name": "McpRoot",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpRoot",
       "description": "Represents a root directory or file that the server can operate on.",
+      "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
       "in_subset": [
         "roots_list"
       ],
@@ -16314,6 +16428,7 @@
       "name": "McpSamplingMessage",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpSamplingMessage",
       "description": "Describes a message issued to or received from an LLM API.",
+      "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
       "in_subset": [
         "sampling_createmessage"
       ],
@@ -16388,6 +16503,7 @@
       "name": "McpSamplingMessageContentBlock",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpSamplingMessageContentBlock",
       "description": "One of `TextContent`, `ImageContent`, `AudioContent`, `ToolUseContent`, `ToolResultContent`.",
+      "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
       "in_subset": [
         "sampling_createmessage"
       ],
@@ -16468,6 +16584,7 @@
         {
           "name": "logging",
           "description": "Present if the server supports sending log messages to the client.",
+          "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
           "range": "McpJSONObject",
           "@type": "SlotDefinition"
         },
@@ -16645,6 +16762,9 @@
       "name": "McpServerNotification",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpServerNotification",
       "description": "One of `CancelledNotification`, `ProgressNotification`, `ResourceListChangedNotification`, `SubscriptionsAcknowledgedNotification`, `ResourceUpdatedNotification`, `PromptListChangedNotification`, `ToolListChangedNotification`, `LoggingMessageNotification`.",
+      "in_subset": [
+        "internal"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:ServerNotification"
@@ -16695,6 +16815,9 @@
       "name": "McpServerResult",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpServerResult",
       "description": "One of `Result`, `InputRequiredResult`, `DiscoverResult`, `ListResourcesResult`, `ListResourceTemplatesResult`, `ReadResourceResult`, `SubscriptionsListenResult`, `ListPromptsResult`, `GetPromptResult`, `ListToolsResult`, `CallToolResult`, `CompleteResult`.",
+      "in_subset": [
+        "internal"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:ServerResult"
@@ -16761,6 +16884,9 @@
       "name": "McpSingleSelectEnumSchema",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpSingleSelectEnumSchema",
       "description": "One of `UntitledSingleSelectEnumSchema`, `TitledSingleSelectEnumSchema`.",
+      "in_subset": [
+        "elicitation_create"
+      ],
       "from_schema": "https://w3id.org/lmodel/mcp",
       "exact_mappings": [
         "mcp_schema:SingleSelectEnumSchema"
@@ -17130,6 +17256,7 @@
           "name": "result_type",
           "description": "Indicates the type of the result, which allows the client to determine\nhow to parse the result object.\n\nServers implementing this protocol version MUST include this field.\nFor backward compatibility, when a client receives a result from a\nserver implementing an earlier protocol version (which does not include\n`resultType`), the client MUST treat the absent field as `\"complete\"`.",
           "alias": "resultType",
+          "range": "McpResultType",
           "required": true,
           "@type": "SlotDefinition"
         }
@@ -17712,6 +17839,7 @@
       "name": "McpToolChoice",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpToolChoice",
       "description": "Controls tool selection behavior for sampling requests.",
+      "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
       "in_subset": [
         "sampling_createmessage"
       ],
@@ -17864,6 +17992,7 @@
       "name": "McpToolResultContent",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpToolResultContent",
       "description": "The result of a tool use, provided by the user back to the assistant.",
+      "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
       "in_subset": [
         "sampling_createmessage"
       ],
@@ -17940,6 +18069,7 @@
       "name": "McpToolUseContent",
       "definition_uri": "https://w3id.org/lmodel/mcp/McpToolUseContent",
       "description": "A request from the assistant to call a tool.",
+      "deprecated": "Deprecated as of protocol version 2026-07-28 (SEP-2577). Remains in the specification for at least twelve months; see the deprecated features registry.",
       "in_subset": [
         "sampling_createmessage"
       ],
@@ -18298,8 +18428,8 @@
   ],
   "metamodel_version": "1.12.0",
   "source_file": "mcp.yaml",
-  "source_file_date": "2026-11-07T03:43:32",
-  "source_file_size": 212668,
+  "source_file_date": "2026-11-07T10:15:54",
+  "source_file_size": 218690,
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/mcp.context.jsonld",

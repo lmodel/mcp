@@ -3639,7 +3639,7 @@ class McpPaginatedRequestParams(McpRequestParams):
     class_model_uri: ClassVar[URIRef] = MCP.McpPaginatedRequestParams
 
     _meta: Union[dict, McpRequestMetaObject] = None
-    cursor: Optional[str] = None
+    cursor: Optional[Union[str, McpCursor]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self._meta):
@@ -3647,8 +3647,8 @@ class McpPaginatedRequestParams(McpRequestParams):
         if not isinstance(self._meta, McpRequestMetaObject):
             self._meta = McpRequestMetaObject(**as_dict(self._meta))
 
-        if self.cursor is not None and not isinstance(self.cursor, str):
-            self.cursor = str(self.cursor)
+        if self.cursor is not None and not isinstance(self.cursor, McpCursor):
+            self.cursor = McpCursor(self.cursor)
 
         super().__post_init__(**kwargs)
 
@@ -4100,14 +4100,14 @@ class McpResult(YAMLRoot):
     class_name: ClassVar[str] = "McpResult"
     class_model_uri: ClassVar[URIRef] = MCP.McpResult
 
-    resultType: str = None
+    resultType: Union[str, McpResultType] = None
     _meta: Optional[Union[dict, "McpResultMetaObject"]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.resultType):
             self.MissingRequiredField("resultType")
-        if not isinstance(self.resultType, str):
-            self.resultType = str(self.resultType)
+        if not isinstance(self.resultType, McpResultType):
+            self.resultType = McpResultType(self.resultType)
 
         if self._meta is not None and not isinstance(self._meta, McpResultMetaObject):
             self._meta = McpResultMetaObject(**as_dict(self._meta))
@@ -4128,7 +4128,7 @@ class McpCacheableResult(McpResult):
     class_model_uri: ClassVar[URIRef] = MCP.McpCacheableResult
 
     cacheScope: Union[str, "McpCacheScope"] = None
-    resultType: str = None
+    resultType: Union[str, McpResultType] = None
     ttlMs: int = None
     _meta: Optional[Union[dict, "McpResultMetaObject"]] = None
 
@@ -4140,8 +4140,8 @@ class McpCacheableResult(McpResult):
 
         if self._is_empty(self.resultType):
             self.MissingRequiredField("resultType")
-        if not isinstance(self.resultType, str):
-            self.resultType = str(self.resultType)
+        if not isinstance(self.resultType, McpResultType):
+            self.resultType = McpResultType(self.resultType)
 
         if self._is_empty(self.ttlMs):
             self.MissingRequiredField("ttlMs")
@@ -4167,7 +4167,7 @@ class McpCallToolResult(McpResult):
     class_model_uri: ClassVar[URIRef] = MCP.McpCallToolResult
 
     content: Union[Union[dict, McpContentBlock], list[Union[dict, McpContentBlock]]] = None
-    resultType: str = None
+    resultType: Union[str, McpResultType] = None
     _meta: Optional[Union[dict, "McpResultMetaObject"]] = None
     isError: Optional[Union[bool, Bool]] = None
     structuredContent: Optional[Union[dict, McpJSONValue]] = None
@@ -4181,8 +4181,8 @@ class McpCallToolResult(McpResult):
 
         if self._is_empty(self.resultType):
             self.MissingRequiredField("resultType")
-        if not isinstance(self.resultType, str):
-            self.resultType = str(self.resultType)
+        if not isinstance(self.resultType, McpResultType):
+            self.resultType = McpResultType(self.resultType)
 
         if self._meta is not None and not isinstance(self._meta, McpResultMetaObject):
             self._meta = McpResultMetaObject(**as_dict(self._meta))
@@ -4206,7 +4206,7 @@ class McpCompleteResult(McpResult):
     class_model_uri: ClassVar[URIRef] = MCP.McpCompleteResult
 
     completion: Union[dict, McpCompleteResultCompletion] = None
-    resultType: str = None
+    resultType: Union[str, McpResultType] = None
     _meta: Optional[Union[dict, "McpResultMetaObject"]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
@@ -4217,8 +4217,8 @@ class McpCompleteResult(McpResult):
 
         if self._is_empty(self.resultType):
             self.MissingRequiredField("resultType")
-        if not isinstance(self.resultType, str):
-            self.resultType = str(self.resultType)
+        if not isinstance(self.resultType, McpResultType):
+            self.resultType = McpResultType(self.resultType)
 
         if self._meta is not None and not isinstance(self._meta, McpResultMetaObject):
             self._meta = McpResultMetaObject(**as_dict(self._meta))
@@ -4240,7 +4240,7 @@ class McpDiscoverResult(McpCacheableResult):
 
     cacheScope: Union[str, "McpCacheScope"] = None
     capabilities: Union[dict, "McpServerCapabilities"] = None
-    resultType: str = None
+    resultType: Union[str, McpResultType] = None
     supportedVersions: Union[str, list[str]] = None
     ttlMs: int = None
     _meta: Optional[Union[dict, "McpResultMetaObject"]] = None
@@ -4259,8 +4259,8 @@ class McpDiscoverResult(McpCacheableResult):
 
         if self._is_empty(self.resultType):
             self.MissingRequiredField("resultType")
-        if not isinstance(self.resultType, str):
-            self.resultType = str(self.resultType)
+        if not isinstance(self.resultType, McpResultType):
+            self.resultType = McpResultType(self.resultType)
 
         if self._is_empty(self.supportedVersions):
             self.MissingRequiredField("supportedVersions")
@@ -4294,7 +4294,7 @@ class McpEmptyResult(McpResult):
     class_name: ClassVar[str] = "McpEmptyResult"
     class_model_uri: ClassVar[URIRef] = MCP.McpEmptyResult
 
-    resultType: str = None
+    resultType: Union[str, McpResultType] = None
 
 @dataclass(repr=False)
 class McpClientResult(McpEmptyResult):
@@ -4308,7 +4308,7 @@ class McpClientResult(McpEmptyResult):
     class_name: ClassVar[str] = "McpClientResult"
     class_model_uri: ClassVar[URIRef] = MCP.McpClientResult
 
-    resultType: str = None
+    resultType: Union[str, McpResultType] = None
 
 @dataclass(repr=False)
 class McpGetPromptResult(McpResult):
@@ -4323,7 +4323,7 @@ class McpGetPromptResult(McpResult):
     class_model_uri: ClassVar[URIRef] = MCP.McpGetPromptResult
 
     messages: Union[Union[dict, McpPromptMessage], list[Union[dict, McpPromptMessage]]] = None
-    resultType: str = None
+    resultType: Union[str, McpResultType] = None
     description: Optional[str] = None
     _meta: Optional[Union[dict, "McpResultMetaObject"]] = None
 
@@ -4334,8 +4334,8 @@ class McpGetPromptResult(McpResult):
 
         if self._is_empty(self.resultType):
             self.MissingRequiredField("resultType")
-        if not isinstance(self.resultType, str):
-            self.resultType = str(self.resultType)
+        if not isinstance(self.resultType, McpResultType):
+            self.resultType = McpResultType(self.resultType)
 
         if self.description is not None and not isinstance(self.description, str):
             self.description = str(self.description)
@@ -4361,7 +4361,7 @@ class McpInputRequiredResult(McpResult):
     class_name: ClassVar[str] = "McpInputRequiredResult"
     class_model_uri: ClassVar[URIRef] = MCP.McpInputRequiredResult
 
-    resultType: str = None
+    resultType: Union[str, McpResultType] = None
     _meta: Optional[Union[dict, "McpResultMetaObject"]] = None
     inputRequests: Optional[Union[dict, McpInputRequests]] = None
     requestState: Optional[str] = None
@@ -4369,8 +4369,8 @@ class McpInputRequiredResult(McpResult):
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.resultType):
             self.MissingRequiredField("resultType")
-        if not isinstance(self.resultType, str):
-            self.resultType = str(self.resultType)
+        if not isinstance(self.resultType, McpResultType):
+            self.resultType = McpResultType(self.resultType)
 
         if self._meta is not None and not isinstance(self._meta, McpResultMetaObject):
             self._meta = McpResultMetaObject(**as_dict(self._meta))
@@ -4396,21 +4396,21 @@ class McpPaginatedResult(McpResult):
     class_name: ClassVar[str] = "McpPaginatedResult"
     class_model_uri: ClassVar[URIRef] = MCP.McpPaginatedResult
 
-    resultType: str = None
+    resultType: Union[str, McpResultType] = None
     _meta: Optional[Union[dict, "McpResultMetaObject"]] = None
-    nextCursor: Optional[str] = None
+    nextCursor: Optional[Union[str, McpCursor]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.resultType):
             self.MissingRequiredField("resultType")
-        if not isinstance(self.resultType, str):
-            self.resultType = str(self.resultType)
+        if not isinstance(self.resultType, McpResultType):
+            self.resultType = McpResultType(self.resultType)
 
         if self._meta is not None and not isinstance(self._meta, McpResultMetaObject):
             self._meta = McpResultMetaObject(**as_dict(self._meta))
 
-        if self.nextCursor is not None and not isinstance(self.nextCursor, str):
-            self.nextCursor = str(self.nextCursor)
+        if self.nextCursor is not None and not isinstance(self.nextCursor, McpCursor):
+            self.nextCursor = McpCursor(self.nextCursor)
 
         super().__post_init__(**kwargs)
 
@@ -4429,10 +4429,10 @@ class McpListPromptsResult(McpPaginatedResult):
 
     cacheScope: Union[str, "McpCacheScope"] = None
     prompts: Union[Union[dict, McpPrompt], list[Union[dict, McpPrompt]]] = None
-    resultType: str = None
+    resultType: Union[str, McpResultType] = None
     ttlMs: int = None
     _meta: Optional[Union[dict, "McpResultMetaObject"]] = None
-    nextCursor: Optional[str] = None
+    nextCursor: Optional[Union[str, McpCursor]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.cacheScope):
@@ -4446,8 +4446,8 @@ class McpListPromptsResult(McpPaginatedResult):
 
         if self._is_empty(self.resultType):
             self.MissingRequiredField("resultType")
-        if not isinstance(self.resultType, str):
-            self.resultType = str(self.resultType)
+        if not isinstance(self.resultType, McpResultType):
+            self.resultType = McpResultType(self.resultType)
 
         if self._is_empty(self.ttlMs):
             self.MissingRequiredField("ttlMs")
@@ -4457,8 +4457,8 @@ class McpListPromptsResult(McpPaginatedResult):
         if self._meta is not None and not isinstance(self._meta, McpResultMetaObject):
             self._meta = McpResultMetaObject(**as_dict(self._meta))
 
-        if self.nextCursor is not None and not isinstance(self.nextCursor, str):
-            self.nextCursor = str(self.nextCursor)
+        if self.nextCursor is not None and not isinstance(self.nextCursor, McpCursor):
+            self.nextCursor = McpCursor(self.nextCursor)
 
         super().__post_init__(**kwargs)
 
@@ -4477,10 +4477,10 @@ class McpListResourceTemplatesResult(McpPaginatedResult):
 
     cacheScope: Union[str, "McpCacheScope"] = None
     resourceTemplates: Union[Union[dict, McpResourceTemplate], list[Union[dict, McpResourceTemplate]]] = None
-    resultType: str = None
+    resultType: Union[str, McpResultType] = None
     ttlMs: int = None
     _meta: Optional[Union[dict, "McpResultMetaObject"]] = None
-    nextCursor: Optional[str] = None
+    nextCursor: Optional[Union[str, McpCursor]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.cacheScope):
@@ -4494,8 +4494,8 @@ class McpListResourceTemplatesResult(McpPaginatedResult):
 
         if self._is_empty(self.resultType):
             self.MissingRequiredField("resultType")
-        if not isinstance(self.resultType, str):
-            self.resultType = str(self.resultType)
+        if not isinstance(self.resultType, McpResultType):
+            self.resultType = McpResultType(self.resultType)
 
         if self._is_empty(self.ttlMs):
             self.MissingRequiredField("ttlMs")
@@ -4505,8 +4505,8 @@ class McpListResourceTemplatesResult(McpPaginatedResult):
         if self._meta is not None and not isinstance(self._meta, McpResultMetaObject):
             self._meta = McpResultMetaObject(**as_dict(self._meta))
 
-        if self.nextCursor is not None and not isinstance(self.nextCursor, str):
-            self.nextCursor = str(self.nextCursor)
+        if self.nextCursor is not None and not isinstance(self.nextCursor, McpCursor):
+            self.nextCursor = McpCursor(self.nextCursor)
 
         super().__post_init__(**kwargs)
 
@@ -4525,10 +4525,10 @@ class McpListResourcesResult(McpPaginatedResult):
 
     cacheScope: Union[str, "McpCacheScope"] = None
     resources: Union[Union[dict, McpResource], list[Union[dict, McpResource]]] = None
-    resultType: str = None
+    resultType: Union[str, McpResultType] = None
     ttlMs: int = None
     _meta: Optional[Union[dict, "McpResultMetaObject"]] = None
-    nextCursor: Optional[str] = None
+    nextCursor: Optional[Union[str, McpCursor]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.cacheScope):
@@ -4542,8 +4542,8 @@ class McpListResourcesResult(McpPaginatedResult):
 
         if self._is_empty(self.resultType):
             self.MissingRequiredField("resultType")
-        if not isinstance(self.resultType, str):
-            self.resultType = str(self.resultType)
+        if not isinstance(self.resultType, McpResultType):
+            self.resultType = McpResultType(self.resultType)
 
         if self._is_empty(self.ttlMs):
             self.MissingRequiredField("ttlMs")
@@ -4553,8 +4553,8 @@ class McpListResourcesResult(McpPaginatedResult):
         if self._meta is not None and not isinstance(self._meta, McpResultMetaObject):
             self._meta = McpResultMetaObject(**as_dict(self._meta))
 
-        if self.nextCursor is not None and not isinstance(self.nextCursor, str):
-            self.nextCursor = str(self.nextCursor)
+        if self.nextCursor is not None and not isinstance(self.nextCursor, McpCursor):
+            self.nextCursor = McpCursor(self.nextCursor)
 
         super().__post_init__(**kwargs)
 
@@ -4572,11 +4572,11 @@ class McpListToolsResult(McpPaginatedResult):
     class_model_uri: ClassVar[URIRef] = MCP.McpListToolsResult
 
     cacheScope: Union[str, "McpCacheScope"] = None
-    resultType: str = None
+    resultType: Union[str, McpResultType] = None
     tools: Union[Union[dict, "McpTool"], list[Union[dict, "McpTool"]]] = None
     ttlMs: int = None
     _meta: Optional[Union[dict, "McpResultMetaObject"]] = None
-    nextCursor: Optional[str] = None
+    nextCursor: Optional[Union[str, McpCursor]] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self.cacheScope):
@@ -4586,8 +4586,8 @@ class McpListToolsResult(McpPaginatedResult):
 
         if self._is_empty(self.resultType):
             self.MissingRequiredField("resultType")
-        if not isinstance(self.resultType, str):
-            self.resultType = str(self.resultType)
+        if not isinstance(self.resultType, McpResultType):
+            self.resultType = McpResultType(self.resultType)
 
         if self._is_empty(self.tools):
             self.MissingRequiredField("tools")
@@ -4601,8 +4601,8 @@ class McpListToolsResult(McpPaginatedResult):
         if self._meta is not None and not isinstance(self._meta, McpResultMetaObject):
             self._meta = McpResultMetaObject(**as_dict(self._meta))
 
-        if self.nextCursor is not None and not isinstance(self.nextCursor, str):
-            self.nextCursor = str(self.nextCursor)
+        if self.nextCursor is not None and not isinstance(self.nextCursor, McpCursor):
+            self.nextCursor = McpCursor(self.nextCursor)
 
         super().__post_init__(**kwargs)
 
@@ -4621,7 +4621,7 @@ class McpReadResourceResult(McpCacheableResult):
 
     cacheScope: Union[str, "McpCacheScope"] = None
     contents: Union[str, list[str]] = None
-    resultType: str = None
+    resultType: Union[str, McpResultType] = None
     ttlMs: int = None
     _meta: Optional[Union[dict, "McpResultMetaObject"]] = None
 
@@ -4639,8 +4639,8 @@ class McpReadResourceResult(McpCacheableResult):
 
         if self._is_empty(self.resultType):
             self.MissingRequiredField("resultType")
-        if not isinstance(self.resultType, str):
-            self.resultType = str(self.resultType)
+        if not isinstance(self.resultType, McpResultType):
+            self.resultType = McpResultType(self.resultType)
 
         if self._is_empty(self.ttlMs):
             self.MissingRequiredField("ttlMs")
@@ -5247,7 +5247,7 @@ class McpSubscriptionsListenResult(McpResult):
     class_model_uri: ClassVar[URIRef] = MCP.McpSubscriptionsListenResult
 
     _meta: Union[dict, "McpSubscriptionsListenResultMetaObject"] = None
-    resultType: str = None
+    resultType: Union[str, McpResultType] = None
 
     def __post_init__(self, *_: str, **kwargs: Any):
         if self._is_empty(self._meta):
@@ -5257,8 +5257,8 @@ class McpSubscriptionsListenResult(McpResult):
 
         if self._is_empty(self.resultType):
             self.MissingRequiredField("resultType")
-        if not isinstance(self.resultType, str):
-            self.resultType = str(self.resultType)
+        if not isinstance(self.resultType, McpResultType):
+            self.resultType = McpResultType(self.resultType)
 
         super().__post_init__(**kwargs)
 
@@ -6317,7 +6317,7 @@ slots.mcpCacheableResult__cache_scope = Slot(uri=MCP.cacheScope, name="mcpCachea
                    model_uri=MCP.mcpCacheableResult__cache_scope, domain=None, range=Union[str, "McpCacheScope"])
 
 slots.mcpCacheableResult__result_type = Slot(uri=MCP.resultType, name="mcpCacheableResult__result_type", curie=MCP.curie('resultType'),
-                   model_uri=MCP.mcpCacheableResult__result_type, domain=None, range=str)
+                   model_uri=MCP.mcpCacheableResult__result_type, domain=None, range=Union[str, McpResultType])
 
 slots.mcpCacheableResult__ttl_ms = Slot(uri=MCP.ttlMs, name="mcpCacheableResult__ttl_ms", curie=MCP.curie('ttlMs'),
                    model_uri=MCP.mcpCacheableResult__ttl_ms, domain=None, range=int)
@@ -6356,7 +6356,7 @@ slots.mcpCallToolResult__is_error = Slot(uri=MCP.isError, name="mcpCallToolResul
                    model_uri=MCP.mcpCallToolResult__is_error, domain=None, range=Optional[Union[bool, Bool]])
 
 slots.mcpCallToolResult__result_type = Slot(uri=MCP.resultType, name="mcpCallToolResult__result_type", curie=MCP.curie('resultType'),
-                   model_uri=MCP.mcpCallToolResult__result_type, domain=None, range=str)
+                   model_uri=MCP.mcpCallToolResult__result_type, domain=None, range=Union[str, McpResultType])
 
 slots.mcpCallToolResult__structured_content = Slot(uri=MCP.structuredContent, name="mcpCallToolResult__structured_content", curie=MCP.curie('structuredContent'),
                    model_uri=MCP.mcpCallToolResult__structured_content, domain=None, range=Optional[Union[dict, McpJSONValue]])
@@ -6461,7 +6461,7 @@ slots.mcpCompleteResult__completion = Slot(uri=MCP.completion, name="mcpComplete
                    model_uri=MCP.mcpCompleteResult__completion, domain=None, range=Union[dict, McpCompleteResultCompletion])
 
 slots.mcpCompleteResult__result_type = Slot(uri=MCP.resultType, name="mcpCompleteResult__result_type", curie=MCP.curie('resultType'),
-                   model_uri=MCP.mcpCompleteResult__result_type, domain=None, range=str)
+                   model_uri=MCP.mcpCompleteResult__result_type, domain=None, range=Union[str, McpResultType])
 
 slots.mcpCompleteResultCompletion__has_more = Slot(uri=MCP.hasMore, name="mcpCompleteResultCompletion__has_more", curie=MCP.curie('hasMore'),
                    model_uri=MCP.mcpCompleteResultCompletion__has_more, domain=None, range=Optional[Union[bool, Bool]])
@@ -6557,7 +6557,7 @@ slots.mcpDiscoverResult__instructions = Slot(uri=MCP.instructions, name="mcpDisc
                    model_uri=MCP.mcpDiscoverResult__instructions, domain=None, range=Optional[str])
 
 slots.mcpDiscoverResult__result_type = Slot(uri=MCP.resultType, name="mcpDiscoverResult__result_type", curie=MCP.curie('resultType'),
-                   model_uri=MCP.mcpDiscoverResult__result_type, domain=None, range=str)
+                   model_uri=MCP.mcpDiscoverResult__result_type, domain=None, range=Union[str, McpResultType])
 
 slots.mcpDiscoverResult__supported_versions = Slot(uri=MCP.supportedVersions, name="mcpDiscoverResult__supported_versions", curie=MCP.curie('supportedVersions'),
                    model_uri=MCP.mcpDiscoverResult__supported_versions, domain=None, range=Union[str, list[str]])
@@ -6665,7 +6665,7 @@ slots.mcpGetPromptResult__messages = Slot(uri=MCP.messages, name="mcpGetPromptRe
                    model_uri=MCP.mcpGetPromptResult__messages, domain=None, range=Union[Union[dict, McpPromptMessage], list[Union[dict, McpPromptMessage]]])
 
 slots.mcpGetPromptResult__result_type = Slot(uri=MCP.resultType, name="mcpGetPromptResult__result_type", curie=MCP.curie('resultType'),
-                   model_uri=MCP.mcpGetPromptResult__result_type, domain=None, range=str)
+                   model_uri=MCP.mcpGetPromptResult__result_type, domain=None, range=Union[str, McpResultType])
 
 slots.mcpGetPromptResultResponse__identifier = Slot(uri=MCP.identifier, name="mcpGetPromptResultResponse__identifier", curie=MCP.curie('identifier'),
                    model_uri=MCP.mcpGetPromptResultResponse__identifier, domain=None, range=Union[str, int])
@@ -6734,7 +6734,7 @@ slots.mcpInputRequiredResult__request_state = Slot(uri=MCP.requestState, name="m
                    model_uri=MCP.mcpInputRequiredResult__request_state, domain=None, range=Optional[str])
 
 slots.mcpInputRequiredResult__result_type = Slot(uri=MCP.resultType, name="mcpInputRequiredResult__result_type", curie=MCP.curie('resultType'),
-                   model_uri=MCP.mcpInputRequiredResult__result_type, domain=None, range=str)
+                   model_uri=MCP.mcpInputRequiredResult__result_type, domain=None, range=Union[str, McpResultType])
 
 slots.mcpInputResponseRequestParams__meta = Slot(uri=MCP._meta, name="mcpInputResponseRequestParams__meta", curie=MCP.curie('_meta'),
                    model_uri=MCP.mcpInputResponseRequestParams__meta, domain=None, range=Union[dict, McpRequestMetaObject])
@@ -6842,13 +6842,13 @@ slots.mcpListPromptsResult__cache_scope = Slot(uri=MCP.cacheScope, name="mcpList
                    model_uri=MCP.mcpListPromptsResult__cache_scope, domain=None, range=Union[str, "McpCacheScope"])
 
 slots.mcpListPromptsResult__next_cursor = Slot(uri=MCP.nextCursor, name="mcpListPromptsResult__next_cursor", curie=MCP.curie('nextCursor'),
-                   model_uri=MCP.mcpListPromptsResult__next_cursor, domain=None, range=Optional[str])
+                   model_uri=MCP.mcpListPromptsResult__next_cursor, domain=None, range=Optional[Union[str, McpCursor]])
 
 slots.mcpListPromptsResult__prompts = Slot(uri=MCP.prompts, name="mcpListPromptsResult__prompts", curie=MCP.curie('prompts'),
                    model_uri=MCP.mcpListPromptsResult__prompts, domain=None, range=Union[Union[dict, McpPrompt], list[Union[dict, McpPrompt]]])
 
 slots.mcpListPromptsResult__result_type = Slot(uri=MCP.resultType, name="mcpListPromptsResult__result_type", curie=MCP.curie('resultType'),
-                   model_uri=MCP.mcpListPromptsResult__result_type, domain=None, range=str)
+                   model_uri=MCP.mcpListPromptsResult__result_type, domain=None, range=Union[str, McpResultType])
 
 slots.mcpListPromptsResult__ttl_ms = Slot(uri=MCP.ttlMs, name="mcpListPromptsResult__ttl_ms", curie=MCP.curie('ttlMs'),
                    model_uri=MCP.mcpListPromptsResult__ttl_ms, domain=None, range=int)
@@ -6881,13 +6881,13 @@ slots.mcpListResourceTemplatesResult__cache_scope = Slot(uri=MCP.cacheScope, nam
                    model_uri=MCP.mcpListResourceTemplatesResult__cache_scope, domain=None, range=Union[str, "McpCacheScope"])
 
 slots.mcpListResourceTemplatesResult__next_cursor = Slot(uri=MCP.nextCursor, name="mcpListResourceTemplatesResult__next_cursor", curie=MCP.curie('nextCursor'),
-                   model_uri=MCP.mcpListResourceTemplatesResult__next_cursor, domain=None, range=Optional[str])
+                   model_uri=MCP.mcpListResourceTemplatesResult__next_cursor, domain=None, range=Optional[Union[str, McpCursor]])
 
 slots.mcpListResourceTemplatesResult__resource_templates = Slot(uri=MCP.resourceTemplates, name="mcpListResourceTemplatesResult__resource_templates", curie=MCP.curie('resourceTemplates'),
                    model_uri=MCP.mcpListResourceTemplatesResult__resource_templates, domain=None, range=Union[Union[dict, McpResourceTemplate], list[Union[dict, McpResourceTemplate]]])
 
 slots.mcpListResourceTemplatesResult__result_type = Slot(uri=MCP.resultType, name="mcpListResourceTemplatesResult__result_type", curie=MCP.curie('resultType'),
-                   model_uri=MCP.mcpListResourceTemplatesResult__result_type, domain=None, range=str)
+                   model_uri=MCP.mcpListResourceTemplatesResult__result_type, domain=None, range=Union[str, McpResultType])
 
 slots.mcpListResourceTemplatesResult__ttl_ms = Slot(uri=MCP.ttlMs, name="mcpListResourceTemplatesResult__ttl_ms", curie=MCP.curie('ttlMs'),
                    model_uri=MCP.mcpListResourceTemplatesResult__ttl_ms, domain=None, range=int)
@@ -6920,13 +6920,13 @@ slots.mcpListResourcesResult__cache_scope = Slot(uri=MCP.cacheScope, name="mcpLi
                    model_uri=MCP.mcpListResourcesResult__cache_scope, domain=None, range=Union[str, "McpCacheScope"])
 
 slots.mcpListResourcesResult__next_cursor = Slot(uri=MCP.nextCursor, name="mcpListResourcesResult__next_cursor", curie=MCP.curie('nextCursor'),
-                   model_uri=MCP.mcpListResourcesResult__next_cursor, domain=None, range=Optional[str])
+                   model_uri=MCP.mcpListResourcesResult__next_cursor, domain=None, range=Optional[Union[str, McpCursor]])
 
 slots.mcpListResourcesResult__resources = Slot(uri=MCP.resources, name="mcpListResourcesResult__resources", curie=MCP.curie('resources'),
                    model_uri=MCP.mcpListResourcesResult__resources, domain=None, range=Union[Union[dict, McpResource], list[Union[dict, McpResource]]])
 
 slots.mcpListResourcesResult__result_type = Slot(uri=MCP.resultType, name="mcpListResourcesResult__result_type", curie=MCP.curie('resultType'),
-                   model_uri=MCP.mcpListResourcesResult__result_type, domain=None, range=str)
+                   model_uri=MCP.mcpListResourcesResult__result_type, domain=None, range=Union[str, McpResultType])
 
 slots.mcpListResourcesResult__ttl_ms = Slot(uri=MCP.ttlMs, name="mcpListResourcesResult__ttl_ms", curie=MCP.curie('ttlMs'),
                    model_uri=MCP.mcpListResourcesResult__ttl_ms, domain=None, range=int)
@@ -6971,10 +6971,10 @@ slots.mcpListToolsResult__cache_scope = Slot(uri=MCP.cacheScope, name="mcpListTo
                    model_uri=MCP.mcpListToolsResult__cache_scope, domain=None, range=Union[str, "McpCacheScope"])
 
 slots.mcpListToolsResult__next_cursor = Slot(uri=MCP.nextCursor, name="mcpListToolsResult__next_cursor", curie=MCP.curie('nextCursor'),
-                   model_uri=MCP.mcpListToolsResult__next_cursor, domain=None, range=Optional[str])
+                   model_uri=MCP.mcpListToolsResult__next_cursor, domain=None, range=Optional[Union[str, McpCursor]])
 
 slots.mcpListToolsResult__result_type = Slot(uri=MCP.resultType, name="mcpListToolsResult__result_type", curie=MCP.curie('resultType'),
-                   model_uri=MCP.mcpListToolsResult__result_type, domain=None, range=str)
+                   model_uri=MCP.mcpListToolsResult__result_type, domain=None, range=Union[str, McpResultType])
 
 slots.mcpListToolsResult__tools = Slot(uri=MCP.tools, name="mcpListToolsResult__tools", curie=MCP.curie('tools'),
                    model_uri=MCP.mcpListToolsResult__tools, domain=None, range=Union[Union[dict, McpTool], list[Union[dict, McpTool]]])
@@ -7091,16 +7091,16 @@ slots.mcpPaginatedRequestParams__meta = Slot(uri=MCP._meta, name="mcpPaginatedRe
                    model_uri=MCP.mcpPaginatedRequestParams__meta, domain=None, range=Union[dict, McpRequestMetaObject])
 
 slots.mcpPaginatedRequestParams__cursor = Slot(uri=MCP.cursor, name="mcpPaginatedRequestParams__cursor", curie=MCP.curie('cursor'),
-                   model_uri=MCP.mcpPaginatedRequestParams__cursor, domain=None, range=Optional[str])
+                   model_uri=MCP.mcpPaginatedRequestParams__cursor, domain=None, range=Optional[Union[str, McpCursor]])
 
 slots.mcpPaginatedResult__meta = Slot(uri=MCP._meta, name="mcpPaginatedResult__meta", curie=MCP.curie('_meta'),
                    model_uri=MCP.mcpPaginatedResult__meta, domain=None, range=Optional[Union[dict, McpResultMetaObject]])
 
 slots.mcpPaginatedResult__next_cursor = Slot(uri=MCP.nextCursor, name="mcpPaginatedResult__next_cursor", curie=MCP.curie('nextCursor'),
-                   model_uri=MCP.mcpPaginatedResult__next_cursor, domain=None, range=Optional[str])
+                   model_uri=MCP.mcpPaginatedResult__next_cursor, domain=None, range=Optional[Union[str, McpCursor]])
 
 slots.mcpPaginatedResult__result_type = Slot(uri=MCP.resultType, name="mcpPaginatedResult__result_type", curie=MCP.curie('resultType'),
-                   model_uri=MCP.mcpPaginatedResult__result_type, domain=None, range=str)
+                   model_uri=MCP.mcpPaginatedResult__result_type, domain=None, range=Union[str, McpResultType])
 
 slots.mcpParseError__code = Slot(uri=MCP.code, name="mcpParseError__code", curie=MCP.curie('code'),
                    model_uri=MCP.mcpParseError__code, domain=None, range=int)
@@ -7199,7 +7199,7 @@ slots.mcpReadResourceResult__contents = Slot(uri=MCP.contents, name="mcpReadReso
                    model_uri=MCP.mcpReadResourceResult__contents, domain=None, range=Union[str, list[str]])
 
 slots.mcpReadResourceResult__result_type = Slot(uri=MCP.resultType, name="mcpReadResourceResult__result_type", curie=MCP.curie('resultType'),
-                   model_uri=MCP.mcpReadResourceResult__result_type, domain=None, range=str)
+                   model_uri=MCP.mcpReadResourceResult__result_type, domain=None, range=Union[str, McpResultType])
 
 slots.mcpReadResourceResult__ttl_ms = Slot(uri=MCP.ttlMs, name="mcpReadResourceResult__ttl_ms", curie=MCP.curie('ttlMs'),
                    model_uri=MCP.mcpReadResourceResult__ttl_ms, domain=None, range=int)
@@ -7340,7 +7340,7 @@ slots.mcpResult__meta = Slot(uri=MCP._meta, name="mcpResult__meta", curie=MCP.cu
                    model_uri=MCP.mcpResult__meta, domain=None, range=Optional[Union[dict, McpResultMetaObject]])
 
 slots.mcpResult__result_type = Slot(uri=MCP.resultType, name="mcpResult__result_type", curie=MCP.curie('resultType'),
-                   model_uri=MCP.mcpResult__result_type, domain=None, range=str)
+                   model_uri=MCP.mcpResult__result_type, domain=None, range=Union[str, McpResultType])
 
 slots.mcpResultMetaObject__mcp_server_info = Slot(uri=MCP.mcp_server_info, name="mcpResultMetaObject__mcp_server_info", curie=MCP.curie('mcp_server_info'),
                    model_uri=MCP.mcpResultMetaObject__mcp_server_info, domain=None, range=Optional[Union[dict, McpImplementation]])
@@ -7457,7 +7457,7 @@ slots.mcpSubscriptionsListenResult__meta = Slot(uri=MCP._meta, name="mcpSubscrip
                    model_uri=MCP.mcpSubscriptionsListenResult__meta, domain=None, range=Union[dict, McpSubscriptionsListenResultMetaObject])
 
 slots.mcpSubscriptionsListenResult__result_type = Slot(uri=MCP.resultType, name="mcpSubscriptionsListenResult__result_type", curie=MCP.curie('resultType'),
-                   model_uri=MCP.mcpSubscriptionsListenResult__result_type, domain=None, range=str)
+                   model_uri=MCP.mcpSubscriptionsListenResult__result_type, domain=None, range=Union[str, McpResultType])
 
 slots.mcpSubscriptionsListenResultMetaObject__mcp_server_info = Slot(uri=MCP.mcp_server_info, name="mcpSubscriptionsListenResultMetaObject__mcp_server_info", curie=MCP.curie('mcp_server_info'),
                    model_uri=MCP.mcpSubscriptionsListenResultMetaObject__mcp_server_info, domain=None, range=Optional[Union[dict, McpImplementation]])

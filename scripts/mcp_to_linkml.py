@@ -69,6 +69,21 @@ RULES = {
     ),
 }
 
+# Deprecations MCP states in words. A definition's description that says to use another
+# in its place, by definition: the replacement and the sentence. And the values a
+# property's @deprecated tag names, by the property's place in schema.json; each value
+# takes the tag's text.
+CLASS_DEPRECATIONS = {
+    "LegacyTitledEnumSchema": (
+        "TitledSingleSelectEnumSchema",
+        "Use {@link TitledSingleSelectEnumSchema} instead.\n"
+        "This interface will be removed in a future version.",
+    ),
+}
+VALUE_DEPRECATIONS = {
+    "CreateMessageRequestParams/properties/includeContext": ("thisServer", "allServers"),
+}
+
 # String formats MCP uses, and the type that carries each.
 FORMAT_TYPES = {
     "uri": "uri",
@@ -210,46 +225,171 @@ def subset_name(category: str) -> str:
     return re.sub(r"[^a-z0-9]+", "_", category.strip("`").lower()).strip("_")
 
 
-def read_typescript(text: str) -> tuple[dict[str, str], dict[str, list[str]]]:
-    """Each declaration's @category, and the parents an interface extends or a type names."""
-    categories: dict[str, str] = {}
-    parents: dict[str, list[str]] = {}
-    for doc, name in re.findall(
-        r"/\*\*((?:(?!\*/).)*?)\*/\s*export\s+(?:interface|type)\s+(\w+)", text, re.S
-    ):
-        match = re.search(r"@category\s+(.+)", doc)
-        if match:
-            categories[name] = match.group(1).strip()
+class TypeScript:
+    """What schema.ts says that schema.json leaves out. A declaration is named as in
+    schema.ts, and an interface's own property by (interface, key)."""
+
+    def __init__(self) -> None:
+        self.categories: dict[str, str] = {}
+        self.internal: set[str] = set()
+        self.deprecated: dict[str, str] = {}
+        self.deprecated_keys: dict[tuple[str, str], str] = {}
+        # Each interface's own keys, and those whose type is one declaration's name, such as
+        # resultType: ResultType.
+        self.keys: dict[str, set[str]] = {}
+        self.key_types: dict[tuple[str, str], str] = {}
+        self.parents: dict[str, list[str]] = {}
+
+    def of_key(self, table: dict, name: str, key: str):
+        """What a table holds for a key of a declaration, read from the nearest declaration
+        of the key in the declaration or the interfaces it extends."""
+        queue, seen = [name], set()
+        while queue:
+            current = queue.pop(0)
+            if (current, key) in table or key in self.keys.get(current, ()):
+                return table.get((current, key))
+            if current not in seen:
+                seen.add(current)
+                queue += self.parents.get(current, [])
+        return None
+
+
+def _blanked(text: str) -> tuple[str, list[tuple[int, int]]]:
+    """schema.ts with every comment and the inside of every string turned to spaces, at the
+    same offsets, so a brace or a colon in either counts for nothing; and the span of each
+    doc comment."""
+    chars = list(text)
+    docs = []
+    i = 0
+    while i < len(text):
+        if text.startswith("//", i):
+            end = text.find("\n", i)
+            end = len(text) if end < 0 else end
+        elif text.startswith("/*", i):
+            end = text.index("*/", i + 2) + 2
+            if text.startswith("/**", i) and end - i > 4:
+                docs.append((i, end))
+        elif text[i] in "\"'`":
+            start, end = i + 1, i + 1
+            while text[end] != text[i]:
+                end += 2 if text[end] == "\\" else 1
+            chars[start:end] = [" " if c != "\n" else c for c in text[start:end]]
+            i = end + 1
+            continue
+        else:
+            i += 1
+            continue
+        chars[i:end] = [" " if c != "\n" else c for c in text[i:end]]
+        i = end
+    return "".join(chars), docs
+
+
+def _tag(doc: str, name: str) -> str | None:
+    """The text of a doc comment's tag, up to the next tag, on one line; "" for a tag with
+    no text, and None when the comment has no such tag."""
+    lines = [re.sub(r"^\s*\*?\s?", "", line) for line in doc.splitlines()]
+    for i, line in enumerate(lines):
+        if re.match(rf"@{name}\b", line.strip()):
+            words = [line.strip()[len(name) + 1 :]]
+            for rest in lines[i + 1 :]:
+                if rest.strip().startswith("@"):
+                    break
+                words.append(rest)
+            return " ".join(" ".join(words).split())
+    return None
+
+
+def read_typescript(text: str) -> TypeScript:
+    """Each declaration's @category, @internal and @deprecated tags, each interface
+    property's @deprecated tag and the declaration its type names, and the parents an
+    interface extends or a type names. A doc comment documents the declaration or the
+    property that follows it, past any line comment, as TypeScript reads it. A
+    @deprecated tag anywhere else, such as on a property of an inline object, stops the
+    script, so no deprecation is lost."""
+    ts = TypeScript()
+    code, docs = _blanked(text)
+    depth, level = [], 0
+    for char in code:
+        depth.append(level)
+        level += {"{": 1, "}": -1}.get(char, 0)
+    bodies = []
+    for match in re.finditer(r"export\s+interface\s+(\w+)[^{]*\{", code):
+        start = match.end() - 1
+        end = start + 1
+        while code[end] != "}" or depth[end] != depth[start] + 1:
+            end += 1
+        bodies.append((match.group(1), start, end))
+
+    def interface_at(offset: int) -> str | None:
+        for name, start, end in bodies:
+            if start < offset < end and depth[offset] == depth[start] + 1:
+                return name
+        return None
+
+    key = re.compile(r'("[^"\n]*"|[A-Za-z_$][\w$]*)\s*\??\s*:\s*')
+    for name, start, end in bodies:
+        for match in key.finditer(code, start + 1, end):
+            if interface_at(match.start()) == name:
+                prop = text[match.start(1) : match.end(1)].strip('"')
+                ts.keys.setdefault(name, set()).add(prop)
+                found = re.match(r"([A-Za-z_]\w*)\s*;", code[match.end() : end])
+                if found:
+                    ts.key_types[(name, prop)] = found.group(1)
+    attached = 0
+    for start, end in docs:
+        doc = text[start + 3 : end - 2]
+        after = re.compile(r"\s*").match(code, end).end()
+        declaration = re.compile(r"export\s+(?:interface|type)\s+(\w+)").match(
+            code, after
+        )
+        prop = key.match(code, after)
+        deprecated = _tag(doc, "deprecated")
+        if declaration and depth[after] == 0:
+            name = declaration.group(1)
+            category = _tag(doc, "category")
+            if category:
+                ts.categories[name] = category
+            if _tag(doc, "internal") is not None:
+                ts.internal.add(name)
+            if deprecated is not None:
+                ts.deprecated[name] = deprecated
+                attached += 1
+        elif prop and deprecated is not None and interface_at(after):
+            owner = interface_at(after)
+            ts.deprecated_keys[(owner, text[prop.start(1) : prop.end(1)].strip('"'))] = (
+                deprecated
+            )
+            attached += 1
+    if attached != len(re.findall(r"@deprecated\b", text)):
+        raise ValueError("schema.ts has a @deprecated tag on something this script skips")
     for name, clause in re.findall(
-        r"export\s+interface\s+(\w+)\s*(?:extends\s+([^{]+))?\{", text
+        r"export\s+interface\s+(\w+)\s*(?:extends\s+([^{]+))?\{", code
     ):
         found = []
-        depth, item = 0, ""
+        nesting, item = 0, ""
         for char in clause + ",":
             if char == "<":
-                depth += 1
+                nesting += 1
             elif char == ">":
-                depth -= 1
-            if char == "," and depth == 0:
+                nesting -= 1
+            if char == "," and nesting == 0:
                 ident = re.search(r"(?:\w+<\s*)?(\w+)", item.strip())
                 if ident:
                     found.append(ident.group(1))
                 item = ""
             else:
                 item += char
-        parents[name] = found
-    for name, target in re.findall(r"export\s+type\s+(\w+)\s*=\s*(\w+)\s*;", text):
-        parents[name] = [target]
-    return categories, parents
+        ts.parents[name] = found
+    for name, target in re.findall(r"export\s+type\s+(\w+)\s*=\s*(\w+)\s*;", code):
+        ts.parents[name] = [target]
+    return ts
 
 
 class Converter:
-    def __init__(
-        self, defs: dict, categories: dict[str, str], parents: dict[str, list[str]]
-    ):
+    def __init__(self, defs: dict, ts: TypeScript):
         self.defs = defs
-        self.categories = categories
-        self.parents = parents
+        self.ts = ts
+        self.parents = ts.parents
         self.classes: dict[str, dict] = {}
         self.enums: dict[str, dict] = {}
         self.types: dict[str, dict] = {}
@@ -304,18 +444,27 @@ class Converter:
     # Elements ----------------------------------------------------------------------------
 
     def subset_of(self, name: str) -> list[str]:
-        category = self.categories.get(name)
-        if not category:
-            return []
-        key = subset_name(category)
-        self.subsets.setdefault(
-            key,
-            {
-                "title": category.strip("`"),
-                "description": f"The definitions schema.ts files under {category}.",
-            },
-        )
-        return [key]
+        """The subset of a definition's @category, and internal for one schema.ts tags
+        @internal."""
+        found = []
+        tags = [(self.ts.categories.get(name), "@category {}")]
+        tags.append(("internal" if name in self.ts.internal else None, "@internal"))
+        for value, tag in tags:
+            if value:
+                title = value.strip("`")
+                self.subsets.setdefault(
+                    subset_name(title),
+                    {
+                        "title": title,
+                        "description": f"The definitions schema.ts tags `{tag.format(title)}`.",
+                    },
+                )
+                found.append(subset_name(title))
+        return found
+
+    def deprecate(self, element: dict, text: str | None) -> None:
+        if text is not None:
+            element["deprecated"] = text
 
     def convert(self) -> None:
         for name, node in self.defs.items():
@@ -344,6 +493,10 @@ class Converter:
             }
         else:
             element["typeof"] = "string"
+        subsets = self.subset_of(name)
+        if subsets:
+            element["in_subset"] = subsets
+        self.deprecate(element, self.ts.deprecated.get(name))
         element["exact_mappings"] = [f"{MAPPING_PREFIX}:{name}"]
         self.types[PREFIX + name] = element
 
@@ -371,7 +524,13 @@ class Converter:
         subsets = self.subset_of(owner)
         if subsets:
             element["in_subset"] = subsets
+        self.deprecate(element, self.ts.deprecated.get(pointer))
         element["permissible_values"] = {value: {} for value in values}
+        if pointer in VALUE_DEPRECATIONS:
+            owner_name, _, key = pointer.partition("/properties/")
+            text = self.ts.deprecated_keys[(owner_name, key)]
+            for value in VALUE_DEPRECATIONS[pointer]:
+                element["permissible_values"][value]["deprecated"] = text
         self.enums[name] = element
 
     def add_class(self, name: str, node: dict) -> None:
@@ -400,6 +559,13 @@ class Converter:
                 "Any JSON value. MCP's schema.json leaves out null and numbers with a "
                 "fraction, which schema.ts allows; this class takes any JSON."
             ]
+        self.deprecate(element, self.ts.deprecated.get(name))
+        if name in CLASS_DEPRECATIONS:
+            replacement, sentence = CLASS_DEPRECATIONS[name]
+            element["deprecated"] = sentence.replace("\n", " ")
+            element["deprecated_element_has_possible_replacement"] = (
+                f"mcp:{PREFIX}{replacement}"
+            )
         self.fill(cls_name, element, node, name, name)
         if name in RULES:
             keys, sentence = RULES[name]
@@ -428,6 +594,8 @@ class Converter:
         keys = (
             "description",
             "comments",
+            "deprecated",
+            "deprecated_element_has_possible_replacement",
             "is_a",
             "mixins",
             "class_uri",
@@ -466,6 +634,10 @@ class Converter:
             if shared_slot(key, prop):
                 element.setdefault("slots", []).append(key)
                 usage = {"description": self.prop_text(key, prop, owner)}
+                if pointer == owner:
+                    self.deprecate(
+                        usage, self.ts.of_key(self.ts.deprecated_keys, owner, key)
+                    )
                 if key in required:
                     usage["required"] = True
                 element.setdefault("slot_usage", {})[key] = usage
@@ -485,6 +657,9 @@ class Converter:
 
     def attribute(self, key, prop, required, cls_name, owner, pointer) -> dict:
         slot: dict = {"description": self.prop_text(key, prop, owner)}
+        own = pointer == f"{owner}/properties/{key}"
+        if own:
+            self.deprecate(slot, self.ts.of_key(self.ts.deprecated_keys, owner, key))
         name, iri = lokf_naming(key, prop)
         if iri:
             slot["slot_uri"] = iri
@@ -497,7 +672,16 @@ class Converter:
                 slot["alias"] = key
             else:
                 slot["aliases"] = [key]
-        slot |= self.expression(prop, cls_name, key, pointer)
+        named = self.ts.of_key(self.ts.key_types, owner, key) if own else None
+        if (
+            named in SCALAR_TYPES
+            and set(prop) <= {"type", "description"}
+            and prop.get("type") == self.defs[named].get("type")
+        ):
+            # schema.json writes the type out in place, as for resultType: ResultType.
+            slot["range"] = PREFIX + named
+        else:
+            slot |= self.expression(prop, cls_name, key, pointer)
         if required:
             slot["required"] = True
         return {name: slot}
@@ -704,10 +888,8 @@ _Dumper.add_representer(str, _text)
 
 def render() -> str:
     defs = json.loads((UPSTREAM / "schema.json").read_text(encoding="utf-8"))["$defs"]
-    categories, parents = read_typescript(
-        (UPSTREAM / "schema.ts").read_text(encoding="utf-8")
-    )
-    converter = Converter(defs, categories, parents)
+    ts = read_typescript((UPSTREAM / "schema.ts").read_text(encoding="utf-8"))
+    converter = Converter(defs, ts)
     converter.convert()
     schema = header()
     schema["subsets"] = dict(sorted(converter.subsets.items()))

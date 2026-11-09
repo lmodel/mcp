@@ -6,6 +6,10 @@ The `v0.0.0` tag is a baseline, not a release: it marks where versioning starts 
 
 ## [Unreleased]
 
+### Security
+
+- **The skills pin is at Knowledge Trust Ladder [v0.62.0](https://github.com/noelmcloughlin/knowledge-trust-ladder/compare/v0.61.0...v0.62.0).** None of the sidecar copies this repository carries changed.
+
 ## [0.2.0] - 2026-11-07
 
 ### Added

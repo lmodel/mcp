@@ -21,7 +21,7 @@ A LinkML schema of the Model Context Protocol (MCP), version 2026-07-28: its JSO
 
 ## Development setup
 
-You need Python 3.10+, [uv](https://docs.astral.sh/uv/) and [just](https://github.com/casey/just).
+You need Python 3.11+, [uv](https://docs.astral.sh/uv/) and [just](https://github.com/casey/just).
 
 ```bash
 git clone https://github.com/lmodel/mcp.git

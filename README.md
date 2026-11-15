@@ -33,7 +33,7 @@ The schema renders the [Model Context Protocol](https://modelcontextprotocol.io/
 * [src/mcp/datamodel/](src/mcp/datamodel): the generated Python datamodel
 * [tests/](tests/): Python tests, with example messages in [data/problem/](tests/data/problem) and the neighbours' adapt copies in [neighbours/](tests/neighbours)
 * [upstream/](upstream/): MCP 2026-07-28's schema files, examples and licence, unchanged
-* [website/](website/): the Astro Starlight site built from the README, `docs/`, the schema's pages and the knowledge bundle
+* [website/](website/): the Hugo site built from the README, `docs/`, the schema's pages and the knowledge bundle
 
 ## Developer Tools
 

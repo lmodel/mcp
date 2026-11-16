@@ -14,7 +14,7 @@ exclude: >-
     src/mcp/schema/mcp\.yaml$|
     \.lokf/(scripts|m365)/|
     \.lokf/schema/(lokf|mcp)\.yaml$|
-    \.github/release/package-lock\.json$|
+    \.release/package-lock\.json$|
     tests/neighbours/|
     upstream/
   )

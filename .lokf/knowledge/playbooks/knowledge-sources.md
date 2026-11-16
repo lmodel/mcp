@@ -77,7 +77,7 @@ exclusions:
     reason: The sidecar sync's pull request template.
   - resource: .github/dependabot.yml
     reason: "Tooling: Dependabot's settings."
-  - resource: .github/release
+  - resource: .release
     reason: The release tools and their lock.
   - resource: .github/scripts
     reason: The release's changelog script and the watch's issue script.
@@ -111,7 +111,7 @@ exclusions:
     reason: Package plumbing.
 generated:
   by: process:ktl-librarian
-  at: "2026-11-07T03:33:30Z"
+  at: "2026-11-15T20:58:32Z"
 status: draft
 ---
 

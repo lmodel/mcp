@@ -1,5 +1,9 @@
 # Change Log
 
+## 2026-11-15
+
+* **Changed**: sources and text follow the move of `.github/release` to `.release`.
+
 ## 2026-11-07
 
 * **Changed**: The release says the knowledge release attaches the copy only when the bundle or the schema changed.
